@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perantara Reps - Your Trusted NZ Cultural Bridge</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --color-teal-primary: #005A6A;
+            --color-teal-light: #4A9AAF;
+            --color-red-primary: #D73502;
+            --color-red-dark: #B12A00;
+            --color-gray-900: #1A1A1A;
+            --color-gray-700: #4A4A4A;
+            --color-gray-500: #808080;
+            --color-gray-200: #E5E5E5;
+            --color-gray-50: #F9F9F9;
+            --color-gold: #D4AF37;
+            --color-forest: #2D5016;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            line-height: 1.6;
+            color: var(--color-gray-900);
+            overflow-x: hidden;
+        }
+
+        /* Header Navigation */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--color-gray-200);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--color-teal-primary), var(--color-teal-light));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 800;
+            font-size: 1.2rem;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--color-teal-primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--color-gray-700);
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--color-teal-primary);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--color-gold);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .cta-button {
+            background: var(--color-red-primary);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(215, 53, 2, 0.2);
+        }
+
+        .cta-button:hover {
+            background: var(--color-red-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(215, 53, 2, 0.3);
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--color-gray-700);
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(135deg, 
+                rgba(0, 90, 106, 0.9), 
+                rgba(74, 154, 175, 0.8),
+                rgba(45, 80, 22, 0.7)
+            ),
+            url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><defs><pattern id="mountains" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse"><polygon points="0,80 25,40 50,60 75,20 100,50 100,100 0,100" fill="%23ffffff" fill-opacity="0.1"/></pattern><pattern id="waves" x="0" y="0" width="60" height="20" patternUnits="userSpaceOnUse"><path d="M0,10 Q15,0 30,10 T60,10" stroke="%23ffffff" stroke-width="1" fill="none" stroke-opacity="0.2"/></pattern></defs><rect width="100%" height="100%" fill="url(%23mountains)"/><rect width="100%" height="100%" fill="url(%23waves)"/></svg>');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 2px,
+                rgba(212, 175, 55, 0.03) 2px,
+                rgba(212, 175, 55, 0.03) 4px
+            );
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-content {
+            max-width: 700px;
+            color: white;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .cultural-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(212, 175, 55, 0.2);
+            border: 1px solid var(--color-gold);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            backdrop-filter: blur(10px);
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-highlight {
+            color: var(--color-gold);
+            background: linear-gradient(135deg, var(--color-gold), #F4E18A);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            margin-bottom: 2rem;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.6;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .btn-primary {
+            background: var(--color-red-primary);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(215, 53, 2, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: var(--color-red-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(215, 53, 2, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            padding: 1rem 2rem;
+            border: 2px solid white;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: var(--color-teal-primary);
+            transform: translateY(-2px);
+        }
+
+        .cultural-indicators {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .cultural-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.75rem 1rem;
+            border-radius: 25px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .indicator-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--color-gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+        }
+
+        /* Cultural Floating Elements */
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .floating-element {
+            position: absolute;
+            opacity: 0.1;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-element:nth-child(1) {
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+            font-size: 3rem;
+        }
+
+        .floating-element:nth-child(2) {
+            top: 60%;
+            right: 15%;
+            animation-delay: 2s;
+            font-size: 2.5rem;
+        }
+
+        .floating-element:nth-child(3) {
+            top: 40%;
+            left: 70%;
+            animation-delay: 4s;
+            font-size: 2rem;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Trust Indicators Section */
+        .trust-section {
+            background: var(--color-gray-50);
+            padding: 3rem 2rem;
+            position: relative;
+        }
+
+        .trust-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .trust-title {
+            font-size: 1.2rem;
+            color: var(--color-gray-700);
+            margin-bottom: 2rem;
+            font-weight: 500;
+        }
+
+        .trust-indicators {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--color-gray-700);
+            font-weight: 600;
+        }
+
+        .trust-icon {
+            width: 24px;
+            height: 24px;
+            color: var(--color-teal-primary);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .btn-primary,
+            .btn-secondary {
+                text-align: center;
+                justify-content: center;
+            }
+
+            .cultural-indicators {
+                justify-content: center;
+            }
+
+            .trust-indicators {
+                gap: 1.5rem;
+            }
+
+            .hero {
+                background-attachment: scroll;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-container {
+                padding: 1rem;
+            }
+
+            .hero-container {
+                padding: 1rem;
+            }
+
+            .cultural-indicators {
+                gap: 1rem;
+            }
+
+            .trust-indicators {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Focus indicators */
+        .nav-link:focus,
+        .cta-button:focus,
+        .btn-primary:focus,
+        .btn-secondary:focus {
+            outline: 2px solid var(--color-gold);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">
+                <div class="logo-icon">P</div>
+                <div class="logo-text">Perantara Reps</div>
+            </div>
+            
+            <nav class="nav-links">
+                <a href="#about" class="nav-link">Cultural Intelligence</a>
+                <a href="#why-partner" class="nav-link">Partnership Benefits</a>
+                <a href="#how-it-works" class="nav-link">Our Process</a>
+                <a href="#contact" class="nav-link">Connect</a>
+            </nav>
+            
+            <a href="#contact" class="cta-button">Start Partnership</a>
+            
+            <button class="mobile-menu-toggle" aria-label="Toggle mobile menu">
+                ☰
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="floating-elements">
+            <div class="floating-element">🏔️</div>
+            <div class="floating-element">🌊</div>
+            <div class="floating-element">🦎</div>
+        </div>
+        
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="cultural-badge">
+                    <span>🇳🇿</span>
+                    <span>Global-Local Connector</span>
+                    <span>🇮🇩</span>
+                </div>
+                
+                <h1 class="hero-title">
+                    Your On-the-Ground <span class="hero-highlight">NZ DMC</span>
+                </h1>
+                
+                <p class="hero-subtitle">
+                    The trusted cultural bridge for Indonesian travel partners seeking premium New Zealand experiences. We combine authentic Kiwi expertise with deep understanding of Indonesian traveler values - from halal dining to family-centered adventures.
+                </p>
+                
+                <div class="hero-buttons">
+                    <a href="#contact" class="btn-primary">
+                        <span>🤝</span>
+                        Request Partnership Info
+                    </a>
+                    <a href="#sample-itineraries" class="btn-secondary">
+                        <span>📋</span>
+                        View Halal-Friendly Itineraries
+                    </a>
+                </div>
+                
+                <div class="cultural-indicators">
+                    <div class="cultural-indicator">
+                        <div class="indicator-icon">🕌</div>
+                        <span>100% Halal Network</span>
+                    </div>
+                    <div class="cultural-indicator">
+                        <div class="indicator-icon">⚡</div>
+                        <span>48-Hour Quotes</span>
+                    </div>
+                    <div class="cultural-indicator">
+                        <div class="indicator-icon">🌿</div>
+                        <span>Māori Cultural Respect</span>
+                    </div>
+                    <div class="cultural-indicator">
+                        <div class="indicator-icon">👨‍👩‍👧‍👦</div>
+                        <span>Family-Focused Experiences</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Indicators -->
+    <section class="trust-section">
+        <div class="trust-container">
+            <h2 class="trust-title">Trusted by Indonesian Travel Partners Since 2018</h2>
+            <div class="trust-indicators">
+                <div class="trust-item">
+                    <svg class="trust-icon" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2L13.09 6.26L18 7L13.09 7.74L12 12L10.91 7.74L6 7L10.91 6.26L12 2Z"/>
+                    </svg>
+                    <span>500+ Halal-Certified Partners</span>
+                </div>
+                <div class="trust-item">
+                    <svg class="trust-icon" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                    </svg>
+                    <span>ISO 9001 Quality Certified</span>
+                </div>
+                <div class="trust-item">
+                    <svg class="trust-icon" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2l3.09 6.26L22 9l-5.91.74L12 16l-4.09-6.26L2 9l6.91-.74L12 2z"/>
+                    </svg>
+                    <span>24/7 Indonesian Support</span>
+                </div>
+                <div class="trust-item">
+                    <svg class="trust-icon" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M9 11H7v6h2v-6zm4 0h-2v6h2v-6zm4 0h-2v6h2v-6zM4 7h16l-1 10H5L4 7z"/>
+                    </svg>
+                    <span>NZTB Licensed DMC</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Header background opacity on scroll
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.header');
+            const scrolled = window.pageYOffset;
+            const rate = scrolled * 0.001;
+            
+            if (scrolled > 50) {
+                header.style.background = `rgba(255, 255, 255, ${Math.min(0.98, 0.95 + rate)})`;
+                header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+                header.style.boxShadow = 'none';
+            }
+        });
+
+        // Mobile menu toggle (basic implementation)
+        document.querySelector('.mobile-menu-toggle').addEventListener('click', function() {
+            const navLinks = document.querySelector('.nav-links');
+            if (navLinks.style.display === 'flex') {
+                navLinks.style.display = 'none';
+            } else {
+                navLinks.style.display = 'flex';
+                navLinks.style.flexDirection = 'column';
+                navLinks.style.position = 'absolute';
+                navLinks.style.top = '100%';
+                navLinks.style.left = '0';
+                navLinks.style.right = '0';
+                navLinks.style.background = 'white';
+                navLinks.style.padding = '1rem';
+                navLinks.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
+            }
+        });
+
+        // Parallax effect for hero background (performance optimized)
+        let ticking = false;
+        function updateParallax() {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelector('.hero');
+            const speed = scrolled * 0.5;
+            
+            if (parallax) {
+                parallax.style.transform = `translateY(${speed}px)`;
+            }
+            ticking = false;
+        }
+
+        function requestTick() {
+            if (!ticking) {
+                requestAnimationFrame(updateParallax);
+                ticking = true;
+            }
+        }
+
+        window.addEventListener('scroll', requestTick);
+
+        // Cultural sensitivity: Detect user timezone for appropriate messaging
+        const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        if (userTimeZone.includes('Jakarta') || userTimeZone.includes('Asia')) {
+            console.log('Indonesian timezone detected - optimizing experience');
+            // Could add timezone-specific messaging or prayer time considerations
+        }
+
+        // Accessibility: Respect reduced motion preferences
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            document.documentElement.style.setProperty('--animation-duration', '0.01ms');
+        }
+
+        // Performance: Lazy load images when implemented
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src;
+                        img.classList.remove('lazy');
+                        imageObserver.unobserve(img);
+                    }
+                });
+            });
+        }
+
+        // Cultural authenticity: Dynamic greeting based on time
+        const currentHour = new Date().getHours();
+        let greeting = 'Selamat datang'; // Default Indonesian greeting
+        
+        if (currentHour < 12) {
+            greeting = 'Selamat pagi'; // Good morning
+        } else if (currentHour < 15) {
+            greeting = 'Selamat siang'; // Good afternoon
+        } else if (currentHour < 18) {
+            greeting = 'Selamat sore'; // Good evening
+        } else {
+            greeting = 'Selamat malam'; // Good night
+        }
+
+        // Add subtle cultural touch to console
+        console.log(`${greeting}! Welcome to Perantara Reps - Your trusted Kiwi connection.`);
+    </script>
+</body>
+</html>

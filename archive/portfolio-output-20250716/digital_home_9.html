@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coffee Shop Corner Digital Home</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times', serif;
+            background: linear-gradient(135deg, #8B4513 0%, #D2691E 15%, #DEB887 35%, #F5DEB3 60%, #FFF8DC 100%);
+            min-height: 100vh;
+            line-height: 1.6;
+            color: #3C2414;
+        }
+
+        .coffee-shop {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+        }
+
+        /* Ambient atmosphere */
+        .atmosphere {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background: radial-gradient(circle at 30% 20%, rgba(255, 223, 186, 0.3) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 80%, rgba(210, 180, 140, 0.2) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        /* Welcome corner */
+        .welcome-corner {
+            background: rgba(255, 248, 220, 0.9);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(139, 69, 19, 0.2);
+            border: 2px solid rgba(160, 82, 45, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-corner::before {
+            content: '☕';
+            position: absolute;
+            top: -10px;
+            right: 20px;
+            font-size: 3em;
+            opacity: 0.2;
+            transform: rotate(15deg);
+        }
+
+        .welcome-title {
+            font-size: 2.2em;
+            color: #8B4513;
+            margin-bottom: 15px;
+            font-weight: 300;
+        }
+
+        .welcome-message {
+            font-size: 1.1em;
+            color: #5D4E37;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        /* Current mood section */
+        .current-mood {
+            background: rgba(222, 184, 135, 0.8);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .current-mood:hover {
+            transform: translateY(-2px);
+        }
+
+        .mood-indicator {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #CD853F, #F4A460);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8em;
+            animation: gentle-pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes gentle-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .mood-content h3 {
+            color: #8B4513;
+            margin-bottom: 5px;
+        }
+
+        .mood-text {
+            color: #654321;
+            font-size: 0.95em;
+        }
+
+        /* Seating areas layout */
+        .seating-areas {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .seating-area {
+            background: rgba(245, 222, 179, 0.9);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid rgba(160, 82, 45, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .seating-area:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(139, 69, 19, 0.25);
+        }
+
+        .area-title {
+            color: #8B4513;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .area-content {
+            color: #5D4E37;
+            line-height: 1.7;
+        }
+
+        /* Conversation menu */
+        .conversation-starters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .conversation-topic {
+            background: rgba(210, 180, 140, 0.8);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            color: #654321;
+            border: 1px solid rgba(139, 69, 19, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .conversation-topic:hover {
+            background: rgba(160, 82, 45, 0.8);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        /* Community board */
+        .community-board {
+            background: rgba(255, 248, 220, 0.95);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 2px dashed rgba(139, 69, 19, 0.4);
+        }
+
+        .board-title {
+            color: #8B4513;
+            font-size: 1.4em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .board-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .board-item {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #CD853F;
+            transition: transform 0.3s ease;
+        }
+
+        .board-item:hover {
+            transform: translateX(5px);
+        }
+
+        .item-category {
+            font-weight: bold;
+            color: #8B4513;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .item-content {
+            color: #5D4E37;
+            margin-top: 5px;
+        }
+
+        /* Coffee date booking */
+        .coffee-date-section {
+            background: rgba(160, 82, 45, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .coffee-date-title {
+            color: #8B4513;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .coffee-date-subtitle {
+            color: #654321;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .coffee-methods {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .coffee-method {
+            background: rgba(210, 180, 140, 0.8);
+            padding: 15px 25px;
+            border-radius: 25px;
+            color: #654321;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .coffee-method:hover {
+            background: #8B4513;
+            color: white;
+            border-color: #654321;
+            transform: translateY(-2px);
+        }
+
+        /* Ambient sounds toggle */
+        .ambient-controls {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(139, 69, 19, 0.9);
+            padding: 15px;
+            border-radius: 50px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .ambient-controls:hover {
+            background: rgba(160, 82, 45, 0.9);
+            transform: scale(1.1);
+        }
+
+        /* Regular's table */
+        .regulars-table {
+            background: rgba(210, 180, 140, 0.6);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(139, 69, 19, 0.3);
+        }
+
+        .regulars-title {
+            color: #8B4513;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+
+        .inside-jokes {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .inside-joke {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 10px 15px;
+            border-radius: 15px;
+            font-size: 0.9em;
+            color: #654321;
+            font-style: italic;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .coffee-shop {
+                padding: 15px;
+            }
+
+            .seating-areas {
+                grid-template-columns: 1fr;
+            }
+
+            .coffee-methods {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .welcome-title {
+                font-size: 1.8em;
+            }
+        }
+
+        /* Loading animation */
+        .loading-cup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3em;
+            z-index: 1000;
+            animation: steam 2s ease-in-out;
+            opacity: 0;
+        }
+
+        @keyframes steam {
+            0% { opacity: 1; transform: translate(-50%, -50%) scale(0.5); }
+            50% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
+            100% { opacity: 0; transform: translate(-50%, -50%) scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <div class="atmosphere"></div>
+    <div class="loading-cup">☕</div>
+
+    <main class="coffee-shop">
+        <!-- Welcome Corner -->
+        <section class="welcome-corner">
+            <h1 class="welcome-title">Welcome to My Corner</h1>
+            <p class="welcome-message">
+                "Pull up a chair, grab something warm to drink, and let's have one of those conversations 
+                that makes you forget to check your phone. This is my little corner of the internet 
+                where real connections happen over virtual coffee."
+            </p>
+            <div class="current-mood">
+                <div class="mood-indicator">🎵</div>
+                <div class="mood-content">
+                    <h3>Currently vibing to</h3>
+                    <p class="mood-text">Lo-fi jazz while reading about sustainable design patterns. That perfect Sunday afternoon energy where everything feels possible.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seating Areas -->
+        <section class="seating-areas">
+            <!-- Window Seat - Deep Conversations -->
+            <div class="seating-area">
+                <h2 class="area-title">🪟 Window Seat Chats</h2>
+                <div class="area-content">
+                    <p>The spot for those conversations that start with "What if..." and end three hours later with mind blown. I love exploring:</p>
+                    <div class="conversation-starters">
+                        <span class="conversation-topic">The future of creativity</span>
+                        <span class="conversation-topic">Tiny life changes, big impacts</span>
+                        <span class="conversation-topic">Books that changed everything</span>
+                        <span class="conversation-topic">Travel stories & mishaps</span>
+                        <span class="conversation-topic">Weird hobbies we're passionate about</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Corner Booth - Life Updates -->
+            <div class="seating-area">
+                <h2 class="area-title">🛋️ Corner Booth Updates</h2>
+                <div class="area-content">
+                    <p><strong>This week I'm:</strong> Learning to make sourdough (attempt #4), finally reading "Klara and the Sun", and planning a weekend camping trip that may or may not happen depending on weather and motivation levels.</p>
+                    <p><strong>Currently available for:</strong> Coffee walks, book recommendations, sourdough troubleshooting, and conversations about anything that makes your eyes light up.</p>
+                </div>
+            </div>
+
+            <!-- Bar Stools - Quick Connections -->
+            <div class="seating-area">
+                <h2 class="area-title">🪑 Bar Stool Quick Hellos</h2>
+                <div class="area-content">
+                    <p><strong>Random recent thoughts:</strong></p>
+                    <ul style="margin-left: 20px; color: #654321;">
+                        <li>Why do we call it "rush hour" when nobody's moving?</li>
+                        <li>Best coffee shop playlist = 70% instrumental, 30% gentle vocals</li>
+                        <li>Nothing beats the satisfaction of a perfectly organized digital photo album</li>
+                        <li>Discovered that 2pm is the optimal time for creative breakthroughs</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Cozy Armchair - Story Corner -->
+            <div class="seating-area">
+                <h2 class="area-title">🛋️ Story Corner</h2>
+                <div class="area-content">
+                    <p><strong>Last week's mini-adventure:</strong> Got completely lost trying to find a hidden waterfall, ended up discovering the most amazing local bakery instead. Sometimes the best journeys are the unplanned ones.</p>
+                    <p><strong>Next up:</strong> Planning a creative writing workshop at the local library. Because sharing stories is how we really get to know each other.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Community Board -->
+        <section class="community-board">
+            <h2 class="board-title">📌 Community Recommendations</h2>
+            <div class="board-items">
+                <div class="board-item">
+                    <div class="item-category">Reading</div>
+                    <div class="item-content">"The Midnight Library" - Perfect for anyone questioning life choices over coffee</div>
+                </div>
+                <div class="board-item">
+                    <div class="item-category">Listening</div>
+                    <div class="item-content">Ólafur Arnalds' "Re:member" album - Atmospheric piano that makes any space feel cozy</div>
+                </div>
+                <div class="board-item">
+                    <div class="item-category">Local Gems</div>
+                    <div class="item-content">Sunrise Point Trail - 20min hike, incredible views, brings perspective to everything</div>
+                </div>
+                <div class="board-item">
+                    <div class="item-category">Food Adventure</div>
+                    <div class="item-content">That hole-in-the-wall Vietnamese place on Oak Street - trust me on this one</div>
+                </div>
+                <div class="board-item">
+                    <div class="item-category">Weekend Activity</div>
+                    <div class="item-content">Saturday farmers market - great people watching + amazing fresh bread</div>
+                </div>
+                <div class="board-item">
+                    <div class="item-category">Creative Inspiration</div>
+                    <div class="item-content">Local pottery studio offers drop-in sessions - something magical about working with clay</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Regular's Table -->
+        <section class="regulars-table">
+            <h3 class="regulars-title">👥 For the Regulars</h3>
+            <p style="color: #654321; margin-bottom: 15px;">You know who you are - the ones who remember my coffee order and ask about my weird projects:</p>
+            <div class="inside-jokes">
+                <span class="inside-joke">"Still working on that novel?"</span>
+                <span class="inside-joke">Update: The plant wall is thriving!</span>
+                <span class="inside-joke">Yes, I'm still obsessed with perfect lighting</span>
+                <span class="inside-joke">The sourdough saga continues...</span>
+            </div>
+        </section>
+
+        <!-- Coffee Date Booking -->
+        <section class="coffee-date-section">
+            <h2 class="coffee-date-title">☕ Let's Grab Coffee</h2>
+            <p class="coffee-date-subtitle">
+                Real connections happen over real conversations. If anything here sparked curiosity, 
+                let's continue the chat over coffee (virtual or in-person).
+            </p>
+            <div class="coffee-methods">
+                <a href="mailto:coffee@yourname.com" class="coffee-method">📧 Send a Coffee Invite</a>
+                <a href="#" class="coffee-method" onclick="showContactForm()">💬 Quick Message</a>
+                <a href="#" class="coffee-method">📱 Coffee Chat Booking</a>
+            </div>
+        </section>
+
+        <!-- Ambient Controls -->
+        <div class="ambient-controls" onclick="toggleAmbient()" title="Toggle Coffee Shop Sounds">
+            🔊
+        </div>
+    </main>
+
+    <script>
+        // Loading animation
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                document.querySelector('.loading-cup').style.display = 'none';
+            }, 2000);
+        });
+
+        // Conversation topic interactions
+        document.querySelectorAll('.conversation-topic').forEach(topic => {
+            topic.addEventListener('click', function() {
+                const messages = [
+                    "That's one of my favorite topics! What's your take on it?",
+                    "Oh, I have so many thoughts about this! Coffee chat?",
+                    "Yes! This is exactly the kind of conversation I love having.",
+                    "You picked a good one - this could be a 3-hour discussion!",
+                    "I was hoping someone would be interested in this!"
+                ];
+                
+                const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+                
+                // Create temporary message bubble
+                const bubble = document.createElement('div');
+                bubble.style.cssText = `
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    background: rgba(139, 69, 19, 0.95);
+                    color: white;
+                    padding: 20px;
+                    border-radius: 15px;
+                    max-width: 300px;
+                    text-align: center;
+                    z-index: 1000;
+                    animation: fadeInOut 3s ease-in-out;
+                `;
+                bubble.textContent = randomMessage;
+                document.body.appendChild(bubble);
+                
+                setTimeout(() => {
+                    bubble.remove();
+                }, 3000);
+            });
+        });
+
+        // Ambient sound toggle
+        let ambientPlaying = false;
+        function toggleAmbient() {
+            const control = document.querySelector('.ambient-controls');
+            if (ambientPlaying) {
+                control.innerHTML = '🔊';
+                control.title = 'Play Coffee Shop Sounds';
+                ambientPlaying = false;
+            } else {
+                control.innerHTML = '🔇';
+                control.title = 'Pause Coffee Shop Sounds';
+                ambientPlaying = true;
+                // In a real implementation, this would start playing ambient coffee shop sounds
+            }
+        }
+
+        // Contact form display
+        function showContactForm() {
+            const formHtml = `
+                <div style="
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0,0,0,0.7);
+                    z-index: 2000;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                " onclick="this.remove()">
+                    <div style="
+                        background: #FFF8DC;
+                        padding: 30px;
+                        border-radius: 15px;
+                        max-width: 400px;
+                        width: 90%;
+                        border: 2px solid #8B4513;
+                    " onclick="event.stopPropagation()">
+                        <h3 style="color: #8B4513; margin-bottom: 15px;">Start a Conversation</h3>
+                        <p style="color: #654321; margin-bottom: 20px;">What would you like to chat about over coffee?</p>
+                        <textarea placeholder="Your message..." style="
+                            width: 100%;
+                            height: 100px;
+                            padding: 10px;
+                            border: 1px solid #D2691E;
+                            border-radius: 8px;
+                            font-family: inherit;
+                            resize: vertical;
+                        "></textarea>
+                        <div style="margin-top: 15px; text-align: center;">
+                            <button style="
+                                background: #8B4513;
+                                color: white;
+                                border: none;
+                                padding: 10px 20px;
+                                border-radius: 20px;
+                                cursor: pointer;
+                                margin-right: 10px;
+                            ">Send Coffee Invite</button>
+                            <button onclick="this.closest('div').remove()" style="
+                                background: transparent;
+                                color: #8B4513;
+                                border: 1px solid #8B4513;
+                                padding: 10px 20px;
+                                border-radius: 20px;
+                                cursor: pointer;
+                            ">Maybe Later</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.insertAdjacentHTML('beforeend', formHtml);
+        }
+
+        // Gentle hover effects for seating areas
+        document.querySelectorAll('.seating-area').forEach(area => {
+            area.addEventListener('mouseenter', function() {
+                this.style.backgroundColor = 'rgba(255, 248, 220, 0.95)';
+            });
+            
+            area.addEventListener('mouseleave', function() {
+                this.style.backgroundColor = 'rgba(245, 222, 179, 0.9)';
+            });
+        });
+
+        // Dynamic time-based content
+        function updateTimeBasedContent() {
+            const hour = new Date().getHours();
+            const moodIndicator = document.querySelector('.mood-indicator');
+            const moodText = document.querySelector('.mood-text');
+            
+            if (hour < 9) {
+                moodIndicator.textContent = '🌅';
+                moodText.textContent = 'Early morning contemplation with coffee and journaling. That quiet energy before the world wakes up.';
+            } else if (hour < 14) {
+                moodIndicator.textContent = '☀️';
+                moodText.textContent = 'Mid-morning productivity flow with upbeat indie folk. Perfect time for creative projects and deep work.';
+            } else if (hour < 17) {
+                moodIndicator.textContent = '🎵';
+                moodText.textContent = 'Afternoon exploration mode with lo-fi jazz. Great for reading, learning, and having interesting conversations.';
+            } else if (hour < 20) {
+                moodIndicator.textContent = '🌆';
+                moodText.textContent = 'Golden hour wind-down with acoustic melodies. Time for reflection and connecting with friends.';
+            } else {
+                moodIndicator.textContent = '🌙';
+                moodText.textContent = 'Evening cozy vibes with ambient soundscapes. Perfect for storytelling and deeper conversations.';
+            }
+        }
+
+        // Initialize time-based content
+        updateTimeBasedContent();
+        setInterval(updateTimeBasedContent, 300000); // Update every 5 minutes
+
+        // CSS for fade in/out animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeInOut {
+                0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+                20% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+                80% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+                100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perantara Reps - Trusted Partnership Portal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --color-teal-primary: #005A6A;
+            --color-teal-light: #4A9AAF;
+            --color-red-primary: #D73502;
+            --color-red-dark: #B12A00;
+            --color-gray-900: #1A1A1A;
+            --color-gray-700: #4A4A4A;
+            --color-gray-500: #808080;
+            --color-gray-200: #E5E5E5;
+            --color-gray-50: #F9F9F9;
+            --color-gold: #D4AF37;
+            --color-forest: #2D5016;
+            --color-green-trust: #22C55E;
+            --color-blue-security: #3B82F6;
+        }
+        
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            color: var(--color-gray-900);
+            background-color: #ffffff;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Trust Header */
+        .trust-header {
+            background: linear-gradient(135deg, var(--color-teal-primary) 0%, var(--color-teal-light) 100%);
+            color: white;
+            padding: 80px 0 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .trust-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" fill="white" opacity="0.05"><polygon points="0,0 1000,0 1000,100 0,80"/></svg>') no-repeat bottom;
+            background-size: cover;
+        }
+        
+        .trust-header .container {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .trust-header h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+        
+        .trust-header .subtitle {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+        
+        .trust-badges {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+        
+        .trust-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .trust-badge-icon {
+            width: 20px;
+            height: 20px;
+            background: var(--color-green-trust);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.8rem;
+        }
+        
+        /* Main Content Area */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            padding: 4rem 0;
+            align-items: start;
+        }
+        
+        /* Contact Form Section */
+        .contact-section {
+            background: white;
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: 0 20px 60px rgba(0, 90, 106, 0.08);
+            border: 1px solid var(--color-gray-200);
+            position: relative;
+        }
+        
+        .contact-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--color-teal-primary), var(--color-red-primary));
+            border-radius: 16px 16px 0 0;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--color-gray-900);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .section-title .security-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--color-blue-security);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1rem;
+        }
+        
+        .security-notice {
+            background: linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 100%);
+            border: 1px solid #BAE6FD;
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .security-notice .icon {
+            width: 24px;
+            height: 24px;
+            background: var(--color-blue-security);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.8rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: var(--color-gray-700);
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+        
+        .required {
+            color: var(--color-red-primary);
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.875rem;
+            border: 2px solid var(--color-gray-200);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: white;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--color-teal-primary);
+            box-shadow: 0 0 0 3px rgba(0, 90, 106, 0.1);
+            transform: translateY(-1px);
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(135deg, var(--color-red-primary) 0%, var(--color-red-dark) 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(215, 53, 2, 0.3);
+        }
+        
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+        
+        /* Testimonials Section */
+        .testimonials-section {
+            background: var(--color-gray-50);
+            border-radius: 16px;
+            padding: 2.5rem;
+            border: 1px solid var(--color-gray-200);
+        }
+        
+        .testimonials-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        
+        .testimonial-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border-left: 4px solid var(--color-teal-primary);
+            position: relative;
+        }
+        
+        .testimonial-quote {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--color-gray-700);
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .author-avatar {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--color-teal-primary), var(--color-teal-light));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .author-info h4 {
+            font-weight: 600;
+            color: var(--color-gray-900);
+            margin-bottom: 0.25rem;
+        }
+        
+        .author-info .company {
+            color: var(--color-gray-500);
+            font-size: 0.9rem;
+        }
+        
+        .rating {
+            display: flex;
+            gap: 0.25rem;
+            margin-top: 0.5rem;
+        }
+        
+        .star {
+            color: var(--color-gold);
+            font-size: 1.1rem;
+        }
+        
+        /* Trust Indicators */
+        .trust-indicators {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 2rem;
+            border: 1px solid var(--color-gray-200);
+        }
+        
+        .indicators-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            text-align: center;
+        }
+        
+        .indicator {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .indicator-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--color-teal-primary), var(--color-teal-light));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+        
+        .indicator-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-gray-900);
+        }
+        
+        .indicator-label {
+            font-size: 0.9rem;
+            color: var(--color-gray-500);
+        }
+        
+        /* Error States */
+        .error {
+            border-color: var(--color-red-primary) !important;
+            background-color: #FEF2F2 !important;
+        }
+        
+        .error-message {
+            color: var(--color-red-primary);
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+        
+        .error-message.show {
+            display: block;
+        }
+        
+        /* Success States */
+        .success-message {
+            background: linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%);
+            border: 1px solid #BBF7D0;
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            display: none;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .success-message.show {
+            display: flex;
+        }
+        
+        .success-message .icon {
+            width: 24px;
+            height: 24px;
+            background: var(--color-green-trust);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.8rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .trust-header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .trust-badges {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .main-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                padding: 2rem 0;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .indicators-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .contact-section,
+            .testimonials-section {
+                padding: 1.5rem;
+            }
+        }
+        
+        /* Loading States */
+        .loading {
+            position: relative;
+            pointer-events: none;
+        }
+        
+        .loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            margin: -10px 0 0 -10px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Accessibility */
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+        
+        /* Focus styles for better accessibility */
+        button:focus,
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: 2px solid var(--color-teal-primary);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Trust Header -->
+    <header class="trust-header">
+        <div class="container">
+            <h1>Trusted Partnership Portal</h1>
+            <p class="subtitle">Secure, Reliable, and Culturally Intelligent New Zealand DMC Services for Indonesian Travel Partners</p>
+            <div class="trust-badges">
+                <div class="trust-badge">
+                    <div class="trust-badge-icon">✓</div>
+                    <span>SSL Secured</span>
+                </div>
+                <div class="trust-badge">
+                    <div class="trust-badge-icon">🛡️</div>
+                    <span>Privacy Protected</span>
+                </div>
+                <div class="trust-badge">
+                    <div class="trust-badge-icon">⚡</div>
+                    <span>48hr Response</span>
+                </div>
+                <div class="trust-badge">
+                    <div class="trust-badge-icon">🏆</div>
+                    <span>15+ Years Experience</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <div class="main-content">
+            <!-- Contact Form Section -->
+            <section class="contact-section">
+                <h2 class="section-title">
+                    <div class="security-icon">🔒</div>
+                    Secure Partnership Inquiry
+                </h2>
+                
+                <div class="security-notice">
+                    <div class="icon">🛡️</div>
+                    <div>
+                        <strong>Your data is protected:</strong> All information is encrypted and handled according to New Zealand Privacy Act 2020 and Indonesian data protection standards.
+                    </div>
+                </div>
+
+                <div class="success-message" id="successMessage">
+                    <div class="icon">✓</div>
+                    <div>
+                        <strong>Thank you!</strong> Your partnership inquiry has been securely submitted. Our team will respond within 48 hours with a comprehensive proposal.
+                    </div>
+                </div>
+
+                <form id="partnershipForm" novalidate>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="companyName">Company Name <span class="required">*</span></label>
+                            <input type="text" id="companyName" name="companyName" required>
+                            <div class="error-message" id="companyNameError">Company name is required</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="contactPerson">Contact Person <span class="required">*</span></label>
+                            <input type="text" id="contactPerson" name="contactPerson" required>
+                            <div class="error-message" id="contactPersonError">Contact person is required</div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">Email Address <span class="required">*</span></label>
+                            <input type="email" id="email" name="email" required>
+                            <div class="error-message" id="emailError">Valid email address is required</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" placeholder="+62 xxx xxx xxxx">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="businessType">Business Type <span class="required">*</span></label>
+                        <select id="businessType" name="businessType" required>
+                            <option value="">Select your business type</option>
+                            <option value="travel-agency">Travel Agency</option>
+                            <option value="tour-operator">Tour Operator</option>
+                            <option value="corporate-travel">Corporate Travel Management</option>
+                            <option value="mice-organizer">MICE Organizer</option>
+                            <option value="online-platform">Online Travel Platform</option>
+                            <option value="other">Other</option>
+                        </select>
+                        <div class="error-message" id="businessTypeError">Please select your business type</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="clientVolume">Expected Monthly Client Volume</label>
+                        <select id="clientVolume" name="clientVolume">
+                            <option value="">Select volume range</option>
+                            <option value="1-10">1-10 clients</option>
+                            <option value="11-25">11-25 clients</option>
+                            <option value="26-50">26-50 clients</option>
+                            <option value="51-100">51-100 clients</option>
+                            <option value="100+">100+ clients</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="partnershipGoals">Partnership Goals & Requirements <span class="required">*</span></label>
+                        <textarea id="partnershipGoals" name="partnershipGoals" placeholder="Tell us about your business objectives, target client demographics, preferred experiences (halal dining, family activities, cultural experiences), and any specific requirements for New Zealand travel packages..." required></textarea>
+                        <div class="error-message" id="partnershipGoalsError">Please describe your partnership goals</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="timeline">Preferred Partnership Start Timeline</label>
+                        <select id="timeline" name="timeline">
+                            <option value="">Select timeline</option>
+                            <option value="immediate">Immediate (within 1 month)</option>
+                            <option value="short-term">Short-term (1-3 months)</option>
+                            <option value="medium-term">Medium-term (3-6 months)</option>
+                            <option value="long-term">Long-term (6+ months)</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="submit-btn" id="submitBtn">
+                        Submit Secure Partnership Inquiry
+                    </button>
+                </form>
+            </section>
+
+            <!-- Testimonials Section -->
+            <section class="testimonials-section">
+                <h2 class="section-title">
+                    <div class="security-icon">🗣️</div>
+                    Trusted by Indonesian Partners
+                </h2>
+
+                <div class="testimonials-grid">
+                    <div class="testimonial-card">
+                        <div class="testimonial-quote">
+                            "Perantara Reps memahami kebutuhan klien Indonesia dengan sangat baik. Mereka selalu menyediakan restoran halal dan akomodasi yang sesuai dengan budaya kami. Tim mereka responsif dan profesional."
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">AS</div>
+                            <div class="author-info">
+                                <h4>Ahmad Santoso</h4>
+                                <div class="company">Managing Director, Jakarta Premium Tours</div>
+                                <div class="rating">
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-card">
+                        <div class="testimonial-quote">
+                            "Their cultural intelligence is exceptional. Every itinerary considers prayer times, halal requirements, and family-friendly activities. Our clients always return with amazing feedback about their New Zealand experience."
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">SF</div>
+                            <div class="author-info">
+                                <h4>Sari Fitriyana</h4>
+                                <div class="company">Operations Manager, Bali Global Travel</div>
+                                <div class="rating">
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-card">
+                        <div class="testimonial-quote">
+                            "Reliability is key in our business. Perantara Reps delivers exactly what they promise - no surprises, no disappointments. Their 48-hour response time and detailed proposals help us serve our clients better."
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">RH</div>
+                            <div class="author-info">
+                                <h4>Rahman Hidayat</h4>
+                                <div class="company">CEO, Surabaya Adventure Group</div>
+                                <div class="rating">
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-card">
+                        <div class="testimonial-quote">
+                            "Working with Perantara Reps has transformed our New Zealand offerings. Their attention to Indonesian cultural needs and premium service standards align perfectly with our high-end clientele expectations."
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">DM</div>
+                            <div class="author-info">
+                                <h4>Dewi Mulyani</h4>
+                                <div class="company">Director, Indonesia Elite Travel</div>
+                                <div class="rating">
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Trust Indicators -->
+                <div class="trust-indicators">
+                    <div class="indicators-grid">
+                        <div class="indicator">
+                            <div class="indicator-icon">🏆</div>
+                            <div class="indicator-value">15+</div>
+                            <div class="indicator-label">Years Experience</div>
+                        </div>
+                        <div class="indicator">
+                            <div class="indicator-icon">🤝</div>
+                            <div class="indicator-value">200+</div>
+                            <div class="indicator-label">Indonesian Partners</div>
+                        </div>
+                        <div class="indicator">
+                            <div class="indicator-icon">✈️</div>
+                            <div class="indicator-value">50K+</div>
+                            <div class="indicator-label">Successful Trips</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        // Form validation and submission
+        document.getElementById('partnershipForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Reset previous error states
+            clearErrors();
+            
+            // Validate form
+            let isValid = true;
+            const requiredFields = ['companyName', 'contactPerson', 'email', 'businessType', 'partnershipGoals'];
+            
+            requiredFields.forEach(field => {
+                const input = document.getElementById(field);
+                const errorDiv = document.getElementById(field + 'Error');
+                
+                if (!input.value.trim()) {
+                    showError(input, errorDiv);
+                    isValid = false;
+                }
+            });
+            
+            // Email validation
+            const email = document.getElementById('email');
+            const emailError = document.getElementById('emailError');
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            
+            if (email.value && !emailRegex.test(email.value)) {
+                showError(email, emailError);
+                emailError.textContent = 'Please enter a valid email address';
+                isValid = false;
+            }
+            
+            if (isValid) {
+                submitForm();
+            }
+        });
+        
+        function clearErrors() {
+            const errorMessages = document.querySelectorAll('.error-message');
+            const inputs = document.querySelectorAll('input, textarea, select');
+            
+            errorMessages.forEach(error => {
+                error.classList.remove('show');
+            });
+            
+            inputs.forEach(input => {
+                input.classList.remove('error');
+            });
+        }
+        
+        function showError(input, errorDiv) {
+            input.classList.add('error');
+            errorDiv.classList.add('show');
+        }
+        
+        function submitForm() {
+            const submitBtn = document.getElementById('submitBtn');
+            const successMessage = document.getElementById('successMessage');
+            const form = document.getElementById('partnershipForm');
+            
+            // Show loading state
+            submitBtn.classList.add('loading');
+            submitBtn.textContent = 'Submitting Securely...';
+            submitBtn.disabled = true;
+            
+            // Simulate API call
+            setTimeout(() => {
+                // Hide form and show success message
+                form.style.display = 'none';
+                successMessage.classList.add('show');
+                
+                // Reset button (in case form is shown again)
+                submitBtn.classList.remove('loading');
+                submitBtn.textContent = 'Submit Secure Partnership Inquiry';
+                submitBtn.disabled = false;
+                
+                // Scroll to success message
+                successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                
+                // Analytics tracking (if needed)
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'form_submit', {
+                        'event_category': 'engagement',
+                        'event_label': 'partnership_inquiry'
+                    });
+                }
+            }, 2000);
+        }
+        
+        // Real-time validation feedback
+        const inputs = document.querySelectorAll('input, textarea, select');
+        inputs.forEach(input => {
+            input.addEventListener('blur', function() {
+                const errorDiv = document.getElementById(this.id + 'Error');
+                if (errorDiv && this.hasAttribute('required') && !this.value.trim()) {
+                    showError(this, errorDiv);
+                } else if (errorDiv) {
+                    this.classList.remove('error');
+                    errorDiv.classList.remove('show');
+                }
+            });
+            
+            input.addEventListener('input', function() {
+                if (this.classList.contains('error') && this.value.trim()) {
+                    const errorDiv = document.getElementById(this.id + 'Error');
+                    this.classList.remove('error');
+                    if (errorDiv) errorDiv.classList.remove('show');
+                }
+            });
+        });
+        
+        // Enhanced accessibility
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add ARIA labels for better screen reader support
+            const form = document.getElementById('partnershipForm');
+            form.setAttribute('aria-label', 'Partnership inquiry form');
+            
+            // Focus management
+            const firstInput = document.getElementById('companyName');
+            if (firstInput) {
+                firstInput.focus();
+            }
+        });
+        
+        // Privacy and security indicators
+        function showPrivacyDetails() {
+            alert('Your data security:\n\n• All data transmitted via 256-bit SSL encryption\n• Information stored in compliance with NZ Privacy Act 2020\n• No data shared with third parties without consent\n• Right to access, modify, or delete your data\n• Secure data centers with 99.9% uptime\n\nFor full privacy policy, contact privacy@perantarareps.co.nz');
+        }
+        
+        // Add click handler for security notice
+        document.querySelector('.security-notice').addEventListener('click', showPrivacyDetails);
+        
+        // Progressive form enhancement
+        if ('IntersectionObserver' in window) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            });
+            
+            document.querySelectorAll('.testimonial-card').forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(card);
+            });
+        }
+    </script>
+</body>
+</html>

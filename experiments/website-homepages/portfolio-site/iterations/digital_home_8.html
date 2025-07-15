@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artist Studio Digital Home</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Handlee&family=Kalam:wght@300;400;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Handlee', cursive;
+            background: #f7f4f0;
+            color: #2c1810;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Studio container with messy layout */
+        .studio-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* Paint splatter background texture */
+        .studio-container::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(255, 107, 107, 0.2) 5px, transparent 5px),
+                radial-gradient(circle at 80% 20%, rgba(78, 205, 196, 0.15) 8px, transparent 8px),
+                radial-gradient(circle at 40% 40%, rgba(255, 193, 7, 0.1) 3px, transparent 3px),
+                radial-gradient(circle at 60% 85%, rgba(156, 39, 176, 0.1) 6px, transparent 6px);
+            background-size: 300px 300px, 200px 200px, 150px 150px, 250px 250px;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* Header - artist identity */
+        .studio-header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .artist-name {
+            font-family: 'Caveat', cursive;
+            font-size: 4rem;
+            font-weight: 700;
+            color: #8b4513;
+            transform: rotate(-2deg);
+            text-shadow: 2px 2px 0px #d2b48c;
+            margin-bottom: 10px;
+        }
+
+        .studio-tagline {
+            font-family: 'Kalam', cursive;
+            font-size: 1.3rem;
+            color: #654321;
+            transform: rotate(1deg);
+            background: #fff;
+            padding: 8px 16px;
+            border: 2px dashed #ddd;
+            display: inline-block;
+            box-shadow: 3px 3px 0px rgba(0,0,0,0.1);
+        }
+
+        /* Main studio layout - chaotic but intentional */
+        .studio-space {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: auto auto auto;
+            gap: 30px;
+            grid-template-areas: 
+                "current-vibe works-in-progress inspiration-wall"
+                "creative-corner guest-book music-corner"
+                "random-thoughts tools-and-supplies studio-tour";
+        }
+
+        /* Individual studio areas */
+        .studio-area {
+            background: #fff;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            position: relative;
+            transform: rotate(var(--rotation, 0deg));
+            border: 3px solid transparent;
+            background-clip: padding-box;
+        }
+
+        .studio-area::before {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #f9ca24, #6c5ce7);
+            border-radius: 18px;
+            z-index: -1;
+        }
+
+        .studio-area:nth-child(1) { --rotation: -1deg; grid-area: current-vibe; }
+        .studio-area:nth-child(2) { --rotation: 2deg; grid-area: works-in-progress; }
+        .studio-area:nth-child(3) { --rotation: -2deg; grid-area: inspiration-wall; }
+        .studio-area:nth-child(4) { --rotation: 1deg; grid-area: creative-corner; }
+        .studio-area:nth-child(5) { --rotation: -1deg; grid-area: guest-book; }
+        .studio-area:nth-child(6) { --rotation: 2deg; grid-area: music-corner; }
+        .studio-area:nth-child(7) { --rotation: -1deg; grid-area: random-thoughts; }
+        .studio-area:nth-child(8) { --rotation: 1deg; grid-area: tools-and-supplies; }
+        .studio-area:nth-child(9) { --rotation: -2deg; grid-area: studio-tour; }
+
+        .area-title {
+            font-family: 'Caveat', cursive;
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #8b4513;
+            position: relative;
+        }
+
+        .area-title::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
+            border-radius: 2px;
+        }
+
+        /* Specific area styles */
+        .current-vibe {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%);
+        }
+
+        .works-in-progress {
+            background: linear-gradient(135deg, #a8e6cf 0%, #88d8c0 100%);
+        }
+
+        .inspiration-wall {
+            background: linear-gradient(135deg, #ffd93d 0%, #6bcf7f 100%);
+            min-height: 300px;
+        }
+
+        .creative-corner {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .guest-book {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        .music-corner {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .random-thoughts {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+
+        .tools-and-supplies {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+
+        .studio-tour {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+        }
+
+        /* Content styling */
+        .mood-indicator {
+            display: inline-block;
+            padding: 5px 12px;
+            background: rgba(255,255,255,0.8);
+            border-radius: 20px;
+            margin: 5px;
+            font-weight: 500;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .project-item {
+            background: rgba(255,255,255,0.9);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border-left: 5px solid #8b4513;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+        }
+
+        .project-title {
+            font-family: 'Caveat', cursive;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #8b4513;
+            margin-bottom: 5px;
+        }
+
+        .project-status {
+            font-size: 0.9rem;
+            color: #666;
+            font-style: italic;
+        }
+
+        .inspiration-item {
+            background: rgba(255,255,255,0.8);
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 8px;
+            border: 2px dashed #ccc;
+            font-size: 0.95rem;
+            position: relative;
+        }
+
+        .inspiration-item::before {
+            content: '📌';
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            font-size: 1.2rem;
+        }
+
+        .now-playing {
+            background: rgba(255,255,255,0.9);
+            padding: 15px;
+            border-radius: 12px;
+            border: 3px solid #4facfe;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .song-title {
+            font-family: 'Caveat', cursive;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #2c1810;
+            margin-bottom: 5px;
+        }
+
+        .artist-name-music {
+            color: #666;
+            font-style: italic;
+        }
+
+        .thought-bubble {
+            background: rgba(255,255,255,0.9);
+            padding: 12px 16px;
+            border-radius: 20px;
+            margin: 10px 0;
+            position: relative;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+        }
+
+        .thought-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 20px;
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 8px solid rgba(255,255,255,0.9);
+        }
+
+        .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .tool-item {
+            background: rgba(255,255,255,0.8);
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .guest-entry {
+            background: rgba(255,255,255,0.8);
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 8px;
+            border-left: 4px solid #ff6b6b;
+        }
+
+        .guest-name {
+            font-weight: 600;
+            color: #2c1810;
+        }
+
+        .guest-message {
+            font-style: italic;
+            margin-top: 5px;
+        }
+
+        /* Floating creative elements */
+        .floating-doodle {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.7;
+            animation: float 4s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        .floating-doodle:nth-child(1) {
+            top: 10%;
+            left: 5%;
+            animation-delay: -2s;
+        }
+
+        .floating-doodle:nth-child(2) {
+            top: 20%;
+            right: 10%;
+            animation-delay: -1s;
+        }
+
+        .floating-doodle:nth-child(3) {
+            bottom: 30%;
+            left: 8%;
+            animation-delay: -3s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        /* Interactive elements */
+        .interactive-element {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .interactive-element:hover {
+            transform: scale(1.05) rotate(2deg);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .studio-space {
+                grid-template-columns: 1fr;
+                grid-template-areas: 
+                    "current-vibe"
+                    "works-in-progress"
+                    "inspiration-wall"
+                    "creative-corner"
+                    "music-corner"
+                    "random-thoughts"
+                    "guest-book"
+                    "tools-and-supplies"
+                    "studio-tour";
+            }
+
+            .artist-name {
+                font-size: 2.5rem;
+            }
+
+            .studio-tagline {
+                font-size: 1.1rem;
+            }
+
+            .studio-area {
+                transform: rotate(0deg) !important;
+            }
+        }
+
+        /* Creative process indicator */
+        .process-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 8px;
+            animation: pulse 2s infinite;
+        }
+
+        .process-brainstorming { background: #ff6b6b; }
+        .process-creating { background: #4ecdc4; }
+        .process-refining { background: #f9ca24; }
+        .process-finished { background: #6c5ce7; }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        /* Availability status */
+        .availability-status {
+            background: rgba(255,255,255,0.9);
+            padding: 12px;
+            border-radius: 10px;
+            border: 2px solid #4ecdc4;
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #4ecdc4;
+            margin-right: 8px;
+            animation: pulse 1.5s infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="studio-container">
+        <!-- Floating creative elements -->
+        <div class="floating-doodle">🎨</div>
+        <div class="floating-doodle">✨</div>
+        <div class="floating-doodle">🖌️</div>
+
+        <!-- Studio Header -->
+        <header class="studio-header">
+            <h1 class="artist-name">radibaboe's studio</h1>
+            <div class="studio-tagline">where ideas come to life (and make beautiful messes)</div>
+        </header>
+
+        <!-- Main Studio Space -->
+        <div class="studio-space">
+            <!-- Current Vibe -->
+            <div class="studio-area current-vibe interactive-element">
+                <h2 class="area-title">Right Now I'm...</h2>
+                <div class="mood-indicator">🌟 feeling inspired</div>
+                <div class="mood-indicator">☕ caffeinated</div>
+                <div class="mood-indicator">🎵 vibing to lo-fi</div>
+                <div class="mood-indicator">🌧️ loving this rainy weather</div>
+                
+                <div class="availability-status">
+                    <span class="status-indicator"></span>
+                    Available for creative chats & coffee connections
+                </div>
+            </div>
+
+            <!-- Works in Progress -->
+            <div class="studio-area works-in-progress interactive-element">
+                <h2 class="area-title">Current Projects</h2>
+                
+                <div class="project-item">
+                    <div class="project-title">Midnight Poetry Collection</div>
+                    <div class="project-status">
+                        <span class="process-indicator process-creating"></span>
+                        37 poems written, editing phase
+                    </div>
+                </div>
+                
+                <div class="project-item">
+                    <div class="project-title">Interactive Web Gallery</div>
+                    <div class="project-status">
+                        <span class="process-indicator process-brainstorming"></span>
+                        Sketching user experience flows
+                    </div>
+                </div>
+                
+                <div class="project-item">
+                    <div class="project-title">Botanical Illustration Series</div>
+                    <div class="project-status">
+                        <span class="process-indicator process-refining"></span>
+                        5/12 drawings complete, finding my style
+                    </div>
+                </div>
+            </div>
+
+            <!-- Inspiration Wall -->
+            <div class="studio-area inspiration-wall interactive-element">
+                <h2 class="area-title">Inspiration Board</h2>
+                
+                <div class="inspiration-item">
+                    "The best time to plant a tree was 20 years ago. The second best time is now." - Chinese Proverb
+                </div>
+                
+                <div class="inspiration-item">
+                    Overheard at cafe: "Art is just making something that wasn't there before"
+                </div>
+                
+                <div class="inspiration-item">
+                    Color combo obsession: sage green + warm terracotta + cream
+                </div>
+                
+                <div class="inspiration-item">
+                    Book recommendation: "Big Magic" by Elizabeth Gilbert (creativity & courage)
+                </div>
+                
+                <div class="inspiration-item">
+                    Photo I took yesterday: shadows dancing on my kitchen wall at 3pm
+                </div>
+            </div>
+
+            <!-- Creative Corner -->
+            <div class="studio-area creative-corner interactive-element">
+                <h2 class="area-title">Creative Philosophy</h2>
+                <p style="margin-bottom: 15px;">I believe in:</p>
+                <ul style="list-style: none; padding-left: 0;">
+                    <li>🌱 Growing ideas slowly, like good plants</li>
+                    <li>🤗 Embracing the beautiful mess of creation</li>
+                    <li>🔄 Iteration over perfection</li>
+                    <li>🤝 Learning from other makers</li>
+                    <li>🎈 Playfulness in serious work</li>
+                    <li>💫 Following curiosity wherever it leads</li>
+                </ul>
+                
+                <p style="margin-top: 15px; font-style: italic;">
+                    "I'm not trying to be the best artist. I'm trying to be the most authentic one."
+                </p>
+            </div>
+
+            <!-- Guest Book -->
+            <div class="studio-area guest-book interactive-element">
+                <h2 class="area-title">Visitor Notes</h2>
+                
+                <div class="guest-entry">
+                    <div class="guest-name">Maya ✨</div>
+                    <div class="guest-message">"Your workspace feels like a warm hug! Love the creative energy here."</div>
+                </div>
+                
+                <div class="guest-entry">
+                    <div class="guest-name">Alex 🌿</div>
+                    <div class="guest-message">"Spent an hour here just exploring. Found so much inspiration!"</div>
+                </div>
+                
+                <div class="guest-entry">
+                    <div class="guest-name">Sam 📚</div>
+                    <div class="guest-message">"Your reading recommendations led me down the best rabbit holes."</div>
+                </div>
+                
+                <p style="margin-top: 15px; text-align: center; font-style: italic;">
+                    Leave a note if you'd like! 
+                    <a href="mailto:hello@radibaboe.studio" style="color: white; text-decoration: underline;">
+                        Drop me a line
+                    </a>
+                </p>
+            </div>
+
+            <!-- Music Corner -->
+            <div class="studio-area music-corner interactive-element">
+                <h2 class="area-title">Studio Soundtrack</h2>
+                
+                <div class="now-playing">
+                    <div class="song-title">🎵 Currently Playing</div>
+                    <div class="song-title">"Weightless" by Marconi Union</div>
+                    <div class="artist-name-music">Perfect for deep creative flow</div>
+                </div>
+                
+                <div style="margin-top: 15px;">
+                    <strong>Recent rotation:</strong>
+                    <ul style="list-style: none; padding-left: 0; margin-top: 10px;">
+                        <li>🌙 Late night coding: Ambient electronic</li>
+                        <li>☀️ Morning sketching: Indie folk</li>
+                        <li>🔥 Energized creating: Post-rock instrumentals</li>
+                        <li>🌊 Thoughtful writing: Ocean sounds + piano</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Random Thoughts -->
+            <div class="studio-area random-thoughts interactive-element">
+                <h2 class="area-title">Stream of Consciousness</h2>
+                
+                <div class="thought-bubble">
+                    Why do my best ideas always come during the dishwashing?
+                </div>
+                
+                <div class="thought-bubble">
+                    Started reading about mycorrhizal networks and now I see collaboration everywhere
+                </div>
+                
+                <div class="thought-bubble">
+                    Note to self: The intersection of technology and nature is where I want to live
+                </div>
+                
+                <div class="thought-bubble">
+                    What if we designed user interfaces like we design gardens?
+                </div>
+                
+                <div class="thought-bubble">
+                    Today's mini-epiphany: Constraints breed creativity, not limitation
+                </div>
+            </div>
+
+            <!-- Tools & Supplies -->
+            <div class="studio-area tools-and-supplies interactive-element">
+                <h2 class="area-title">Creative Arsenal</h2>
+                
+                <div class="tool-grid">
+                    <div class="tool-item">✏️ Pencils</div>
+                    <div class="tool-item">🖥️ Code Editor</div>
+                    <div class="tool-item">📓 Notebooks</div>
+                    <div class="tool-item">🎨 Watercolors</div>
+                    <div class="tool-item">☕ Coffee</div>
+                    <div class="tool-item">🌱 Plant friends</div>
+                    <div class="tool-item">🔍 Magnifying glass</div>
+                    <div class="tool-item">📱 Camera</div>
+                    <div class="tool-item">🕯️ Candles</div>
+                    <div class="tool-item">📚 Books</div>
+                    <div class="tool-item">🎧 Headphones</div>
+                    <div class="tool-item">✨ Imagination</div>
+                </div>
+                
+                <p style="margin-top: 15px; font-style: italic; text-align: center;">
+                    "The best tool is the one you have with you when inspiration strikes"
+                </p>
+            </div>
+
+            <!-- Studio Tour -->
+            <div class="studio-area studio-tour interactive-element">
+                <h2 class="area-title">Digital Studio Tour</h2>
+                <p style="margin-bottom: 15px;">Welcome to my creative corner of the internet!</p>
+                
+                <div style="margin-bottom: 15px;">
+                    <strong>🏠 The Setup:</strong><br>
+                    Cozy corner desk by the window, plants everywhere, half-finished projects scattered with intention, 
+                    fairy lights for evening creativity sessions.
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <strong>☕ Creative Fuel:</strong><br>
+                    Morning ritual: coffee + journal + whatever project is calling to me today.
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <strong>🌙 After Hours:</strong><br>
+                    This is when the magic happens. Quiet house, ambient music, 
+                    following creative threads wherever they lead.
+                </div>
+                
+                <div style="text-align: center; font-style: italic; margin-top: 20px;">
+                    Thanks for visiting! Come back anytime - 
+                    there's always something new growing here 🌱
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add interactive animations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Floating elements animation
+            const floatingElements = document.querySelectorAll('.floating-doodle');
+            floatingElements.forEach((element, index) => {
+                element.style.animationDelay = `${index * 0.5}s`;
+            });
+
+            // Project status animation
+            const processIndicators = document.querySelectorAll('.process-indicator');
+            processIndicators.forEach(indicator => {
+                setInterval(() => {
+                    indicator.style.transform = indicator.style.transform === 'scale(1.2)' ? 'scale(1)' : 'scale(1.2)';
+                }, 2000);
+            });
+
+            // Add hover effects to studio areas
+            const studioAreas = document.querySelectorAll('.studio-area');
+            studioAreas.forEach(area => {
+                area.addEventListener('mouseenter', function() {
+                    this.style.transform = `${this.style.transform} scale(1.02)`;
+                    this.style.zIndex = '10';
+                });
+                
+                area.addEventListener('mouseleave', function() {
+                    this.style.transform = this.style.transform.replace(' scale(1.02)', '');
+                    this.style.zIndex = '1';
+                });
+            });
+
+            // Inspiration board interaction
+            const inspirationItems = document.querySelectorAll('.inspiration-item');
+            inspirationItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    this.style.background = this.style.background === 'rgba(255, 255, 255, 0.9)' 
+                        ? 'rgba(255, 255, 255, 0.8)' 
+                        : 'rgba(255, 255, 255, 0.9)';
+                });
+            });
+
+            // Thought bubble animation
+            const thoughtBubbles = document.querySelectorAll('.thought-bubble');
+            thoughtBubbles.forEach((bubble, index) => {
+                bubble.addEventListener('click', function() {
+                    this.style.animation = 'none';
+                    setTimeout(() => {
+                        this.style.animation = 'float 3s ease-in-out';
+                    }, 100);
+                });
+            });
+
+            // Tool grid interaction
+            const toolItems = document.querySelectorAll('.tool-item');
+            toolItems.forEach(tool => {
+                tool.addEventListener('click', function() {
+                    this.style.transform = 'rotate(10deg) scale(1.1)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 300);
+                });
+            });
+
+            // Random mood updates (simulating living space)
+            const moods = [
+                '🌟 feeling inspired', '☕ caffeinated', '🎵 vibing to lo-fi', 
+                '🌧️ loving this rainy weather', '🌅 embracing morning light',
+                '🧘 in contemplative mood', '🔥 energized and focused',
+                '🌙 night owl mode activated', '🌱 nurturing growth mindset'
+            ];
+
+            setInterval(() => {
+                const moodIndicators = document.querySelectorAll('.mood-indicator');
+                if (moodIndicators.length > 0) {
+                    const randomMood = moods[Math.floor(Math.random() * moods.length)];
+                    const randomIndicator = moodIndicators[Math.floor(Math.random() * moodIndicators.length)];
+                    randomIndicator.textContent = randomMood;
+                    randomIndicator.style.animation = 'pulse 0.5s ease-in-out';
+                    setTimeout(() => {
+                        randomIndicator.style.animation = '';
+                    }, 500);
+                }
+            }, 15000);
+
+            // Add gentle background color shifting
+            let colorShift = 0;
+            setInterval(() => {
+                colorShift += 0.5;
+                document.body.style.background = `hsl(${45 + Math.sin(colorShift * 0.01) * 5}, 20%, 95%)`;
+            }, 2000);
+
+            // Simulate creative energy
+            const energyPulse = () => {
+                const studioContainer = document.querySelector('.studio-container');
+                studioContainer.style.filter = 'brightness(1.02) contrast(1.01)';
+                setTimeout(() => {
+                    studioContainer.style.filter = '';
+                }, 200);
+            };
+
+            setInterval(energyPulse, 8000);
+        });
+
+        // Performance optimization
+        const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+        if (mediaQuery.matches) {
+            document.querySelectorAll('.floating-doodle, .process-indicator').forEach(el => {
+                el.style.animation = 'none';
+            });
+        }
+    </script>
+</body>
+</html>

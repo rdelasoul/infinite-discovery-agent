@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typewriter Terminal Portfolio</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@300;400;500;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Source Code Pro', 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.4;
+            color: #2d2d2d;
+            background: #f7f3e9;
+            letter-spacing: 0.5px;
+        }
+
+        .portfolio-container {
+            max-width: 120ch;
+            margin: 0 auto;
+            padding: 2rem;
+            background: #f7f3e9;
+            position: relative;
+        }
+
+        /* ASCII Art Header */
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            border: 2px solid #2d2d2d;
+            padding: 2rem;
+            background: #ffffff;
+            font-weight: 400;
+        }
+
+        .header pre {
+            font-size: 12px;
+            line-height: 1.2;
+            color: #d73502;
+            margin-bottom: 1rem;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            letter-spacing: 2px;
+        }
+
+        .header .tagline {
+            font-size: 14px;
+            color: #666;
+            letter-spacing: 1px;
+        }
+
+        /* Navigation */
+        .nav-menu {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 3rem;
+            background: #2d2d2d;
+            padding: 1rem;
+            border-radius: 0;
+        }
+
+        .nav-item {
+            background: none;
+            border: none;
+            color: #f7f3e9;
+            font-family: inherit;
+            font-size: 14px;
+            padding: 0.5rem 2rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-right: 1px solid #666;
+            letter-spacing: 1px;
+        }
+
+        .nav-item:last-child {
+            border-right: none;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            background: #d73502;
+            color: #ffffff;
+        }
+
+        /* Main Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .main-content {
+            background: #ffffff;
+            border: 2px solid #2d2d2d;
+            padding: 2rem;
+        }
+
+        .sidebar {
+            background: #ffffff;
+            border: 2px solid #2d2d2d;
+            padding: 2rem;
+            height: fit-content;
+        }
+
+        /* Section Styling */
+        .section {
+            margin-bottom: 3rem;
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .section-header {
+            border-bottom: 2px solid #2d2d2d;
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .section-header::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 60px;
+            height: 2px;
+            background: #d73502;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* ASCII Dividers */
+        .divider {
+            text-align: center;
+            font-size: 12px;
+            color: #d73502;
+            margin: 2rem 0;
+            line-height: 1;
+        }
+
+        /* Content Blocks */
+        .content-block {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: #f9f9f9;
+            border-left: 4px solid #d73502;
+        }
+
+        .content-block h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            letter-spacing: 1px;
+        }
+
+        .content-block .meta {
+            color: #666;
+            font-size: 12px;
+            margin-bottom: 1rem;
+            letter-spacing: 0.5px;
+        }
+
+        .content-block p {
+            margin-bottom: 1rem;
+        }
+
+        .content-block ul {
+            list-style: none;
+            margin-left: 2ch;
+        }
+
+        .content-block li:before {
+            content: '> ';
+            color: #d73502;
+            font-weight: bold;
+        }
+
+        /* Facts Widget */
+        .facts-widget {
+            background: #2d2d2d;
+            color: #f7f3e9;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .facts-widget h3 {
+            color: #d73502;
+            font-size: 16px;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            letter-spacing: 2px;
+        }
+
+        .fact-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            padding: 0.5rem 0;
+            border-bottom: 1px dotted #666;
+        }
+
+        .fact-item:last-child {
+            border-bottom: none;
+        }
+
+        .fact-label {
+            color: #f7f3e9;
+            font-size: 12px;
+        }
+
+        .fact-value {
+            color: #d73502;
+            font-weight: 600;
+            font-size: 12px;
+        }
+
+        /* Terminal Contact */
+        .contact-terminal {
+            background: #000;
+            color: #00ff00;
+            padding: 1.5rem;
+            font-size: 12px;
+            border-radius: 0;
+        }
+
+        .contact-terminal .prompt {
+            color: #d73502;
+        }
+
+        .contact-terminal .command {
+            color: #ffffff;
+        }
+
+        /* Skills Grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .skill-item {
+            background: #f9f9f9;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        .skill-level {
+            width: 100%;
+            height: 8px;
+            background: #ddd;
+            margin-top: 0.5rem;
+            position: relative;
+        }
+
+        .skill-progress {
+            height: 100%;
+            background: #d73502;
+            transition: width 0.3s ease;
+        }
+
+        /* Typewriter Animation */
+        .typewriter {
+            overflow: hidden;
+            border-right: 2px solid #d73502;
+            white-space: nowrap;
+            margin: 0 auto;
+            animation: typing 3s steps(40, end), blink-caret 0.75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: #d73502; }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .portfolio-container {
+                padding: 1rem;
+                max-width: 100%;
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .nav-menu {
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+
+            .nav-item {
+                border-right: none;
+                border-bottom: 1px solid #666;
+                padding: 0.5rem 1rem;
+            }
+
+            .header pre {
+                font-size: 10px;
+            }
+        }
+
+        /* Paper Texture Effect */
+        .portfolio-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 24px,
+                    rgba(45, 45, 45, 0.05) 25px
+                );
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .header,
+        .main-content,
+        .sidebar,
+        .facts-widget {
+            position: relative;
+            z-index: 2;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <div class="portfolio-container">
+            <!-- ASCII Art Header -->
+            <header class="header">
+                <pre>
+ ██████╗  █████╗ ██████╗ ██╗██████╗  █████╗ ██████╗  ██████╗ ███████╗
+ ██╔══██╗██╔══██╗██╔══██╗██║██╔══██╗██╔══██╗██╔══██╗██╔═══██╗██╔════╝
+ ██████╔╝███████║██║  ██║██║██████╔╝███████║██████╔╝██║   ██║█████╗  
+ ██╔══██╗██╔══██║██║  ██║██║██╔══██╗██╔══██║██╔══██╗██║   ██║██╔══╝  
+ ██║  ██║██║  ██║██████╔╝██║██████╔╝██║  ██║██████╔╝╚██████╔╝███████╗
+ ╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝ ╚═╝╚═════╝ ╚═╝  ╚═╝╚═════╝  ╚═════╝ ╚══════╝
+                </pre>
+                <h1>RADIBABOE</h1>
+                <div class="tagline typewriter">FULL-STACK_DEVELOPER.EXE</div>
+            </header>
+
+            <!-- Navigation Menu -->
+            <nav class="nav-menu">
+                <button class="nav-item active" data-section="about">[ ABOUT ]</button>
+                <button class="nav-item" data-section="experience">[ EXPERIENCE ]</button>
+                <button class="nav-item" data-section="projects">[ PROJECTS ]</button>
+                <button class="nav-item" data-section="skills">[ SKILLS ]</button>
+                <button class="nav-item" data-section="contact">[ CONTACT ]</button>
+            </nav>
+
+            <!-- Main Content Grid -->
+            <div class="content-grid">
+                <!-- Main Content Area -->
+                <div class="main-content">
+                    <!-- About Section -->
+                    <section class="section active" id="about">
+                        <div class="section-header">
+                            <h2 class="section-title">ABOUT.TXT</h2>
+                        </div>
+                        
+                        <div class="divider">
+════════════════════════════════════════════════════════
+                        </div>
+
+                        <div class="content-block">
+                            <p>
+                                > Initializing developer profile...
+                                <br>
+                                > Loading experience database...
+                                <br>
+                                > Status: READY
+                            </p>
+                            <p>
+                                Passionate full-stack developer with expertise in modern web technologies. 
+                                Specialized in creating efficient, scalable applications using React, Node.js, 
+                                and cloud infrastructure. Always seeking to optimize performance and user experience.
+                            </p>
+                            <p>
+                                Currently focused on building robust web applications, exploring emerging 
+                                technologies, and contributing to open-source projects. Dedicated to writing 
+                                clean, maintainable code and fostering collaborative development environments.
+                            </p>
+                        </div>
+
+                        <div class="divider">
+ ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+                        </div>
+                    </section>
+
+                    <!-- Experience Section -->
+                    <section class="section" id="experience">
+                        <div class="section-header">
+                            <h2 class="section-title">EXPERIENCE.LOG</h2>
+                        </div>
+
+                        <div class="content-block">
+                            <h3>Senior Full-Stack Developer</h3>
+                            <div class="meta">TechCorp Solutions | 2022 - Present</div>
+                            <p>
+                                Leading development of enterprise web applications using React, TypeScript, 
+                                and Node.js. Implemented microservices architecture reducing response times by 40%.
+                            </p>
+                            <ul>
+                                <li>Architected scalable frontend solutions</li>
+                                <li>Optimized database queries and API performance</li>
+                                <li>Mentored junior developers in best practices</li>
+                                <li>Established CI/CD pipelines using Docker and AWS</li>
+                            </ul>
+                        </div>
+
+                        <div class="content-block">
+                            <h3>Frontend Developer</h3>
+                            <div class="meta">Digital Innovations | 2020 - 2022</div>
+                            <p>
+                                Developed responsive web applications with focus on user experience and 
+                                accessibility. Collaborated with design teams to implement pixel-perfect interfaces.
+                            </p>
+                            <ul>
+                                <li>Built component libraries using React and Storybook</li>
+                                <li>Implemented responsive designs across devices</li>
+                                <li>Ensured WCAG 2.1 AA compliance</li>
+                                <li>Optimized bundle sizes and loading performance</li>
+                            </ul>
+                        </div>
+
+                        <div class="content-block">
+                            <h3>Junior Web Developer</h3>
+                            <div class="meta">StartupCo | 2019 - 2020</div>
+                            <p>
+                                Contributed to multiple client projects using various web technologies. 
+                                Gained experience in full development lifecycle from conception to deployment.
+                            </p>
+                            <ul>
+                                <li>Developed custom WordPress themes and plugins</li>
+                                <li>Integrated third-party APIs and services</li>
+                                <li>Performed cross-browser testing and debugging</li>
+                                <li>Collaborated in agile development environment</li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <!-- Projects Section -->
+                    <section class="section" id="projects">
+                        <div class="section-header">
+                            <h2 class="section-title">PROJECTS.DIR</h2>
+                        </div>
+
+                        <div class="content-block">
+                            <h3>E-Commerce Platform</h3>
+                            <div class="meta">React | Node.js | PostgreSQL | Stripe</div>
+                            <p>
+                                Full-featured e-commerce solution with real-time inventory management, 
+                                payment processing, and admin dashboard. Handles 10,000+ concurrent users.
+                            </p>
+                            <ul>
+                                <li>Microservices architecture with Docker containers</li>
+                                <li>Real-time notifications using WebSocket</li>
+                                <li>Automated testing with Jest and Cypress</li>
+                                <li>AWS deployment with auto-scaling</li>
+                            </ul>
+                        </div>
+
+                        <div class="content-block">
+                            <h3>Task Management Dashboard</h3>
+                            <div class="meta">Vue.js | Express | MongoDB | Socket.io</div>
+                            <p>
+                                Collaborative project management tool with real-time updates, file sharing, 
+                                and team communication features. Used by 500+ teams globally.
+                            </p>
+                            <ul>
+                                <li>Drag-and-drop interface with custom components</li>
+                                <li>Real-time collaboration using Socket.io</li>
+                                <li>File upload and sharing system</li>
+                                <li>Role-based access control</li>
+                            </ul>
+                        </div>
+
+                        <div class="content-block">
+                            <h3>Weather Analytics API</h3>
+                            <div class="meta">Python | FastAPI | Redis | Machine Learning</div>
+                            <p>
+                                RESTful API providing weather predictions and analytics using machine learning 
+                                models. Processes 1M+ requests daily with 99.9% uptime.
+                            </p>
+                            <ul>
+                                <li>Machine learning models for weather prediction</li>
+                                <li>Redis caching for improved performance</li>
+                                <li>Comprehensive API documentation</li>
+                                <li>Rate limiting and security measures</li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <!-- Skills Section -->
+                    <section class="section" id="skills">
+                        <div class="section-header">
+                            <h2 class="section-title">SKILLS.CFG</h2>
+                        </div>
+
+                        <div class="skills-grid">
+                            <div class="skill-item">
+                                <div>JavaScript/TypeScript</div>
+                                <div class="skill-level">
+                                    <div class="skill-progress" style="width: 95%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item">
+                                <div>React/Vue.js</div>
+                                <div class="skill-level">
+                                    <div class="skill-progress" style="width: 90%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item">
+                                <div>Node.js/Express</div>
+                                <div class="skill-level">
+                                    <div class="skill-progress" style="width: 88%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item">
+                                <div>Python/Django</div>
+                                <div class="skill-level">
+                                    <div class="skill-progress" style="width: 85%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item">
+                                <div>AWS/Docker</div>
+                                <div class="skill-level">
+                                    <div class="skill-progress" style="width: 80%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item">
+                                <div>SQL/NoSQL</div>
+                                <div class="skill-level">
+                                    <div class="skill-progress" style="width: 85%"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="divider">
+ ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+                        </div>
+                    </section>
+
+                    <!-- Contact Section -->
+                    <section class="section" id="contact">
+                        <div class="section-header">
+                            <h2 class="section-title">CONTACT.SH</h2>
+                        </div>
+
+                        <div class="contact-terminal">
+                            <div>
+                                <span class="prompt">$</span> <span class="command">./connect_with_radibaboe.sh</span>
+                            </div>
+                            <div>Initializing connection protocols...</div>
+                            <div>Available communication channels:</div>
+                            <br>
+                            <div><span class="prompt">></span> Email: radibaboe@example.com</div>
+                            <div><span class="prompt">></span> LinkedIn: /in/radibaboe</div>
+                            <div><span class="prompt">></span> GitHub: /radibaboe</div>
+                            <div><span class="prompt">></span> Portfolio: https://radibaboe.dev</div>
+                            <br>
+                            <div>Status: READY FOR CONNECTION</div>
+                            <div>Response time: &lt; 24 hours</div>
+                            <div>Timezone: UTC-5 (EST)</div>
+                        </div>
+
+                        <div class="divider">
+ ████████████████████████████████████████████████████████████
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Sidebar -->
+                <aside class="sidebar">
+                    <!-- Facts Widget -->
+                    <div class="facts-widget">
+                        <h3>SYSTEM.STATS</h3>
+                        <div class="fact-item">
+                            <span class="fact-label">Coffee_consumed:</span>
+                            <span class="fact-value">2847 cups</span>
+                        </div>
+                        <div class="fact-item">
+                            <span class="fact-label">Lines_of_code:</span>
+                            <span class="fact-value">250K+</span>
+                        </div>
+                        <div class="fact-item">
+                            <span class="fact-label">Projects_completed:</span>
+                            <span class="fact-value">127</span>
+                        </div>
+                        <div class="fact-item">
+                            <span class="fact-label">Current_status:</span>
+                            <span class="fact-value">CODING</span>
+                        </div>
+                        <div class="fact-item">
+                            <span class="fact-label">Favorite_editor:</span>
+                            <span class="fact-value">VS Code</span>
+                        </div>
+                        <div class="fact-item">
+                            <span class="fact-label">Years_experience:</span>
+                            <span class="fact-value">5+</span>
+                        </div>
+                        <div class="fact-item">
+                            <span class="fact-label">Bug_fixes_today:</span>
+                            <span class="fact-value">42</span>
+                        </div>
+                        <div class="fact-item">
+                            <span class="fact-label">Uptime:</span>
+                            <span class="fact-value">99.9%</span>
+                        </div>
+                    </div>
+
+                    <!-- Quick Links -->
+                    <div class="content-block">
+                        <h3>QUICK_ACCESS.LNK</h3>
+                        <div class="divider">
+ ─────────────────────────
+                        </div>
+                        <p>
+                            <strong>Resume:</strong><br>
+                            <a href="#" style="color: #d73502; text-decoration: underline;">download_cv.pdf</a>
+                        </p>
+                        <p>
+                            <strong>Latest Project:</strong><br>
+                            <a href="#" style="color: #d73502; text-decoration: underline;">github.com/radibaboe/latest</a>
+                        </p>
+                        <p>
+                            <strong>Tech Blog:</strong><br>
+                            <a href="#" style="color: #d73502; text-decoration: underline;">radibaboe.dev/blog</a>
+                        </p>
+                    </div>
+
+                    <!-- Current Stack -->
+                    <div class="content-block">
+                        <h3>CURRENT_STACK.INI</h3>
+                        <div class="divider">
+ ─────────────────────────
+                        </div>
+                        <p>> Frontend: React + TypeScript</p>
+                        <p>> Backend: Node.js + Express</p>
+                        <p>> Database: PostgreSQL + Redis</p>
+                        <p>> Cloud: AWS + Docker</p>
+                        <p>> Tools: Git + VS Code + Figma</p>
+                        <p>> Testing: Jest + Cypress</p>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Navigation functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const navItems = document.querySelectorAll('.nav-item');
+            const sections = document.querySelectorAll('.section');
+
+            navItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const targetSection = this.getAttribute('data-section');
+                    
+                    // Remove active class from all nav items and sections
+                    navItems.forEach(nav => nav.classList.remove('active'));
+                    sections.forEach(section => section.classList.remove('active'));
+                    
+                    // Add active class to clicked nav item and corresponding section
+                    this.classList.add('active');
+                    document.getElementById(targetSection).classList.add('active');
+                });
+            });
+
+            // Typewriter effect for tagline
+            const typewriterElement = document.querySelector('.typewriter');
+            if (typewriterElement) {
+                const text = typewriterElement.textContent;
+                typewriterElement.textContent = '';
+                typewriterElement.style.width = '0';
+                
+                setTimeout(() => {
+                    typewriterElement.textContent = text;
+                    typewriterElement.style.width = '100%';
+                }, 1000);
+            }
+
+            // Add typing sound effect (optional)
+            let typingSound = null;
+            navItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    // Simple click sound simulation
+                    if ('AudioContext' in window) {
+                        const audioContext = new AudioContext();
+                        const oscillator = audioContext.createOscillator();
+                        const gainNode = audioContext.createGain();
+                        
+                        oscillator.connect(gainNode);
+                        gainNode.connect(audioContext.destination);
+                        
+                        oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+                        gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+                        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+                        
+                        oscillator.start(audioContext.currentTime);
+                        oscillator.stop(audioContext.currentTime + 0.1);
+                    }
+                });
+            });
+
+            // Scroll spy simulation for single page
+            window.addEventListener('scroll', function() {
+                // This would be used if implementing scroll-based navigation
+                // For this terminal-style interface, we use button navigation instead
+            });
+
+            // Animate skill progress bars when skills section is active
+            const skillsObserver = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    if (mutation.target.classList.contains('active') && 
+                        mutation.target.id === 'skills') {
+                        const progressBars = document.querySelectorAll('.skill-progress');
+                        progressBars.forEach((bar, index) => {
+                            setTimeout(() => {
+                                bar.style.transition = 'width 1s ease-out';
+                                const width = bar.style.width;
+                                bar.style.width = '0%';
+                                setTimeout(() => {
+                                    bar.style.width = width;
+                                }, 100);
+                            }, index * 200);
+                        });
+                    }
+                });
+            });
+
+            sections.forEach(section => {
+                skillsObserver.observe(section, {
+                    attributes: true,
+                    attributeFilter: ['class']
+                });
+            });
+
+            // Random facts update (simulating dynamic data)
+            setInterval(() => {
+                const randomFacts = [
+                    { label: 'Coffee_consumed:', value: Math.floor(Math.random() * 100 + 2800) + ' cups' },
+                    { label: 'Bug_fixes_today:', value: Math.floor(Math.random() * 20 + 30) },
+                    { label: 'Current_status:', value: ['CODING', 'DEBUGGING', 'DESIGNING', 'TESTING'][Math.floor(Math.random() * 4)] }
+                ];
+                
+                // Update one random fact every 30 seconds
+                const factItems = document.querySelectorAll('.fact-item');
+                const randomIndex = Math.floor(Math.random() * factItems.length);
+                const randomFact = randomFacts[Math.floor(Math.random() * randomFacts.length)];
+                
+                const factItem = factItems[randomIndex];
+                if (factItem) {
+                    const label = factItem.querySelector('.fact-label');
+                    const value = factItem.querySelector('.fact-value');
+                    if (label && value && label.textContent === randomFact.label) {
+                        value.textContent = randomFact.value;
+                    }
+                }
+            }, 30000);
+        });
+    </script>
+</body>
+</html>
