@@ -7,7 +7,17 @@ Focus on functional excellence while working within a constrained design system 
 
 ## Design System Integration
 
-**Design System Input**: `design-systems/geist.md` (Vercel Geist Design System)
+**Design System Input**: 
+- `design-systems/geist-core.md` (Essential foundations: colors, typography, spacing, grid)
+- `design-systems/geist-components.md` (Component overview and usage guidance)
+
+**Additional References** (load as needed):
+- `design-systems/geist-forms.md` - Form component details
+- `design-systems/geist-layout.md` - Layout component details  
+- `design-systems/geist-feedback.md` - Feedback component details
+- `design-systems/geist-status.md` - Status component details
+- `design-systems/geist-data.md` - Data display component details
+- `design-systems/geist-information.md` - Information component details
 
 **Visual Framework Constraints**:
 - Use Geist color tokens, typography scale, and spacing system
@@ -35,7 +45,7 @@ Focus on functional excellence while working within a constrained design system 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>[Pattern Name] - [User Goal] Flow</title>
     <style>
-        /* Geist Design System implementation - see design-systems/geist.md */
+        /* Geist Design System implementation - see design-systems/geist-core.md and geist-components.md */
         /* Use Geist color tokens, typography, spacing, and component patterns */
         /* Pattern-specific layout and interaction optimizations within Geist constraints */
         /* Focus on workflow efficiency and cognitive load reduction */
@@ -190,7 +200,7 @@ Each pattern must solve real user workflow challenges through innovative interac
 - **Responsive Design**: Patterns work effectively on mobile, tablet, and desktop
 
 ### **Geist Design System Adherence**
-- **Component Consistency**: Use Geist components as specified in design-systems/geist.md
+- **Component Consistency**: Use Geist components as specified in design-systems/geist-core.md and geist-components.md
 - **Visual Harmony**: Patterns fit seamlessly within Geist aesthetic and brand expression
 - **Interaction Consistency**: Follow Geist interaction paradigms and animation principles
 - **Accessibility Standards**: Maintain Geist WCAG compliance and focus management patterns
@@ -251,7 +261,7 @@ Before each functional UX pattern creation, deeply consider:
 - What contextual assistance would help users succeed without cluttering the interface?
 
 **System Integration:**
-- How does this pattern fit within Geist design system constraints from design-systems/geist.md?
+- How does this pattern fit within Geist design system constraints from design-systems/geist-core.md and geist-components.md?
 - Which Geist components (buttons, modals, cards, inputs) should be used for consistency?
 - How will this pattern interact with other Geist interface elements users encounter?
 - What performance implications does this pattern have within Geist performance standards?

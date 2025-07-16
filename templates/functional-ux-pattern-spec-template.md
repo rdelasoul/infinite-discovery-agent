@@ -5,7 +5,17 @@
 
 ## Design System Input
 
-**Design System**: `design-systems/[system-name].md` (e.g., `design-systems/geist.md`)
+**Design System**: 
+- `design-systems/[system-name]-core.md` (Essential foundations: colors, typography, spacing, grid)
+- `design-systems/[system-name]-components.md` (Component overview and usage guidance)
+
+**Additional References** (load as needed):
+- `design-systems/[system-name]-forms.md` - Form component details
+- `design-systems/[system-name]-layout.md` - Layout component details  
+- `design-systems/[system-name]-feedback.md` - Feedback component details
+- `design-systems/[system-name]-status.md` - Status component details
+- `design-systems/[system-name]-data.md` - Data display component details
+- `design-systems/[system-name]-information.md` - Information component details
 
 **Visual Constraints**:
 - Use predefined color tokens and theme variables
@@ -33,7 +43,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>[Pattern Name] - [User Goal] Flow</title>
     <style>
-        /* Design system implementation - import from design-systems/[system-name].md */
+        /* Design system implementation - import from design-systems/[system-name]-core.md and [system-name]-components.md */
         /* Use design system color tokens, typography, spacing, and components */
         /* Pattern-specific layout and interaction optimizations within constraints */
         /* Focus on workflow efficiency, not visual variation */
@@ -68,7 +78,7 @@
 - **[Cognitive Load Patterns]**: [Mental effort reduction strategies]
 
 #### **[Implementation Strategy]**
-- **Design System Integration**: Reference `design-systems/[system-name].md` for visual constraints
+- **Design System Integration**: Reference `design-systems/[system-name]-core.md` and `[system-name]-components.md` for visual constraints
 - **Component Reuse**: Utilize design system components for consistent visual framework
 - **User Goal Optimization**: Focus on task completion efficiency within design constraints
 - **Pattern Innovation**: Explore information architecture and interaction models
@@ -121,7 +131,7 @@ Before creating each [pattern type], deeply consider:
 - [What contextual assistance would help users succeed?]
 
 **System Integration:**
-- [How does this pattern fit within design system constraints from design-systems/[system-name].md?]
+- [How does this pattern fit within design system constraints from design-systems/[system-name]-core.md and [system-name]-components.md?]
 - [Which design system components should be used for visual consistency?]
 - [How will this pattern interact with other interface elements?]
 - [What performance implications does this pattern have?]

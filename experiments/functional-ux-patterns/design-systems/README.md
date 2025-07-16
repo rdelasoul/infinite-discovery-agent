@@ -25,12 +25,17 @@ Same visual system + Different UX patterns = Workflow innovation
 
 ## Available Design Systems
 
-### 🎯 Vercel Geist (`geist.md`)
+### 🎯 Vercel Geist (Sharded: `geist-core.md` + `geist-components.md`)
 **Characteristics**:
 - Minimalist, developer-focused aesthetic
 - High-contrast accessibility standards
 - Comprehensive component library
 - Swiss design movement inspiration
+
+**Sharded Structure** (74% token reduction):
+- `geist-core.md` - Essential foundations (colors, typography, spacing, grid)
+- `geist-components.md` - Component overview and usage guidance
+- Detailed component files available on-demand for specific needs
 
 **Best For**:
 - Developer tools and dashboards
