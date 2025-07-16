@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Transaction Matching - Bank Reconciliation Flow</title>
+    <style>
+        /* Geist Design System Implementation */
+        :root {
+            /* Gray Scale - Primary neutral palette */
+            --ds-gray-100: #fafafa;
+            --ds-gray-200: #eaeaea;
+            --ds-gray-300: #999999;
+            --ds-gray-400: #888888;
+            --ds-gray-500: #666666;
+            --ds-gray-600: #444444;
+            --ds-gray-700: #333333;
+            --ds-gray-800: #222222;
+            --ds-gray-900: #111111;
+            --ds-gray-1000: #000000;
+
+            /* Blue - Interactive elements */
+            --ds-blue-100: #e1f5fe;
+            --ds-blue-500: #0070f3;
+            --ds-blue-600: #0061d5;
+            --ds-blue-700: #004fc4;
+
+            /* Status Colors */
+            --ds-red-500: #ee0000;
+            --ds-amber-500: #f5a623;
+            --ds-green-500: #00b341;
+            --ds-purple-500: #7c3aed;
+
+            /* Typography */
+            --font-size-h1: 2.25rem;
+            --font-size-h2: 1.875rem;
+            --font-size-h3: 1.5rem;
+            --font-size-base: 1rem;
+            --font-size-small: 0.875rem;
+            --font-size-xs: 0.75rem;
+
+            /* Spacing scale based on 8px grid */
+            --space-1: 0.25rem;
+            --space-2: 0.5rem;
+            --space-3: 0.75rem;
+            --space-4: 1rem;
+            --space-6: 1.5rem;
+            --space-8: 2rem;
+            --space-12: 3rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Geist Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: var(--ds-gray-100);
+            color: var(--ds-gray-900);
+            line-height: 1.5;
+        }
+
+        /* Layout Components */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--space-8);
+        }
+
+        .stack {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-6);
+        }
+
+        .grid {
+            display: grid;
+            gap: var(--space-6);
+        }
+
+        .two-col {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        /* Geist Button Component */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-2);
+            padding: var(--space-2) var(--space-4);
+            border-radius: 6px;
+            border: 1px solid transparent;
+            font-size: var(--font-size-small);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--ds-blue-500);
+            color: white;
+            border-color: var(--ds-blue-500);
+        }
+
+        .btn-primary:hover {
+            background: var(--ds-blue-600);
+            border-color: var(--ds-blue-600);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--ds-gray-700);
+            border-color: var(--ds-gray-300);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--ds-gray-400);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--ds-gray-600);
+            border: none;
+        }
+
+        .btn-ghost:hover {
+            background: var(--ds-gray-200);
+        }
+
+        .btn-sm {
+            padding: var(--space-1) var(--space-3);
+            font-size: var(--font-size-xs);
+        }
+
+        /* Geist Card Component */
+        .card {
+            background: white;
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 8px;
+            padding: var(--space-6);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: var(--space-4);
+            padding-bottom: var(--space-4);
+            border-bottom: 1px solid var(--ds-gray-200);
+        }
+
+        /* Progress Component */
+        .progress-header {
+            background: white;
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 8px;
+            padding: var(--space-4);
+            margin-bottom: var(--space-6);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--ds-gray-200);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: var(--space-3) 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--ds-green-500);
+            transition: width 0.3s ease;
+        }
+
+        .progress-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-600);
+        }
+
+        /* Transaction List Components */
+        .match-section {
+            margin-bottom: var(--space-8);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-4);
+        }
+
+        .confidence-badge {
+            padding: var(--space-1) var(--space-2);
+            border-radius: 4px;
+            font-size: var(--font-size-xs);
+            font-weight: 500;
+        }
+
+        .confidence-high {
+            background: #e8f5e8;
+            color: #1b5e1f;
+        }
+
+        .confidence-medium {
+            background: #fff4e6;
+            color: #b45309;
+        }
+
+        .confidence-low {
+            background: #fef2f2;
+            color: #991b1b;
+        }
+
+        .transaction-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-4);
+            padding: var(--space-4);
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 6px;
+            margin-bottom: var(--space-3);
+            background: white;
+            transition: border-color 0.15s ease;
+        }
+
+        .transaction-item:hover {
+            border-color: var(--ds-blue-500);
+        }
+
+        .transaction-checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--ds-gray-300);
+            border-radius: 4px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .transaction-checkbox.checked {
+            background: var(--ds-blue-500);
+            border-color: var(--ds-blue-500);
+        }
+
+        .transaction-details {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: var(--space-4);
+            align-items: center;
+        }
+
+        .transaction-primary {
+            font-weight: 500;
+            color: var(--ds-gray-900);
+        }
+
+        .transaction-secondary {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-600);
+            margin-top: var(--space-1);
+        }
+
+        .amount {
+            font-weight: 600;
+            text-align: right;
+        }
+
+        .amount.positive {
+            color: var(--ds-green-500);
+        }
+
+        .amount.negative {
+            color: var(--ds-red-500);
+        }
+
+        /* Match Confidence Display */
+        .match-info {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            font-size: var(--font-size-small);
+        }
+
+        .confidence-score {
+            font-weight: 600;
+        }
+
+        .match-reason {
+            color: var(--ds-gray-600);
+        }
+
+        /* Context Panel */
+        .context-panel {
+            position: fixed;
+            right: 0;
+            top: 0;
+            width: 400px;
+            height: 100vh;
+            background: white;
+            border-left: 1px solid var(--ds-gray-200);
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+
+        .context-panel.open {
+            transform: translateX(0);
+        }
+
+        .context-header {
+            padding: var(--space-6);
+            border-bottom: 1px solid var(--ds-gray-200);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .context-content {
+            padding: var(--space-6);
+        }
+
+        /* Batch Actions */
+        .batch-actions {
+            display: flex;
+            gap: var(--space-3);
+            margin-bottom: var(--space-4);
+            padding: var(--space-4);
+            background: var(--ds-blue-100);
+            border-radius: 8px;
+            border: 1px solid var(--ds-blue-500);
+        }
+
+        .selected-count {
+            font-weight: 500;
+            color: var(--ds-blue-700);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: var(--space-4);
+            }
+
+            .transaction-details {
+                grid-template-columns: 1fr;
+                gap: var(--space-2);
+            }
+
+            .context-panel {
+                width: 100%;
+            }
+
+            .two-col {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Accessibility */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+        }
+
+        /* Focus management */
+        button:focus,
+        .transaction-checkbox:focus {
+            outline: 2px solid var(--ds-blue-500);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    <main class="container">
+        <div class="stack">
+            <!-- Progress Header -->
+            <div class="progress-header">
+                <h1 style="font-size: var(--font-size-h2); margin-bottom: var(--space-3);">Bank Reconciliation</h1>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 67%;"></div>
+                </div>
+                <div class="progress-stats">
+                    <span><strong>24 of 36</strong> transactions reconciled</span>
+                    <div style="display: flex; gap: var(--space-6);">
+                        <span>Matched: <strong>$12,847.33</strong></span>
+                        <span>Remaining: <strong>$4,231.67</strong></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Automatic Matches Section -->
+            <div class="match-section">
+                <div class="section-header">
+                    <div style="display: flex; align-items: center; gap: var(--space-3);">
+                        <h2 style="font-size: var(--font-size-h3);">Automatic Matches</h2>
+                        <span class="confidence-badge confidence-high">95-100% Confidence</span>
+                        <span style="color: var(--ds-gray-600);">8 transactions</span>
+                    </div>
+                    <button class="btn btn-primary">Confirm All (8)</button>
+                </div>
+
+                <div class="batch-actions" id="batch-actions" style="display: none;">
+                    <span class="selected-count">3 selected</span>
+                    <button class="btn btn-primary btn-sm">Confirm Selected</button>
+                    <button class="btn btn-ghost btn-sm">Deselect All</button>
+                </div>
+
+                <div class="transaction-item">
+                    <div class="transaction-checkbox" onclick="toggleSelection(this)"></div>
+                    <div class="transaction-details">
+                        <div>
+                            <div class="transaction-primary">ACH TRANSFER - PAYROLL SOLUTIONS INC</div>
+                            <div class="transaction-secondary">Ref: PSI2024011501 • Jan 15, 2024</div>
+                        </div>
+                        <div class="amount negative">-$8,425.00</div>
+                        <div class="match-info">
+                            <span class="confidence-score" style="color: var(--ds-green-500);">98%</span>
+                            <span class="match-reason">Exact amount + vendor</span>
+                        </div>
+                        <div>
+                            <button class="btn btn-ghost btn-sm" onclick="showDetails('payroll-match')">Details</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="transaction-item">
+                    <div class="transaction-checkbox" onclick="toggleSelection(this)"></div>
+                    <div class="transaction-details">
+                        <div>
+                            <div class="transaction-primary">WIRE TRANSFER - OFFICE SUPPLIES CO</div>
+                            <div class="transaction-secondary">Ref: OSC-INV-2024-0089 • Jan 16, 2024</div>
+                        </div>
+                        <div class="amount negative">-$1,247.89</div>
+                        <div class="match-info">
+                            <span class="confidence-score" style="color: var(--ds-green-500);">97%</span>
+                            <span class="match-reason">Invoice match</span>
+                        </div>
+                        <div>
+                            <button class="btn btn-ghost btn-sm" onclick="showDetails('supplies-match')">Details</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="transaction-item">
+                    <div class="transaction-checkbox" onclick="toggleSelection(this)"></div>
+                    <div class="transaction-details">
+                        <div>
+                            <div class="transaction-primary">CLIENT PAYMENT - ACME CORP</div>
+                            <div class="transaction-secondary">Ref: INV-2024-0156 • Jan 18, 2024</div>
+                        </div>
+                        <div class="amount positive">+$15,750.00</div>
+                        <div class="match-info">
+                            <span class="confidence-score" style="color: var(--ds-green-500);">100%</span>
+                            <span class="match-reason">Exact invoice</span>
+                        </div>
+                        <div>
+                            <button class="btn btn-ghost btn-sm" onclick="showDetails('acme-payment')">Details</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Suggested Matches Section -->
+            <div class="match-section">
+                <div class="section-header">
+                    <div style="display: flex; align-items: center; gap: var(--space-3);">
+                        <h2 style="font-size: var(--font-size-h3);">Suggested Matches</h2>
+                        <span class="confidence-badge confidence-medium">70-95% Confidence</span>
+                        <span style="color: var(--ds-gray-600);">4 transactions</span>
+                    </div>
+                </div>
+
+                <div class="transaction-item">
+                    <div class="transaction-details">
+                        <div>
+                            <div class="transaction-primary">SUBSCRIPTION - CLOUDTECH SERVICES</div>
+                            <div class="transaction-secondary">Ref: CTS-SUB-240119 • Jan 19, 2024</div>
+                        </div>
+                        <div class="amount negative">-$299.00</div>
+                        <div class="match-info">
+                            <span class="confidence-score" style="color: var(--ds-amber-500);">87%</span>
+                            <span class="match-reason">Recurring payment</span>
+                        </div>
+                        <div style="display: flex; gap: var(--space-2);">
+                            <button class="btn btn-primary btn-sm">Confirm</button>
+                            <button class="btn btn-secondary btn-sm">Review</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="transaction-item">
+                    <div class="transaction-details">
+                        <div>
+                            <div class="transaction-primary">VENDOR PAYMENT - TECH SOLUTIONS LLC</div>
+                            <div class="transaction-secondary">Ref: TSL-INV-4721 • Jan 20, 2024</div>
+                        </div>
+                        <div class="amount negative">-$2,150.75</div>
+                        <div class="match-info">
+                            <span class="confidence-score" style="color: var(--ds-amber-500);">82%</span>
+                            <span class="match-reason">Similar amount</span>
+                        </div>
+                        <div style="display: flex; gap: var(--space-2);">
+                            <button class="btn btn-primary btn-sm">Confirm</button>
+                            <button class="btn btn-secondary btn-sm">Review</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Manual Review Section -->
+            <div class="match-section">
+                <div class="section-header">
+                    <div style="display: flex; align-items: center; gap: var(--space-3);">
+                        <h2 style="font-size: var(--font-size-h3);">Manual Review Required</h2>
+                        <span class="confidence-badge confidence-low">No matches found</span>
+                        <span style="color: var(--ds-gray-600);">3 transactions</span>
+                    </div>
+                    <button class="btn btn-secondary">Search Records</button>
+                </div>
+
+                <div class="transaction-item">
+                    <div class="transaction-details">
+                        <div>
+                            <div class="transaction-primary">BANK FEE - WIRE TRANSFER CHARGE</div>
+                            <div class="transaction-secondary">Jan 21, 2024</div>
+                        </div>
+                        <div class="amount negative">-$25.00</div>
+                        <div class="match-info">
+                            <span class="match-reason">No accounting record</span>
+                        </div>
+                        <div>
+                            <button class="btn btn-secondary btn-sm">Create Entry</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="transaction-item">
+                    <div class="transaction-details">
+                        <div>
+                            <div class="transaction-primary">UNKNOWN DEPOSIT</div>
+                            <div class="transaction-secondary">Ref: EXT-DEP-240122 • Jan 22, 2024</div>
+                        </div>
+                        <div class="amount positive">+$1,500.00</div>
+                        <div class="match-info">
+                            <span class="match-reason">Investigation needed</span>
+                        </div>
+                        <div>
+                            <button class="btn btn-secondary btn-sm">Investigate</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Context Panel for Transaction Details -->
+    <div class="context-panel" id="context-panel">
+        <div class="context-header">
+            <h3>Transaction Details</h3>
+            <button class="btn btn-ghost" onclick="closeDetails()">✕</button>
+        </div>
+        <div class="context-content" id="context-content">
+            <!-- Dynamic content populated by showDetails() -->
+        </div>
+    </div>
+
+    <script>
+        // Workflow-optimized interactions and state management
+        let selectedTransactions = new Set();
+
+        function toggleSelection(checkbox) {
+            const item = checkbox.closest('.transaction-item');
+            const isSelected = checkbox.classList.toggle('checked');
+            
+            if (isSelected) {
+                selectedTransactions.add(item);
+                checkbox.innerHTML = '✓';
+            } else {
+                selectedTransactions.delete(item);
+                checkbox.innerHTML = '';
+            }
+            
+            updateBatchActions();
+        }
+
+        function updateBatchActions() {
+            const batchActions = document.getElementById('batch-actions');
+            const selectedCount = document.querySelector('.selected-count');
+            
+            if (selectedTransactions.size > 0) {
+                batchActions.style.display = 'flex';
+                selectedCount.textContent = `${selectedTransactions.size} selected`;
+            } else {
+                batchActions.style.display = 'none';
+            }
+        }
+
+        // Error prevention and contextual assistance
+        function showDetails(transactionId) {
+            const panel = document.getElementById('context-panel');
+            const content = document.getElementById('context-content');
+            
+            // Progressive disclosure - show relevant information based on transaction type
+            const transactionDetails = {
+                'payroll-match': {
+                    title: 'Payroll Transfer Match',
+                    bankTransaction: {
+                        amount: '$8,425.00',
+                        date: 'Jan 15, 2024',
+                        reference: 'PSI2024011501',
+                        description: 'ACH TRANSFER - PAYROLL SOLUTIONS INC'
+                    },
+                    accountingRecord: {
+                        invoice: 'Payroll Run #2024-003',
+                        amount: '$8,425.00',
+                        date: 'Jan 15, 2024',
+                        account: 'Payroll Expenses (5200)',
+                        status: 'Approved'
+                    },
+                    confidence: '98%',
+                    reasons: [
+                        'Exact amount match: $8,425.00',
+                        'Vendor name match: Payroll Solutions Inc',
+                        'Date within 1 day tolerance',
+                        'Reference number pattern match'
+                    ]
+                },
+                'supplies-match': {
+                    title: 'Office Supplies Invoice Match',
+                    bankTransaction: {
+                        amount: '$1,247.89',
+                        date: 'Jan 16, 2024',
+                        reference: 'OSC-INV-2024-0089',
+                        description: 'WIRE TRANSFER - OFFICE SUPPLIES CO'
+                    },
+                    accountingRecord: {
+                        invoice: 'INV-2024-0089',
+                        amount: '$1,247.89',
+                        date: 'Jan 12, 2024',
+                        account: 'Office Supplies (6100)',
+                        status: 'Approved for Payment'
+                    },
+                    confidence: '97%',
+                    reasons: [
+                        'Invoice number match: OSC-INV-2024-0089',
+                        'Exact amount match: $1,247.89',
+                        'Vendor match: Office Supplies Co',
+                        'Payment within approved terms'
+                    ]
+                }
+            };
+
+            const data = transactionDetails[transactionId];
+            if (!data) return;
+
+            content.innerHTML = `
+                <div class="stack">
+                    <h4>${data.title}</h4>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h5>Bank Transaction</h5>
+                        </div>
+                        <div style="display: grid; gap: var(--space-3);">
+                            <div><strong>Amount:</strong> ${data.bankTransaction.amount}</div>
+                            <div><strong>Date:</strong> ${data.bankTransaction.date}</div>
+                            <div><strong>Reference:</strong> ${data.bankTransaction.reference}</div>
+                            <div><strong>Description:</strong> ${data.bankTransaction.description}</div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h5>Accounting Record</h5>
+                        </div>
+                        <div style="display: grid; gap: var(--space-3);">
+                            <div><strong>Invoice:</strong> ${data.accountingRecord.invoice}</div>
+                            <div><strong>Amount:</strong> ${data.accountingRecord.amount}</div>
+                            <div><strong>Date:</strong> ${data.accountingRecord.date}</div>
+                            <div><strong>Account:</strong> ${data.accountingRecord.account}</div>
+                            <div><strong>Status:</strong> ${data.accountingRecord.status}</div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h5>Match Analysis</h5>
+                        </div>
+                        <div style="margin-bottom: var(--space-3);">
+                            <strong>Confidence Score: ${data.confidence}</strong>
+                        </div>
+                        <div><strong>Matching Factors:</strong></div>
+                        <ul style="margin-left: var(--space-4); margin-top: var(--space-2);">
+                            ${data.reasons.map(reason => `<li>${reason}</li>`).join('')}
+                        </ul>
+                    </div>
+
+                    <div style="display: flex; gap: var(--space-3);">
+                        <button class="btn btn-primary" onclick="confirmMatch('${transactionId}')">Confirm Match</button>
+                        <button class="btn btn-secondary" onclick="rejectMatch('${transactionId}')">Reject Match</button>
+                    </div>
+                </div>
+            `;
+            
+            panel.classList.add('open');
+        }
+
+        function closeDetails() {
+            document.getElementById('context-panel').classList.remove('open');
+        }
+
+        // Performance-optimized user task completion
+        function confirmMatch(transactionId) {
+            // Simulate confirming a match with immediate visual feedback
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: var(--ds-green-500);
+                color: white;
+                padding: var(--space-4);
+                border-radius: 8px;
+                z-index: 1001;
+                font-weight: 500;
+            `;
+            notification.textContent = 'Transaction matched successfully!';
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+                closeDetails();
+                // In real implementation, would update the progress and move transaction to completed section
+            }, 2000);
+        }
+
+        function rejectMatch(transactionId) {
+            closeDetails();
+            // In real implementation, would move transaction to manual review section
+        }
+
+        // Keyboard navigation support
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeDetails();
+            }
+        });
+
+        // Progressive enhancement - works without JavaScript for core functionality
+        // All critical actions (viewing transactions, basic matching) work with server-side processing
+        // JavaScript enhances the experience with real-time feedback and context panels
+    </script>
+</body>
+</html>
