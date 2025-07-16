@@ -11,6 +11,9 @@ claude
 # Generate themed UI components
 /infinite ui-components 5
 
+# Generate functional UX patterns
+/infinite functional-ux-patterns 3
+
 # Generate website homepage iterations
 /infinite website-homepages/perantara-reps 3
 
@@ -45,6 +48,23 @@ claude
 **Active Projects**:
 - **Perantara Reps**: NZ DMC targeting Indonesian travel agents
 - **Portfolio Site**: Personal portfolio showcasing capabilities
+
+---
+
+### 🎯 Functional UX Patterns (`functional-ux-patterns/`)
+**Purpose**: Optimize user workflows through innovative UX patterns while working within design system constraints.
+
+**Command**: `/infinite functional-ux-patterns [count]`
+
+**Concept**: Function-first exploration focusing on task completion efficiency, cognitive load reduction, and workflow optimization rather than visual variation. Design system elements provide consistent visual framework while patterns explore information architecture, interaction models, and user journey optimization.
+
+**Focus**: Information architecture patterns, interaction model innovation, workflow optimization, and cognitive load reduction.
+
+**Pattern Categories**:
+- **Information Architecture**: Contextual clustering, progressive disclosure, adaptive hierarchy
+- **Interaction Models**: Modal vs inline, drawer vs page, progressive forms, contextual actions
+- **Workflow Optimization**: Task continuation, error prevention, intelligent defaults, recovery assistance
+- **Cognitive Load**: Attention management, memory assistance, decision support, complexity abstraction
 
 ---
 
@@ -116,3 +136,4 @@ Specification templates for new experiment types are available in `../templates/
 - `ui-component-spec-template.md`
 - `website-spec-template.md`
 - `interaction-spec-template.md`
+- `functional-ux-pattern-spec-template.md`

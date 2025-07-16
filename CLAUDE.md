@@ -25,6 +25,11 @@ Then use the `/infinite` slash command with simplified syntax and auto-discovery
 /infinite ui-components 20         # Large batch (batched parallel execution)
 /infinite ui-components infinite   # Continuous generation with progressive sophistication
 
+# Functional UX Patterns (workflow optimization through pattern innovation)
+/infinite functional-ux-patterns 1 # Single UX pattern exploration
+/infinite functional-ux-patterns 5 # Small batch (5 parallel pattern agents)
+/infinite functional-ux-patterns 10 # Large batch of pattern variations
+
 # Website Homepages (complete page iterations)
 /infinite website-homepages/perantara-reps 3      # NZ DMC homepage variations
 /infinite website-homepages/portfolio-site 5     # Portfolio homepage iterations
@@ -60,6 +65,11 @@ The project uses Claude Code's custom commands feature with enhanced auto-discov
   - Single-file format: `single-file/ui_hybrid_X.html`
   - Multi-file format: `multi-file/ui_hybrid_X/index.html`
   - Spec: Ultra-detailed 236-line specification for themed hybrid components
+
+- **`experiments/functional-ux-patterns/`** - Workflow optimization through pattern innovation
+  - Format: `iterations/ux_pattern_X.html`
+  - Focus: Function-first exploration with design system constraints
+  - Patterns: Information architecture, interaction models, cognitive load optimization
 
 - **`experiments/website-homepages/`** - Complete homepage iterations
   - Project-specific: `perantara-reps/`, `portfolio-site/`
@@ -108,6 +118,12 @@ The infinite command implements sophisticated parallel agent coordination:
 - Exploring design languages (Organic Nature, Digital Minimalism, Cyberpunk, etc.)
 - Developing reusable interface patterns with distinctive personalities
 - Examples: Search Hub, Input Intelligence, Action Controller, File Manager
+
+**Functional UX Patterns** (`/infinite functional-ux-patterns X`):
+- Optimizing user workflows through innovative interaction and information architecture patterns
+- Working within design system constraints to focus on functional excellence over visual variation
+- Reducing cognitive load and improving task completion efficiency
+- Examples: Modal vs inline patterns, progressive disclosure systems, contextual actions, error prevention flows
 
 **Website Homepages** (`/infinite website-homepages/project-name X`):
 - Generating complete homepage variations for specific projects
