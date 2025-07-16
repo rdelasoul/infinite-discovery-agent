@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relationship Intelligence Workflow - Bank Portfolio Manager</title>
+    <style>
+        /* Geist Design System Implementation */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Geist Colors */
+            --ds-gray-100: #fafafa;
+            --ds-gray-200: #eaeaea;
+            --ds-gray-300: #999999;
+            --ds-gray-400: #888888;
+            --ds-gray-500: #666666;
+            --ds-gray-600: #444444;
+            --ds-gray-700: #333333;
+            --ds-gray-800: #222222;
+            --ds-gray-900: #111111;
+            --ds-blue-500: #0070f3;
+            --ds-blue-600: #0061d5;
+            --ds-green-500: #00a86b;
+            --ds-red-500: #ee0000;
+            --ds-amber-500: #f5a623;
+            --ds-purple-500: #7c3aed;
+
+            /* Geist Typography */
+            --font-size-h1: 2.25rem;
+            --font-size-h2: 1.875rem;
+            --font-size-h3: 1.5rem;
+            --font-size-base: 1rem;
+            --font-size-small: 0.875rem;
+            --font-size-xs: 0.75rem;
+            --line-height-normal: 1.5;
+
+            /* Geist Spacing */
+            --space-1: 0.25rem;
+            --space-2: 0.5rem;
+            --space-3: 0.75rem;
+            --space-4: 1rem;
+            --space-5: 1.25rem;
+            --space-6: 1.5rem;
+            --space-8: 2rem;
+            --space-12: 3rem;
+            --space-16: 4rem;
+        }
+
+        body {
+            font-family: 'Geist Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: var(--ds-gray-100);
+            color: var(--ds-gray-900);
+            line-height: var(--line-height-normal);
+        }
+
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--space-6);
+        }
+
+        .header {
+            background: white;
+            border-radius: 8px;
+            padding: var(--space-6);
+            margin-bottom: var(--space-6);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-title {
+            font-size: var(--font-size-h1);
+            color: var(--ds-gray-900);
+            margin-bottom: var(--space-2);
+        }
+
+        .header-subtitle {
+            color: var(--ds-gray-500);
+            margin-bottom: var(--space-6);
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-4);
+            margin-bottom: var(--space-8);
+        }
+
+        .metric-card {
+            background: white;
+            border-radius: 8px;
+            padding: var(--space-5);
+            text-align: center;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .metric-value {
+            font-size: var(--font-size-h2);
+            font-weight: 600;
+            color: var(--ds-blue-500);
+            margin-bottom: var(--space-2);
+        }
+
+        .metric-label {
+            color: var(--ds-gray-500);
+            font-size: var(--font-size-small);
+        }
+
+        .metric-change {
+            font-size: var(--font-size-xs);
+            margin-top: var(--space-1);
+        }
+
+        .metric-change.positive {
+            color: var(--ds-green-500);
+        }
+
+        .metric-change.negative {
+            color: var(--ds-red-500);
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: var(--space-6);
+            margin-bottom: var(--space-8);
+        }
+
+        .priority-clients {
+            background: white;
+            border-radius: 8px;
+            padding: var(--space-6);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-5);
+        }
+
+        .section-title {
+            font-size: var(--font-size-h3);
+            color: var(--ds-gray-900);
+        }
+
+        .client-card {
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 8px;
+            padding: var(--space-4);
+            margin-bottom: var(--space-4);
+            transition: all 0.2s ease;
+        }
+
+        .client-card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .client-header {
+            display: flex;
+            justify-content: between;
+            align-items: flex-start;
+            margin-bottom: var(--space-3);
+        }
+
+        .client-name {
+            font-weight: 600;
+            color: var(--ds-gray-900);
+            font-size: var(--font-size-base);
+        }
+
+        .opportunity-score {
+            background: var(--ds-blue-500);
+            color: white;
+            padding: var(--space-1) var(--space-2);
+            border-radius: 4px;
+            font-size: var(--font-size-xs);
+            font-weight: 600;
+            margin-left: auto;
+        }
+
+        .client-info {
+            display: flex;
+            gap: var(--space-4);
+            margin-bottom: var(--space-3);
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-1);
+        }
+
+        .info-label {
+            color: var(--ds-gray-500);
+            font-size: var(--font-size-xs);
+        }
+
+        .info-value {
+            font-weight: 500;
+            color: var(--ds-gray-900);
+            font-size: var(--font-size-small);
+        }
+
+        .opportunity-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-2);
+            margin-bottom: var(--space-3);
+        }
+
+        .opportunity-tag {
+            background: var(--ds-green-500);
+            color: white;
+            padding: var(--space-1) var(--space-2);
+            border-radius: 4px;
+            font-size: var(--font-size-xs);
+            font-weight: 500;
+        }
+
+        .opportunity-tag.risk {
+            background: var(--ds-red-500);
+        }
+
+        .opportunity-tag.warning {
+            background: var(--ds-amber-500);
+        }
+
+        .next-actions {
+            display: flex;
+            gap: var(--space-2);
+        }
+
+        .action-btn {
+            padding: var(--space-2) var(--space-3);
+            border: 1px solid var(--ds-blue-500);
+            background: white;
+            color: var(--ds-blue-500);
+            border-radius: 4px;
+            font-size: var(--font-size-xs);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .action-btn:hover {
+            background: var(--ds-blue-500);
+            color: white;
+        }
+
+        .action-btn.primary {
+            background: var(--ds-blue-500);
+            color: white;
+        }
+
+        .action-btn.primary:hover {
+            background: var(--ds-blue-600);
+        }
+
+        .opportunities-panel {
+            background: white;
+            border-radius: 8px;
+            padding: var(--space-6);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .opportunity-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--space-3);
+            border-bottom: 1px solid var(--ds-gray-200);
+        }
+
+        .opportunity-item:last-child {
+            border-bottom: none;
+        }
+
+        .opportunity-details {
+            flex: 1;
+        }
+
+        .opportunity-client {
+            font-weight: 600;
+            color: var(--ds-gray-900);
+            font-size: var(--font-size-small);
+        }
+
+        .opportunity-desc {
+            color: var(--ds-gray-500);
+            font-size: var(--font-size-xs);
+            margin-top: var(--space-1);
+        }
+
+        .opportunity-value {
+            font-weight: 600;
+            color: var(--ds-green-500);
+            font-size: var(--font-size-small);
+        }
+
+        .analytics-section {
+            background: white;
+            border-radius: 8px;
+            padding: var(--space-6);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--space-6);
+        }
+
+        .chart-container {
+            position: relative;
+            height: 200px;
+            background: var(--ds-gray-100);
+            border-radius: 4px;
+            margin-bottom: var(--space-4);
+        }
+
+        .chart-placeholder {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--ds-gray-500);
+            font-size: var(--font-size-small);
+        }
+
+        .filter-bar {
+            display: flex;
+            gap: var(--space-4);
+            margin-bottom: var(--space-6);
+            padding: var(--space-4);
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+
+        .filter-label {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-500);
+        }
+
+        .filter-select {
+            padding: var(--space-2);
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 4px;
+            font-size: var(--font-size-small);
+        }
+
+        .badge {
+            padding: var(--space-1) var(--space-2);
+            border-radius: 4px;
+            font-size: var(--font-size-xs);
+            font-weight: 500;
+        }
+
+        .badge.high {
+            background: var(--ds-red-500);
+            color: white;
+        }
+
+        .badge.medium {
+            background: var(--ds-amber-500);
+            color: white;
+        }
+
+        .badge.low {
+            background: var(--ds-green-500);
+            color: white;
+        }
+
+        .risk-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: var(--space-2);
+        }
+
+        .risk-indicator.low {
+            background: var(--ds-green-500);
+        }
+
+        .risk-indicator.medium {
+            background: var(--ds-amber-500);
+        }
+
+        .risk-indicator.high {
+            background: var(--ds-red-500);
+        }
+
+        .integration-status {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            margin-bottom: var(--space-4);
+        }
+
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--ds-green-500);
+        }
+
+        .status-text {
+            font-size: var(--font-size-xs);
+            color: var(--ds-gray-500);
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .analytics-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .filter-bar {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <div class="header">
+            <h1 class="header-title">Relationship Intelligence Workflow</h1>
+            <p class="header-subtitle">AI-Powered Portfolio Management for Sarah Johnson - Senior Relationship Manager</p>
+            
+            <div class="integration-status">
+                <div class="status-indicator"></div>
+                <span class="status-text">Multi-source integration active - Last sync: 2 mins ago</span>
+            </div>
+        </div>
+
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-value">127</div>
+                <div class="metric-label">Total Clients</div>
+                <div class="metric-change positive">+3 this month</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">$47.2M</div>
+                <div class="metric-label">Portfolio Value</div>
+                <div class="metric-change positive">+12.4%</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">23</div>
+                <div class="metric-label">High Priority Actions</div>
+                <div class="metric-change negative">+8 this week</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">$2.8M</div>
+                <div class="metric-label">Opportunity Pipeline</div>
+                <div class="metric-change positive">+18.2%</div>
+            </div>
+        </div>
+
+        <div class="filter-bar">
+            <div class="filter-group">
+                <label class="filter-label">Risk Level:</label>
+                <select class="filter-select">
+                    <option>All Levels</option>
+                    <option>High Risk</option>
+                    <option>Medium Risk</option>
+                    <option>Low Risk</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label class="filter-label">Opportunity Score:</label>
+                <select class="filter-select">
+                    <option>All Scores</option>
+                    <option>90-100</option>
+                    <option>80-89</option>
+                    <option>70-79</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label class="filter-label">Industry:</label>
+                <select class="filter-select">
+                    <option>All Industries</option>
+                    <option>Construction</option>
+                    <option>Professional Services</option>
+                    <option>Retail</option>
+                    <option>Healthcare</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="priority-clients">
+                <div class="section-header">
+                    <h2 class="section-title">Priority Clients - Next Best Actions</h2>
+                </div>
+
+                <div class="client-card">
+                    <div class="client-header">
+                        <h3 class="client-name">Rodriguez Construction LLC</h3>
+                        <div class="opportunity-score">94</div>
+                    </div>
+                    <div class="client-info">
+                        <div class="info-item">
+                            <span class="info-label">Annual Revenue</span>
+                            <span class="info-value">$2.1M</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Deposits</span>
+                            <span class="info-value">$180K</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Risk Level</span>
+                            <span class="info-value">
+                                <span class="risk-indicator low"></span>Low
+                            </span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Relationship Length</span>
+                            <span class="info-value">3.2 years</span>
+                        </div>
+                    </div>
+                    <div class="opportunity-tags">
+                        <span class="opportunity-tag">Equipment Loan $450K</span>
+                        <span class="opportunity-tag">Treasury Services</span>
+                        <span class="opportunity-tag">Payroll Processing</span>
+                    </div>
+                    <div class="next-actions">
+                        <button class="action-btn primary">Schedule Loan Meeting</button>
+                        <button class="action-btn">View Full Profile</button>
+                        <button class="action-btn">Contact History</button>
+                    </div>
+                </div>
+
+                <div class="client-card">
+                    <div class="client-header">
+                        <h3 class="client-name">Chen Marketing Group</h3>
+                        <div class="opportunity-score">87</div>
+                    </div>
+                    <div class="client-info">
+                        <div class="info-item">
+                            <span class="info-label">Annual Revenue</span>
+                            <span class="info-value">$520K</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Deposits</span>
+                            <span class="info-value">$45K</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Risk Level</span>
+                            <span class="info-value">
+                                <span class="risk-indicator medium"></span>Medium
+                            </span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Relationship Length</span>
+                            <span class="info-value">1.8 years</span>
+                        </div>
+                    </div>
+                    <div class="opportunity-tags">
+                        <span class="opportunity-tag">Deposit Growth 67%</span>
+                        <span class="opportunity-tag">Credit Line $75K</span>
+                        <span class="opportunity-tag warning">Competitor Primary</span>
+                    </div>
+                    <div class="next-actions">
+                        <button class="action-btn primary">Competitive Analysis</button>
+                        <button class="action-btn">Deposit Migration</button>
+                        <button class="action-btn">View Transactions</button>
+                    </div>
+                </div>
+
+                <div class="client-card">
+                    <div class="client-header">
+                        <h3 class="client-name">Thompson Legal Services</h3>
+                        <div class="opportunity-score">82</div>
+                    </div>
+                    <div class="client-info">
+                        <div class="info-item">
+                            <span class="info-label">Annual Revenue</span>
+                            <span class="info-value">$1.2M</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Deposits</span>
+                            <span class="info-value">$320K</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Risk Level</span>
+                            <span class="info-value">
+                                <span class="risk-indicator low"></span>Low
+                            </span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Relationship Length</span>
+                            <span class="info-value">7.1 years</span>
+                        </div>
+                    </div>
+                    <div class="opportunity-tags">
+                        <span class="opportunity-tag">Treasury Services</span>
+                        <span class="opportunity-tag">Business Credit Card</span>
+                        <span class="opportunity-tag">Investment Advisory</span>
+                    </div>
+                    <div class="next-actions">
+                        <button class="action-btn primary">Treasury Consultation</button>
+                        <button class="action-btn">Investment Review</button>
+                        <button class="action-btn">Account Analysis</button>
+                    </div>
+                </div>
+
+                <div class="client-card">
+                    <div class="client-header">
+                        <h3 class="client-name">Kim Restaurant Group</h3>
+                        <div class="opportunity-score">78</div>
+                    </div>
+                    <div class="client-info">
+                        <div class="info-item">
+                            <span class="info-label">Annual Revenue</span>
+                            <span class="info-value">$800K</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Deposits</span>
+                            <span class="info-value">$65K</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Risk Level</span>
+                            <span class="info-value">
+                                <span class="risk-indicator medium"></span>Medium
+                            </span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Relationship Length</span>
+                            <span class="info-value">0.9 years</span>
+                        </div>
+                    </div>
+                    <div class="opportunity-tags">
+                        <span class="opportunity-tag">Seasonal Cash Flow</span>
+                        <span class="opportunity-tag">Working Capital $120K</span>
+                        <span class="opportunity-tag warning">Payment Processing</span>
+                    </div>
+                    <div class="next-actions">
+                        <button class="action-btn primary">Cash Flow Analysis</button>
+                        <button class="action-btn">Credit Line Setup</button>
+                        <button class="action-btn">Merchant Services</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="opportunities-panel">
+                <div class="section-header">
+                    <h2 class="section-title">Top Opportunities</h2>
+                </div>
+
+                <div class="opportunity-item">
+                    <div class="opportunity-details">
+                        <div class="opportunity-client">Rodriguez Construction</div>
+                        <div class="opportunity-desc">Equipment financing for expansion</div>
+                    </div>
+                    <div class="opportunity-value">$450K</div>
+                </div>
+
+                <div class="opportunity-item">
+                    <div class="opportunity-details">
+                        <div class="opportunity-client">Santos Consulting</div>
+                        <div class="opportunity-desc">Credit line increase request</div>
+                    </div>
+                    <div class="opportunity-value">$85K</div>
+                </div>
+
+                <div class="opportunity-item">
+                    <div class="opportunity-details">
+                        <div class="opportunity-client">Miller Healthcare</div>
+                        <div class="opportunity-desc">Treasury services upgrade</div>
+                    </div>
+                    <div class="opportunity-value">$125K</div>
+                </div>
+
+                <div class="opportunity-item">
+                    <div class="opportunity-details">
+                        <div class="opportunity-client">Davis Manufacturing</div>
+                        <div class="opportunity-desc">Payroll processing conversion</div>
+                    </div>
+                    <div class="opportunity-value">$45K</div>
+                </div>
+
+                <div class="opportunity-item">
+                    <div class="opportunity-details">
+                        <div class="opportunity-client">Brown Tech Solutions</div>
+                        <div class="opportunity-desc">Investment advisory services</div>
+                    </div>
+                    <div class="opportunity-value">$220K</div>
+                </div>
+
+                <div class="opportunity-item">
+                    <div class="opportunity-details">
+                        <div class="opportunity-client">Wilson Retail Group</div>
+                        <div class="opportunity-desc">Merchant services upgrade</div>
+                    </div>
+                    <div class="opportunity-value">$78K</div>
+                </div>
+
+                <div class="opportunity-item">
+                    <div class="opportunity-details">
+                        <div class="opportunity-client">Johnson Architecture</div>
+                        <div class="opportunity-desc">Business credit card portfolio</div>
+                    </div>
+                    <div class="opportunity-value">$35K</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="analytics-section">
+            <div class="section-header">
+                <h2 class="section-title">Portfolio Intelligence Analytics</h2>
+            </div>
+
+            <div class="analytics-grid">
+                <div>
+                    <h3>Opportunity Pipeline by Industry</h3>
+                    <div class="chart-container">
+                        <div class="chart-placeholder">Interactive Chart: Pipeline Analysis</div>
+                    </div>
+                    <div style="display: flex; gap: var(--space-4); font-size: var(--font-size-small);">
+                        <div>Construction: $890K</div>
+                        <div>Professional: $560K</div>
+                        <div>Healthcare: $445K</div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3>Risk Distribution</h3>
+                    <div class="chart-container">
+                        <div class="chart-placeholder">Interactive Chart: Risk Analysis</div>
+                    </div>
+                    <div style="display: flex; gap: var(--space-4); font-size: var(--font-size-small);">
+                        <div><span class="badge low">Low</span> 89 clients</div>
+                        <div><span class="badge medium">Medium</span> 32 clients</div>
+                        <div><span class="badge high">High</span> 6 clients</div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3>Relationship Manager Performance</h3>
+                    <div class="chart-container">
+                        <div class="chart-placeholder">Interactive Chart: Performance Metrics</div>
+                    </div>
+                    <div style="display: flex; gap: var(--space-4); font-size: var(--font-size-small);">
+                        <div>Closed Rate: 73%</div>
+                        <div>Avg Deal Size: $187K</div>
+                        <div>Time to Close: 21 days</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Relationship Intelligence Workflow Implementation
+        class RelationshipIntelligenceWorkflow {
+            constructor() {
+                this.initializeWorkflow();
+                this.setupEventListeners();
+                this.loadPortfolioData();
+            }
+
+            initializeWorkflow() {
+                // Initialize AI-powered client prioritization
+                this.prioritizationEngine = new ClientPrioritizationEngine();
+                this.opportunityDetector = new OpportunityDetector();
+                this.riskAssessment = new RiskAssessmentEngine();
+                
+                // Setup real-time data integration
+                this.setupDataIntegration();
+            }
+
+            setupDataIntegration() {
+                // Multi-source data integration simulation
+                const dataSources = [
+                    'credit_cards', 'bank_accounts', 'accounting_software',
+                    'transaction_history', 'payment_patterns', 'cash_flow'
+                ];
+                
+                dataSources.forEach(source => {
+                    this.syncDataSource(source);
+                });
+                
+                // Real-time sync every 2 minutes
+                setInterval(() => {
+                    this.syncAllSources();
+                }, 120000);
+            }
+
+            syncDataSource(source) {
+                // Simulate data source synchronization
+                console.log(`Syncing ${source} data...`);
+                
+                // Update integration status
+                const statusElement = document.querySelector('.status-text');
+                statusElement.textContent = `Multi-source integration active - Last sync: Just now`;
+                
+                setTimeout(() => {
+                    statusElement.textContent = `Multi-source integration active - Last sync: 2 mins ago`;
+                }, 2000);
+            }
+
+            syncAllSources() {
+                // Comprehensive data synchronization
+                const sources = ['Chase Business Cards', 'Wells Fargo Accounts', 'QuickBooks Data'];
+                sources.forEach(source => {
+                    this.processDataSource(source);
+                });
+                
+                // Trigger opportunity re-scoring
+                this.rescoreOpportunities();
+            }
+
+            setupEventListeners() {
+                // Client card interactions
+                document.querySelectorAll('.client-card').forEach(card => {
+                    card.addEventListener('click', (e) => {
+                        if (!e.target.classList.contains('action-btn')) {
+                            this.showClientDetails(card);
+                        }
+                    });
+                });
+
+                // Action button handlers
+                document.querySelectorAll('.action-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        this.handleActionClick(btn);
+                    });
+                });
+
+                // Filter handlers
+                document.querySelectorAll('.filter-select').forEach(select => {
+                    select.addEventListener('change', (e) => {
+                        this.applyFilters();
+                    });
+                });
+            }
+
+            handleActionClick(btn) {
+                const action = btn.textContent.trim();
+                const clientCard = btn.closest('.client-card');
+                const clientName = clientCard.querySelector('.client-name').textContent;
+
+                switch(action) {
+                    case 'Schedule Loan Meeting':
+                        this.scheduleLoanMeeting(clientName);
+                        break;
+                    case 'Competitive Analysis':
+                        this.runCompetitiveAnalysis(clientName);
+                        break;
+                    case 'Treasury Consultation':
+                        this.scheduleTreasuryConsultation(clientName);
+                        break;
+                    case 'Cash Flow Analysis':
+                        this.performCashFlowAnalysis(clientName);
+                        break;
+                    case 'View Full Profile':
+                        this.showFullClientProfile(clientName);
+                        break;
+                    case 'Contact History':
+                        this.showContactHistory(clientName);
+                        break;
+                    default:
+                        this.performGenericAction(action, clientName);
+                }
+            }
+
+            scheduleLoanMeeting(clientName) {
+                // Simulate loan meeting scheduling
+                const modal = this.createModal('Schedule Loan Meeting', `
+                    <div style="padding: var(--space-4);">
+                        <h3>${clientName} - Equipment Loan Discussion</h3>
+                        <p>Loan Amount: $450,000</p>
+                        <p>Purpose: Equipment financing for expansion</p>
+                        <p>Recommended Meeting Date: Next Tuesday 2:00 PM</p>
+                        <button class="action-btn primary" onclick="this.closest('.modal').remove()">
+                            Schedule Meeting
+                        </button>
+                    </div>
+                `);
+                document.body.appendChild(modal);
+            }
+
+            runCompetitiveAnalysis(clientName) {
+                // Simulate competitive analysis
+                const modal = this.createModal('Competitive Analysis', `
+                    <div style="padding: var(--space-4);">
+                        <h3>${clientName} - Banking Relationship Analysis</h3>
+                        <p><strong>Primary Bank:</strong> Wells Fargo (67% wallet share)</p>
+                        <p><strong>Secondary Bank:</strong> Our Bank (33% wallet share)</p>
+                        <p><strong>Opportunity:</strong> Deposit migration potential $89K</p>
+                        <p><strong>Strategy:</strong> Treasury services competitive pricing</p>
+                        <button class="action-btn primary" onclick="this.closest('.modal').remove()">
+                            Create Action Plan
+                        </button>
+                    </div>
+                `);
+                document.body.appendChild(modal);
+            }
+
+            scheduleTreasuryConsultation(clientName) {
+                // Simulate treasury consultation scheduling
+                const modal = this.createModal('Treasury Consultation', `
+                    <div style="padding: var(--space-4);">
+                        <h3>${clientName} - Treasury Services Consultation</h3>
+                        <p>Current Services: Basic checking, savings</p>
+                        <p>Recommended Upgrades: ACH services, lockbox, investment sweep</p>
+                        <p>Estimated Revenue: $125K annually</p>
+                        <button class="action-btn primary" onclick="this.closest('.modal').remove()">
+                            Schedule Consultation
+                        </button>
+                    </div>
+                `);
+                document.body.appendChild(modal);
+            }
+
+            performCashFlowAnalysis(clientName) {
+                // Simulate cash flow analysis
+                const modal = this.createModal('Cash Flow Analysis', `
+                    <div style="padding: var(--space-4);">
+                        <h3>${clientName} - Seasonal Cash Flow Pattern</h3>
+                        <p><strong>Peak Season:</strong> Nov-Jan (125% of average)</p>
+                        <p><strong>Low Season:</strong> Jul-Sep (67% of average)</p>
+                        <p><strong>Recommended:</strong> Working capital line $120K</p>
+                        <p><strong>Terms:</strong> Prime + 2.5%, seasonal pricing</p>
+                        <button class="action-btn primary" onclick="this.closest('.modal').remove()">
+                            Prepare Proposal
+                        </button>
+                    </div>
+                `);
+                document.body.appendChild(modal);
+            }
+
+            createModal(title, content) {
+                const modal = document.createElement('div');
+                modal.className = 'modal';
+                modal.style.cssText = `
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background: rgba(0, 0, 0, 0.5);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    z-index: 1000;
+                `;
+                
+                modal.innerHTML = `
+                    <div style="background: white; border-radius: 8px; max-width: 500px; width: 90%;">
+                        <div style="padding: var(--space-4); border-bottom: 1px solid var(--ds-gray-200);">
+                            <h2 style="margin: 0;">${title}</h2>
+                        </div>
+                        ${content}
+                    </div>
+                `;
+                
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        modal.remove();
+                    }
+                });
+                
+                return modal;
+            }
+
+            applyFilters() {
+                // Get filter values
+                const riskFilter = document.querySelector('.filter-select').value;
+                const opportunityFilter = document.querySelectorAll('.filter-select')[1].value;
+                const industryFilter = document.querySelectorAll('.filter-select')[2].value;
+                
+                // Apply filters to client cards
+                this.filterClientCards(riskFilter, opportunityFilter, industryFilter);
+                
+                // Update analytics
+                this.updateAnalytics();
+            }
+
+            filterClientCards(riskFilter, opportunityFilter, industryFilter) {
+                const clientCards = document.querySelectorAll('.client-card');
+                
+                clientCards.forEach(card => {
+                    let shouldShow = true;
+                    
+                    // Apply risk filter
+                    if (riskFilter !== 'All Levels') {
+                        const riskLevel = card.querySelector('.info-value').textContent.toLowerCase();
+                        if (!riskLevel.includes(riskFilter.toLowerCase().replace(' risk', ''))) {
+                            shouldShow = false;
+                        }
+                    }
+                    
+                    // Apply opportunity filter
+                    if (opportunityFilter !== 'All Scores') {
+                        const score = parseInt(card.querySelector('.opportunity-score').textContent);
+                        const [min, max] = opportunityFilter.split('-').map(n => parseInt(n));
+                        if (score < min || score > max) {
+                            shouldShow = false;
+                        }
+                    }
+                    
+                    card.style.display = shouldShow ? 'block' : 'none';
+                });
+            }
+
+            loadPortfolioData() {
+                // Simulate loading comprehensive portfolio data
+                const portfolioData = {
+                    totalClients: 127,
+                    portfolioValue: 47200000,
+                    highPriorityActions: 23,
+                    opportunityPipeline: 2800000,
+                    riskDistribution: {
+                        low: 89,
+                        medium: 32,
+                        high: 6
+                    },
+                    performanceMetrics: {
+                        closedRate: 73,
+                        avgDealSize: 187000,
+                        timeToClose: 21
+                    }
+                };
+                
+                this.updateDashboardMetrics(portfolioData);
+            }
+
+            updateDashboardMetrics(data) {
+                // Update metric cards with real data
+                const metricCards = document.querySelectorAll('.metric-card');
+                
+                metricCards[0].querySelector('.metric-value').textContent = data.totalClients;
+                metricCards[1].querySelector('.metric-value').textContent = `$${(data.portfolioValue / 1000000).toFixed(1)}M`;
+                metricCards[2].querySelector('.metric-value').textContent = data.highPriorityActions;
+                metricCards[3].querySelector('.metric-value').textContent = `$${(data.opportunityPipeline / 1000000).toFixed(1)}M`;
+            }
+
+            rescoreOpportunities() {
+                // Simulate AI-powered opportunity rescoring
+                const clients = document.querySelectorAll('.client-card');
+                
+                clients.forEach(client => {
+                    const currentScore = parseInt(client.querySelector('.opportunity-score').textContent);
+                    const newScore = this.calculateOpportunityScore(client);
+                    
+                    if (Math.abs(newScore - currentScore) > 2) {
+                        client.querySelector('.opportunity-score').textContent = newScore;
+                        this.highlightScoreChange(client);
+                    }
+                });
+            }
+
+            calculateOpportunityScore(clientElement) {
+                // Simulate ML-powered scoring algorithm
+                const baseScore = Math.floor(Math.random() * 20) + 70;
+                const revenue = this.extractRevenue(clientElement);
+                const deposits = this.extractDeposits(clientElement);
+                const riskLevel = this.extractRiskLevel(clientElement);
+                
+                let score = baseScore;
+                score += Math.min(revenue / 50000, 15); // Revenue factor
+                score += Math.min(deposits / 25000, 10); // Deposit factor
+                score += riskLevel === 'Low' ? 5 : riskLevel === 'Medium' ? 0 : -10; // Risk factor
+                
+                return Math.min(Math.max(Math.round(score), 60), 100);
+            }
+
+            extractRevenue(clientElement) {
+                const revenueText = clientElement.querySelector('.info-value').textContent;
+                return parseFloat(revenueText.replace(/[$MK,]/g, '')) * (revenueText.includes('M') ? 1000000 : 1000);
+            }
+
+            extractDeposits(clientElement) {
+                const depositsText = clientElement.querySelectorAll('.info-value')[1].textContent;
+                return parseFloat(depositsText.replace(/[$MK,]/g, '')) * (depositsText.includes('M') ? 1000000 : 1000);
+            }
+
+            extractRiskLevel(clientElement) {
+                return clientElement.querySelectorAll('.info-value')[2].textContent.trim().replace(/.*\s/, '');
+            }
+
+            highlightScoreChange(clientElement) {
+                const scoreElement = clientElement.querySelector('.opportunity-score');
+                scoreElement.style.animation = 'pulse 2s ease-in-out';
+                
+                setTimeout(() => {
+                    scoreElement.style.animation = '';
+                }, 2000);
+            }
+
+            updateAnalytics() {
+                // Update analytics charts based on current filters
+                this.updateOpportunityPipeline();
+                this.updateRiskDistribution();
+                this.updatePerformanceMetrics();
+            }
+
+            updateOpportunityPipeline() {
+                // Simulate pipeline update
+                const pipelineElements = document.querySelectorAll('.analytics-grid div')[0];
+                // Update would happen here in real implementation
+            }
+
+            updateRiskDistribution() {
+                // Simulate risk distribution update
+                const riskElements = document.querySelectorAll('.analytics-grid div')[1];
+                // Update would happen here in real implementation
+            }
+
+            updatePerformanceMetrics() {
+                // Simulate performance metrics update
+                const performanceElements = document.querySelectorAll('.analytics-grid div')[2];
+                // Update would happen here in real implementation
+            }
+        }
+
+        // Additional utility classes for AI-powered features
+        class ClientPrioritizationEngine {
+            constructor() {
+                this.scoringFactors = {
+                    revenue: 0.25,
+                    deposits: 0.20,
+                    riskLevel: 0.15,
+                    relationshipLength: 0.10,
+                    growthTrend: 0.15,
+                    competitivePosition: 0.15
+                };
+            }
+
+            calculatePriorityScore(clientData) {
+                // AI-powered priority scoring algorithm
+                let score = 0;
+                Object.keys(this.scoringFactors).forEach(factor => {
+                    score += clientData[factor] * this.scoringFactors[factor];
+                });
+                return Math.round(score);
+            }
+        }
+
+        class OpportunityDetector {
+            constructor() {
+                this.opportunityTypes = [
+                    'equipment_loan', 'credit_line', 'treasury_services',
+                    'payroll_processing', 'merchant_services', 'investment_advisory'
+                ];
+            }
+
+            detectOpportunities(clientData) {
+                // ML-powered opportunity detection
+                const opportunities = [];
+                
+                // Simulate detection logic
+                if (clientData.revenue > 1000000 && clientData.deposits > 100000) {
+                    opportunities.push({
+                        type: 'treasury_services',
+                        value: clientData.deposits * 0.15,
+                        confidence: 0.89
+                    });
+                }
+                
+                return opportunities;
+            }
+        }
+
+        class RiskAssessmentEngine {
+            constructor() {
+                this.riskFactors = [
+                    'payment_history', 'cash_flow_volatility', 'industry_risk',
+                    'competitive_position', 'management_quality', 'market_conditions'
+                ];
+            }
+
+            assessRisk(clientData) {
+                // AI-powered risk assessment
+                const riskScore = this.calculateRiskScore(clientData);
+                
+                if (riskScore < 30) return 'Low';
+                if (riskScore < 70) return 'Medium';
+                return 'High';
+            }
+
+            calculateRiskScore(clientData) {
+                // Simulate risk scoring algorithm
+                return Math.floor(Math.random() * 100);
+            }
+        }
+
+        // Initialize the Relationship Intelligence Workflow
+        document.addEventListener('DOMContentLoaded', () => {
+            window.relationshipWorkflow = new RelationshipIntelligenceWorkflow();
+        });
+
+        // Add CSS animation for score changes
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes pulse {
+                0% { transform: scale(1); }
+                50% { transform: scale(1.1); background: var(--ds-green-500); }
+                100% { transform: scale(1); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

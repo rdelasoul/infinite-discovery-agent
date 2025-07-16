@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Source Data Integration Dashboard - Bank Relationship Intelligence</title>
+    <style>
+        /* Geist Design System Implementation */
+        :root {
+            /* Gray Scale - Primary neutral palette */
+            --ds-gray-100: #fafafa;
+            --ds-gray-200: #eaeaea;
+            --ds-gray-300: #999999;
+            --ds-gray-400: #888888;
+            --ds-gray-500: #666666;
+            --ds-gray-600: #444444;
+            --ds-gray-700: #333333;
+            --ds-gray-800: #222222;
+            --ds-gray-900: #111111;
+            --ds-gray-1000: #000000;
+
+            /* Blue - Interactive elements */
+            --ds-blue-100: #e1f5fe;
+            --ds-blue-500: #0070f3;
+            --ds-blue-600: #0061d5;
+            --ds-blue-700: #004fc4;
+            --ds-blue-800: #0043a5;
+
+            /* Status Colors */
+            --ds-red-500: #ee0000;
+            --ds-amber-500: #f5a623;
+            --ds-green-500: #00d084;
+            --ds-purple-500: #7c3aed;
+
+            /* Typography */
+            --font-size-h1: 2.25rem;
+            --font-size-h2: 1.875rem;
+            --font-size-h3: 1.5rem;
+            --font-size-h4: 1.25rem;
+            --font-size-base: 1rem;
+            --font-size-small: 0.875rem;
+            --font-size-xs: 0.75rem;
+
+            /* Spacing */
+            --space-1: 0.25rem;
+            --space-2: 0.5rem;
+            --space-3: 0.75rem;
+            --space-4: 1rem;
+            --space-5: 1.25rem;
+            --space-6: 1.5rem;
+            --space-8: 2rem;
+            --space-10: 2.5rem;
+            --space-12: 3rem;
+            --space-16: 4rem;
+        }
+
+        body {
+            font-family: 'Geist Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background-color: var(--ds-gray-100);
+            color: var(--ds-gray-900);
+            margin: 0;
+            padding: 0;
+            line-height: 1.5;
+        }
+
+        .dashboard-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--space-6);
+        }
+
+        .dashboard-header {
+            margin-bottom: var(--space-8);
+        }
+
+        .dashboard-title {
+            font-size: var(--font-size-h1);
+            font-weight: 600;
+            color: var(--ds-gray-900);
+            margin: 0 0 var(--space-2) 0;
+        }
+
+        .dashboard-subtitle {
+            font-size: var(--font-size-base);
+            color: var(--ds-gray-600);
+            margin: 0;
+        }
+
+        .integration-status {
+            display: flex;
+            gap: var(--space-4);
+            margin-bottom: var(--space-8);
+            padding: var(--space-4);
+            background: white;
+            border-radius: 8px;
+            border: 1px solid var(--ds-gray-200);
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            padding: var(--space-3) var(--space-4);
+            border-radius: 6px;
+            background: var(--ds-gray-100);
+            flex: 1;
+        }
+
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--ds-green-500);
+        }
+
+        .status-indicator.warning {
+            background: var(--ds-amber-500);
+        }
+
+        .status-indicator.error {
+            background: var(--ds-red-500);
+        }
+
+        .status-text {
+            font-size: var(--font-size-small);
+            font-weight: 500;
+            color: var(--ds-gray-700);
+        }
+
+        .status-detail {
+            font-size: var(--font-size-xs);
+            color: var(--ds-gray-500);
+            margin-top: var(--space-1);
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: var(--space-6);
+            margin-bottom: var(--space-8);
+        }
+
+        .portfolio-overview {
+            background: white;
+            border-radius: 8px;
+            border: 1px solid var(--ds-gray-200);
+            padding: var(--space-6);
+        }
+
+        .portfolio-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-4);
+            margin-bottom: var(--space-6);
+        }
+
+        .stat-card {
+            padding: var(--space-4);
+            background: var(--ds-gray-100);
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: var(--font-size-h3);
+            font-weight: 600;
+            color: var(--ds-gray-900);
+            margin: 0;
+        }
+
+        .stat-label {
+            font-size: var(--font-size-xs);
+            color: var(--ds-gray-600);
+            margin-top: var(--space-1);
+        }
+
+        .client-search {
+            margin-bottom: var(--space-6);
+        }
+
+        .search-input {
+            width: 100%;
+            padding: var(--space-3) var(--space-4);
+            border: 1px solid var(--ds-gray-300);
+            border-radius: 6px;
+            font-size: var(--font-size-base);
+            background: white;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--ds-blue-500);
+            box-shadow: 0 0 0 2px rgba(0, 112, 243, 0.1);
+        }
+
+        .client-filters {
+            display: flex;
+            gap: var(--space-2);
+            margin-bottom: var(--space-6);
+        }
+
+        .filter-btn {
+            padding: var(--space-2) var(--space-3);
+            border: 1px solid var(--ds-gray-300);
+            border-radius: 6px;
+            background: white;
+            color: var(--ds-gray-700);
+            font-size: var(--font-size-small);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-btn:hover {
+            background: var(--ds-gray-100);
+        }
+
+        .filter-btn.active {
+            background: var(--ds-blue-500);
+            color: white;
+            border-color: var(--ds-blue-500);
+        }
+
+        .insights-panel {
+            background: white;
+            border-radius: 8px;
+            border: 1px solid var(--ds-gray-200);
+            padding: var(--space-6);
+            position: sticky;
+            top: var(--space-6);
+            max-height: calc(100vh - var(--space-12));
+            overflow-y: auto;
+        }
+
+        .insights-title {
+            font-size: var(--font-size-h4);
+            font-weight: 600;
+            color: var(--ds-gray-900);
+            margin: 0 0 var(--space-4) 0;
+        }
+
+        .insight-item {
+            padding: var(--space-4);
+            margin-bottom: var(--space-3);
+            border-radius: 6px;
+            border-left: 4px solid var(--ds-blue-500);
+            background: var(--ds-blue-100);
+        }
+
+        .insight-item.warning {
+            border-left-color: var(--ds-amber-500);
+            background: #fef3c7;
+        }
+
+        .insight-item.opportunity {
+            border-left-color: var(--ds-green-500);
+            background: #dcfce7;
+        }
+
+        .insight-title {
+            font-size: var(--font-size-small);
+            font-weight: 600;
+            color: var(--ds-gray-800);
+            margin: 0 0 var(--space-2) 0;
+        }
+
+        .insight-description {
+            font-size: var(--font-size-xs);
+            color: var(--ds-gray-600);
+            margin: 0;
+        }
+
+        .client-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--ds-gray-200);
+        }
+
+        .client-table th,
+        .client-table td {
+            padding: var(--space-4);
+            text-align: left;
+            border-bottom: 1px solid var(--ds-gray-200);
+        }
+
+        .client-table th {
+            background: var(--ds-gray-100);
+            font-weight: 600;
+            color: var(--ds-gray-800);
+            font-size: var(--font-size-small);
+        }
+
+        .client-table td {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-700);
+        }
+
+        .client-table tr:hover {
+            background: var(--ds-gray-100);
+        }
+
+        .client-name {
+            font-weight: 600;
+            color: var(--ds-gray-900);
+        }
+
+        .revenue-amount {
+            font-weight: 600;
+            color: var(--ds-gray-900);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: var(--space-1) var(--space-2);
+            border-radius: 4px;
+            font-size: var(--font-size-xs);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge.healthy {
+            background: var(--ds-green-500);
+            color: white;
+        }
+
+        .badge.warning {
+            background: var(--ds-amber-500);
+            color: white;
+        }
+
+        .badge.distressed {
+            background: var(--ds-red-500);
+            color: white;
+        }
+
+        .badge.growth {
+            background: var(--ds-purple-500);
+            color: white;
+        }
+
+        .data-sources {
+            display: flex;
+            gap: var(--space-1);
+        }
+
+        .source-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .source-icon.bank {
+            background: var(--ds-blue-500);
+        }
+
+        .source-icon.card {
+            background: var(--ds-purple-500);
+        }
+
+        .source-icon.accounting {
+            background: var(--ds-green-500);
+        }
+
+        .opportunity-score {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+
+        .score-bar {
+            width: 40px;
+            height: 6px;
+            background: var(--ds-gray-200);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .score-fill {
+            height: 100%;
+            background: var(--ds-green-500);
+            transition: width 0.3s ease;
+        }
+
+        .score-fill.medium {
+            background: var(--ds-amber-500);
+        }
+
+        .score-fill.high {
+            background: var(--ds-blue-500);
+        }
+
+        .client-detail-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: var(--space-6);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: var(--space-6);
+        }
+
+        .modal-title {
+            font-size: var(--font-size-h3);
+            font-weight: 600;
+            color: var(--ds-gray-900);
+            margin: 0;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: var(--font-size-h4);
+            cursor: pointer;
+            color: var(--ds-gray-500);
+        }
+
+        .integration-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-4);
+            margin-bottom: var(--space-6);
+        }
+
+        .integration-card {
+            padding: var(--space-4);
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .integration-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: 600;
+            color: white;
+            margin: 0 auto var(--space-2) auto;
+        }
+
+        .integration-name {
+            font-size: var(--font-size-small);
+            font-weight: 600;
+            color: var(--ds-gray-900);
+            margin: 0 0 var(--space-1) 0;
+        }
+
+        .integration-status {
+            font-size: var(--font-size-xs);
+            color: var(--ds-gray-600);
+        }
+
+        .transaction-timeline {
+            margin-top: var(--space-6);
+        }
+
+        .timeline-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            padding: var(--space-3) 0;
+            border-bottom: 1px solid var(--ds-gray-200);
+        }
+
+        .timeline-date {
+            font-size: var(--font-size-xs);
+            color: var(--ds-gray-500);
+            min-width: 80px;
+        }
+
+        .timeline-description {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-700);
+            flex: 1;
+        }
+
+        .timeline-amount {
+            font-size: var(--font-size-small);
+            font-weight: 600;
+            color: var(--ds-gray-900);
+        }
+
+        .timeline-source {
+            font-size: var(--font-size-xs);
+            color: var(--ds-gray-500);
+            min-width: 60px;
+        }
+
+        @media (max-width: 1024px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .insights-panel {
+                position: static;
+                max-height: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <header class="dashboard-header">
+            <h1 class="dashboard-title">Multi-Source Data Integration Dashboard</h1>
+            <p class="dashboard-subtitle">Bank Relationship Intelligence Pattern - Unified Financial View</p>
+        </header>
+
+        <!-- Integration Status Bar -->
+        <div class="integration-status">
+            <div class="status-item">
+                <div class="status-indicator"></div>
+                <div>
+                    <div class="status-text">Credit Cards</div>
+                    <div class="status-detail">12 sources • Last sync: 2 min ago</div>
+                </div>
+            </div>
+            <div class="status-item">
+                <div class="status-indicator warning"></div>
+                <div>
+                    <div class="status-text">Bank Accounts</div>
+                    <div class="status-detail">8 sources • Last sync: 15 min ago</div>
+                </div>
+            </div>
+            <div class="status-item">
+                <div class="status-indicator"></div>
+                <div>
+                    <div class="status-text">Accounting Software</div>
+                    <div class="status-detail">QuickBooks, Xero • Last sync: 5 min ago</div>
+                </div>
+            </div>
+            <div class="status-item">
+                <div class="status-indicator"></div>
+                <div>
+                    <div class="status-text">Data Correlation</div>
+                    <div class="status-detail">98.7% match rate • 3 discrepancies</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-grid">
+            <!-- Portfolio Overview -->
+            <div class="portfolio-overview">
+                <div class="portfolio-stats">
+                    <div class="stat-card">
+                        <div class="stat-value">127</div>
+                        <div class="stat-label">Total Clients</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">$142M</div>
+                        <div class="stat-label">Portfolio Volume</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">23</div>
+                        <div class="stat-label">Opportunities</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">5</div>
+                        <div class="stat-label">Risk Alerts</div>
+                    </div>
+                </div>
+
+                <div class="client-search">
+                    <input type="text" class="search-input" placeholder="Search clients by name, industry, or revenue..." id="clientSearch">
+                </div>
+
+                <div class="client-filters">
+                    <button class="filter-btn active" data-filter="all">All Clients</button>
+                    <button class="filter-btn" data-filter="healthy">Healthy</button>
+                    <button class="filter-btn" data-filter="warning">Warning</button>
+                    <button class="filter-btn" data-filter="opportunity">Opportunities</button>
+                    <button class="filter-btn" data-filter="distressed">Distressed</button>
+                </div>
+
+                <table class="client-table">
+                    <thead>
+                        <tr>
+                            <th>Client</th>
+                            <th>Industry</th>
+                            <th>Revenue</th>
+                            <th>Health</th>
+                            <th>Sources</th>
+                            <th>Opportunity</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="clientTableBody">
+                        <!-- Table rows will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- AI Insights Panel -->
+            <div class="insights-panel">
+                <h3 class="insights-title">AI Intelligence</h3>
+                
+                <div class="insight-item opportunity">
+                    <div class="insight-title">High-Value Opportunity</div>
+                    <div class="insight-description">Rodriguez Construction showing 47% revenue growth with equipment financing needs. Recommend $500K credit line.</div>
+                </div>
+
+                <div class="insight-item warning">
+                    <div class="insight-title">Risk Alert</div>
+                    <div class="insight-description">Kim Restaurant cash flow declining 23% over 60 days. Credit utilization at 85%. Consider intervention.</div>
+                </div>
+
+                <div class="insight-item">
+                    <div class="insight-title">Cross-Source Correlation</div>
+                    <div class="insight-description">Chen Marketing shows deposits at Wells Fargo not reflected in our accounts. Potential competitor relationship.</div>
+                </div>
+
+                <div class="insight-item opportunity">
+                    <div class="insight-title">Upsell Opportunity</div>
+                    <div class="insight-description">Thompson Legal maintaining high balances. Treasury services could generate $12K annual revenue.</div>
+                </div>
+
+                <div class="insight-item">
+                    <div class="insight-title">Data Integration</div>
+                    <div class="insight-description">Successfully correlated 2,847 transactions across 127 clients. 3 discrepancies require review.</div>
+                </div>
+
+                <div class="insight-item opportunity">
+                    <div class="insight-title">Portfolio Optimization</div>
+                    <div class="insight-description">Santos Consulting ready for business expansion. Multiple growth indicators suggest loan opportunity.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Client Detail Modal -->
+        <div class="client-detail-modal" id="clientModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title" id="modalTitle">Client Details</h2>
+                    <button class="close-btn" onclick="closeModal()">&times;</button>
+                </div>
+                
+                <div class="integration-grid">
+                    <div class="integration-card">
+                        <div class="integration-icon bank">B</div>
+                        <div class="integration-name">Bank Accounts</div>
+                        <div class="integration-status">3 accounts integrated</div>
+                    </div>
+                    <div class="integration-card">
+                        <div class="integration-icon card">C</div>
+                        <div class="integration-name">Credit Cards</div>
+                        <div class="integration-status">2 cards integrated</div>
+                    </div>
+                    <div class="integration-card">
+                        <div class="integration-icon accounting">A</div>
+                        <div class="integration-name">Accounting</div>
+                        <div class="integration-status">QuickBooks Online</div>
+                    </div>
+                </div>
+
+                <div class="transaction-timeline">
+                    <h4>Recent Transaction Correlation</h4>
+                    <div class="timeline-item">
+                        <div class="timeline-date">Dec 15</div>
+                        <div class="timeline-description">Equipment purchase - Heavy machinery</div>
+                        <div class="timeline-amount">-$45,000</div>
+                        <div class="timeline-source">Credit</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">Dec 14</div>
+                        <div class="timeline-description">Client payment - Johnson Project</div>
+                        <div class="timeline-amount">+$28,500</div>
+                        <div class="timeline-source">Bank</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">Dec 13</div>
+                        <div class="timeline-description">Payroll processing</div>
+                        <div class="timeline-amount">-$12,350</div>
+                        <div class="timeline-source">Accounting</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">Dec 12</div>
+                        <div class="timeline-description">Materials supply - Home Depot</div>
+                        <div class="timeline-amount">-$3,450</div>
+                        <div class="timeline-source">Credit</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample client data representing 127 small businesses
+        const clientData = [
+            {
+                name: "Rodriguez Construction",
+                industry: "Construction",
+                revenue: "$2.1M",
+                health: "healthy",
+                sources: ["bank", "card", "accounting"],
+                opportunity: 85,
+                riskScore: 20,
+                description: "Primary relationship, equipment loan opportunity"
+            },
+            {
+                name: "Chen Marketing",
+                industry: "Marketing",
+                revenue: "$540K",
+                health: "warning",
+                sources: ["bank", "card"],
+                opportunity: 60,
+                riskScore: 65,
+                description: "Secondary relationship, competitor primary"
+            },
+            {
+                name: "Thompson Legal",
+                industry: "Legal Services",
+                revenue: "$1.3M",
+                health: "healthy",
+                sources: ["bank", "card", "accounting"],
+                opportunity: 75,
+                riskScore: 15,
+                description: "Long-term client, treasury services upsell"
+            },
+            {
+                name: "Kim Restaurant",
+                industry: "Food Service",
+                revenue: "$820K",
+                health: "distressed",
+                sources: ["bank", "card"],
+                opportunity: 30,
+                riskScore: 85,
+                description: "Cash flow issues, working capital needs"
+            },
+            {
+                name: "Santos Consulting",
+                industry: "Consulting",
+                revenue: "$380K",
+                health: "growth",
+                sources: ["bank", "accounting"],
+                opportunity: 90,
+                riskScore: 25,
+                description: "High growth, credit line expansion"
+            },
+            {
+                name: "Wilson Manufacturing",
+                industry: "Manufacturing",
+                revenue: "$3.2M",
+                health: "healthy",
+                sources: ["bank", "card", "accounting"],
+                opportunity: 70,
+                riskScore: 30,
+                description: "Equipment financing opportunity"
+            },
+            {
+                name: "Davis Tech Solutions",
+                industry: "Technology",
+                revenue: "$1.8M",
+                health: "healthy",
+                sources: ["bank", "card", "accounting"],
+                opportunity: 65,
+                riskScore: 20,
+                description: "Growth stage, line of credit needs"
+            },
+            {
+                name: "Johnson Retail",
+                industry: "Retail",
+                revenue: "$950K",
+                health: "warning",
+                sources: ["bank", "card"],
+                opportunity: 45,
+                riskScore: 70,
+                description: "Seasonal cash flow challenges"
+            },
+            {
+                name: "Martinez Landscaping",
+                industry: "Landscaping",
+                revenue: "$670K",
+                health: "healthy",
+                sources: ["bank", "card", "accounting"],
+                opportunity: 55,
+                riskScore: 35,
+                description: "Seasonal business, equipment loans"
+            },
+            {
+                name: "Anderson Accounting",
+                industry: "Accounting",
+                revenue: "$1.1M",
+                health: "healthy",
+                sources: ["bank", "card", "accounting"],
+                opportunity: 50,
+                riskScore: 25,
+                description: "Stable business, modest growth"
+            },
+            {
+                name: "Lee Import Export",
+                industry: "Import/Export",
+                revenue: "$2.8M",
+                health: "healthy",
+                sources: ["bank", "card", "accounting"],
+                opportunity: 80,
+                riskScore: 40,
+                description: "International expansion, trade finance"
+            },
+            {
+                name: "Garcia Auto Repair",
+                industry: "Automotive",
+                revenue: "$450K",
+                health: "warning",
+                sources: ["bank", "card"],
+                opportunity: 40,
+                riskScore: 60,
+                description: "Equipment needs, cash flow tight"
+            },
+            {
+                name: "Brown Real Estate",
+                industry: "Real Estate",
+                revenue: "$1.9M",
+                health: "healthy",
+                sources: ["bank", "card", "accounting"],
+                opportunity: 75,
+                riskScore: 30,
+                description: "Commission-based, bridge lending"
+            },
+            {
+                name: "Taylor Software",
+                industry: "Software",
+                revenue: "$1.4M",
+                health: "growth",
+                sources: ["bank", "card", "accounting"],
+                opportunity: 85,
+                riskScore: 20,
+                description: "SaaS growth, venture debt opportunity"
+            },
+            {
+                name: "Clark Transportation",
+                industry: "Transportation",
+                revenue: "$2.5M",
+                health: "healthy",
+                sources: ["bank", "card", "accounting"],
+                opportunity: 70,
+                riskScore: 35,
+                description: "Fleet expansion, equipment financing"
+            },
+            {
+                name: "White Catering",
+                industry: "Food Service",
+                revenue: "$720K",
+                health: "healthy",
+                sources: ["bank", "card"],
+                opportunity: 60,
+                riskScore: 40,
+                description: "Event-based, working capital needs"
+            },
+            {
+                name: "Miller Architecture",
+                industry: "Architecture",
+                revenue: "$1.6M",
+                health: "healthy",
+                sources: ["bank", "card", "accounting"],
+                opportunity: 65,
+                riskScore: 25,
+                description: "Project-based, credit line optimization"
+            },
+            {
+                name: "Harris Plumbing",
+                industry: "Plumbing",
+                revenue: "$580K",
+                health: "warning",
+                sources: ["bank", "card"],
+                opportunity: 50,
+                riskScore: 55,
+                description: "Seasonal variations, equipment needs"
+            },
+            {
+                name: "Martin Dental",
+                industry: "Healthcare",
+                revenue: "$1.2M",
+                health: "healthy",
+                sources: ["bank", "card", "accounting"],
+                opportunity: 70,
+                riskScore: 20,
+                description: "Practice expansion, equipment financing"
+            },
+            {
+                name: "Young Fitness",
+                industry: "Fitness",
+                revenue: "$340K",
+                health: "growth",
+                sources: ["bank", "card"],
+                opportunity: 80,
+                riskScore: 30,
+                description: "Second location, expansion loan"
+            }
+        ];
+
+        // Generate additional sample data to reach 127 clients
+        const additionalClients = [];
+        const industries = ["Retail", "Manufacturing", "Healthcare", "Technology", "Construction", "Food Service", "Consulting", "Legal Services"];
+        const healthStatuses = ["healthy", "warning", "growth", "distressed"];
+        
+        for (let i = 21; i <= 127; i++) {
+            const industry = industries[Math.floor(Math.random() * industries.length)];
+            const health = healthStatuses[Math.floor(Math.random() * healthStatuses.length)];
+            const revenue = Math.floor(Math.random() * 2500 + 200); // 200K to 2.7M
+            const opportunity = Math.floor(Math.random() * 100);
+            const riskScore = health === "distressed" ? 70 + Math.floor(Math.random() * 30) : 
+                             health === "warning" ? 50 + Math.floor(Math.random() * 30) : 
+                             Math.floor(Math.random() * 50);
+            
+            additionalClients.push({
+                name: `Client ${i}`,
+                industry: industry,
+                revenue: `$${revenue}K`,
+                health: health,
+                sources: ["bank", "card", "accounting"].slice(0, Math.floor(Math.random() * 3) + 1),
+                opportunity: opportunity,
+                riskScore: riskScore,
+                description: `${industry} business with ${health} status`
+            });
+        }
+
+        const allClients = [...clientData, ...additionalClients];
+
+        function renderClientTable(clients = allClients) {
+            const tbody = document.getElementById('clientTableBody');
+            tbody.innerHTML = '';
+
+            clients.forEach(client => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>
+                        <div class="client-name">${client.name}</div>
+                        <div style="font-size: 0.75rem; color: var(--ds-gray-500);">${client.description}</div>
+                    </td>
+                    <td>${client.industry}</td>
+                    <td class="revenue-amount">${client.revenue}</td>
+                    <td><span class="badge ${client.health}">${client.health}</span></td>
+                    <td>
+                        <div class="data-sources">
+                            ${client.sources.map(source => 
+                                `<div class="source-icon ${source}">${source.charAt(0).toUpperCase()}</div>`
+                            ).join('')}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="opportunity-score">
+                            <span>${client.opportunity}%</span>
+                            <div class="score-bar">
+                                <div class="score-fill ${client.opportunity > 70 ? 'high' : client.opportunity > 40 ? 'medium' : ''}" 
+                                     style="width: ${client.opportunity}%"></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <button onclick="openClientModal('${client.name}')" style="background: var(--ds-blue-500); color: white; border: none; padding: 0.25rem 0.5rem; border-radius: 4px; cursor: pointer;">View</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function openClientModal(clientName) {
+            const modal = document.getElementById('clientModal');
+            const modalTitle = document.getElementById('modalTitle');
+            modalTitle.textContent = clientName;
+            modal.style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('clientModal').style.display = 'none';
+        }
+
+        // Filter functionality
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                const filter = this.dataset.filter;
+                let filteredClients = allClients;
+                
+                if (filter !== 'all') {
+                    filteredClients = allClients.filter(client => client.health === filter);
+                }
+                
+                renderClientTable(filteredClients);
+            });
+        });
+
+        // Search functionality
+        document.getElementById('clientSearch').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const filteredClients = allClients.filter(client => 
+                client.name.toLowerCase().includes(searchTerm) ||
+                client.industry.toLowerCase().includes(searchTerm) ||
+                client.revenue.toLowerCase().includes(searchTerm)
+            );
+            renderClientTable(filteredClients);
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(e) {
+            const modal = document.getElementById('clientModal');
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Initialize table
+        renderClientTable();
+
+        // Real-time integration status simulation
+        setInterval(() => {
+            const indicators = document.querySelectorAll('.status-indicator');
+            indicators.forEach(indicator => {
+                const randomStatus = Math.random();
+                indicator.className = 'status-indicator';
+                if (randomStatus < 0.8) {
+                    // 80% chance of being healthy
+                } else if (randomStatus < 0.95) {
+                    indicator.classList.add('warning');
+                } else {
+                    indicator.classList.add('error');
+                }
+            });
+        }, 30000); // Update every 30 seconds
+    </script>
+</body>
+</html>

@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Receipt Capture & Automated Matching - Multi-Card Banking Flow</title>
+    <style>
+        /* Geist Design System Implementation */
+        :root {
+            /* Colors */
+            --ds-gray-100: #fafafa;
+            --ds-gray-200: #eaeaea;
+            --ds-gray-300: #999999;
+            --ds-gray-400: #888888;
+            --ds-gray-500: #666666;
+            --ds-gray-600: #444444;
+            --ds-gray-700: #333333;
+            --ds-gray-800: #222222;
+            --ds-gray-900: #111111;
+            --ds-gray-1000: #000000;
+
+            --ds-blue-100: #e1f5fe;
+            --ds-blue-500: #0070f3;
+            --ds-blue-600: #0061d5;
+            --ds-blue-700: #004fc4;
+
+            --ds-red-500: #ee0000;
+            --ds-amber-500: #f5a623;
+            --ds-green-500: #0070f3;
+            --ds-purple-500: #7c3aed;
+
+            /* Typography */
+            --font-size-h1: 2.25rem;
+            --font-size-h2: 1.875rem;
+            --font-size-h3: 1.5rem;
+            --font-size-h4: 1.25rem;
+            --font-size-large: 1.125rem;
+            --font-size-base: 1rem;
+            --font-size-small: 0.875rem;
+            --font-size-xs: 0.75rem;
+
+            /* Spacing */
+            --space-1: 0.25rem;
+            --space-2: 0.5rem;
+            --space-3: 0.75rem;
+            --space-4: 1rem;
+            --space-5: 1.25rem;
+            --space-6: 1.5rem;
+            --space-8: 2rem;
+            --space-10: 2.5rem;
+            --space-12: 3rem;
+            --space-16: 4rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Geist Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            font-size: var(--font-size-base);
+            line-height: 1.5;
+            color: var(--ds-gray-900);
+            background-color: var(--ds-gray-100);
+            padding: var(--space-4);
+        }
+
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--ds-blue-500), var(--ds-blue-600));
+            color: white;
+            padding: var(--space-6) var(--space-4);
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: var(--font-size-h3);
+            font-weight: 600;
+            margin-bottom: var(--space-2);
+        }
+
+        .header .subtitle {
+            font-size: var(--font-size-small);
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: var(--space-4);
+        }
+
+        .capture-section {
+            margin-bottom: var(--space-8);
+        }
+
+        .section-title {
+            font-size: var(--font-size-h4);
+            font-weight: 600;
+            color: var(--ds-gray-800);
+            margin-bottom: var(--space-4);
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+
+        .capture-camera {
+            border: 2px dashed var(--ds-gray-300);
+            border-radius: 12px;
+            padding: var(--space-8);
+            text-align: center;
+            background: var(--ds-gray-100);
+            margin-bottom: var(--space-4);
+            transition: all 0.2s ease;
+        }
+
+        .capture-camera:hover {
+            border-color: var(--ds-blue-500);
+            background: var(--ds-blue-100);
+        }
+
+        .camera-icon {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto var(--space-3);
+            background: var(--ds-blue-500);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+        }
+
+        .capture-button {
+            background: var(--ds-blue-500);
+            color: white;
+            border: none;
+            padding: var(--space-3) var(--space-6);
+            border-radius: 8px;
+            font-size: var(--font-size-base);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            width: 100%;
+            margin-bottom: var(--space-4);
+        }
+
+        .capture-button:hover {
+            background: var(--ds-blue-600);
+            transform: translateY(-1px);
+        }
+
+        .recent-captures {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-2);
+            margin-bottom: var(--space-6);
+        }
+
+        .capture-thumbnail {
+            aspect-ratio: 1;
+            background: var(--ds-gray-200);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--font-size-xs);
+            color: var(--ds-gray-500);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .capture-thumbnail.processing {
+            background: linear-gradient(45deg, var(--ds-amber-500), #ffd700);
+            color: white;
+            animation: pulse 2s infinite;
+        }
+
+        .capture-thumbnail.matched {
+            background: linear-gradient(45deg, var(--ds-green-500), #00a86b);
+            color: white;
+        }
+
+        .capture-thumbnail.error {
+            background: linear-gradient(45deg, var(--ds-red-500), #ff6b6b);
+            color: white;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .match-results {
+            background: white;
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: var(--space-6);
+        }
+
+        .match-item {
+            padding: var(--space-4);
+            border-bottom: 1px solid var(--ds-gray-200);
+            display: flex;
+            gap: var(--space-3);
+            align-items: flex-start;
+        }
+
+        .match-item:last-child {
+            border-bottom: none;
+        }
+
+        .match-receipt {
+            flex-shrink: 0;
+            width: 60px;
+            height: 80px;
+            background: var(--ds-gray-200);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--font-size-xs);
+            color: var(--ds-gray-500);
+        }
+
+        .match-details {
+            flex: 1;
+        }
+
+        .match-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: var(--space-2);
+        }
+
+        .match-merchant {
+            font-weight: 600;
+            color: var(--ds-gray-800);
+            font-size: var(--font-size-base);
+        }
+
+        .match-amount {
+            font-weight: 600;
+            color: var(--ds-gray-900);
+            font-size: var(--font-size-base);
+        }
+
+        .match-info {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-1);
+            margin-bottom: var(--space-3);
+        }
+
+        .match-card {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-600);
+            display: flex;
+            align-items: center;
+            gap: var(--space-1);
+        }
+
+        .card-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--ds-blue-500);
+        }
+
+        .match-date {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-500);
+        }
+
+        .match-confidence {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            margin-bottom: var(--space-3);
+        }
+
+        .confidence-bar {
+            flex: 1;
+            height: 4px;
+            background: var(--ds-gray-200);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .confidence-fill {
+            height: 100%;
+            background: var(--ds-green-500);
+            transition: width 0.3s ease;
+        }
+
+        .confidence-fill.medium {
+            background: var(--ds-amber-500);
+        }
+
+        .confidence-fill.low {
+            background: var(--ds-red-500);
+        }
+
+        .confidence-text {
+            font-size: var(--font-size-xs);
+            color: var(--ds-gray-600);
+            font-weight: 500;
+        }
+
+        .match-actions {
+            display: flex;
+            gap: var(--space-2);
+        }
+
+        .action-button {
+            padding: var(--space-2) var(--space-3);
+            border-radius: 6px;
+            font-size: var(--font-size-small);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+        }
+
+        .action-confirm {
+            background: var(--ds-green-500);
+            color: white;
+        }
+
+        .action-confirm:hover {
+            background: #00a86b;
+        }
+
+        .action-edit {
+            background: var(--ds-gray-200);
+            color: var(--ds-gray-700);
+        }
+
+        .action-edit:hover {
+            background: var(--ds-gray-300);
+        }
+
+        .action-reject {
+            background: var(--ds-red-500);
+            color: white;
+        }
+
+        .action-reject:hover {
+            background: #cc0000;
+        }
+
+        .unmatched-section {
+            margin-top: var(--space-6);
+        }
+
+        .unmatched-transactions {
+            background: var(--ds-amber-100);
+            border: 1px solid var(--ds-amber-500);
+            border-radius: 12px;
+            padding: var(--space-4);
+        }
+
+        .unmatched-header {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            margin-bottom: var(--space-3);
+            color: var(--ds-amber-500);
+            font-weight: 600;
+        }
+
+        .unmatched-list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-2);
+        }
+
+        .unmatched-item {
+            background: white;
+            padding: var(--space-3);
+            border-radius: 8px;
+            border: 1px solid var(--ds-amber-500);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .unmatched-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .unmatched-merchant {
+            font-weight: 500;
+            color: var(--ds-gray-800);
+        }
+
+        .unmatched-details {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-600);
+        }
+
+        .unmatched-amount {
+            font-weight: 600;
+            color: var(--ds-gray-900);
+        }
+
+        .stats-section {
+            margin-top: var(--space-8);
+            padding: var(--space-4);
+            background: var(--ds-gray-100);
+            border-radius: 12px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-4);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: var(--font-size-h3);
+            font-weight: 700;
+            color: var(--ds-blue-500);
+            margin-bottom: var(--space-1);
+        }
+
+        .stat-label {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-600);
+        }
+
+        .ai-insights {
+            margin-top: var(--space-6);
+            padding: var(--space-4);
+            background: linear-gradient(135deg, var(--ds-purple-500), #9333ea);
+            color: white;
+            border-radius: 12px;
+        }
+
+        .ai-header {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            margin-bottom: var(--space-3);
+            font-weight: 600;
+        }
+
+        .ai-recommendations {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-2);
+        }
+
+        .ai-tip {
+            background: rgba(255, 255, 255, 0.1);
+            padding: var(--space-3);
+            border-radius: 8px;
+            font-size: var(--font-size-small);
+        }
+
+        .icon {
+            width: 20px;
+            height: 20px;
+            display: inline-block;
+        }
+
+        /* Mobile optimizations */
+        @media (max-width: 640px) {
+            body {
+                padding: var(--space-2);
+            }
+
+            .container {
+                border-radius: 0;
+                box-shadow: none;
+            }
+
+            .header {
+                padding: var(--space-4);
+            }
+
+            .capture-camera {
+                padding: var(--space-6);
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: var(--space-3);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Receipt Capture & Matching</h1>
+            <div class="subtitle">Martinez Consulting LLC - Mobile Expense Tracker</div>
+        </header>
+
+        <div class="content">
+            <!-- Receipt Capture Section -->
+            <section class="capture-section">
+                <h2 class="section-title">
+                    <span class="icon">📸</span>
+                    Capture Receipt
+                </h2>
+                
+                <div class="capture-camera" onclick="simulateCapture()">
+                    <div class="camera-icon">📷</div>
+                    <div>Tap to capture receipt</div>
+                    <div style="font-size: var(--font-size-small); color: var(--ds-gray-500); margin-top: var(--space-2);">
+                        Auto-extracts text & matches transactions
+                    </div>
+                </div>
+
+                <button class="capture-button" onclick="simulateCapture()">
+                    📱 Open Camera
+                </button>
+
+                <div class="recent-captures">
+                    <div class="capture-thumbnail processing" title="Processing...">
+                        <span>🔄</span>
+                    </div>
+                    <div class="capture-thumbnail matched" title="Auto-matched">
+                        <span>✅</span>
+                    </div>
+                    <div class="capture-thumbnail error" title="Needs review">
+                        <span>⚠️</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Automated Matches Section -->
+            <section class="matches-section">
+                <h2 class="section-title">
+                    <span class="icon">🤖</span>
+                    AI-Matched Receipts
+                </h2>
+
+                <div class="match-results">
+                    <div class="match-item">
+                        <div class="match-receipt">📄</div>
+                        <div class="match-details">
+                            <div class="match-header">
+                                <div class="match-merchant">Office Depot</div>
+                                <div class="match-amount">$127.89</div>
+                            </div>
+                            <div class="match-info">
+                                <div class="match-card">
+                                    <div class="card-dot"></div>
+                                    Chase Ink Business •••• 3247
+                                </div>
+                                <div class="match-date">Today, 2:34 PM</div>
+                            </div>
+                            <div class="match-confidence">
+                                <div class="confidence-bar">
+                                    <div class="confidence-fill" style="width: 94%"></div>
+                                </div>
+                                <div class="confidence-text">94% match</div>
+                            </div>
+                            <div class="match-actions">
+                                <button class="action-button action-confirm">✓ Confirm</button>
+                                <button class="action-button action-edit">✏️ Edit</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="match-item">
+                        <div class="match-receipt">📄</div>
+                        <div class="match-details">
+                            <div class="match-header">
+                                <div class="match-merchant">Starbucks</div>
+                                <div class="match-amount">$28.50</div>
+                            </div>
+                            <div class="match-info">
+                                <div class="match-card">
+                                    <div class="card-dot" style="background: var(--ds-purple-500)"></div>
+                                    Capital One Spark •••• 8912
+                                </div>
+                                <div class="match-date">Today, 9:15 AM</div>
+                            </div>
+                            <div class="match-confidence">
+                                <div class="confidence-bar">
+                                    <div class="confidence-fill medium" style="width: 78%"></div>
+                                </div>
+                                <div class="confidence-text">78% match</div>
+                            </div>
+                            <div class="match-actions">
+                                <button class="action-button action-confirm">✓ Confirm</button>
+                                <button class="action-button action-edit">✏️ Edit</button>
+                                <button class="action-button action-reject">✗ Reject</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="match-item">
+                        <div class="match-receipt">📄</div>
+                        <div class="match-details">
+                            <div class="match-header">
+                                <div class="match-merchant">Amazon AWS</div>
+                                <div class="match-amount">$89.99</div>
+                            </div>
+                            <div class="match-info">
+                                <div class="match-card">
+                                    <div class="card-dot" style="background: var(--ds-amber-500)"></div>
+                                    AmEx Business •••• 1005
+                                </div>
+                                <div class="match-date">Yesterday, 3:00 PM</div>
+                            </div>
+                            <div class="match-confidence">
+                                <div class="confidence-bar">
+                                    <div class="confidence-fill low" style="width: 45%"></div>
+                                </div>
+                                <div class="confidence-text">45% match</div>
+                            </div>
+                            <div class="match-actions">
+                                <button class="action-button action-edit">✏️ Review</button>
+                                <button class="action-button action-reject">✗ Reject</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Unmatched Transactions -->
+            <section class="unmatched-section">
+                <div class="unmatched-transactions">
+                    <div class="unmatched-header">
+                        <span>⚠️</span>
+                        Transactions Missing Receipts
+                    </div>
+                    <div class="unmatched-list">
+                        <div class="unmatched-item">
+                            <div class="unmatched-info">
+                                <div class="unmatched-merchant">Shell Gas Station</div>
+                                <div class="unmatched-details">Chase Ink •••• 3247 • 2 days ago</div>
+                            </div>
+                            <div class="unmatched-amount">$45.20</div>
+                        </div>
+                        <div class="unmatched-item">
+                            <div class="unmatched-info">
+                                <div class="unmatched-merchant">Uber</div>
+                                <div class="unmatched-details">Capital One Spark •••• 8912 • 3 days ago</div>
+                            </div>
+                            <div class="unmatched-amount">$32.75</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Statistics Dashboard -->
+            <section class="stats-section">
+                <h3 class="section-title">
+                    <span class="icon">📊</span>
+                    Receipt Matching Stats
+                </h3>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number">92%</div>
+                        <div class="stat-label">Auto-Match Rate</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">156</div>
+                        <div class="stat-label">Receipts This Month</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">4</div>
+                        <div class="stat-label">Cards Tracked</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- AI Insights -->
+            <section class="ai-insights">
+                <div class="ai-header">
+                    <span class="icon">🧠</span>
+                    Smart Recommendations
+                </div>
+                <div class="ai-recommendations">
+                    <div class="ai-tip">
+                        <strong>Receipt Pattern:</strong> You typically spend $120-150 at Office Depot. Consider setting up purchase order alerts for budget tracking.
+                    </div>
+                    <div class="ai-tip">
+                        <strong>Missing Receipts:</strong> Gas station purchases often lack receipts. Enable automatic mileage tracking for better expense documentation.
+                    </div>
+                    <div class="ai-tip">
+                        <strong>Tax Optimization:</strong> 89% of your captured receipts qualify for business deductions. You're on track for $18K in tax savings this year.
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        // Mobile Receipt Capture & Automated Matching Functionality
+        
+        function simulateCapture() {
+            // Simulate camera capture with loading states
+            const captureArea = document.querySelector('.capture-camera');
+            const originalContent = captureArea.innerHTML;
+            
+            captureArea.innerHTML = `
+                <div class="camera-icon" style="background: var(--ds-amber-500)">⏳</div>
+                <div>Processing receipt...</div>
+                <div style="font-size: var(--font-size-small); color: var(--ds-gray-500); margin-top: var(--space-2);">
+                    Extracting text with OCR...
+                </div>
+            `;
+            
+            setTimeout(() => {
+                captureArea.innerHTML = `
+                    <div class="camera-icon" style="background: var(--ds-green-500)">✅</div>
+                    <div>Receipt captured!</div>
+                    <div style="font-size: var(--font-size-small); color: var(--ds-gray-500); margin-top: var(--space-2);">
+                        Auto-matching to transactions...
+                    </div>
+                `;
+                
+                // Add new match to the results
+                addNewMatch();
+                
+                setTimeout(() => {
+                    captureArea.innerHTML = originalContent;
+                }, 2000);
+            }, 2000);
+        }
+        
+        function addNewMatch() {
+            const matchResults = document.querySelector('.match-results');
+            const newMatch = document.createElement('div');
+            newMatch.className = 'match-item';
+            newMatch.style.border = '2px solid var(--ds-green-500)';
+            newMatch.style.background = 'var(--ds-green-100)';
+            
+            newMatch.innerHTML = `
+                <div class="match-receipt">📄</div>
+                <div class="match-details">
+                    <div class="match-header">
+                        <div class="match-merchant">FedEx Office</div>
+                        <div class="match-amount">$24.99</div>
+                    </div>
+                    <div class="match-info">
+                        <div class="match-card">
+                            <div class="card-dot"></div>
+                            Chase Ink Business •••• 3247
+                        </div>
+                        <div class="match-date">Just now</div>
+                    </div>
+                    <div class="match-confidence">
+                        <div class="confidence-bar">
+                            <div class="confidence-fill" style="width: 96%"></div>
+                        </div>
+                        <div class="confidence-text">96% match</div>
+                    </div>
+                    <div class="match-actions">
+                        <button class="action-button action-confirm">✓ Confirm</button>
+                        <button class="action-button action-edit">✏️ Edit</button>
+                    </div>
+                </div>
+            `;
+            
+            matchResults.insertBefore(newMatch, matchResults.firstChild);
+            
+            // Remove the green highlight after animation
+            setTimeout(() => {
+                newMatch.style.border = '1px solid var(--ds-gray-200)';
+                newMatch.style.background = 'white';
+            }, 3000);
+        }
+        
+        // Handle action buttons
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('action-confirm')) {
+                const matchItem = e.target.closest('.match-item');
+                matchItem.style.background = 'var(--ds-green-100)';
+                e.target.innerHTML = '✅ Confirmed';
+                e.target.disabled = true;
+                e.target.style.opacity = '0.6';
+                
+                // Update stats
+                updateStats();
+            }
+            
+            if (e.target.classList.contains('action-reject')) {
+                const matchItem = e.target.closest('.match-item');
+                matchItem.style.background = 'var(--ds-red-100)';
+                matchItem.style.opacity = '0.6';
+                setTimeout(() => {
+                    matchItem.remove();
+                }, 1000);
+            }
+            
+            if (e.target.classList.contains('action-edit')) {
+                // Simulate edit modal (simplified for demo)
+                alert('Edit Receipt Details:\n\n- Merchant: ' + 
+                      e.target.closest('.match-item').querySelector('.match-merchant').textContent + 
+                      '\n- Amount: ' + 
+                      e.target.closest('.match-item').querySelector('.match-amount').textContent + 
+                      '\n- Category: Office Supplies\n- Tax Deductible: Yes');
+            }
+        });
+        
+        function updateStats() {
+            const matchRateElement = document.querySelector('.stat-number');
+            let currentRate = parseInt(matchRateElement.textContent);
+            if (currentRate < 95) {
+                matchRateElement.textContent = (currentRate + 1) + '%';
+            }
+            
+            const receiptsElement = document.querySelectorAll('.stat-number')[1];
+            let currentReceipts = parseInt(receiptsElement.textContent);
+            receiptsElement.textContent = (currentReceipts + 1);
+        }
+        
+        // Simulate real-time updates
+        setInterval(() => {
+            const processingThumbnails = document.querySelectorAll('.capture-thumbnail.processing');
+            processingThumbnails.forEach(thumb => {
+                if (Math.random() > 0.7) {
+                    thumb.className = 'capture-thumbnail matched';
+                    thumb.innerHTML = '<span>✅</span>';
+                }
+            });
+        }, 5000);
+        
+        // Mobile-specific features
+        if ('serviceWorker' in navigator) {
+            // Enable offline receipt storage
+            console.log('Receipt storage available offline');
+        }
+        
+        // Camera access simulation for mobile
+        function enableCameraAccess() {
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({ video: true })
+                    .then(function(stream) {
+                        console.log('Camera access granted for receipt capture');
+                        // In a real app, this would show the camera viewfinder
+                    })
+                    .catch(function(err) {
+                        console.log('Camera access denied - using file upload fallback');
+                    });
+            }
+        }
+        
+        // Initialize mobile optimizations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add touch feedback
+            document.querySelectorAll('button, .capture-camera').forEach(element => {
+                element.addEventListener('touchstart', function() {
+                    this.style.transform = 'scale(0.95)';
+                });
+                
+                element.addEventListener('touchend', function() {
+                    this.style.transform = 'scale(1)';
+                });
+            });
+            
+            // Enable camera access on load
+            enableCameraAccess();
+        });
+        
+        // Error handling for OCR failures
+        function handleOCRError(receiptData) {
+            console.log('OCR processing failed, enabling manual entry');
+            
+            const errorMatch = document.createElement('div');
+            errorMatch.className = 'match-item';
+            errorMatch.style.border = '2px solid var(--ds-red-500)';
+            errorMatch.style.background = 'var(--ds-red-100)';
+            
+            errorMatch.innerHTML = `
+                <div class="match-receipt">❌</div>
+                <div class="match-details">
+                    <div class="match-header">
+                        <div class="match-merchant">Receipt Unreadable</div>
+                        <div class="match-amount">Manual Entry</div>
+                    </div>
+                    <div class="match-info">
+                        <div class="match-date">Just captured</div>
+                    </div>
+                    <div class="match-actions">
+                        <button class="action-button action-edit">✏️ Enter Manually</button>
+                        <button class="action-button action-reject">🗑️ Delete</button>
+                    </div>
+                </div>
+            `;
+            
+            document.querySelector('.match-results').insertBefore(errorMatch, document.querySelector('.match-results').firstChild);
+        }
+    </script>
+</body>
+</html>

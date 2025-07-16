@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Vendor Recognition & Auto-Categorization Engine - Multi-Card Banking Flow</title>
+    <style>
+        /* Geist Design System implementation */
+        :root {
+            /* Colors */
+            --ds-gray-100: #fafafa;
+            --ds-gray-200: #eaeaea;
+            --ds-gray-300: #999999;
+            --ds-gray-400: #888888;
+            --ds-gray-500: #666666;
+            --ds-gray-600: #444444;
+            --ds-gray-700: #333333;
+            --ds-gray-800: #222222;
+            --ds-gray-900: #111111;
+            --ds-gray-1000: #000000;
+            --ds-blue-100: #e1f5fe;
+            --ds-blue-500: #0070f3;
+            --ds-blue-600: #0061d5;
+            --ds-blue-700: #004fc4;
+            --ds-red-500: #ee0000;
+            --ds-amber-500: #f5a623;
+            --ds-green-500: #22c55e;
+            --ds-purple-500: #7c3aed;
+
+            /* Typography */
+            --font-size-xs: 0.75rem;
+            --font-size-small: 0.875rem;
+            --font-size-base: 1rem;
+            --font-size-large: 1.125rem;
+            --font-size-h4: 1.25rem;
+            --font-size-h3: 1.5rem;
+            --font-size-h2: 1.875rem;
+            --font-size-h1: 2.25rem;
+
+            /* Spacing */
+            --space-1: 0.25rem;
+            --space-2: 0.5rem;
+            --space-3: 0.75rem;
+            --space-4: 1rem;
+            --space-5: 1.25rem;
+            --space-6: 1.5rem;
+            --space-8: 2rem;
+            --space-10: 2.5rem;
+            --space-12: 3rem;
+            --space-16: 4rem;
+        }
+
+        /* Base Geist Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Geist Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            font-size: var(--font-size-base);
+            line-height: 1.5;
+            color: var(--ds-gray-900);
+            background-color: var(--ds-gray-100);
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: var(--space-4);
+        }
+
+        /* Header Styles */
+        .header {
+            background: white;
+            border-bottom: 1px solid var(--ds-gray-200);
+            padding: var(--space-4) var(--space-6);
+            margin-bottom: var(--space-6);
+        }
+
+        .header-content {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--ds-gray-300);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: var(--ds-gray-700);
+        }
+
+        /* Main Title */
+        h1 {
+            font-size: var(--font-size-h1);
+            font-weight: 600;
+            color: var(--ds-gray-900);
+            margin-bottom: var(--space-6);
+        }
+
+        /* Geist Button */
+        .geist-button {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            padding: var(--space-2) var(--space-4);
+            background: var(--ds-blue-500);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: var(--font-size-small);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+        }
+
+        .geist-button:hover {
+            background: var(--ds-blue-600);
+            transform: translateY(-1px);
+        }
+
+        .geist-button--secondary {
+            background: var(--ds-gray-200);
+            color: var(--ds-gray-900);
+        }
+
+        .geist-button--secondary:hover {
+            background: var(--ds-gray-300);
+        }
+
+        .geist-button--small {
+            padding: var(--space-1) var(--space-3);
+            font-size: var(--font-size-xs);
+        }
+
+        /* Geist Card */
+        .geist-card {
+            background: white;
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 8px;
+            padding: var(--space-6);
+            margin-bottom: var(--space-6);
+        }
+
+        .geist-card h2 {
+            font-size: var(--font-size-h3);
+            font-weight: 600;
+            color: var(--ds-gray-900);
+            margin-bottom: var(--space-4);
+        }
+
+        .geist-card h3 {
+            font-size: var(--font-size-h4);
+            font-weight: 500;
+            color: var(--ds-gray-800);
+            margin-bottom: var(--space-3);
+        }
+
+        /* Geist Badge */
+        .geist-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: var(--space-1) var(--space-3);
+            background: var(--ds-gray-200);
+            color: var(--ds-gray-700);
+            border-radius: 12px;
+            font-size: var(--font-size-xs);
+            font-weight: 500;
+        }
+
+        .geist-badge--green {
+            background: var(--ds-green-500);
+            color: white;
+        }
+
+        .geist-badge--blue {
+            background: var(--ds-blue-500);
+            color: white;
+        }
+
+        .geist-badge--amber {
+            background: var(--ds-amber-500);
+            color: white;
+        }
+
+        .geist-badge--purple {
+            background: var(--ds-purple-500);
+            color: white;
+        }
+
+        /* Vendor Intelligence Dashboard */
+        .vendor-intelligence-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-6);
+            margin-bottom: var(--space-8);
+        }
+
+        .recognition-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-4);
+            margin-bottom: var(--space-6);
+        }
+
+        .stat-item {
+            background: white;
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 8px;
+            padding: var(--space-4);
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: var(--font-size-h2);
+            font-weight: 600;
+            color: var(--ds-blue-500);
+            margin-bottom: var(--space-1);
+        }
+
+        .stat-label {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-600);
+        }
+
+        /* Vendor Recognition Engine */
+        .vendor-recognition-engine {
+            background: linear-gradient(135deg, var(--ds-blue-100) 0%, white 100%);
+            border: 1px solid var(--ds-blue-200);
+            border-radius: 12px;
+            padding: var(--space-6);
+            margin-bottom: var(--space-6);
+        }
+
+        .recognition-status {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            margin-bottom: var(--space-4);
+        }
+
+        .pulse-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--ds-green-500);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        /* Learning Insights */
+        .learning-insights {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--space-4);
+            margin-bottom: var(--space-6);
+        }
+
+        .insight-card {
+            background: white;
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 8px;
+            padding: var(--space-4);
+            position: relative;
+        }
+
+        .insight-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--ds-blue-500);
+            border-radius: 8px 8px 0 0;
+        }
+
+        .insight-title {
+            font-size: var(--font-size-small);
+            font-weight: 600;
+            color: var(--ds-gray-800);
+            margin-bottom: var(--space-2);
+        }
+
+        .insight-value {
+            font-size: var(--font-size-base);
+            color: var(--ds-gray-700);
+            margin-bottom: var(--space-3);
+        }
+
+        .insight-trend {
+            display: flex;
+            align-items: center;
+            gap: var(--space-1);
+            font-size: var(--font-size-xs);
+            color: var(--ds-green-500);
+        }
+
+        /* Transaction Stream */
+        .transaction-stream {
+            background: white;
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .stream-header {
+            background: var(--ds-gray-100);
+            padding: var(--space-4);
+            border-bottom: 1px solid var(--ds-gray-200);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .stream-title {
+            font-size: var(--font-size-base);
+            font-weight: 600;
+            color: var(--ds-gray-900);
+        }
+
+        .transaction-item {
+            padding: var(--space-4);
+            border-bottom: 1px solid var(--ds-gray-200);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.2s ease;
+        }
+
+        .transaction-item:hover {
+            background: var(--ds-gray-100);
+        }
+
+        .transaction-info {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+        }
+
+        .vendor-logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background: var(--ds-gray-200);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: var(--ds-gray-700);
+        }
+
+        .transaction-details {
+            flex: 1;
+        }
+
+        .vendor-name {
+            font-weight: 600;
+            color: var(--ds-gray-900);
+            margin-bottom: var(--space-1);
+        }
+
+        .transaction-meta {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-600);
+        }
+
+        .transaction-amount {
+            font-weight: 600;
+            color: var(--ds-gray-900);
+            margin-right: var(--space-3);
+        }
+
+        .category-tags {
+            display: flex;
+            gap: var(--space-2);
+            margin-top: var(--space-2);
+        }
+
+        /* Vendor Relationship Management */
+        .vendor-relationship-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--space-4);
+            margin-bottom: var(--space-6);
+        }
+
+        .relationship-card {
+            background: white;
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 8px;
+            padding: var(--space-4);
+        }
+
+        .relationship-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-3);
+        }
+
+        .vendor-info {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+        }
+
+        .vendor-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-3);
+            margin-bottom: var(--space-3);
+        }
+
+        .stat-small {
+            text-align: center;
+            padding: var(--space-2);
+            background: var(--ds-gray-100);
+            border-radius: 6px;
+        }
+
+        .stat-small-value {
+            font-size: var(--font-size-base);
+            font-weight: 600;
+            color: var(--ds-gray-900);
+        }
+
+        .stat-small-label {
+            font-size: var(--font-size-xs);
+            color: var(--ds-gray-600);
+            margin-top: var(--space-1);
+        }
+
+        /* Optimization Suggestions */
+        .optimization-panel {
+            background: linear-gradient(135deg, var(--ds-green-500) 0%, var(--ds-blue-500) 100%);
+            color: white;
+            border-radius: 12px;
+            padding: var(--space-6);
+            margin-bottom: var(--space-6);
+        }
+
+        .optimization-title {
+            font-size: var(--font-size-h3);
+            font-weight: 600;
+            margin-bottom: var(--space-4);
+        }
+
+        .optimization-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--space-4);
+        }
+
+        .optimization-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: var(--space-4);
+            backdrop-filter: blur(10px);
+        }
+
+        .optimization-item h4 {
+            font-size: var(--font-size-base);
+            font-weight: 600;
+            margin-bottom: var(--space-2);
+        }
+
+        .optimization-item p {
+            font-size: var(--font-size-small);
+            opacity: 0.9;
+            margin-bottom: var(--space-2);
+        }
+
+        .optimization-impact {
+            font-size: var(--font-size-xs);
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.2);
+            padding: var(--space-1) var(--space-2);
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .vendor-intelligence-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .recognition-stats {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .learning-insights {
+                grid-template-columns: 1fr;
+            }
+            
+            .vendor-relationship-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="user-info">
+                <div class="avatar">AR</div>
+                <div>
+                    <div style="font-weight: 600;">Alex Rodriguez</div>
+                    <div style="font-size: var(--font-size-small); color: var(--ds-gray-600);">Rodriguez Digital Marketing</div>
+                </div>
+            </div>
+            <button class="geist-button">
+                <svg width="16" height="16" fill="currentColor">
+                    <path d="M8 4a4 4 0 0 1 4 4v4H4V8a4 4 0 0 1 4-4z"/>
+                    <path d="M8 0a2 2 0 0 1 2 2v2H6V2a2 2 0 0 1 2-2z"/>
+                </svg>
+                Train Recognition
+            </button>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1>Smart Vendor Recognition & Auto-Categorization Engine - Multi-Card Small Business Banking Pattern</h1>
+
+        <!-- Vendor Intelligence Overview -->
+        <div class="vendor-recognition-engine">
+            <div class="recognition-status">
+                <div class="pulse-indicator"></div>
+                <span style="font-weight: 600; color: var(--ds-gray-900);">Recognition Engine Active</span>
+                <span class="geist-badge geist-badge--green">99.2% Accuracy</span>
+            </div>
+            <p style="color: var(--ds-gray-700); margin-bottom: var(--space-4);">
+                Advanced ML algorithms continuously learn from your spending patterns across all 5 business cards, 
+                automatically categorizing transactions and building vendor intelligence for tax optimization.
+            </p>
+            <div class="recognition-stats">
+                <div class="stat-item">
+                    <div class="stat-value">847</div>
+                    <div class="stat-label">Vendors Recognized</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">94%</div>
+                    <div class="stat-label">Auto-Categorized</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">12</div>
+                    <div class="stat-label">Tax Categories</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">$34,567</div>
+                    <div class="stat-label">Savings Identified</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Vendor Intelligence Dashboard -->
+        <div class="vendor-intelligence-grid">
+            <!-- Learning Insights -->
+            <div class="geist-card">
+                <h2>Learning Insights</h2>
+                <div class="learning-insights">
+                    <div class="insight-card">
+                        <div class="insight-title">Spending Pattern Recognition</div>
+                        <div class="insight-value">Adobe Creative Suite detected across 3 cards</div>
+                        <div class="insight-trend">
+                            <span>↗</span>
+                            <span>Consolidated to single card for better rewards</span>
+                        </div>
+                    </div>
+                    <div class="insight-card">
+                        <div class="insight-title">Vendor Intelligence</div>
+                        <div class="insight-value">Microsoft identified as recurring vendor</div>
+                        <div class="insight-trend">
+                            <span>↗</span>
+                            <span>Auto-categorized as "Software & Subscriptions"</span>
+                        </div>
+                    </div>
+                    <div class="insight-card">
+                        <div class="insight-title">Tax Optimization</div>
+                        <div class="insight-value">Starbucks meetings reclassified</div>
+                        <div class="insight-trend">
+                            <span>↗</span>
+                            <span>Moved to "Client Entertainment" for deduction</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Real-time Transaction Stream -->
+            <div class="geist-card">
+                <h2>Real-time Recognition Stream</h2>
+                <div class="transaction-stream">
+                    <div class="stream-header">
+                        <div class="stream-title">Latest Transactions</div>
+                        <span class="geist-badge">Live</span>
+                    </div>
+                    <div class="transaction-item">
+                        <div class="transaction-info">
+                            <div class="vendor-logo">AM</div>
+                            <div class="transaction-details">
+                                <div class="vendor-name">Amazon Web Services</div>
+                                <div class="transaction-meta">Chase Ink Business • Dec 15, 2023</div>
+                                <div class="category-tags">
+                                    <span class="geist-badge geist-badge--blue">Cloud Services</span>
+                                    <span class="geist-badge geist-badge--green">Auto-Categorized</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="transaction-amount">$89.45</div>
+                    </div>
+                    <div class="transaction-item">
+                        <div class="transaction-info">
+                            <div class="vendor-logo">SB</div>
+                            <div class="transaction-details">
+                                <div class="vendor-name">Starbucks - Downtown</div>
+                                <div class="transaction-meta">Capital One Spark • Dec 15, 2023</div>
+                                <div class="category-tags">
+                                    <span class="geist-badge geist-badge--purple">Client Entertainment</span>
+                                    <span class="geist-badge geist-badge--amber">ML Suggested</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="transaction-amount">$24.67</div>
+                    </div>
+                    <div class="transaction-item">
+                        <div class="transaction-info">
+                            <div class="vendor-logo">AD</div>
+                            <div class="transaction-details">
+                                <div class="vendor-name">Adobe Creative Cloud</div>
+                                <div class="transaction-meta">American Express Business • Dec 15, 2023</div>
+                                <div class="category-tags">
+                                    <span class="geist-badge geist-badge--blue">Software & Subscriptions</span>
+                                    <span class="geist-badge geist-badge--green">Auto-Categorized</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="transaction-amount">$52.99</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Vendor Relationship Management -->
+        <div class="geist-card">
+            <h2>Vendor Relationship Intelligence</h2>
+            <p style="color: var(--ds-gray-700); margin-bottom: var(--space-4);">
+                Smart insights into your vendor relationships with spending optimization recommendations.
+            </p>
+            <div class="vendor-relationship-grid">
+                <div class="relationship-card">
+                    <div class="relationship-header">
+                        <div class="vendor-info">
+                            <div class="vendor-logo">MS</div>
+                            <div>
+                                <div class="vendor-name">Microsoft</div>
+                                <div style="font-size: var(--font-size-small); color: var(--ds-gray-600);">Software Provider</div>
+                            </div>
+                        </div>
+                        <span class="geist-badge geist-badge--blue">Preferred</span>
+                    </div>
+                    <div class="vendor-stats">
+                        <div class="stat-small">
+                            <div class="stat-small-value">$1,247</div>
+                            <div class="stat-small-label">Monthly Spend</div>
+                        </div>
+                        <div class="stat-small">
+                            <div class="stat-small-value">3</div>
+                            <div class="stat-small-label">Cards Used</div>
+                        </div>
+                    </div>
+                    <div style="font-size: var(--font-size-small); color: var(--ds-gray-700);">
+                        <strong>Recommendation:</strong> Consolidate to single card for better rewards tracking
+                    </div>
+                </div>
+
+                <div class="relationship-card">
+                    <div class="relationship-header">
+                        <div class="vendor-info">
+                            <div class="vendor-logo">GG</div>
+                            <div>
+                                <div class="vendor-name">Google Workspace</div>
+                                <div style="font-size: var(--font-size-small); color: var(--ds-gray-600);">Productivity Suite</div>
+                            </div>
+                        </div>
+                        <span class="geist-badge geist-badge--green">Optimized</span>
+                    </div>
+                    <div class="vendor-stats">
+                        <div class="stat-small">
+                            <div class="stat-small-value">$180</div>
+                            <div class="stat-small-label">Monthly Spend</div>
+                        </div>
+                        <div class="stat-small">
+                            <div class="stat-small-value">1</div>
+                            <div class="stat-small-label">Cards Used</div>
+                        </div>
+                    </div>
+                    <div style="font-size: var(--font-size-small); color: var(--ds-gray-700);">
+                        <strong>Status:</strong> Perfectly categorized as "Software & Subscriptions"
+                    </div>
+                </div>
+
+                <div class="relationship-card">
+                    <div class="relationship-header">
+                        <div class="vendor-info">
+                            <div class="vendor-logo">UB</div>
+                            <div>
+                                <div class="vendor-name">Uber for Business</div>
+                                <div style="font-size: var(--font-size-small); color: var(--ds-gray-600);">Transportation</div>
+                            </div>
+                        </div>
+                        <span class="geist-badge geist-badge--amber">Learning</span>
+                    </div>
+                    <div class="vendor-stats">
+                        <div class="stat-small">
+                            <div class="stat-small-value">$567</div>
+                            <div class="stat-small-label">Monthly Spend</div>
+                        </div>
+                        <div class="stat-small">
+                            <div class="stat-small-value">2</div>
+                            <div class="stat-small-label">Cards Used</div>
+                        </div>
+                    </div>
+                    <div style="font-size: var(--font-size-small); color: var(--ds-gray-700);">
+                        <strong>Learning:</strong> Distinguishing between client visits and office commutes
+                    </div>
+                </div>
+
+                <div class="relationship-card">
+                    <div class="relationship-header">
+                        <div class="vendor-info">
+                            <div class="vendor-logo">FB</div>
+                            <div>
+                                <div class="vendor-name">Facebook Ads</div>
+                                <div style="font-size: var(--font-size-small); color: var(--ds-gray-600);">Marketing Platform</div>
+                            </div>
+                        </div>
+                        <span class="geist-badge geist-badge--purple">Strategic</span>
+                    </div>
+                    <div class="vendor-stats">
+                        <div class="stat-small">
+                            <div class="stat-small-value">$2,340</div>
+                            <div class="stat-small-label">Monthly Spend</div>
+                        </div>
+                        <div class="stat-small">
+                            <div class="stat-small-value">1</div>
+                            <div class="stat-small-label">Cards Used</div>
+                        </div>
+                    </div>
+                    <div style="font-size: var(--font-size-small); color: var(--ds-gray-700);">
+                        <strong>Insight:</strong> Peak spending aligns with product launches
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Optimization Recommendations -->
+        <div class="optimization-panel">
+            <h3 class="optimization-title">AI-Powered Optimization Recommendations</h3>
+            <div class="optimization-list">
+                <div class="optimization-item">
+                    <h4>Vendor Consolidation</h4>
+                    <p>Combine Adobe purchases on single rewards card for 3x points on software spending</p>
+                    <div class="optimization-impact">Save $156/month</div>
+                </div>
+                <div class="optimization-item">
+                    <h4>Tax Category Optimization</h4>
+                    <p>Reclassify Starbucks meetings as "Client Entertainment" for better deduction potential</p>
+                    <div class="optimization-impact">Save $89/month</div>
+                </div>
+                <div class="optimization-item">
+                    <h4>Spending Pattern Alert</h4>
+                    <p>AWS costs trending 23% higher - consider reserved instances or usage optimization</p>
+                    <div class="optimization-impact">Save $267/month</div>
+                </div>
+                <div class="optimization-item">
+                    <h4>Vendor Relationship</h4>
+                    <p>Microsoft volume discounts available - contact account manager for enterprise pricing</p>
+                    <div class="optimization-impact">Save $198/month</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Training Dashboard -->
+        <div class="geist-card">
+            <h2>Recognition Training Dashboard</h2>
+            <p style="color: var(--ds-gray-700); margin-bottom: var(--space-4);">
+                Help the AI learn your business patterns by providing feedback on categorization and vendor recognition.
+            </p>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--space-4);">
+                <div style="background: var(--ds-gray-100); padding: var(--space-4); border-radius: 8px;">
+                    <h4 style="margin-bottom: var(--space-2);">Pending Review</h4>
+                    <div style="font-size: var(--font-size-h3); font-weight: 600; color: var(--ds-amber-500); margin-bottom: var(--space-2);">23</div>
+                    <button class="geist-button geist-button--small">Review Now</button>
+                </div>
+                <div style="background: var(--ds-gray-100); padding: var(--space-4); border-radius: 8px;">
+                    <h4 style="margin-bottom: var(--space-2);">Training Accuracy</h4>
+                    <div style="font-size: var(--font-size-h3); font-weight: 600; color: var(--ds-green-500); margin-bottom: var(--space-2);">94.7%</div>
+                    <button class="geist-button geist-button--small geist-button--secondary">View Details</button>
+                </div>
+                <div style="background: var(--ds-gray-100); padding: var(--space-4); border-radius: 8px;">
+                    <h4 style="margin-bottom: var(--space-2);">New Vendors</h4>
+                    <div style="font-size: var(--font-size-h3); font-weight: 600; color: var(--ds-blue-500); margin-bottom: var(--space-2);">7</div>
+                    <button class="geist-button geist-button--small">Train Recognition</button>
+                </div>
+                <div style="background: var(--ds-gray-100); padding: var(--space-4); border-radius: 8px;">
+                    <h4 style="margin-bottom: var(--space-2);">Savings This Month</h4>
+                    <div style="font-size: var(--font-size-h3); font-weight: 600; color: var(--ds-purple-500); margin-bottom: var(--space-2);">$1,247</div>
+                    <button class="geist-button geist-button--small geist-button--secondary">View Report</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cross-Card Intelligence -->
+        <div class="geist-card">
+            <h2>Cross-Card Intelligence</h2>
+            <p style="color: var(--ds-gray-700); margin-bottom: var(--space-4);">
+                Smart insights across all 5 business cards with unified vendor recognition and spending optimization.
+            </p>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-4);">
+                <div style="border: 1px solid var(--ds-gray-200); border-radius: 8px; padding: var(--space-4);">
+                    <h4 style="margin-bottom: var(--space-3);">Chase Ink Business</h4>
+                    <div style="margin-bottom: var(--space-2);">
+                        <div style="font-size: var(--font-size-small); color: var(--ds-gray-600);">Primary Categories</div>
+                        <div style="display: flex; gap: var(--space-2); margin-top: var(--space-1);">
+                            <span class="geist-badge">Office Supplies</span>
+                            <span class="geist-badge">Utilities</span>
+                        </div>
+                    </div>
+                    <div style="font-size: var(--font-size-small); color: var(--ds-gray-700);">
+                        <strong>Recognition Rate:</strong> 97.3%
+                    </div>
+                </div>
+                
+                <div style="border: 1px solid var(--ds-gray-200); border-radius: 8px; padding: var(--space-4);">
+                    <h4 style="margin-bottom: var(--space-3);">Capital One Spark</h4>
+                    <div style="margin-bottom: var(--space-2);">
+                        <div style="font-size: var(--font-size-small); color: var(--ds-gray-600);">Primary Categories</div>
+                        <div style="display: flex; gap: var(--space-2); margin-top: var(--space-1);">
+                            <span class="geist-badge">Travel</span>
+                            <span class="geist-badge">Client Entertainment</span>
+                        </div>
+                    </div>
+                    <div style="font-size: var(--font-size-small); color: var(--ds-gray-700);">
+                        <strong>Recognition Rate:</strong> 91.8%
+                    </div>
+                </div>
+                
+                <div style="border: 1px solid var(--ds-gray-200); border-radius: 8px; padding: var(--space-4);">
+                    <h4 style="margin-bottom: var(--space-3);">American Express Business</h4>
+                    <div style="margin-bottom: var(--space-2);">
+                        <div style="font-size: var(--font-size-small); color: var(--ds-gray-600);">Primary Categories</div>
+                        <div style="display: flex; gap: var(--space-2); margin-top: var(--space-1);">
+                            <span class="geist-badge">Software</span>
+                            <span class="geist-badge">Equipment</span>
+                        </div>
+                    </div>
+                    <div style="font-size: var(--font-size-small); color: var(--ds-gray-700);">
+                        <strong>Recognition Rate:</strong> 96.1%
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Smart Vendor Recognition Engine
+        class VendorRecognitionEngine {
+            constructor() {
+                this.recognitionAccuracy = 99.2;
+                this.trainedVendors = 847;
+                this.autoCategorizationRate = 94;
+                this.trainingSessions = 0;
+                this.pendingReviews = 23;
+                this.initializeEngine();
+            }
+
+            initializeEngine() {
+                this.simulateRealTimeRecognition();
+                this.setupTrainingInterface();
+                this.initializeLearningInsights();
+            }
+
+            simulateRealTimeRecognition() {
+                // Simulate real-time transaction recognition
+                const transactionStream = document.querySelector('.transaction-stream');
+                if (transactionStream) {
+                    setInterval(() => {
+                        this.processNewTransaction();
+                    }, 15000); // New transaction every 15 seconds
+                }
+            }
+
+            processNewTransaction() {
+                const vendors = [
+                    { name: 'Zoom Pro', category: 'Software & Subscriptions', confidence: 98.7 },
+                    { name: 'Office Depot', category: 'Office Supplies', confidence: 95.3 },
+                    { name: 'LinkedIn Premium', category: 'Professional Services', confidence: 97.1 },
+                    { name: 'Dropbox Business', category: 'Cloud Services', confidence: 99.2 }
+                ];
+
+                const vendor = vendors[Math.floor(Math.random() * vendors.length)];
+                this.updateRecognitionStats(vendor);
+                this.displayRecognitionFeedback(vendor);
+            }
+
+            updateRecognitionStats(vendor) {
+                // Update recognition accuracy based on confidence
+                this.recognitionAccuracy = Math.min(99.9, this.recognitionAccuracy + 0.1);
+                
+                // Update stats display
+                document.querySelectorAll('.stat-value').forEach((element, index) => {
+                    if (index === 0) element.textContent = this.trainedVendors;
+                    if (index === 1) element.textContent = `${this.autoCategorizationRate}%`;
+                    if (index === 3) element.textContent = `$${(34567 + Math.random() * 100).toFixed(0)}`;
+                });
+            }
+
+            displayRecognitionFeedback(vendor) {
+                // Create toast notification for new recognition
+                const toast = document.createElement('div');
+                toast.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: var(--ds-green-500);
+                    color: white;
+                    padding: var(--space-4);
+                    border-radius: 8px;
+                    z-index: 1000;
+                    animation: slideIn 0.3s ease-out;
+                `;
+                toast.innerHTML = `
+                    <div style="font-weight: 600; margin-bottom: var(--space-1);">Vendor Recognized</div>
+                    <div style="font-size: var(--font-size-small);">${vendor.name} → ${vendor.category}</div>
+                    <div style="font-size: var(--font-size-xs); opacity: 0.9;">Confidence: ${vendor.confidence}%</div>
+                `;
+                
+                document.body.appendChild(toast);
+                setTimeout(() => toast.remove(), 4000);
+            }
+
+            setupTrainingInterface() {
+                // Training button functionality
+                document.querySelectorAll('button').forEach(button => {
+                    if (button.textContent.includes('Train Recognition')) {
+                        button.addEventListener('click', () => this.startTrainingSession());
+                    }
+                    if (button.textContent.includes('Review Now')) {
+                        button.addEventListener('click', () => this.openReviewInterface());
+                    }
+                });
+            }
+
+            startTrainingSession() {
+                this.trainingSessions++;
+                this.recognitionAccuracy = Math.min(99.9, this.recognitionAccuracy + 0.5);
+                this.pendingReviews = Math.max(0, this.pendingReviews - 3);
+                
+                // Update training accuracy display
+                document.querySelectorAll('.stat-small-value').forEach((element, index) => {
+                    if (index === 0) element.textContent = this.pendingReviews;
+                    if (index === 1) element.textContent = `${this.recognitionAccuracy.toFixed(1)}%`;
+                });
+
+                this.showTrainingFeedback();
+            }
+
+            showTrainingFeedback() {
+                const feedback = document.createElement('div');
+                feedback.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: var(--ds-blue-500);
+                    color: white;
+                    padding: var(--space-4);
+                    border-radius: 8px;
+                    z-index: 1000;
+                    animation: slideIn 0.3s ease-out;
+                `;
+                feedback.innerHTML = `
+                    <div style="font-weight: 600; margin-bottom: var(--space-1);">Training Complete</div>
+                    <div style="font-size: var(--font-size-small);">Recognition accuracy improved to ${this.recognitionAccuracy.toFixed(1)}%</div>
+                `;
+                
+                document.body.appendChild(feedback);
+                setTimeout(() => feedback.remove(), 3000);
+            }
+
+            openReviewInterface() {
+                // Simulate opening review interface
+                const modal = document.createElement('div');
+                modal.style.cssText = `
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background: rgba(0, 0, 0, 0.5);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    z-index: 1000;
+                `;
+                
+                modal.innerHTML = `
+                    <div style="background: white; border-radius: 12px; padding: var(--space-8); max-width: 500px; width: 90%;">
+                        <h3 style="margin-bottom: var(--space-4);">Review Pending Categorizations</h3>
+                        <div style="margin-bottom: var(--space-4);">
+                            <div style="padding: var(--space-3); border: 1px solid var(--ds-gray-200); border-radius: 8px; margin-bottom: var(--space-3);">
+                                <div style="font-weight: 600; margin-bottom: var(--space-1);">Slack Technologies</div>
+                                <div style="font-size: var(--font-size-small); color: var(--ds-gray-600); margin-bottom: var(--space-2);">$89.99 • Chase Ink Business</div>
+                                <div style="display: flex; gap: var(--space-2);">
+                                    <button class="geist-button geist-button--small">Software & Subscriptions</button>
+                                    <button class="geist-button geist-button--small geist-button--secondary">Communication Tools</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: var(--space-3);">
+                            <button class="geist-button" onclick="this.closest('.modal').remove()">Continue Training</button>
+                            <button class="geist-button geist-button--secondary" onclick="this.closest('.modal').remove()">Skip</button>
+                        </div>
+                    </div>
+                `;
+                
+                modal.className = 'modal';
+                document.body.appendChild(modal);
+            }
+
+            initializeLearningInsights() {
+                // Simulate learning insights updates
+                setInterval(() => {
+                    this.updateLearningInsights();
+                }, 30000); // Update every 30 seconds
+            }
+
+            updateLearningInsights() {
+                const insights = document.querySelectorAll('.insight-card');
+                insights.forEach(insight => {
+                    const trend = insight.querySelector('.insight-trend');
+                    if (trend && Math.random() > 0.7) {
+                        trend.style.opacity = '1';
+                        setTimeout(() => trend.style.opacity = '0.7', 2000);
+                    }
+                });
+            }
+        }
+
+        // Cross-Card Intelligence System
+        class CrossCardIntelligence {
+            constructor() {
+                this.cards = [
+                    { name: 'Chase Ink Business', recognitionRate: 97.3, primaryCategories: ['Office Supplies', 'Utilities'] },
+                    { name: 'Capital One Spark', recognitionRate: 91.8, primaryCategories: ['Travel', 'Client Entertainment'] },
+                    { name: 'American Express Business', recognitionRate: 96.1, primaryCategories: ['Software', 'Equipment'] },
+                    { name: 'Bank of America Business', recognitionRate: 93.4, primaryCategories: ['Online Services', 'Marketing'] },
+                    { name: 'Personal Card (Business Use)', recognitionRate: 88.7, primaryCategories: ['Mixed Use', 'Emergency'] }
+                ];
+                this.initializeIntelligence();
+            }
+
+            initializeIntelligence() {
+                this.analyzeVendorPatterns();
+                this.generateOptimizationSuggestions();
+                this.monitorSpendingPatterns();
+            }
+
+            analyzeVendorPatterns() {
+                // Analyze patterns across all cards
+                const patterns = this.identifyVendorPatterns();
+                this.updateVendorRelationships(patterns);
+            }
+
+            identifyVendorPatterns() {
+                return {
+                    multiCardVendors: ['Adobe', 'Microsoft', 'AWS', 'Google'],
+                    categoryOptimization: ['Software consolidation', 'Travel rewards optimization'],
+                    spendingTrends: ['Q4 marketing increase', 'Software subscription growth']
+                };
+            }
+
+            updateVendorRelationships(patterns) {
+                // Update vendor relationship cards based on patterns
+                const relationshipCards = document.querySelectorAll('.relationship-card');
+                relationshipCards.forEach(card => {
+                    const badge = card.querySelector('.geist-badge');
+                    if (Math.random() > 0.8) {
+                        badge.textContent = 'Updated';
+                        badge.className = 'geist-badge geist-badge--green';
+                    }
+                });
+            }
+
+            generateOptimizationSuggestions() {
+                // Generate AI-powered optimization suggestions
+                const suggestions = [
+                    { type: 'Vendor Consolidation', savings: 156 },
+                    { type: 'Tax Optimization', savings: 89 },
+                    { type: 'Spending Alert', savings: 267 },
+                    { type: 'Vendor Relationship', savings: 198 }
+                ];
+                
+                this.updateOptimizationDisplay(suggestions);
+            }
+
+            updateOptimizationDisplay(suggestions) {
+                const optimizationItems = document.querySelectorAll('.optimization-item');
+                optimizationItems.forEach((item, index) => {
+                    if (suggestions[index]) {
+                        const impact = item.querySelector('.optimization-impact');
+                        impact.textContent = `Save $${suggestions[index].savings}/month`;
+                    }
+                });
+            }
+
+            monitorSpendingPatterns() {
+                // Monitor spending patterns across all cards
+                setInterval(() => {
+                    this.analyzeSpendingTrends();
+                }, 60000); // Check every minute
+            }
+
+            analyzeSpendingTrends() {
+                // Analyze trends and update insights
+                const trendData = this.calculateTrends();
+                this.updateTrendDisplays(trendData);
+            }
+
+            calculateTrends() {
+                return {
+                    totalSpending: 34567 + Math.random() * 1000,
+                    categoryGrowth: Math.random() * 10 - 5,
+                    vendorCount: 847 + Math.floor(Math.random() * 10)
+                };
+            }
+
+            updateTrendDisplays(data) {
+                // Update trend indicators
+                document.querySelectorAll('.stat-value').forEach((element, index) => {
+                    if (index === 0) element.textContent = data.vendorCount;
+                    if (index === 3) element.textContent = `$${Math.floor(data.totalSpending).toLocaleString()}`;
+                });
+            }
+        }
+
+        // Initialize systems
+        document.addEventListener('DOMContentLoaded', () => {
+            const vendorEngine = new VendorRecognitionEngine();
+            const crossCardIntelligence = new CrossCardIntelligence();
+            
+            // Add slide-in animation for toast notifications
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes slideIn {
+                    from {
+                        transform: translateX(100%);
+                        opacity: 0;
+                    }
+                    to {
+                        transform: translateX(0);
+                        opacity: 1;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        });
+    </script>
+</body>
+</html>

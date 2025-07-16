@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Card Executive Dashboard - Enterprise Banking Platform</title>
+    <style>
+        /* Geist Design System Implementation */
+        :root {
+            /* Gray Scale - Primary neutral palette */
+            --ds-gray-100: #fafafa;
+            --ds-gray-200: #eaeaea;
+            --ds-gray-300: #999999;
+            --ds-gray-400: #888888;
+            --ds-gray-500: #666666;
+            --ds-gray-600: #444444;
+            --ds-gray-700: #333333;
+            --ds-gray-800: #222222;
+            --ds-gray-900: #111111;
+            --ds-gray-1000: #000000;
+
+            /* Blue - Interactive elements */
+            --ds-blue-100: #e1f5fe;
+            --ds-blue-500: #0070f3;
+            --ds-blue-600: #0061d5;
+            --ds-blue-700: #004fc4;
+
+            /* Status Colors */
+            --ds-red-500: #ee0000;
+            --ds-amber-500: #f5a623;
+            --ds-green-500: #00b341;
+            --ds-purple-500: #7c3aed;
+
+            /* Typography */
+            --font-size-h1: 2.25rem;
+            --font-size-h2: 1.875rem;
+            --font-size-h3: 1.5rem;
+            --font-size-base: 1rem;
+            --font-size-small: 0.875rem;
+            --font-size-xs: 0.75rem;
+
+            /* Spacing scale based on 8px grid */
+            --space-1: 0.25rem;
+            --space-2: 0.5rem;
+            --space-3: 0.75rem;
+            --space-4: 1rem;
+            --space-6: 1.5rem;
+            --space-8: 2rem;
+            --space-12: 3rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Geist Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: var(--ds-gray-100);
+            color: var(--ds-gray-900);
+            line-height: 1.5;
+        }
+
+        /* Layout Components */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--space-8);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-8);
+            padding-bottom: var(--space-6);
+            border-bottom: 1px solid var(--ds-gray-200);
+        }
+
+        .header-left h1 {
+            font-size: var(--font-size-h2);
+            font-weight: 600;
+            margin-bottom: var(--space-2);
+        }
+
+        .header-meta {
+            color: var(--ds-gray-600);
+            font-size: var(--font-size-small);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: var(--space-4);
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            padding: var(--space-3);
+            background: white;
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 8px;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--ds-blue-500);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        .user-info h3 {
+            font-size: var(--font-size-small);
+            font-weight: 600;
+        }
+
+        .user-role {
+            font-size: var(--font-size-xs);
+            color: var(--ds-gray-600);
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-8);
+            margin-bottom: var(--space-8);
+        }
+
+        /* Card Portfolio Section */
+        .card-portfolio {
+            grid-column: 1 / -1;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-6);
+        }
+
+        .section-title {
+            font-size: var(--font-size-h3);
+            font-weight: 600;
+        }
+
+        .card-switcher {
+            display: flex;
+            gap: var(--space-2);
+            background: white;
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 8px;
+            padding: var(--space-1);
+        }
+
+        .card-tab {
+            padding: var(--space-2) var(--space-4);
+            border-radius: 6px;
+            border: none;
+            background: transparent;
+            color: var(--ds-gray-600);
+            font-size: var(--font-size-small);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .card-tab.active {
+            background: var(--ds-blue-500);
+            color: white;
+        }
+
+        .card-tab:hover:not(.active) {
+            background: var(--ds-gray-100);
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--space-6);
+            margin-bottom: var(--space-8);
+        }
+
+        .card-item {
+            background: white;
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 12px;
+            padding: var(--space-6);
+            position: relative;
+            transition: border-color 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .card-item:hover {
+            border-color: var(--ds-blue-500);
+            box-shadow: 0 4px 12px rgba(0, 112, 243, 0.1);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-4);
+        }
+
+        .card-brand {
+            font-weight: 600;
+            font-size: var(--font-size-base);
+        }
+
+        .card-status {
+            padding: var(--space-1) var(--space-3);
+            border-radius: 4px;
+            font-size: var(--font-size-xs);
+            font-weight: 500;
+        }
+
+        .status-active {
+            background: #e8f5e8;
+            color: #1b5e1f;
+        }
+
+        .status-warning {
+            background: #fff4e6;
+            color: #b45309;
+        }
+
+        .card-number {
+            font-family: 'Geist Mono', monospace;
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-600);
+            margin-bottom: var(--space-4);
+        }
+
+        .card-metrics {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-4);
+            margin-bottom: var(--space-4);
+        }
+
+        .metric {
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: var(--font-size-h3);
+            font-weight: 700;
+            margin-bottom: var(--space-1);
+        }
+
+        .metric-label {
+            font-size: var(--font-size-xs);
+            color: var(--ds-gray-600);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .utilization-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--ds-gray-200);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: var(--space-2);
+        }
+
+        .utilization-fill {
+            height: 100%;
+            transition: width 0.3s ease;
+        }
+
+        .utilization-low {
+            background: var(--ds-green-500);
+        }
+
+        .utilization-medium {
+            background: var(--ds-amber-500);
+        }
+
+        .utilization-high {
+            background: var(--ds-red-500);
+        }
+
+        .utilization-text {
+            text-align: center;
+            font-size: var(--font-size-xs);
+            color: var(--ds-gray-600);
+        }
+
+        /* Executive Summary */
+        .executive-summary {
+            background: white;
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 12px;
+            padding: var(--space-6);
+        }
+
+        .summary-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: var(--space-6);
+            margin-bottom: var(--space-6);
+        }
+
+        .summary-metric {
+            text-align: center;
+        }
+
+        .summary-value {
+            font-size: var(--font-size-h2);
+            font-weight: 700;
+            margin-bottom: var(--space-1);
+        }
+
+        .summary-value.positive {
+            color: var(--ds-green-500);
+        }
+
+        .summary-value.negative {
+            color: var(--ds-red-500);
+        }
+
+        .summary-label {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-600);
+        }
+
+        .summary-trend {
+            font-size: var(--font-size-xs);
+            margin-top: var(--space-1);
+        }
+
+        .trend-up {
+            color: var(--ds-green-500);
+        }
+
+        .trend-down {
+            color: var(--ds-red-500);
+        }
+
+        /* Recent Activity */
+        .recent-activity {
+            background: white;
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 12px;
+            padding: var(--space-6);
+        }
+
+        .activity-list {
+            list-style: none;
+        }
+
+        .activity-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--space-4) 0;
+            border-bottom: 1px solid var(--ds-gray-200);
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-details {
+            flex: 1;
+        }
+
+        .activity-description {
+            font-weight: 500;
+            margin-bottom: var(--space-1);
+        }
+
+        .activity-meta {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-600);
+        }
+
+        .activity-amount {
+            font-weight: 600;
+            text-align: right;
+        }
+
+        .amount-negative {
+            color: var(--ds-red-500);
+        }
+
+        .amount-positive {
+            color: var(--ds-green-500);
+        }
+
+        /* Alerts Section */
+        .alerts-section {
+            margin-top: var(--space-8);
+        }
+
+        .alert {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            padding: var(--space-4);
+            border-radius: 8px;
+            margin-bottom: var(--space-3);
+        }
+
+        .alert-warning {
+            background: #fff4e6;
+            border: 1px solid var(--ds-amber-500);
+        }
+
+        .alert-info {
+            background: var(--ds-blue-100);
+            border: 1px solid var(--ds-blue-500);
+        }
+
+        .alert-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--font-size-xs);
+            font-weight: 600;
+        }
+
+        .alert-warning .alert-icon {
+            background: var(--ds-amber-500);
+            color: white;
+        }
+
+        .alert-info .alert-icon {
+            background: var(--ds-blue-500);
+            color: white;
+        }
+
+        .alert-content {
+            flex: 1;
+        }
+
+        .alert-title {
+            font-weight: 600;
+            margin-bottom: var(--space-1);
+        }
+
+        .alert-description {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-600);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: var(--space-4);
+            }
+            
+            .header {
+                flex-direction: column;
+                gap: var(--space-4);
+                align-items: flex-start;
+            }
+            
+            .card-switcher {
+                flex-wrap: wrap;
+            }
+            
+            .summary-metrics {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <h1>Corporate Card Portfolio</h1>
+                <div class="header-meta">Last updated: Today at 2:47 PM • 5 active cards • $287,450 total available credit</div>
+            </div>
+            <div class="header-right">
+                <div class="user-profile">
+                    <div class="avatar">SC</div>
+                    <div class="user-info">
+                        <h3>Sarah Chen</h3>
+                        <div class="user-role">Chief Financial Officer</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Card Portfolio Section -->
+        <section class="card-portfolio">
+            <div class="section-header">
+                <h2 class="section-title">Multi-Card Overview</h2>
+                <div class="card-switcher">
+                    <button class="card-tab active" onclick="switchView('all')">All Cards</button>
+                    <button class="card-tab" onclick="switchView('department')">By Department</button>
+                    <button class="card-tab" onclick="switchView('utilization')">By Utilization</button>
+                </div>
+            </div>
+
+            <div class="cards-grid" id="cards-grid">
+                <!-- AmEx Corporate Platinum -->
+                <div class="card-item" data-card="amex">
+                    <div class="card-header">
+                        <div class="card-brand">AmEx Corporate Platinum</div>
+                        <div class="card-status status-active">Active</div>
+                    </div>
+                    <div class="card-number">**** **** **** 4521</div>
+                    <div class="card-metrics">
+                        <div class="metric">
+                            <div class="metric-value">$38,250</div>
+                            <div class="metric-label">Available</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value">$11,750</div>
+                            <div class="metric-label">Used</div>
+                        </div>
+                    </div>
+                    <div class="utilization-bar">
+                        <div class="utilization-fill utilization-low" style="width: 23.5%;"></div>
+                    </div>
+                    <div class="utilization-text">23.5% utilization • Executive Team</div>
+                </div>
+
+                <!-- Chase Ink Business -->
+                <div class="card-item" data-card="chase">
+                    <div class="card-header">
+                        <div class="card-brand">Chase Ink Business</div>
+                        <div class="card-status status-active">Active</div>
+                    </div>
+                    <div class="card-number">**** **** **** 8743</div>
+                    <div class="card-metrics">
+                        <div class="metric">
+                            <div class="metric-value">$8,750</div>
+                            <div class="metric-label">Available</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value">$16,250</div>
+                            <div class="metric-label">Used</div>
+                        </div>
+                    </div>
+                    <div class="utilization-bar">
+                        <div class="utilization-fill utilization-medium" style="width: 65%;"></div>
+                    </div>
+                    <div class="utilization-text">65% utilization • Operations</div>
+                </div>
+
+                <!-- Capital One Spark -->
+                <div class="card-item" data-card="capital">
+                    <div class="card-header">
+                        <div class="card-brand">Capital One Spark</div>
+                        <div class="card-status status-warning">High Utilization</div>
+                    </div>
+                    <div class="card-number">**** **** **** 9156</div>
+                    <div class="card-metrics">
+                        <div class="metric">
+                            <div class="metric-value">$5,250</div>
+                            <div class="metric-label">Available</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value">$29,750</div>
+                            <div class="metric-label">Used</div>
+                        </div>
+                    </div>
+                    <div class="utilization-bar">
+                        <div class="utilization-fill utilization-high" style="width: 85%;"></div>
+                    </div>
+                    <div class="utilization-text">85% utilization • Marketing</div>
+                </div>
+
+                <!-- Citi Corporate Card -->
+                <div class="card-item" data-card="citi">
+                    <div class="card-header">
+                        <div class="card-brand">Citi Corporate Card</div>
+                        <div class="card-status status-active">Active</div>
+                    </div>
+                    <div class="card-number">**** **** **** 2847</div>
+                    <div class="card-metrics">
+                        <div class="metric">
+                            <div class="metric-value">$22,500</div>
+                            <div class="metric-label">Available</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value">$17,500</div>
+                            <div class="metric-label">Used</div>
+                        </div>
+                    </div>
+                    <div class="utilization-bar">
+                        <div class="utilization-fill utilization-medium" style="width: 43.75%;"></div>
+                    </div>
+                    <div class="utilization-text">43.8% utilization • IT Department</div>
+                </div>
+
+                <!-- Bank of America Business -->
+                <div class="card-item" data-card="boa">
+                    <div class="card-header">
+                        <div class="card-brand">Bank of America Business</div>
+                        <div class="card-status status-active">Active</div>
+                    </div>
+                    <div class="card-number">**** **** **** 5632</div>
+                    <div class="card-metrics">
+                        <div class="metric">
+                            <div class="metric-value">$3,750</div>
+                            <div class="metric-label">Available</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value">$1,250</div>
+                            <div class="metric-label">Used</div>
+                        </div>
+                    </div>
+                    <div class="utilization-bar">
+                        <div class="utilization-fill utilization-low" style="width: 25%;"></div>
+                    </div>
+                    <div class="utilization-text">25% utilization • General Employees</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dashboard Grid -->
+        <div class="dashboard-grid">
+            <!-- Executive Summary -->
+            <div class="executive-summary">
+                <h3 class="section-title" style="margin-bottom: var(--space-6);">Executive Summary</h3>
+                <div class="summary-metrics">
+                    <div class="summary-metric">
+                        <div class="summary-value">$78,500</div>
+                        <div class="summary-label">Total Spent (MTD)</div>
+                        <div class="summary-trend trend-up">↗ 12.3% vs last month</div>
+                    </div>
+                    <div class="summary-metric">
+                        <div class="summary-value positive">$208,950</div>
+                        <div class="summary-label">Available Credit</div>
+                        <div class="summary-trend">72.7% available</div>
+                    </div>
+                    <div class="summary-metric">
+                        <div class="summary-value">$45,750</div>
+                        <div class="summary-label">Due This Month</div>
+                        <div class="summary-trend">3 payment dates</div>
+                    </div>
+                    <div class="summary-metric">
+                        <div class="summary-value">27.3%</div>
+                        <div class="summary-label">Avg Utilization</div>
+                        <div class="summary-trend trend-up">↗ 3.2% vs last month</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="recent-activity">
+                <h3 class="section-title" style="margin-bottom: var(--space-6);">Recent Activity</h3>
+                <ul class="activity-list">
+                    <li class="activity-item">
+                        <div class="activity-details">
+                            <div class="activity-description">Google Ads - Marketing Campaign</div>
+                            <div class="activity-meta">Capital One Spark • 2 hours ago • Jennifer Park</div>
+                        </div>
+                        <div class="activity-amount amount-negative">-$8,500</div>
+                    </li>
+                    <li class="activity-item">
+                        <div class="activity-details">
+                            <div class="activity-description">Salesforce Annual Subscription</div>
+                            <div class="activity-meta">Citi Corporate • 4 hours ago • David Kim</div>
+                        </div>
+                        <div class="activity-amount amount-negative">-$5,000</div>
+                    </li>
+                    <li class="activity-item">
+                        <div class="activity-details">
+                            <div class="activity-description">Client Refund - Acme Corp</div>
+                            <div class="activity-meta">AmEx Platinum • Yesterday • Mike Rodriguez</div>
+                        </div>
+                        <div class="activity-amount amount-positive">+$2,750</div>
+                    </li>
+                    <li class="activity-item">
+                        <div class="activity-details">
+                            <div class="activity-description">Office Furniture - Conference Room</div>
+                            <div class="activity-meta">Chase Ink • Yesterday • Operations Team</div>
+                        </div>
+                        <div class="activity-amount amount-negative">-$2,500</div>
+                    </li>
+                    <li class="activity-item">
+                        <div class="activity-details">
+                            <div class="activity-description">Business Travel - NYC Conference</div>
+                            <div class="activity-meta">AmEx Platinum • 2 days ago • Sarah Chen</div>
+                        </div>
+                        <div class="activity-amount amount-negative">-$1,850</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Alerts Section -->
+        <section class="alerts-section">
+            <h3 class="section-title" style="margin-bottom: var(--space-6);">Alerts & Notifications</h3>
+            
+            <div class="alert alert-warning">
+                <div class="alert-icon">!</div>
+                <div class="alert-content">
+                    <div class="alert-title">High Utilization Warning</div>
+                    <div class="alert-description">Capital One Spark card is at 85% utilization. Consider payment or credit limit increase to maintain optimal credit rating.</div>
+                </div>
+            </div>
+
+            <div class="alert alert-info">
+                <div class="alert-icon">i</div>
+                <div class="alert-content">
+                    <div class="alert-title">Payment Due Reminder</div>
+                    <div class="alert-description">3 card payments totaling $45,750 are due within the next 7 days. Schedule payments to avoid late fees.</div>
+                </div>
+            </div>
+
+            <div class="alert alert-info">
+                <div class="alert-icon">i</div>
+                <div class="alert-content">
+                    <div class="alert-title">Budget Variance Alert</div>
+                    <div class="alert-description">Marketing department is 12% over monthly budget. Review Q4 campaign spending with Jennifer Park.</div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Multi-card dashboard optimization and state management
+        let currentView = 'all';
+        
+        function switchView(view) {
+            currentView = view;
+            
+            // Update active tab
+            document.querySelectorAll('.card-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Get all card items
+            const cards = document.querySelectorAll('.card-item');
+            
+            // Apply view-specific organization and filtering
+            switch(view) {
+                case 'all':
+                    cards.forEach(card => {
+                        card.style.display = 'block';
+                        card.style.order = '0';
+                    });
+                    break;
+                    
+                case 'department':
+                    // Sort by department
+                    const departmentOrder = {
+                        'executive': 1,
+                        'operations': 2,
+                        'marketing': 3,
+                        'it': 4,
+                        'general': 5
+                    };
+                    
+                    cards.forEach(card => {
+                        card.style.display = 'block';
+                        const cardText = card.textContent.toLowerCase();
+                        if (cardText.includes('executive')) card.style.order = '1';
+                        else if (cardText.includes('operations')) card.style.order = '2';
+                        else if (cardText.includes('marketing')) card.style.order = '3';
+                        else if (cardText.includes('it department')) card.style.order = '4';
+                        else card.style.order = '5';
+                    });
+                    break;
+                    
+                case 'utilization':
+                    // Sort by utilization percentage (highest first)
+                    const utilizationValues = [];
+                    cards.forEach((card, index) => {
+                        const utilizationText = card.querySelector('.utilization-text').textContent;
+                        const percentage = parseFloat(utilizationText.match(/[\d.]+/)[0]);
+                        utilizationValues.push({ element: card, utilization: percentage, index });
+                    });
+                    
+                    utilizationValues.sort((a, b) => b.utilization - a.utilization);
+                    utilizationValues.forEach((item, index) => {
+                        item.element.style.order = index.toString();
+                        item.element.style.display = 'block';
+                    });
+                    break;
+            }
+            
+            // Animate the reorganization
+            const grid = document.getElementById('cards-grid');
+            grid.style.transition = 'all 0.3s ease';
+        }
+        
+        // Real-time data simulation
+        function simulateRealTimeUpdates() {
+            // Simulate small balance changes
+            const balanceElements = document.querySelectorAll('.metric-value');
+            
+            setInterval(() => {
+                balanceElements.forEach(element => {
+                    if (element.textContent.includes('$') && Math.random() < 0.1) {
+                        const currentValue = parseFloat(element.textContent.replace(/[$,]/g, ''));
+                        const change = (Math.random() - 0.5) * 100; // Random change up to $50
+                        const newValue = Math.max(0, currentValue + change);
+                        element.textContent = '$' + newValue.toLocaleString(undefined, {maximumFractionDigits: 0});
+                    }
+                });
+            }, 5000);
+        }
+        
+        // Enhanced card interactions
+        document.querySelectorAll('.card-item').forEach(card => {
+            card.addEventListener('click', function() {
+                // Simulate navigation to detailed card view
+                const cardBrand = this.querySelector('.card-brand').textContent;
+                
+                // Visual feedback
+                this.style.transform = 'scale(0.98)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                }, 150);
+                
+                // In a real implementation, this would navigate to detailed card management
+                console.log(`Navigating to detailed view for ${cardBrand}`);
+                
+                // Show toast notification
+                showToast(`Loading detailed view for ${cardBrand}...`);
+            });
+        });
+        
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: var(--ds-blue-500);
+                color: white;
+                padding: var(--space-4);
+                border-radius: 8px;
+                z-index: 1000;
+                font-weight: 500;
+                animation: slideIn 0.3s ease;
+            `;
+            toast.textContent = message;
+            
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => {
+                    document.body.removeChild(toast);
+                }, 300);
+            }, 3000);
+        }
+        
+        // Executive dashboard context preservation
+        function preserveContext() {
+            // Save current view state
+            localStorage.setItem('dashboardView', currentView);
+            localStorage.setItem('lastVisited', new Date().toISOString());
+        }
+        
+        function restoreContext() {
+            // Restore previous view state
+            const savedView = localStorage.getItem('dashboardView');
+            if (savedView && savedView !== 'all') {
+                switchView(savedView);
+            }
+        }
+        
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            restoreContext();
+            simulateRealTimeUpdates();
+        });
+        
+        // Save context on page unload
+        window.addEventListener('beforeunload', preserveContext);
+        
+        // Keyboard shortcuts for power users
+        document.addEventListener('keydown', function(e) {
+            if (e.altKey) {
+                switch(e.key) {
+                    case '1':
+                        switchView('all');
+                        break;
+                    case '2':
+                        switchView('department');
+                        break;
+                    case '3':
+                        switchView('utilization');
+                        break;
+                }
+            }
+        });
+        
+        // Performance optimization for financial data
+        // Progressive enhancement - works without JavaScript for core functionality
+        // All critical financial data is visible in base HTML
+        // JavaScript enhances with real-time updates and interactive features
+    </script>
+</body>
+</html>

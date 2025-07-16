@@ -1,0 +1,1506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Categorization & Reconciliation - Multi-Card Banking Platform</title>
+    <style>
+        /* Geist Design System Implementation */
+        :root {
+            /* Gray Scale - Primary neutral palette */
+            --ds-gray-100: #fafafa;
+            --ds-gray-200: #eaeaea;
+            --ds-gray-300: #999999;
+            --ds-gray-400: #888888;
+            --ds-gray-500: #666666;
+            --ds-gray-600: #444444;
+            --ds-gray-700: #333333;
+            --ds-gray-800: #222222;
+            --ds-gray-900: #111111;
+            --ds-gray-1000: #000000;
+
+            /* Blue - Interactive elements */
+            --ds-blue-100: #e1f5fe;
+            --ds-blue-500: #0070f3;
+            --ds-blue-600: #0061d5;
+            --ds-blue-700: #004fc4;
+
+            /* Status Colors */
+            --ds-red-500: #ee0000;
+            --ds-amber-500: #f5a623;
+            --ds-green-500: #00b341;
+            --ds-purple-500: #7c3aed;
+
+            /* Typography */
+            --font-size-h1: 2.25rem;
+            --font-size-h2: 1.875rem;
+            --font-size-h3: 1.5rem;
+            --font-size-base: 1rem;
+            --font-size-small: 0.875rem;
+            --font-size-xs: 0.75rem;
+
+            /* Spacing scale based on 8px grid */
+            --space-1: 0.25rem;
+            --space-2: 0.5rem;
+            --space-3: 0.75rem;
+            --space-4: 1rem;
+            --space-6: 1.5rem;
+            --space-8: 2rem;
+            --space-12: 3rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Geist Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: var(--ds-gray-100);
+            color: var(--ds-gray-900);
+            line-height: 1.5;
+        }
+
+        /* Layout Components */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--space-8);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-8);
+            padding-bottom: var(--space-6);
+            border-bottom: 1px solid var(--ds-gray-200);
+        }
+
+        .header-left h1 {
+            font-size: var(--font-size-h2);
+            font-weight: 600;
+            margin-bottom: var(--space-2);
+        }
+
+        .header-meta {
+            color: var(--ds-gray-600);
+            font-size: var(--font-size-small);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: var(--space-4);
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            padding: var(--space-3);
+            background: white;
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 8px;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--ds-blue-500);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        .user-info h3 {
+            font-size: var(--font-size-small);
+            font-weight: 600;
+        }
+
+        .user-role {
+            font-size: var(--font-size-xs);
+            color: var(--ds-gray-600);
+        }
+
+        /* Main Layout */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: var(--space-8);
+        }
+
+        /* Categorization Panel */
+        .categorization-panel {
+            background: white;
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .panel-header {
+            background: var(--ds-gray-100);
+            padding: var(--space-6);
+            border-bottom: 1px solid var(--ds-gray-200);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .section-title {
+            font-size: var(--font-size-h3);
+            font-weight: 600;
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: var(--space-2);
+            background: white;
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 6px;
+            padding: var(--space-1);
+        }
+
+        .filter-tab {
+            padding: var(--space-1) var(--space-3);
+            border-radius: 4px;
+            border: none;
+            background: transparent;
+            color: var(--ds-gray-600);
+            font-size: var(--font-size-xs);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .filter-tab.active {
+            background: var(--ds-blue-500);
+            color: white;
+        }
+
+        .filter-tab:hover:not(.active) {
+            background: var(--ds-gray-100);
+        }
+
+        .badge {
+            background: var(--ds-red-500);
+            color: white;
+            font-size: var(--font-size-xs);
+            padding: var(--space-1) var(--space-2);
+            border-radius: 3px;
+            font-weight: 600;
+            margin-left: var(--space-2);
+        }
+
+        /* Transaction List */
+        .transaction-list {
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        .transaction-item {
+            padding: var(--space-4) var(--space-6);
+            border-bottom: 1px solid var(--ds-gray-200);
+            cursor: pointer;
+            transition: background 0.15s ease;
+            position: relative;
+        }
+
+        .transaction-item:hover {
+            background: var(--ds-gray-100);
+        }
+
+        .transaction-item.selected {
+            background: var(--ds-blue-100);
+            border-left: 4px solid var(--ds-blue-500);
+        }
+
+        .transaction-item.categorized {
+            background: #e8f5e8;
+            border-left: 4px solid var(--ds-green-500);
+        }
+
+        .transaction-item.exception {
+            background: #fff1f0;
+            border-left: 4px solid var(--ds-red-500);
+        }
+
+        .transaction-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-2);
+        }
+
+        .transaction-amount {
+            font-weight: 600;
+            font-size: var(--font-size-base);
+        }
+
+        .amount-negative {
+            color: var(--ds-red-500);
+        }
+
+        .amount-positive {
+            color: var(--ds-green-500);
+        }
+
+        .transaction-status {
+            padding: var(--space-1) var(--space-2);
+            border-radius: 4px;
+            font-size: var(--font-size-xs);
+            font-weight: 500;
+        }
+
+        .status-pending {
+            background: #fff4e6;
+            color: #b45309;
+        }
+
+        .status-categorized {
+            background: #e8f5e8;
+            color: #1b5e1f;
+        }
+
+        .status-exception {
+            background: #fff1f0;
+            color: #cf1322;
+        }
+
+        .status-review {
+            background: #f0f5ff;
+            color: #1890ff;
+        }
+
+        .transaction-description {
+            font-weight: 500;
+            margin-bottom: var(--space-1);
+        }
+
+        .transaction-meta {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-600);
+            display: flex;
+            gap: var(--space-4);
+        }
+
+        .transaction-tags {
+            display: flex;
+            gap: var(--space-2);
+            margin-top: var(--space-2);
+        }
+
+        .tag {
+            padding: var(--space-1) var(--space-2);
+            border-radius: 3px;
+            font-size: var(--font-size-xs);
+            font-weight: 500;
+        }
+
+        .tag-category {
+            background: var(--ds-blue-100);
+            color: var(--ds-blue-700);
+        }
+
+        .tag-card {
+            background: var(--ds-purple-100);
+            color: var(--ds-purple-700);
+        }
+
+        .tag-department {
+            background: var(--ds-amber-100);
+            color: #b45309;
+        }
+
+        /* Categorization Sidebar */
+        .categorization-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-6);
+        }
+
+        .category-section {
+            background: white;
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 12px;
+            padding: var(--space-6);
+        }
+
+        .quick-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-3);
+            margin-bottom: var(--space-6);
+        }
+
+        .btn {
+            padding: var(--space-3) var(--space-4);
+            border-radius: 6px;
+            border: none;
+            font-size: var(--font-size-small);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: var(--ds-blue-500);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--ds-blue-600);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--ds-gray-700);
+            border: 1px solid var(--ds-gray-300);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--ds-gray-400);
+        }
+
+        .btn-success {
+            background: var(--ds-green-500);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #009100;
+        }
+
+        .btn-danger {
+            background: var(--ds-red-500);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #cc0000;
+        }
+
+        /* Smart Suggestions */
+        .smart-suggestions {
+            background: var(--ds-blue-100);
+            border: 1px solid var(--ds-blue-500);
+            border-radius: 8px;
+            padding: var(--space-4);
+            margin-bottom: var(--space-6);
+        }
+
+        .suggestion-header {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            margin-bottom: var(--space-3);
+        }
+
+        .ai-icon {
+            width: 20px;
+            height: 20px;
+            background: var(--ds-blue-500);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--font-size-xs);
+            font-weight: 600;
+        }
+
+        .suggestion-title {
+            font-weight: 600;
+            color: var(--ds-blue-700);
+        }
+
+        .suggestion-list {
+            list-style: none;
+        }
+
+        .suggestion-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--space-2) 0;
+            border-bottom: 1px solid rgba(0, 112, 243, 0.2);
+        }
+
+        .suggestion-item:last-child {
+            border-bottom: none;
+        }
+
+        .suggestion-category {
+            font-weight: 500;
+            color: var(--ds-blue-700);
+        }
+
+        .suggestion-confidence {
+            font-size: var(--font-size-xs);
+            color: var(--ds-blue-600);
+        }
+
+        .suggestion-actions {
+            display: flex;
+            gap: var(--space-2);
+        }
+
+        .btn-xs {
+            padding: var(--space-1) var(--space-2);
+            font-size: var(--font-size-xs);
+        }
+
+        /* Category Form */
+        .category-form {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-4);
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-2);
+        }
+
+        .form-label {
+            font-weight: 500;
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-700);
+        }
+
+        .form-input {
+            padding: var(--space-3);
+            border: 1px solid var(--ds-gray-300);
+            border-radius: 6px;
+            font-size: var(--font-size-small);
+            transition: border-color 0.15s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--ds-blue-500);
+            box-shadow: 0 0 0 3px rgba(0, 112, 243, 0.1);
+        }
+
+        .form-select {
+            padding: var(--space-3);
+            border: 1px solid var(--ds-gray-300);
+            border-radius: 6px;
+            font-size: var(--font-size-small);
+            background: white;
+            cursor: pointer;
+        }
+
+        /* Receipt Upload */
+        .receipt-upload {
+            border: 2px dashed var(--ds-gray-300);
+            border-radius: 8px;
+            padding: var(--space-6);
+            text-align: center;
+            transition: border-color 0.15s ease;
+            cursor: pointer;
+        }
+
+        .receipt-upload:hover {
+            border-color: var(--ds-blue-500);
+            background: var(--ds-blue-100);
+        }
+
+        .receipt-upload.dragover {
+            border-color: var(--ds-blue-500);
+            background: var(--ds-blue-100);
+        }
+
+        .upload-icon {
+            font-size: var(--font-size-h2);
+            color: var(--ds-gray-400);
+            margin-bottom: var(--space-2);
+        }
+
+        .upload-text {
+            color: var(--ds-gray-600);
+            font-size: var(--font-size-small);
+        }
+
+        .receipt-preview {
+            margin-top: var(--space-4);
+        }
+
+        .receipt-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            padding: var(--space-3);
+            background: var(--ds-gray-100);
+            border-radius: 6px;
+            margin-bottom: var(--space-2);
+        }
+
+        .receipt-thumbnail {
+            width: 40px;
+            height: 40px;
+            background: var(--ds-gray-300);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--font-size-xs);
+            color: var(--ds-gray-600);
+        }
+
+        .receipt-info {
+            flex: 1;
+        }
+
+        .receipt-name {
+            font-weight: 500;
+            font-size: var(--font-size-small);
+        }
+
+        .receipt-size {
+            font-size: var(--font-size-xs);
+            color: var(--ds-gray-600);
+        }
+
+        /* Exception Alerts */
+        .exception-alerts {
+            margin-bottom: var(--space-6);
+        }
+
+        .alert {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            padding: var(--space-4);
+            border-radius: 8px;
+            margin-bottom: var(--space-3);
+        }
+
+        .alert-warning {
+            background: #fff4e6;
+            border: 1px solid var(--ds-amber-500);
+        }
+
+        .alert-error {
+            background: #fff1f0;
+            border: 1px solid var(--ds-red-500);
+        }
+
+        .alert-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--font-size-xs);
+            font-weight: 600;
+        }
+
+        .alert-warning .alert-icon {
+            background: var(--ds-amber-500);
+            color: white;
+        }
+
+        .alert-error .alert-icon {
+            background: var(--ds-red-500);
+            color: white;
+        }
+
+        .alert-content {
+            flex: 1;
+        }
+
+        .alert-title {
+            font-weight: 600;
+            margin-bottom: var(--space-1);
+        }
+
+        .alert-description {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-600);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+            }
+            
+            .categorization-sidebar {
+                order: -1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: var(--space-4);
+            }
+            
+            .header {
+                flex-direction: column;
+                gap: var(--space-4);
+                align-items: flex-start;
+            }
+            
+            .quick-actions {
+                grid-template-columns: 1fr;
+            }
+            
+            .filter-tabs {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <h1>Expense Categorization & Reconciliation</h1>
+                <div class="header-meta">42 transactions pending • $23,750 uncategorized • March 2024 reconciliation</div>
+            </div>
+            <div class="header-right">
+                <div class="user-profile">
+                    <div class="avatar">LT</div>
+                    <div class="user-info">
+                        <h3>Lisa Thompson</h3>
+                        <div class="user-role">Senior Accountant</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Exception Alerts -->
+        <div class="exception-alerts">
+            <div class="alert alert-error">
+                <div class="alert-icon">!</div>
+                <div class="alert-content">
+                    <div class="alert-title">Missing Receipts Alert</div>
+                    <div class="alert-description">5 transactions over $25 require receipt uploads for compliance. Due by end of day.</div>
+                </div>
+            </div>
+
+            <div class="alert alert-warning">
+                <div class="alert-icon">⚠</div>
+                <div class="alert-content">
+                    <div class="alert-title">Duplicate Transaction Detected</div>
+                    <div class="alert-description">Potential duplicate: Google Ads payment on Capital One ($8,500) matches previous transaction.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Layout -->
+        <div class="main-layout">
+            <!-- Transaction List -->
+            <div class="categorization-panel">
+                <div class="panel-header">
+                    <h2 class="section-title">Transaction Categorization</h2>
+                    <div class="filter-tabs">
+                        <button class="filter-tab active" onclick="filterTransactions('all')">
+                            All <span class="badge">42</span>
+                        </button>
+                        <button class="filter-tab" onclick="filterTransactions('pending')">
+                            Pending <span class="badge">18</span>
+                        </button>
+                        <button class="filter-tab" onclick="filterTransactions('categorized')">
+                            Categorized <span class="badge">19</span>
+                        </button>
+                        <button class="filter-tab" onclick="filterTransactions('exceptions')">
+                            Exceptions <span class="badge">5</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="transaction-list" id="transaction-list">
+                    <!-- Transaction Item 1 -->
+                    <div class="transaction-item selected pending" onclick="selectTransaction(this)" data-category="pending">
+                        <div class="transaction-header">
+                            <div class="transaction-amount amount-negative">-$8,500</div>
+                            <div class="transaction-status status-pending">Pending</div>
+                        </div>
+                        <div class="transaction-description">Google Ads - Q4 Marketing Campaign</div>
+                        <div class="transaction-meta">
+                            <span>Capital One Spark</span>
+                            <span>Mar 12, 2024</span>
+                            <span>REF: GA-Q4-001</span>
+                        </div>
+                        <div class="transaction-tags">
+                            <span class="tag tag-card">Capital One</span>
+                            <span class="tag tag-department">Marketing</span>
+                        </div>
+                    </div>
+
+                    <!-- Transaction Item 2 -->
+                    <div class="transaction-item categorized" onclick="selectTransaction(this)" data-category="categorized">
+                        <div class="transaction-header">
+                            <div class="transaction-amount amount-negative">-$5,000</div>
+                            <div class="transaction-status status-categorized">Categorized</div>
+                        </div>
+                        <div class="transaction-description">Salesforce Enterprise License</div>
+                        <div class="transaction-meta">
+                            <span>Citi Corporate</span>
+                            <span>Mar 11, 2024</span>
+                            <span>REF: SF-2024-001</span>
+                        </div>
+                        <div class="transaction-tags">
+                            <span class="tag tag-category">Software/SaaS</span>
+                            <span class="tag tag-card">Citi</span>
+                            <span class="tag tag-department">IT</span>
+                        </div>
+                    </div>
+
+                    <!-- Transaction Item 3 -->
+                    <div class="transaction-item pending" onclick="selectTransaction(this)" data-category="pending">
+                        <div class="transaction-header">
+                            <div class="transaction-amount amount-negative">-$2,500</div>
+                            <div class="transaction-status status-pending">Pending</div>
+                        </div>
+                        <div class="transaction-description">Office Furniture - Conference Room Setup</div>
+                        <div class="transaction-meta">
+                            <span>Chase Ink Business</span>
+                            <span>Mar 10, 2024</span>
+                            <span>REF: FURN-CR-024</span>
+                        </div>
+                        <div class="transaction-tags">
+                            <span class="tag tag-card">Chase Ink</span>
+                            <span class="tag tag-department">Operations</span>
+                        </div>
+                    </div>
+
+                    <!-- Transaction Item 4 -->
+                    <div class="transaction-item exception" onclick="selectTransaction(this)" data-category="exceptions">
+                        <div class="transaction-header">
+                            <div class="transaction-amount amount-negative">-$1,850</div>
+                            <div class="transaction-status status-exception">Exception</div>
+                        </div>
+                        <div class="transaction-description">Business Travel - NYC Client Meeting</div>
+                        <div class="transaction-meta">
+                            <span>AmEx Platinum</span>
+                            <span>Mar 9, 2024</span>
+                            <span>REF: TRAVEL-NYC-078</span>
+                        </div>
+                        <div class="transaction-tags">
+                            <span class="tag tag-card">AmEx</span>
+                            <span class="tag tag-department">Executive</span>
+                        </div>
+                    </div>
+
+                    <!-- Transaction Item 5 -->
+                    <div class="transaction-item pending" onclick="selectTransaction(this)" data-category="pending">
+                        <div class="transaction-header">
+                            <div class="transaction-amount amount-negative">-$1,200</div>
+                            <div class="transaction-status status-pending">Pending</div>
+                        </div>
+                        <div class="transaction-description">Adobe Creative Suite Team License</div>
+                        <div class="transaction-meta">
+                            <span>Capital One Spark</span>
+                            <span>Mar 8, 2024</span>
+                            <span>REF: ADOBE-TEAM-2024</span>
+                        </div>
+                        <div class="transaction-tags">
+                            <span class="tag tag-card">Capital One</span>
+                            <span class="tag tag-department">Marketing</span>
+                        </div>
+                    </div>
+
+                    <!-- Transaction Item 6 -->
+                    <div class="transaction-item categorized" onclick="selectTransaction(this)" data-category="categorized">
+                        <div class="transaction-header">
+                            <div class="transaction-amount amount-negative">-$850</div>
+                            <div class="transaction-status status-categorized">Categorized</div>
+                        </div>
+                        <div class="transaction-description">Office Supplies & Equipment</div>
+                        <div class="transaction-meta">
+                            <span>Chase Ink Business</span>
+                            <span>Mar 7, 2024</span>
+                            <span>REF: SUPPLY-156</span>
+                        </div>
+                        <div class="transaction-tags">
+                            <span class="tag tag-category">Office Supplies</span>
+                            <span class="tag tag-card">Chase Ink</span>
+                            <span class="tag tag-department">Operations</span>
+                        </div>
+                    </div>
+
+                    <!-- Transaction Item 7 -->
+                    <div class="transaction-item exception" onclick="selectTransaction(this)" data-category="exceptions">
+                        <div class="transaction-header">
+                            <div class="transaction-amount amount-negative">-$125</div>
+                            <div class="transaction-status status-exception">Exception</div>
+                        </div>
+                        <div class="transaction-description">Team Lunch - Client Meeting</div>
+                        <div class="transaction-meta">
+                            <span>AmEx Platinum</span>
+                            <span>Mar 6, 2024</span>
+                            <span>REF: MEAL-CLIENT-089</span>
+                        </div>
+                        <div class="transaction-tags">
+                            <span class="tag tag-card">AmEx</span>
+                            <span class="tag tag-department">Executive</span>
+                        </div>
+                    </div>
+
+                    <!-- Transaction Item 8 -->
+                    <div class="transaction-item pending" onclick="selectTransaction(this)" data-category="pending">
+                        <div class="transaction-header">
+                            <div class="transaction-amount amount-positive">+$2,750</div>
+                            <div class="transaction-status status-review">Review</div>
+                        </div>
+                        <div class="transaction-description">Client Refund - Acme Corp Project</div>
+                        <div class="transaction-meta">
+                            <span>AmEx Platinum</span>
+                            <span>Mar 5, 2024</span>
+                            <span>REF: REFUND-ACME-156</span>
+                        </div>
+                        <div class="transaction-tags">
+                            <span class="tag tag-card">AmEx</span>
+                            <span class="tag tag-department">Finance</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Categorization Sidebar -->
+            <div class="categorization-sidebar">
+                <!-- Quick Actions -->
+                <div class="category-section">
+                    <h3 class="section-title" style="margin-bottom: var(--space-4);">Quick Actions</h3>
+                    <div class="quick-actions">
+                        <button class="btn btn-primary" onclick="categorizeSelected()">Categorize</button>
+                        <button class="btn btn-secondary" onclick="splitTransaction()">Split</button>
+                        <button class="btn btn-success" onclick="bulkCategorize()">Bulk Apply</button>
+                        <button class="btn btn-danger" onclick="flagException()">Flag Issue</button>
+                    </div>
+                </div>
+
+                <!-- Smart Suggestions -->
+                <div class="smart-suggestions">
+                    <div class="suggestion-header">
+                        <div class="ai-icon">AI</div>
+                        <div class="suggestion-title">Smart Categorization</div>
+                    </div>
+                    <ul class="suggestion-list">
+                        <li class="suggestion-item">
+                            <div>
+                                <div class="suggestion-category">Advertising & Marketing</div>
+                                <div class="suggestion-confidence">95% confidence</div>
+                            </div>
+                            <div class="suggestion-actions">
+                                <button class="btn btn-primary btn-xs" onclick="applySuggestion('advertising')">Apply</button>
+                                <button class="btn btn-secondary btn-xs" onclick="rejectSuggestion('advertising')">Skip</button>
+                            </div>
+                        </li>
+                        <li class="suggestion-item">
+                            <div>
+                                <div class="suggestion-category">Marketing Department</div>
+                                <div class="suggestion-confidence">88% confidence</div>
+                            </div>
+                            <div class="suggestion-actions">
+                                <button class="btn btn-primary btn-xs" onclick="applySuggestion('marketing')">Apply</button>
+                                <button class="btn btn-secondary btn-xs" onclick="rejectSuggestion('marketing')">Skip</button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Category Form -->
+                <div class="category-section">
+                    <h3 class="section-title" style="margin-bottom: var(--space-4);">Manual Categorization</h3>
+                    <div class="category-form">
+                        <div class="form-group">
+                            <label class="form-label">Category</label>
+                            <select class="form-select" id="category-select">
+                                <option value="">Select category...</option>
+                                <option value="software">Software/SaaS</option>
+                                <option value="advertising">Advertising & Marketing</option>
+                                <option value="office-supplies">Office Supplies</option>
+                                <option value="travel">Business Travel</option>
+                                <option value="meals">Meals & Entertainment</option>
+                                <option value="equipment">Equipment & Hardware</option>
+                                <option value="professional-services">Professional Services</option>
+                                <option value="utilities">Utilities & Communications</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Department</label>
+                            <select class="form-select" id="department-select">
+                                <option value="">Select department...</option>
+                                <option value="marketing">Marketing</option>
+                                <option value="it">IT Department</option>
+                                <option value="operations">Operations</option>
+                                <option value="executive">Executive</option>
+                                <option value="finance">Finance</option>
+                                <option value="hr">Human Resources</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Project Code (Optional)</label>
+                            <input type="text" class="form-input" placeholder="e.g., PROJ-2024-Q1" id="project-code">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Notes</label>
+                            <textarea class="form-input" rows="3" placeholder="Additional categorization notes..." id="category-notes"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Receipt Upload -->
+                <div class="category-section">
+                    <h3 class="section-title" style="margin-bottom: var(--space-4);">Receipt Upload</h3>
+                    <div class="receipt-upload" onclick="triggerFileUpload()" ondrop="handleFileDrop(event)" ondragover="handleDragOver(event)">
+                        <div class="upload-icon">📄</div>
+                        <div class="upload-text">Drop receipt here or click to upload</div>
+                        <input type="file" id="receipt-file" style="display: none;" accept="image/*,.pdf" multiple onchange="handleFileSelect(event)">
+                    </div>
+                    
+                    <div class="receipt-preview" id="receipt-preview">
+                        <div class="receipt-item">
+                            <div class="receipt-thumbnail">PDF</div>
+                            <div class="receipt-info">
+                                <div class="receipt-name">google-ads-receipt.pdf</div>
+                                <div class="receipt-size">245 KB</div>
+                            </div>
+                            <button class="btn btn-secondary btn-xs" onclick="removeReceipt(this)">Remove</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Expense categorization and reconciliation optimization
+        let selectedTransaction = null;
+        let currentFilter = 'all';
+        
+        function selectTransaction(element) {
+            // Remove selection from other transactions
+            document.querySelectorAll('.transaction-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+            
+            // Select current transaction
+            element.classList.add('selected');
+            selectedTransaction = element;
+            
+            // Load transaction details into form
+            loadTransactionDetails(element);
+            
+            // Update smart suggestions
+            updateSmartSuggestions(element);
+            
+            showToast('Transaction selected for categorization', 'info');
+        }
+        
+        function loadTransactionDetails(transaction) {
+            const description = transaction.querySelector('.transaction-description').textContent;
+            const department = transaction.querySelector('.tag-department')?.textContent || '';
+            
+            // Pre-populate form based on transaction
+            const categorySelect = document.getElementById('category-select');
+            const departmentSelect = document.getElementById('department-select');
+            
+            // Smart category suggestion based on merchant
+            if (description.includes('Google Ads')) {
+                categorySelect.value = 'advertising';
+            } else if (description.includes('Salesforce')) {
+                categorySelect.value = 'software';
+            } else if (description.includes('Office')) {
+                categorySelect.value = 'office-supplies';
+            } else if (description.includes('Travel')) {
+                categorySelect.value = 'travel';
+            }
+            
+            // Set department
+            departmentSelect.value = department.toLowerCase();
+        }
+        
+        function updateSmartSuggestions(transaction) {
+            const description = transaction.querySelector('.transaction-description').textContent;
+            const suggestionList = document.querySelector('.suggestion-list');
+            
+            // Generate ML-based suggestions
+            let suggestions = [];
+            
+            if (description.includes('Google Ads')) {
+                suggestions = [
+                    { category: 'Advertising & Marketing', confidence: 95 },
+                    { department: 'Marketing Department', confidence: 88 }
+                ];
+            } else if (description.includes('Salesforce')) {
+                suggestions = [
+                    { category: 'Software/SaaS', confidence: 98 },
+                    { department: 'IT Department', confidence: 92 }
+                ];
+            } else if (description.includes('Office')) {
+                suggestions = [
+                    { category: 'Office Supplies', confidence: 85 },
+                    { department: 'Operations', confidence: 78 }
+                ];
+            }
+            
+            // Update suggestion display
+            suggestionList.innerHTML = suggestions.map(suggestion => `
+                <li class="suggestion-item">
+                    <div>
+                        <div class="suggestion-category">${suggestion.category || suggestion.department}</div>
+                        <div class="suggestion-confidence">${suggestion.confidence}% confidence</div>
+                    </div>
+                    <div class="suggestion-actions">
+                        <button class="btn btn-primary btn-xs" onclick="applySuggestion('${suggestion.category || suggestion.department}')">Apply</button>
+                        <button class="btn btn-secondary btn-xs" onclick="rejectSuggestion('${suggestion.category || suggestion.department}')">Skip</button>
+                    </div>
+                </li>
+            `).join('');
+        }
+        
+        function filterTransactions(filter) {
+            currentFilter = filter;
+            
+            // Update active tab
+            document.querySelectorAll('.filter-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Filter transactions
+            const transactions = document.querySelectorAll('.transaction-item');
+            transactions.forEach(transaction => {
+                const category = transaction.dataset.category;
+                let shouldShow = false;
+                
+                switch(filter) {
+                    case 'all':
+                        shouldShow = true;
+                        break;
+                    case 'pending':
+                        shouldShow = category === 'pending';
+                        break;
+                    case 'categorized':
+                        shouldShow = category === 'categorized';
+                        break;
+                    case 'exceptions':
+                        shouldShow = category === 'exceptions';
+                        break;
+                }
+                
+                transaction.style.display = shouldShow ? 'block' : 'none';
+            });
+            
+            showToast(`Filtered to ${filter} transactions`, 'info');
+        }
+        
+        function categorizeSelected() {
+            if (!selectedTransaction) {
+                showToast('Please select a transaction first', 'warning');
+                return;
+            }
+            
+            const category = document.getElementById('category-select').value;
+            const department = document.getElementById('department-select').value;
+            const projectCode = document.getElementById('project-code').value;
+            const notes = document.getElementById('category-notes').value;
+            
+            if (!category || !department) {
+                showToast('Please select both category and department', 'warning');
+                return;
+            }
+            
+            // Apply categorization
+            applyCategorization(selectedTransaction, category, department, projectCode, notes);
+            
+            showToast('Transaction categorized successfully', 'success');
+        }
+        
+        function applyCategorization(transaction, category, department, projectCode, notes) {
+            // Update transaction status
+            transaction.classList.remove('pending', 'exception');
+            transaction.classList.add('categorized');
+            transaction.dataset.category = 'categorized';
+            
+            // Update status badge
+            const statusElement = transaction.querySelector('.transaction-status');
+            statusElement.textContent = 'Categorized';
+            statusElement.className = 'transaction-status status-categorized';
+            
+            // Add category tag
+            const tagsContainer = transaction.querySelector('.transaction-tags');
+            const categoryTag = document.createElement('span');
+            categoryTag.className = 'tag tag-category';
+            categoryTag.textContent = category.charAt(0).toUpperCase() + category.slice(1).replace('-', ' ');
+            tagsContainer.insertBefore(categoryTag, tagsContainer.firstChild);
+            
+            // Store categorization data
+            transaction.dataset.category = 'categorized';
+            transaction.dataset.categoryType = category;
+            transaction.dataset.department = department;
+            if (projectCode) transaction.dataset.projectCode = projectCode;
+            if (notes) transaction.dataset.notes = notes;
+            
+            // Clear form
+            clearCategoryForm();
+            
+            // Update filter counts
+            updateFilterCounts();
+        }
+        
+        function applySuggestion(suggestionType) {
+            if (!selectedTransaction) {
+                showToast('Please select a transaction first', 'warning');
+                return;
+            }
+            
+            // Apply the suggestion to form
+            if (suggestionType.includes('Marketing')) {
+                document.getElementById('category-select').value = 'advertising';
+                document.getElementById('department-select').value = 'marketing';
+            } else if (suggestionType.includes('Software')) {
+                document.getElementById('category-select').value = 'software';
+                document.getElementById('department-select').value = 'it';
+            }
+            
+            showToast(`Applied suggestion: ${suggestionType}`, 'success');
+            
+            // Auto-categorize if both category and department are set
+            const category = document.getElementById('category-select').value;
+            const department = document.getElementById('department-select').value;
+            
+            if (category && department) {
+                categorizeSelected();
+            }
+        }
+        
+        function rejectSuggestion(suggestionType) {
+            showToast(`Rejected suggestion: ${suggestionType}`, 'info');
+            
+            // Log for ML model improvement
+            console.log(`Rejected suggestion: ${suggestionType} for transaction: ${selectedTransaction?.querySelector('.transaction-description').textContent}`);
+        }
+        
+        function splitTransaction() {
+            if (!selectedTransaction) {
+                showToast('Please select a transaction first', 'warning');
+                return;
+            }
+            
+            // In real implementation, would open split transaction modal
+            showToast('Split transaction feature - Opening allocation modal...', 'info');
+            
+            // Simulate split allocation
+            setTimeout(() => {
+                showToast('Transaction split: 60% Operations, 40% Marketing', 'success');
+            }, 2000);
+        }
+        
+        function bulkCategorize() {
+            const pendingTransactions = document.querySelectorAll('.transaction-item.pending');
+            
+            if (pendingTransactions.length === 0) {
+                showToast('No pending transactions to categorize', 'warning');
+                return;
+            }
+            
+            // Show bulk categorization modal in real implementation
+            const confirmed = confirm(`Apply current categorization settings to ${pendingTransactions.length} pending transactions?`);
+            
+            if (confirmed) {
+                const category = document.getElementById('category-select').value;
+                const department = document.getElementById('department-select').value;
+                
+                if (!category || !department) {
+                    showToast('Please set category and department first', 'warning');
+                    return;
+                }
+                
+                // Apply to all pending
+                pendingTransactions.forEach(transaction => {
+                    applyCategorization(transaction, category, department, '', '');
+                });
+                
+                showToast(`Bulk categorized ${pendingTransactions.length} transactions`, 'success');
+            }
+        }
+        
+        function flagException() {
+            if (!selectedTransaction) {
+                showToast('Please select a transaction first', 'warning');
+                return;
+            }
+            
+            const reason = prompt('Exception reason:');
+            if (reason) {
+                selectedTransaction.classList.add('exception');
+                selectedTransaction.dataset.category = 'exceptions';
+                
+                const statusElement = selectedTransaction.querySelector('.transaction-status');
+                statusElement.textContent = 'Exception';
+                statusElement.className = 'transaction-status status-exception';
+                
+                showToast(`Transaction flagged: ${reason}`, 'warning');
+                updateFilterCounts();
+            }
+        }
+        
+        function clearCategoryForm() {
+            document.getElementById('category-select').value = '';
+            document.getElementById('department-select').value = '';
+            document.getElementById('project-code').value = '';
+            document.getElementById('category-notes').value = '';
+        }
+        
+        function updateFilterCounts() {
+            const filterTabs = document.querySelectorAll('.filter-tab');
+            
+            filterTabs.forEach(tab => {
+                const filter = tab.textContent.trim().split(' ')[0].toLowerCase();
+                const badge = tab.querySelector('.badge');
+                
+                if (badge) {
+                    let count = 0;
+                    
+                    switch(filter) {
+                        case 'all':
+                            count = document.querySelectorAll('.transaction-item').length;
+                            break;
+                        case 'pending':
+                            count = document.querySelectorAll('.transaction-item.pending').length;
+                            break;
+                        case 'categorized':
+                            count = document.querySelectorAll('.transaction-item.categorized').length;
+                            break;
+                        case 'exceptions':
+                            count = document.querySelectorAll('.transaction-item.exception').length;
+                            break;
+                    }
+                    
+                    badge.textContent = count;
+                }
+            });
+        }
+        
+        // Receipt upload functionality
+        function triggerFileUpload() {
+            document.getElementById('receipt-file').click();
+        }
+        
+        function handleFileDrop(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            
+            const files = event.dataTransfer.files;
+            processFiles(files);
+            
+            event.target.classList.remove('dragover');
+        }
+        
+        function handleDragOver(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            event.target.classList.add('dragover');
+        }
+        
+        function handleFileSelect(event) {
+            const files = event.target.files;
+            processFiles(files);
+        }
+        
+        function processFiles(files) {
+            const previewContainer = document.getElementById('receipt-preview');
+            
+            Array.from(files).forEach(file => {
+                if (file.type.includes('image') || file.type.includes('pdf')) {
+                    const receiptItem = document.createElement('div');
+                    receiptItem.className = 'receipt-item';
+                    
+                    const fileType = file.type.includes('pdf') ? 'PDF' : 'IMG';
+                    const fileSize = (file.size / 1024).toFixed(0) + ' KB';
+                    
+                    receiptItem.innerHTML = `
+                        <div class="receipt-thumbnail">${fileType}</div>
+                        <div class="receipt-info">
+                            <div class="receipt-name">${file.name}</div>
+                            <div class="receipt-size">${fileSize}</div>
+                        </div>
+                        <button class="btn btn-secondary btn-xs" onclick="removeReceipt(this)">Remove</button>
+                    `;
+                    
+                    previewContainer.appendChild(receiptItem);
+                    
+                    showToast(`Receipt uploaded: ${file.name}`, 'success');
+                }
+            });
+        }
+        
+        function removeReceipt(button) {
+            const receiptItem = button.parentElement;
+            receiptItem.remove();
+            showToast('Receipt removed', 'info');
+        }
+        
+        // Auto-categorization based on patterns
+        function runAutoCategorization() {
+            const pendingTransactions = document.querySelectorAll('.transaction-item.pending');
+            
+            pendingTransactions.forEach(transaction => {
+                const description = transaction.querySelector('.transaction-description').textContent;
+                const amount = parseFloat(transaction.querySelector('.transaction-amount').textContent.replace(/[$,-]/g, ''));
+                
+                // Pattern-based auto-categorization
+                if (description.includes('Google') || description.includes('Facebook') || description.includes('Ads')) {
+                    // High confidence advertising
+                    if (Math.random() < 0.8) { // 80% auto-categorize
+                        applyCategorization(transaction, 'advertising', 'marketing', '', 'Auto-categorized');
+                    }
+                } else if (description.includes('Software') || description.includes('License') || description.includes('SaaS')) {
+                    if (Math.random() < 0.9) { // 90% auto-categorize
+                        applyCategorization(transaction, 'software', 'it', '', 'Auto-categorized');
+                    }
+                } else if (description.includes('Office') || description.includes('Supplies')) {
+                    if (Math.random() < 0.85) { // 85% auto-categorize
+                        applyCategorization(transaction, 'office-supplies', 'operations', '', 'Auto-categorized');
+                    }
+                }
+            });
+            
+            updateFilterCounts();
+        }
+        
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            let backgroundColor;
+            
+            switch(type) {
+                case 'success':
+                    backgroundColor = 'var(--ds-green-500)';
+                    break;
+                case 'warning':
+                    backgroundColor = 'var(--ds-amber-500)';
+                    break;
+                case 'error':
+                    backgroundColor = 'var(--ds-red-500)';
+                    break;
+                default:
+                    backgroundColor = 'var(--ds-blue-500)';
+            }
+            
+            toast.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${backgroundColor};
+                color: white;
+                padding: var(--space-4);
+                border-radius: 8px;
+                z-index: 1000;
+                font-weight: 500;
+                max-width: 300px;
+                animation: slideInRight 0.3s ease;
+            `;
+            toast.textContent = message;
+            
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.animation = 'slideOutRight 0.3s ease';
+                setTimeout(() => {
+                    document.body.removeChild(toast);
+                }, 300);
+            }, 3000);
+        }
+        
+        // Keyboard shortcuts for accountant efficiency
+        document.addEventListener('keydown', function(e) {
+            if (e.altKey) {
+                switch(e.key) {
+                    case 'c':
+                        categorizeSelected();
+                        break;
+                    case 's':
+                        splitTransaction();
+                        break;
+                    case 'b':
+                        bulkCategorize();
+                        break;
+                    case 'f':
+                        flagException();
+                        break;
+                    case '1':
+                        filterTransactions('pending');
+                        break;
+                    case '2':
+                        filterTransactions('categorized');
+                        break;
+                    case '3':
+                        filterTransactions('exceptions');
+                        break;
+                }
+            }
+            
+            // Arrow key navigation
+            if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+                const transactions = Array.from(document.querySelectorAll('.transaction-item:not([style*="display: none"])'));
+                const currentIndex = transactions.findIndex(t => t.classList.contains('selected'));
+                
+                if (e.key === 'ArrowDown' && currentIndex < transactions.length - 1) {
+                    selectTransaction(transactions[currentIndex + 1]);
+                } else if (e.key === 'ArrowUp' && currentIndex > 0) {
+                    selectTransaction(transactions[currentIndex - 1]);
+                }
+                
+                e.preventDefault();
+            }
+        });
+        
+        // Add CSS animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideInRight {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            
+            @keyframes slideOutRight {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+            
+            .transaction-item {
+                transition: all 0.15s ease;
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Initialize categorization system
+        document.addEventListener('DOMContentLoaded', function() {
+            // Auto-select first transaction
+            const firstTransaction = document.querySelector('.transaction-item');
+            if (firstTransaction) {
+                selectTransaction(firstTransaction);
+            }
+            
+            // Run auto-categorization after a delay
+            setTimeout(() => {
+                showToast('Smart categorization enabled - AI suggestions available', 'info');
+                
+                // Simulate periodic auto-categorization
+                setTimeout(runAutoCategorization, 5000);
+            }, 2000);
+        });
+        
+        // Performance optimization for expense categorization workflows
+        // Progressive enhancement - works without JavaScript for core categorization functionality
+        // JavaScript enhances with smart suggestions, auto-categorization, and workflow automation
+    </script>
+</body>
+</html>

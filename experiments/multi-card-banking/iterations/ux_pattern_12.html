@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automated Tax Compliance & Audit Trail System - Multi-Card Banking Flow</title>
+    <style>
+        /* Geist Design System implementation */
+        :root {
+            /* Colors */
+            --ds-gray-100: #fafafa;
+            --ds-gray-200: #eaeaea;
+            --ds-gray-300: #999999;
+            --ds-gray-400: #888888;
+            --ds-gray-500: #666666;
+            --ds-gray-600: #444444;
+            --ds-gray-700: #333333;
+            --ds-gray-800: #222222;
+            --ds-gray-900: #111111;
+            --ds-gray-1000: #000000;
+            --ds-blue-100: #e1f5fe;
+            --ds-blue-500: #0070f3;
+            --ds-blue-600: #0061d5;
+            --ds-blue-700: #004fc4;
+            --ds-red-500: #ee0000;
+            --ds-amber-500: #f5a623;
+            --ds-green-500: #22c55e;
+            --ds-purple-500: #7c3aed;
+            --ds-teal-500: #14b8a6;
+            --ds-orange-500: #f97316;
+
+            /* Typography */
+            --font-size-xs: 0.75rem;
+            --font-size-small: 0.875rem;
+            --font-size-base: 1rem;
+            --font-size-large: 1.125rem;
+            --font-size-h4: 1.25rem;
+            --font-size-h3: 1.5rem;
+            --font-size-h2: 1.875rem;
+            --font-size-h1: 2.25rem;
+
+            /* Spacing */
+            --space-1: 0.25rem;
+            --space-2: 0.5rem;
+            --space-3: 0.75rem;
+            --space-4: 1rem;
+            --space-5: 1.25rem;
+            --space-6: 1.5rem;
+            --space-8: 2rem;
+            --space-10: 2.5rem;
+            --space-12: 3rem;
+            --space-16: 4rem;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Geist Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background-color: var(--ds-gray-100);
+            color: var(--ds-gray-900);
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: var(--space-4);
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            border-bottom: 1px solid var(--ds-gray-200);
+            padding: var(--space-4) 0;
+            margin-bottom: var(--space-6);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 var(--space-4);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--ds-teal-500);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: var(--font-size-small);
+        }
+
+        .user-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user-name {
+            font-weight: 600;
+            color: var(--ds-gray-900);
+            font-size: var(--font-size-base);
+        }
+
+        .user-role {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-500);
+        }
+
+        .tax-year-selector {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            background: var(--ds-gray-100);
+            padding: var(--space-2);
+            border-radius: 8px;
+        }
+
+        .tax-year-selector select {
+            padding: var(--space-2) var(--space-3);
+            border: 1px solid var(--ds-gray-300);
+            border-radius: 6px;
+            font-size: var(--font-size-small);
+            background: white;
+        }
+
+        /* Main Layout */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: var(--space-6);
+            margin-bottom: var(--space-8);
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        .two-column {
+            grid-column: span 2;
+        }
+
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: var(--space-6);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--ds-gray-200);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-5);
+        }
+
+        .card-title {
+            font-size: var(--font-size-h3);
+            font-weight: 600;
+            color: var(--ds-gray-900);
+        }
+
+        .card-subtitle {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-500);
+            margin-top: var(--space-1);
+        }
+
+        /* Tax Compliance Dashboard */
+        .compliance-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-4);
+            margin-bottom: var(--space-6);
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: var(--space-4);
+            background: var(--ds-gray-100);
+            border-radius: 8px;
+        }
+
+        .stat-value {
+            font-size: var(--font-size-h2);
+            font-weight: 600;
+            color: var(--ds-gray-900);
+            margin-bottom: var(--space-1);
+        }
+
+        .stat-label {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-500);
+        }
+
+        .stat-trend {
+            font-size: var(--font-size-xs);
+            margin-top: var(--space-1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-1);
+        }
+
+        .trend-up {
+            color: var(--ds-green-500);
+        }
+
+        .trend-down {
+            color: var(--ds-red-500);
+        }
+
+        /* Audit Trail */
+        .audit-trail {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-3);
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .audit-entry {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            padding: var(--space-3);
+            background: var(--ds-gray-100);
+            border-radius: 8px;
+            border-left: 4px solid var(--ds-blue-500);
+        }
+
+        .audit-entry.warning {
+            border-left-color: var(--ds-amber-500);
+        }
+
+        .audit-entry.error {
+            border-left-color: var(--ds-red-500);
+        }
+
+        .audit-entry.success {
+            border-left-color: var(--ds-green-500);
+        }
+
+        .audit-timestamp {
+            font-size: var(--font-size-xs);
+            color: var(--ds-gray-500);
+            min-width: 80px;
+        }
+
+        .audit-message {
+            flex: 1;
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-700);
+        }
+
+        .audit-action {
+            font-size: var(--font-size-xs);
+            color: var(--ds-blue-500);
+            cursor: pointer;
+        }
+
+        /* Tax Categories */
+        .tax-category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--space-4);
+        }
+
+        .tax-category {
+            background: var(--ds-gray-100);
+            border-radius: 8px;
+            padding: var(--space-4);
+            position: relative;
+        }
+
+        .category-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-3);
+        }
+
+        .category-name {
+            font-weight: 600;
+            color: var(--ds-gray-900);
+            font-size: var(--font-size-base);
+        }
+
+        .category-amount {
+            font-weight: 600;
+            color: var(--ds-green-500);
+            font-size: var(--font-size-large);
+        }
+
+        .category-progress {
+            background: var(--ds-gray-200);
+            height: 4px;
+            border-radius: 2px;
+            overflow: hidden;
+            margin-bottom: var(--space-2);
+        }
+
+        .category-progress-fill {
+            height: 100%;
+            background: var(--ds-green-500);
+            transition: width 0.3s ease;
+        }
+
+        .category-transactions {
+            font-size: var(--font-size-xs);
+            color: var(--ds-gray-500);
+        }
+
+        /* Deduction Optimizer */
+        .deduction-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--space-3);
+            background: var(--ds-gray-100);
+            border-radius: 8px;
+            margin-bottom: var(--space-3);
+        }
+
+        .deduction-info {
+            flex: 1;
+        }
+
+        .deduction-title {
+            font-weight: 500;
+            color: var(--ds-gray-900);
+            font-size: var(--font-size-base);
+        }
+
+        .deduction-description {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-600);
+            margin-top: var(--space-1);
+        }
+
+        .deduction-potential {
+            font-weight: 600;
+            color: var(--ds-green-500);
+            font-size: var(--font-size-large);
+        }
+
+        .deduction-actions {
+            display: flex;
+            gap: var(--space-2);
+        }
+
+        /* Status Badges */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: var(--space-1) var(--space-2);
+            border-radius: 6px;
+            font-size: var(--font-size-xs);
+            font-weight: 500;
+            gap: var(--space-1);
+        }
+
+        .status-badge.compliant {
+            background: var(--ds-green-500);
+            color: white;
+        }
+
+        .status-badge.warning {
+            background: var(--ds-amber-500);
+            color: white;
+        }
+
+        .status-badge.error {
+            background: var(--ds-red-500);
+            color: white;
+        }
+
+        .status-badge.processed {
+            background: var(--ds-blue-500);
+            color: white;
+        }
+
+        .status-badge.pending {
+            background: var(--ds-gray-400);
+            color: white;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: var(--space-2) var(--space-4);
+            border-radius: 6px;
+            border: none;
+            font-size: var(--font-size-small);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+
+        .btn-primary {
+            background: var(--ds-blue-500);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--ds-blue-600);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: var(--ds-gray-200);
+            color: var(--ds-gray-700);
+        }
+
+        .btn-secondary:hover {
+            background: var(--ds-gray-300);
+        }
+
+        .btn-success {
+            background: var(--ds-green-500);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #16a34a;
+        }
+
+        .btn-warning {
+            background: var(--ds-amber-500);
+            color: white;
+        }
+
+        .btn-warning:hover {
+            background: #d97706;
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--ds-gray-600);
+            border: 1px solid var(--ds-gray-300);
+        }
+
+        .btn-ghost:hover {
+            background: var(--ds-gray-100);
+            border-color: var(--ds-gray-400);
+        }
+
+        /* IRS Report Preview */
+        .irs-report {
+            background: white;
+            border: 2px solid var(--ds-gray-300);
+            border-radius: 8px;
+            padding: var(--space-6);
+            margin-bottom: var(--space-4);
+        }
+
+        .irs-header {
+            text-align: center;
+            margin-bottom: var(--space-6);
+            padding-bottom: var(--space-4);
+            border-bottom: 2px solid var(--ds-gray-300);
+        }
+
+        .irs-title {
+            font-size: var(--font-size-h2);
+            font-weight: 600;
+            color: var(--ds-gray-900);
+            margin-bottom: var(--space-2);
+        }
+
+        .irs-subtitle {
+            font-size: var(--font-size-base);
+            color: var(--ds-gray-600);
+        }
+
+        .irs-section {
+            margin-bottom: var(--space-6);
+        }
+
+        .irs-section-title {
+            font-size: var(--font-size-h4);
+            font-weight: 600;
+            color: var(--ds-gray-900);
+            margin-bottom: var(--space-3);
+            padding-bottom: var(--space-2);
+            border-bottom: 1px solid var(--ds-gray-200);
+        }
+
+        .irs-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: var(--space-4);
+        }
+
+        .irs-table th,
+        .irs-table td {
+            padding: var(--space-3);
+            text-align: left;
+            border-bottom: 1px solid var(--ds-gray-200);
+        }
+
+        .irs-table th {
+            background: var(--ds-gray-100);
+            font-weight: 600;
+            color: var(--ds-gray-900);
+        }
+
+        .irs-table td {
+            color: var(--ds-gray-700);
+        }
+
+        .irs-table .amount {
+            text-align: right;
+            font-weight: 600;
+        }
+
+        .irs-summary {
+            background: var(--ds-gray-100);
+            padding: var(--space-4);
+            border-radius: 8px;
+            margin-top: var(--space-4);
+        }
+
+        .irs-summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: var(--space-2);
+        }
+
+        .irs-summary-item:last-child {
+            margin-bottom: 0;
+            font-weight: 600;
+            font-size: var(--font-size-large);
+            border-top: 2px solid var(--ds-gray-300);
+            padding-top: var(--space-2);
+        }
+
+        /* Quarterly Calendar */
+        .quarterly-calendar {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-4);
+        }
+
+        .quarter-card {
+            background: var(--ds-gray-100);
+            border-radius: 8px;
+            padding: var(--space-4);
+            text-align: center;
+        }
+
+        .quarter-card.current {
+            background: var(--ds-blue-100);
+            border: 2px solid var(--ds-blue-500);
+        }
+
+        .quarter-card.completed {
+            background: var(--ds-green-100);
+            border: 2px solid var(--ds-green-500);
+        }
+
+        .quarter-title {
+            font-weight: 600;
+            color: var(--ds-gray-900);
+            margin-bottom: var(--space-2);
+        }
+
+        .quarter-due {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-600);
+            margin-bottom: var(--space-3);
+        }
+
+        .quarter-status {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-1);
+            font-size: var(--font-size-small);
+            font-weight: 500;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .main-layout {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .two-column {
+                grid-column: span 2;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+            }
+            
+            .two-column {
+                grid-column: span 1;
+            }
+            
+            .compliance-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .tax-category-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .quarterly-calendar {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="user-info">
+                <div class="avatar">AR</div>
+                <div class="user-details">
+                    <div class="user-name">Alex Rodriguez</div>
+                    <div class="user-role">Business Owner • Rodriguez Consulting LLC</div>
+                </div>
+            </div>
+            <div class="tax-year-selector">
+                <label for="tax-year">Tax Year:</label>
+                <select id="tax-year">
+                    <option value="2024" selected>2024</option>
+                    <option value="2023">2023</option>
+                    <option value="2022">2022</option>
+                </select>
+                <button class="btn btn-primary">Generate IRS Report</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <h1 class="card-title">Automated Tax Compliance & Audit Trail System</h1>
+        <p class="card-subtitle">Real-time tax compliance monitoring with IRS-ready documentation across all business payment methods</p>
+
+        <!-- Tax Compliance Overview -->
+        <div class="card full-width" style="margin-bottom: var(--space-6);">
+            <div class="card-header">
+                <div>
+                    <h2 class="card-title">2024 Tax Compliance Dashboard</h2>
+                    <p class="card-subtitle">Automated compliance tracking with real-time audit readiness</p>
+                </div>
+                <div class="status-badge compliant">✓ IRS Compliant</div>
+            </div>
+            
+            <div class="compliance-stats">
+                <div class="stat-item">
+                    <div class="stat-value">$47,892</div>
+                    <div class="stat-label">Total Deductions</div>
+                    <div class="stat-trend trend-up">↑ 12% vs 2023</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">1,247</div>
+                    <div class="stat-label">Transactions Processed</div>
+                    <div class="stat-trend trend-up">↑ 8% vs 2023</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">98.7%</div>
+                    <div class="stat-label">Auto-Categorized</div>
+                    <div class="stat-trend trend-up">↑ 2.3% vs 2023</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">$2,840</div>
+                    <div class="stat-label">Potential Savings</div>
+                    <div class="stat-trend trend-up">↑ Optimized</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-layout">
+            <!-- Audit Trail -->
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <h3 class="card-title">Live Audit Trail</h3>
+                        <p class="card-subtitle">Real-time compliance monitoring</p>
+                    </div>
+                    <div class="status-badge processed">Live</div>
+                </div>
+
+                <div class="audit-trail">
+                    <div class="audit-entry success">
+                        <div class="audit-timestamp">2:34 PM</div>
+                        <div class="audit-message">MacBook Pro purchase auto-categorized as Equipment (Sec. 179) with $2,899 deduction captured</div>
+                        <div class="audit-action">View</div>
+                    </div>
+
+                    <div class="audit-entry">
+                        <div class="audit-timestamp">2:15 PM</div>
+                        <div class="audit-message">Adobe Creative Suite renewal categorized as Software subscription, monthly deduction applied</div>
+                        <div class="audit-action">View</div>
+                    </div>
+
+                    <div class="audit-entry warning">
+                        <div class="audit-timestamp">1:42 PM</div>
+                        <div class="audit-message">Hotel expense over $75 requires receipt verification for full deduction eligibility</div>
+                        <div class="audit-action">Fix</div>
+                    </div>
+
+                    <div class="audit-entry success">
+                        <div class="audit-timestamp">1:28 PM</div>
+                        <div class="audit-message">Mileage log automatically generated for client visit - 24 miles at $0.655/mile = $15.72</div>
+                        <div class="audit-action">View</div>
+                    </div>
+
+                    <div class="audit-entry">
+                        <div class="audit-timestamp">11:15 AM</div>
+                        <div class="audit-message">LinkedIn Premium categorized as Marketing expense, recurring pattern detected</div>
+                        <div class="audit-action">View</div>
+                    </div>
+
+                    <div class="audit-entry success">
+                        <div class="audit-timestamp">10:33 AM</div>
+                        <div class="audit-message">Legal consultation expense validated with supporting documentation</div>
+                        <div class="audit-action">View</div>
+                    </div>
+
+                    <div class="audit-entry">
+                        <div class="audit-timestamp">9:45 AM</div>
+                        <div class="audit-message">Office supplies purchase categorized and receipt matched automatically</div>
+                        <div class="audit-action">View</div>
+                    </div>
+
+                    <div class="audit-entry warning">
+                        <div class="audit-timestamp">9:12 AM</div>
+                        <div class="audit-message">Business meal expense flagged for 50% deduction rule application</div>
+                        <div class="audit-action">Fix</div>
+                    </div>
+                </div>
+
+                <div style="margin-top: var(--space-4); display: flex; gap: var(--space-3);">
+                    <button class="btn btn-primary">Export Full Trail</button>
+                    <button class="btn btn-secondary">Filter by Issues</button>
+                </div>
+            </div>
+
+            <!-- Tax Categories -->
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <h3 class="card-title">Tax Categories</h3>
+                        <p class="card-subtitle">IRS-compliant categorization</p>
+                    </div>
+                    <div class="status-badge compliant">✓ Verified</div>
+                </div>
+
+                <div class="tax-category-grid">
+                    <div class="tax-category">
+                        <div class="category-header">
+                            <div class="category-name">Travel & Meals</div>
+                            <div class="category-amount">$8,420</div>
+                        </div>
+                        <div class="category-progress">
+                            <div class="category-progress-fill" style="width: 68%"></div>
+                        </div>
+                        <div class="category-transactions">147 transactions • 50% meal deduction applied</div>
+                    </div>
+
+                    <div class="tax-category">
+                        <div class="category-header">
+                            <div class="category-name">Equipment</div>
+                            <div class="category-amount">$12,580</div>
+                        </div>
+                        <div class="category-progress">
+                            <div class="category-progress-fill" style="width: 45%"></div>
+                        </div>
+                        <div class="category-transactions">23 transactions • Sec. 179 eligible</div>
+                    </div>
+
+                    <div class="tax-category">
+                        <div class="category-header">
+                            <div class="category-name">Software</div>
+                            <div class="category-amount">$4,890</div>
+                        </div>
+                        <div class="category-progress">
+                            <div class="category-progress-fill" style="width: 82%"></div>
+                        </div>
+                        <div class="category-transactions">89 transactions • Monthly subscriptions</div>
+                    </div>
+
+                    <div class="tax-category">
+                        <div class="category-header">
+                            <div class="category-name">Office Supplies</div>
+                            <div class="category-amount">$2,340</div>
+                        </div>
+                        <div class="category-progress">
+                            <div class="category-progress-fill" style="width: 60%"></div>
+                        </div>
+                        <div class="category-transactions">156 transactions • 100% deductible</div>
+                    </div>
+
+                    <div class="tax-category">
+                        <div class="category-header">
+                            <div class="category-name">Professional Services</div>
+                            <div class="category-amount">$6,720</div>
+                        </div>
+                        <div class="category-progress">
+                            <div class="category-progress-fill" style="width: 78%"></div>
+                        </div>
+                        <div class="category-transactions">34 transactions • Legal & accounting</div>
+                    </div>
+
+                    <div class="tax-category">
+                        <div class="category-header">
+                            <div class="category-name">Marketing</div>
+                            <div class="category-amount">$3,890</div>
+                        </div>
+                        <div class="category-progress">
+                            <div class="category-progress-fill" style="width: 65%"></div>
+                        </div>
+                        <div class="category-transactions">78 transactions • Digital ads & events</div>
+                    </div>
+                </div>
+
+                <div style="margin-top: var(--space-4);">
+                    <button class="btn btn-primary">View Full Breakdown</button>
+                </div>
+            </div>
+
+            <!-- Deduction Optimizer -->
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <h3 class="card-title">Deduction Optimizer</h3>
+                        <p class="card-subtitle">AI-powered tax savings opportunities</p>
+                    </div>
+                    <div class="status-badge warning">3 Actions</div>
+                </div>
+
+                <div class="deduction-item">
+                    <div class="deduction-info">
+                        <div class="deduction-title">Home Office Deduction</div>
+                        <div class="deduction-description">Based on your workspace usage, you may qualify for additional $1,200 deduction</div>
+                    </div>
+                    <div class="deduction-potential">+$1,200</div>
+                    <div class="deduction-actions">
+                        <button class="btn btn-success">Apply</button>
+                        <button class="btn btn-ghost">Learn More</button>
+                    </div>
+                </div>
+
+                <div class="deduction-item">
+                    <div class="deduction-info">
+                        <div class="deduction-title">Vehicle Expense Method</div>
+                        <div class="deduction-description">Switching to actual expense method could save $840 vs. standard mileage</div>
+                    </div>
+                    <div class="deduction-potential">+$840</div>
+                    <div class="deduction-actions">
+                        <button class="btn btn-success">Apply</button>
+                        <button class="btn btn-ghost">Compare</button>
+                    </div>
+                </div>
+
+                <div class="deduction-item">
+                    <div class="deduction-info">
+                        <div class="deduction-title">Section 179 Optimization</div>
+                        <div class="deduction-description">Equipment purchases qualify for immediate $2,899 deduction vs. depreciation</div>
+                    </div>
+                    <div class="deduction-potential">+$800</div>
+                    <div class="deduction-actions">
+                        <button class="btn btn-success">Apply</button>
+                        <button class="btn btn-ghost">Details</button>
+                    </div>
+                </div>
+
+                <div style="margin-top: var(--space-4);">
+                    <button class="btn btn-primary">Apply All Optimizations</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quarterly Filing Schedule -->
+        <div class="card full-width">
+            <div class="card-header">
+                <div>
+                    <h3 class="card-title">Quarterly Filing Schedule</h3>
+                    <p class="card-subtitle">Automated compliance calendar with pre-filled forms</p>
+                </div>
+                <div class="status-badge compliant">✓ On Track</div>
+            </div>
+
+            <div class="quarterly-calendar">
+                <div class="quarter-card completed">
+                    <div class="quarter-title">Q1 2024</div>
+                    <div class="quarter-due">Filed: April 15, 2024</div>
+                    <div class="quarter-status">
+                        <span style="color: var(--ds-green-500);">✓</span>
+                        Completed
+                    </div>
+                </div>
+
+                <div class="quarter-card completed">
+                    <div class="quarter-title">Q2 2024</div>
+                    <div class="quarter-due">Filed: June 17, 2024</div>
+                    <div class="quarter-status">
+                        <span style="color: var(--ds-green-500);">✓</span>
+                        Completed
+                    </div>
+                </div>
+
+                <div class="quarter-card completed">
+                    <div class="quarter-title">Q3 2024</div>
+                    <div class="quarter-due">Filed: September 16, 2024</div>
+                    <div class="quarter-status">
+                        <span style="color: var(--ds-green-500);">✓</span>
+                        Completed
+                    </div>
+                </div>
+
+                <div class="quarter-card current">
+                    <div class="quarter-title">Q4 2024</div>
+                    <div class="quarter-due">Due: January 15, 2025</div>
+                    <div class="quarter-status">
+                        <span style="color: var(--ds-blue-500);">⚡</span>
+                        In Progress
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: var(--space-4); display: flex; gap: var(--space-3);">
+                <button class="btn btn-primary">Download Q4 Forms</button>
+                <button class="btn btn-secondary">Schedule Accountant Review</button>
+                <button class="btn btn-ghost">View Filing History</button>
+            </div>
+        </div>
+
+        <!-- IRS-Ready Report Preview -->
+        <div class="card full-width">
+            <div class="card-header">
+                <div>
+                    <h3 class="card-title">IRS-Ready Report Preview</h3>
+                    <p class="card-subtitle">Schedule C preview with automated calculations</p>
+                </div>
+                <div class="status-badge compliant">✓ IRS Format</div>
+            </div>
+
+            <div class="irs-report">
+                <div class="irs-header">
+                    <div class="irs-title">SCHEDULE C</div>
+                    <div class="irs-subtitle">Profit or Loss From Business (Sole Proprietorship)</div>
+                    <div class="irs-subtitle">Rodriguez Consulting LLC • Tax Year 2024</div>
+                </div>
+
+                <div class="irs-section">
+                    <div class="irs-section-title">Part I: Income</div>
+                    <table class="irs-table">
+                        <tr>
+                            <td>Gross receipts or sales</td>
+                            <td class="amount">$127,850</td>
+                        </tr>
+                        <tr>
+                            <td>Returns and allowances</td>
+                            <td class="amount">$0</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Gross income</strong></td>
+                            <td class="amount"><strong>$127,850</strong></td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="irs-section">
+                    <div class="irs-section-title">Part II: Expenses</div>
+                    <table class="irs-table">
+                        <tr>
+                            <td>Travel, meals, and entertainment</td>
+                            <td class="amount">$8,420</td>
+                        </tr>
+                        <tr>
+                            <td>Equipment purchases</td>
+                            <td class="amount">$12,580</td>
+                        </tr>
+                        <tr>
+                            <td>Software and subscriptions</td>
+                            <td class="amount">$4,890</td>
+                        </tr>
+                        <tr>
+                            <td>Office supplies</td>
+                            <td class="amount">$2,340</td>
+                        </tr>
+                        <tr>
+                            <td>Professional services</td>
+                            <td class="amount">$6,720</td>
+                        </tr>
+                        <tr>
+                            <td>Marketing and advertising</td>
+                            <td class="amount">$3,890</td>
+                        </tr>
+                        <tr>
+                            <td>Home office expenses</td>
+                            <td class="amount">$2,400</td>
+                        </tr>
+                        <tr>
+                            <td>Vehicle expenses</td>
+                            <td class="amount">$6,652</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Total expenses</strong></td>
+                            <td class="amount"><strong>$47,892</strong></td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="irs-summary">
+                    <div class="irs-summary-item">
+                        <span>Gross Income</span>
+                        <span>$127,850</span>
+                    </div>
+                    <div class="irs-summary-item">
+                        <span>Total Expenses</span>
+                        <span>$47,892</span>
+                    </div>
+                    <div class="irs-summary-item">
+                        <span>Net Profit</span>
+                        <span>$79,958</span>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: var(--space-3);">
+                <button class="btn btn-primary">Download PDF</button>
+                <button class="btn btn-secondary">Export to TurboTax</button>
+                <button class="btn btn-secondary">Export to QuickBooks</button>
+                <button class="btn btn-ghost">Email to Accountant</button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Initialize the tax compliance dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            // Tax year selector functionality
+            const taxYearSelect = document.getElementById('tax-year');
+            taxYearSelect.addEventListener('change', function() {
+                updateTaxYearData(this.value);
+            });
+
+            // Deduction optimizer functionality
+            const optimizerButtons = document.querySelectorAll('.deduction-actions .btn-success');
+            optimizerButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const deductionItem = this.closest('.deduction-item');
+                    const potentialSavings = deductionItem.querySelector('.deduction-potential').textContent;
+                    
+                    // Animate the application
+                    this.textContent = 'Applied';
+                    this.classList.remove('btn-success');
+                    this.classList.add('btn-secondary');
+                    this.disabled = true;
+                    
+                    // Update the total deductions
+                    updateTotalDeductions(potentialSavings);
+                    
+                    // Show success message
+                    showNotification('Deduction applied successfully! Tax savings updated.', 'success');
+                });
+            });
+
+            // Audit trail real-time updates
+            simulateAuditTrail();
+
+            // Progress bar animations
+            animateProgressBars();
+        });
+
+        function updateTaxYearData(year) {
+            // Simulate loading new data for selected tax year
+            const loader = document.createElement('div');
+            loader.innerHTML = '<div style="text-align: center; padding: 20px; color: #666;">Loading ' + year + ' data...</div>';
+            
+            showNotification('Loading tax data for ' + year, 'info');
+            
+            // Simulate data refresh
+            setTimeout(() => {
+                showNotification('Tax data updated for ' + year, 'success');
+            }, 1000);
+        }
+
+        function updateTotalDeductions(savings) {
+            const totalDeductionsElement = document.querySelector('.stat-value');
+            const currentValue = parseInt(totalDeductionsElement.textContent.replace(/[,$]/g, ''));
+            const savingsValue = parseInt(savings.replace(/[+,$]/g, ''));
+            const newValue = currentValue + savingsValue;
+            
+            // Animate the number change
+            animateNumber(totalDeductionsElement, currentValue, newValue);
+        }
+
+        function animateNumber(element, from, to) {
+            const duration = 1000;
+            const start = Date.now();
+            const range = to - from;
+            
+            function update() {
+                const elapsed = Date.now() - start;
+                const progress = Math.min(elapsed / duration, 1);
+                const current = Math.round(from + (range * progress));
+                
+                element.textContent = '$' + current.toLocaleString();
+                
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                }
+            }
+            
+            update();
+        }
+
+        function simulateAuditTrail() {
+            // Simulate real-time audit trail updates
+            const auditMessages = [
+                'PayPal payment categorized as Software subscription',
+                'Uber ride expense auto-categorized as Travel',
+                'Amazon purchase split between Office Supplies and Equipment',
+                'Starbucks meeting expense categorized as Meals (50% deduction)',
+                'Receipt uploaded and matched to transaction automatically'
+            ];
+            
+            const auditTrail = document.querySelector('.audit-trail');
+            let messageIndex = 0;
+            
+            setInterval(() => {
+                if (messageIndex < auditMessages.length) {
+                    const newEntry = document.createElement('div');
+                    newEntry.className = 'audit-entry';
+                    newEntry.style.opacity = '0';
+                    newEntry.innerHTML = `
+                        <div class="audit-timestamp">${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</div>
+                        <div class="audit-message">${auditMessages[messageIndex]}</div>
+                        <div class="audit-action">View</div>
+                    `;
+                    
+                    auditTrail.insertBefore(newEntry, auditTrail.firstChild);
+                    
+                    // Animate in
+                    requestAnimationFrame(() => {
+                        newEntry.style.transition = 'opacity 0.3s ease';
+                        newEntry.style.opacity = '1';
+                    });
+                    
+                    messageIndex++;
+                }
+            }, 5000);
+        }
+
+        function animateProgressBars() {
+            const progressBars = document.querySelectorAll('.category-progress-fill');
+            progressBars.forEach(bar => {
+                const width = bar.style.width;
+                bar.style.width = '0%';
+                
+                setTimeout(() => {
+                    bar.style.width = width;
+                }, 500);
+            });
+        }
+
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 16px 24px;
+                background: ${type === 'success' ? 'var(--ds-green-500)' : 'var(--ds-blue-500)'};
+                color: white;
+                border-radius: 8px;
+                font-size: 14px;
+                z-index: 1000;
+                transform: translateX(400px);
+                transition: transform 0.3s ease;
+            `;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            // Animate in
+            requestAnimationFrame(() => {
+                notification.style.transform = 'translateX(0)';
+            });
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                notification.style.transform = 'translateX(400px)';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        // Export functionality
+        document.addEventListener('click', function(e) {
+            if (e.target.textContent === 'Generate IRS Report') {
+                showNotification('Generating IRS-compliant report...', 'info');
+                setTimeout(() => {
+                    showNotification('Report generated successfully!', 'success');
+                }, 2000);
+            }
+            
+            if (e.target.textContent === 'Export Full Trail') {
+                showNotification('Exporting audit trail to CSV...', 'info');
+                setTimeout(() => {
+                    showNotification('Audit trail exported successfully!', 'success');
+                }, 1500);
+            }
+            
+            if (e.target.textContent === 'Download PDF') {
+                showNotification('Downloading Schedule C PDF...', 'info');
+                setTimeout(() => {
+                    showNotification('PDF downloaded successfully!', 'success');
+                }, 1000);
+            }
+        });
+    </script>
+</body>
+</html>

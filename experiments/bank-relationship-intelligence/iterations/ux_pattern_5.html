@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predictive Analytics Interface - Bank Relationship Intelligence</title>
+    <style>
+        /* Geist Design System Core */
+        :root {
+            /* Colors */
+            --ds-gray-100: #fafafa;
+            --ds-gray-200: #eaeaea;
+            --ds-gray-300: #999999;
+            --ds-gray-400: #888888;
+            --ds-gray-500: #666666;
+            --ds-gray-600: #444444;
+            --ds-gray-700: #333333;
+            --ds-gray-800: #222222;
+            --ds-gray-900: #111111;
+            --ds-gray-1000: #000000;
+            
+            --ds-blue-100: #e1f5fe;
+            --ds-blue-500: #0070f3;
+            --ds-blue-600: #0061d5;
+            --ds-blue-700: #004fc4;
+            
+            --ds-red-500: #ee0000;
+            --ds-amber-500: #f5a623;
+            --ds-green-500: #00a86b;
+            --ds-purple-500: #7c3aed;
+            
+            /* Typography */
+            --font-size-h1: 2.25rem;
+            --font-size-h2: 1.875rem;
+            --font-size-h3: 1.5rem;
+            --font-size-h4: 1.25rem;
+            --font-size-base: 1rem;
+            --font-size-small: 0.875rem;
+            --font-size-xs: 0.75rem;
+            
+            /* Spacing */
+            --space-1: 0.25rem;
+            --space-2: 0.5rem;
+            --space-3: 0.75rem;
+            --space-4: 1rem;
+            --space-5: 1.25rem;
+            --space-6: 1.5rem;
+            --space-8: 2rem;
+            --space-10: 2.5rem;
+            --space-12: 3rem;
+            --space-16: 4rem;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Geist Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            color: var(--ds-gray-900);
+            background: var(--ds-gray-100);
+            line-height: 1.5;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--space-6);
+        }
+        
+        /* Header */
+        .header {
+            background: white;
+            border-bottom: 1px solid var(--ds-gray-200);
+            padding: var(--space-4) var(--space-6);
+            margin-bottom: var(--space-6);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header h1 {
+            font-size: var(--font-size-h2);
+            color: var(--ds-gray-900);
+            font-weight: 600;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+        }
+        
+        .avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--ds-blue-500);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: var(--font-size-small);
+        }
+        
+        /* Main Layout */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: var(--space-6);
+            height: calc(100vh - 140px);
+        }
+        
+        /* AI Insights Panel */
+        .ai-insights-panel {
+            background: white;
+            border-radius: 8px;
+            border: 1px solid var(--ds-gray-200);
+            padding: var(--space-6);
+            height: fit-content;
+        }
+        
+        .ai-insights-header {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            margin-bottom: var(--space-4);
+        }
+        
+        .ai-icon {
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(135deg, var(--ds-purple-500), var(--ds-blue-500));
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: var(--font-size-xs);
+        }
+        
+        .insight-card {
+            background: var(--ds-gray-100);
+            border-radius: 6px;
+            padding: var(--space-4);
+            margin-bottom: var(--space-3);
+            border-left: 3px solid var(--ds-blue-500);
+        }
+        
+        .insight-priority {
+            display: inline-block;
+            background: var(--ds-blue-500);
+            color: white;
+            padding: var(--space-1) var(--space-2);
+            border-radius: 4px;
+            font-size: var(--font-size-xs);
+            font-weight: 600;
+            margin-bottom: var(--space-2);
+        }
+        
+        .insight-priority.high {
+            background: var(--ds-red-500);
+        }
+        
+        .insight-priority.medium {
+            background: var(--ds-amber-500);
+        }
+        
+        .insight-text {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-700);
+            margin-bottom: var(--space-2);
+        }
+        
+        .insight-confidence {
+            font-size: var(--font-size-xs);
+            color: var(--ds-gray-500);
+            display: flex;
+            align-items: center;
+            gap: var(--space-1);
+        }
+        
+        .confidence-bar {
+            width: 40px;
+            height: 4px;
+            background: var(--ds-gray-200);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        
+        .confidence-fill {
+            height: 100%;
+            background: var(--ds-green-500);
+            transition: width 0.3s ease;
+        }
+        
+        /* Main Content */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-6);
+        }
+        
+        /* Predictive Dashboard */
+        .predictive-dashboard {
+            background: white;
+            border-radius: 8px;
+            border: 1px solid var(--ds-gray-200);
+            padding: var(--space-6);
+        }
+        
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-6);
+        }
+        
+        .dashboard-title {
+            font-size: var(--font-size-h3);
+            color: var(--ds-gray-900);
+            font-weight: 600;
+        }
+        
+        .time-filter {
+            display: flex;
+            gap: var(--space-2);
+        }
+        
+        .filter-btn {
+            padding: var(--space-2) var(--space-3);
+            border: 1px solid var(--ds-gray-200);
+            background: white;
+            border-radius: 4px;
+            font-size: var(--font-size-small);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .filter-btn.active {
+            background: var(--ds-blue-500);
+            color: white;
+            border-color: var(--ds-blue-500);
+        }
+        
+        .filter-btn:hover {
+            background: var(--ds-gray-100);
+        }
+        
+        .filter-btn.active:hover {
+            background: var(--ds-blue-600);
+        }
+        
+        /* Metrics Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-4);
+            margin-bottom: var(--space-8);
+        }
+        
+        .metric-card {
+            background: var(--ds-gray-100);
+            border-radius: 6px;
+            padding: var(--space-4);
+            text-align: center;
+        }
+        
+        .metric-value {
+            font-size: var(--font-size-h2);
+            font-weight: 700;
+            color: var(--ds-gray-900);
+            margin-bottom: var(--space-1);
+        }
+        
+        .metric-label {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-600);
+            margin-bottom: var(--space-2);
+        }
+        
+        .metric-change {
+            font-size: var(--font-size-xs);
+            font-weight: 600;
+        }
+        
+        .metric-change.positive {
+            color: var(--ds-green-500);
+        }
+        
+        .metric-change.negative {
+            color: var(--ds-red-500);
+        }
+        
+        /* Client Predictions Table */
+        .predictions-section {
+            background: white;
+            border-radius: 8px;
+            border: 1px solid var(--ds-gray-200);
+            padding: var(--space-6);
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-4);
+        }
+        
+        .section-title {
+            font-size: var(--font-size-h4);
+            color: var(--ds-gray-900);
+            font-weight: 600;
+        }
+        
+        .view-all-btn {
+            color: var(--ds-blue-500);
+            text-decoration: none;
+            font-size: var(--font-size-small);
+            font-weight: 500;
+        }
+        
+        .predictions-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .predictions-table th {
+            text-align: left;
+            padding: var(--space-3) var(--space-4);
+            border-bottom: 1px solid var(--ds-gray-200);
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-600);
+            font-weight: 500;
+        }
+        
+        .predictions-table td {
+            padding: var(--space-3) var(--space-4);
+            border-bottom: 1px solid var(--ds-gray-100);
+            font-size: var(--font-size-small);
+            vertical-align: top;
+        }
+        
+        .predictions-table tr:hover {
+            background: var(--ds-gray-100);
+        }
+        
+        .client-info {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-1);
+        }
+        
+        .client-name {
+            font-weight: 600;
+            color: var(--ds-gray-900);
+        }
+        
+        .client-details {
+            color: var(--ds-gray-600);
+            font-size: var(--font-size-xs);
+        }
+        
+        .prediction-score {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+        
+        .score-badge {
+            padding: var(--space-1) var(--space-2);
+            border-radius: 4px;
+            font-size: var(--font-size-xs);
+            font-weight: 600;
+        }
+        
+        .score-badge.high {
+            background: var(--ds-red-500);
+            color: white;
+        }
+        
+        .score-badge.medium {
+            background: var(--ds-amber-500);
+            color: white;
+        }
+        
+        .score-badge.low {
+            background: var(--ds-green-500);
+            color: white;
+        }
+        
+        .prediction-details {
+            max-width: 300px;
+            line-height: 1.4;
+        }
+        
+        .trend-indicator {
+            display: flex;
+            align-items: center;
+            gap: var(--space-1);
+        }
+        
+        .trend-arrow {
+            width: 0;
+            height: 0;
+            border-left: 4px solid transparent;
+            border-right: 4px solid transparent;
+        }
+        
+        .trend-arrow.up {
+            border-bottom: 6px solid var(--ds-green-500);
+        }
+        
+        .trend-arrow.down {
+            border-top: 6px solid var(--ds-red-500);
+        }
+        
+        /* Action Buttons */
+        .action-btn {
+            padding: var(--space-2) var(--space-3);
+            border: 1px solid var(--ds-blue-500);
+            background: white;
+            color: var(--ds-blue-500);
+            border-radius: 4px;
+            font-size: var(--font-size-xs);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .action-btn:hover {
+            background: var(--ds-blue-500);
+            color: white;
+        }
+        
+        .action-btn.primary {
+            background: var(--ds-blue-500);
+            color: white;
+        }
+        
+        .action-btn.primary:hover {
+            background: var(--ds-blue-600);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+            }
+            
+            .metrics-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .predictions-table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <h1>Predictive Analytics Interface</h1>
+            <div class="user-info">
+                <div class="avatar">SJ</div>
+                <div>
+                    <div style="font-weight: 600; font-size: 14px;">Sarah Johnson</div>
+                    <div style="color: var(--ds-gray-600); font-size: 12px;">Senior Relationship Manager</div>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="main-layout">
+            <!-- AI Insights Panel -->
+            <div class="ai-insights-panel">
+                <div class="ai-insights-header">
+                    <div class="ai-icon">AI</div>
+                    <h3>AI Insights</h3>
+                </div>
+                
+                <div class="insight-card">
+                    <div class="insight-priority high">HIGH PRIORITY</div>
+                    <div class="insight-text">Rodriguez Construction shows 89% probability of needing equipment financing within 30 days based on recent transaction patterns and seasonal trends.</div>
+                    <div class="insight-confidence">
+                        <span>Confidence:</span>
+                        <div class="confidence-bar">
+                            <div class="confidence-fill" style="width: 89%"></div>
+                        </div>
+                        <span>89%</span>
+                    </div>
+                </div>
+                
+                <div class="insight-card">
+                    <div class="insight-priority medium">MEDIUM PRIORITY</div>
+                    <div class="insight-text">Chen Marketing is likely to switch primary banking relationship unless proactive retention measures are taken. Key indicators: declining deposits, increased competitor usage.</div>
+                    <div class="insight-confidence">
+                        <span>Confidence:</span>
+                        <div class="confidence-bar">
+                            <div class="confidence-fill" style="width: 76%"></div>
+                        </div>
+                        <span>76%</span>
+                    </div>
+                </div>
+                
+                <div class="insight-card">
+                    <div class="insight-priority">OPPORTUNITY</div>
+                    <div class="insight-text">Santos Consulting revenue growth of 145% indicates readiness for premium business banking package and treasury services.</div>
+                    <div class="insight-confidence">
+                        <span>Confidence:</span>
+                        <div class="confidence-bar">
+                            <div class="confidence-fill" style="width: 92%"></div>
+                        </div>
+                        <span>92%</span>
+                    </div>
+                </div>
+                
+                <div class="insight-card">
+                    <div class="insight-priority">RISK ALERT</div>
+                    <div class="insight-text">Kim Restaurant cash flow patterns suggest potential seasonal stress. Recommend proactive working capital discussion.</div>
+                    <div class="insight-confidence">
+                        <span>Confidence:</span>
+                        <div class="confidence-bar">
+                            <div class="confidence-fill" style="width: 84%"></div>
+                        </div>
+                        <span>84%</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Main Content -->
+            <div class="main-content">
+                <!-- Predictive Dashboard -->
+                <div class="predictive-dashboard">
+                    <div class="dashboard-header">
+                        <h2 class="dashboard-title">Portfolio Predictive Analytics</h2>
+                        <div class="time-filter">
+                            <button class="filter-btn">7D</button>
+                            <button class="filter-btn active">30D</button>
+                            <button class="filter-btn">90D</button>
+                            <button class="filter-btn">1Y</button>
+                        </div>
+                    </div>
+                    
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-value">$2.8M</div>
+                            <div class="metric-label">Predicted Revenue</div>
+                            <div class="metric-change positive">+23.5%</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">47</div>
+                            <div class="metric-label">Upsell Opportunities</div>
+                            <div class="metric-change positive">+12.8%</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">8</div>
+                            <div class="metric-label">Churn Risk Clients</div>
+                            <div class="metric-change negative">+3.2%</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">94.2%</div>
+                            <div class="metric-label">Portfolio Health</div>
+                            <div class="metric-change positive">+1.8%</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Client Predictions Table -->
+                <div class="predictions-section">
+                    <div class="section-header">
+                        <h3 class="section-title">Client Predictions & Recommendations</h3>
+                        <a href="#" class="view-all-btn">View All 127 Clients</a>
+                    </div>
+                    
+                    <table class="predictions-table">
+                        <thead>
+                            <tr>
+                                <th>Client</th>
+                                <th>Prediction Type</th>
+                                <th>Score</th>
+                                <th>Details</th>
+                                <th>Trend</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="client-info">
+                                        <div class="client-name">Rodriguez Construction</div>
+                                        <div class="client-details">$2.1M Annual Revenue • Primary Relationship</div>
+                                    </div>
+                                </td>
+                                <td>Equipment Financing</td>
+                                <td>
+                                    <div class="prediction-score">
+                                        <span class="score-badge high">89%</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="prediction-details">
+                                        Recent equipment-related expenses increased 340%. Seasonal patterns indicate Q2 expansion. Cash flow supports $500K+ loan.
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="trend-indicator">
+                                        <div class="trend-arrow up"></div>
+                                        <span style="color: var(--ds-green-500);">+34%</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <button class="action-btn primary">Schedule Meeting</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="client-info">
+                                        <div class="client-name">Chen Marketing</div>
+                                        <div class="client-details">$510K Annual Revenue • Secondary Relationship</div>
+                                    </div>
+                                </td>
+                                <td>Churn Risk</td>
+                                <td>
+                                    <div class="prediction-score">
+                                        <span class="score-badge high">76%</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="prediction-details">
+                                        Declining deposits, increased competitor usage. Primary banking relationship with Wells Fargo strengthening.
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="trend-indicator">
+                                        <div class="trend-arrow down"></div>
+                                        <span style="color: var(--ds-red-500);">-28%</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <button class="action-btn primary">Retention Call</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="client-info">
+                                        <div class="client-name">Thompson Legal</div>
+                                        <div class="client-details">$1.2M Annual Revenue • Primary Relationship</div>
+                                    </div>
+                                </td>
+                                <td>Treasury Services</td>
+                                <td>
+                                    <div class="prediction-score">
+                                        <span class="score-badge medium">67%</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="prediction-details">
+                                        Stable cash flow, growing client base. Manual payment processing indicates treasury service opportunity.
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="trend-indicator">
+                                        <div class="trend-arrow up"></div>
+                                        <span style="color: var(--ds-green-500);">+12%</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <button class="action-btn">Propose Services</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="client-info">
+                                        <div class="client-name">Santos Consulting</div>
+                                        <div class="client-details">$295K Annual Revenue • Growth Stage</div>
+                                    </div>
+                                </td>
+                                <td>Credit Line Expansion</td>
+                                <td>
+                                    <div class="prediction-score">
+                                        <span class="score-badge high">92%</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="prediction-details">
+                                        145% revenue growth, hiring 3 new employees. Current $50K line utilized 80%. Ready for $200K expansion.
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="trend-indicator">
+                                        <div class="trend-arrow up"></div>
+                                        <span style="color: var(--ds-green-500);">+145%</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <button class="action-btn primary">Credit Review</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="client-info">
+                                        <div class="client-name">Kim Restaurant</div>
+                                        <div class="client-details">$785K Annual Revenue • Seasonal Business</div>
+                                    </div>
+                                </td>
+                                <td>Working Capital</td>
+                                <td>
+                                    <div class="prediction-score">
+                                        <span class="score-badge medium">58%</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="prediction-details">
+                                        Seasonal cash flow stress predicted for Q1. Previous year pattern shows 45% revenue decline Jan-Mar.
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="trend-indicator">
+                                        <div class="trend-arrow down"></div>
+                                        <span style="color: var(--ds-red-500);">-23%</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <button class="action-btn">Discuss Options</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="client-info">
+                                        <div class="client-name">Williams Manufacturing</div>
+                                        <div class="client-details">$3.2M Annual Revenue • Primary Relationship</div>
+                                    </div>
+                                </td>
+                                <td>International Services</td>
+                                <td>
+                                    <div class="prediction-score">
+                                        <span class="score-badge medium">71%</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="prediction-details">
+                                        Increased international wire activity, foreign exchange transactions. Expanding into European markets.
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="trend-indicator">
+                                        <div class="trend-arrow up"></div>
+                                        <span style="color: var(--ds-green-500);">+67%</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <button class="action-btn">FX Services</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Multi-source data integration simulation
+        const financialData = {
+            creditCards: {
+                'Rodriguez Construction': {
+                    primary: 'Chase Business',
+                    utilization: 45,
+                    recentActivity: 'Equipment purchases +340%'
+                },
+                'Chen Marketing': {
+                    primary: 'Capital One Spark',
+                    utilization: 67,
+                    recentActivity: 'Declining usage -28%'
+                },
+                'Santos Consulting': {
+                    primary: 'Amex Business',
+                    utilization: 80,
+                    recentActivity: 'Growth expenses +145%'
+                }
+            },
+            bankAccounts: {
+                'Rodriguez Construction': {
+                    primary: 'Our Bank',
+                    avgBalance: 450000,
+                    trend: 'increasing'
+                },
+                'Chen Marketing': {
+                    primary: 'Wells Fargo',
+                    avgBalance: 125000,
+                    trend: 'declining'
+                },
+                'Santos Consulting': {
+                    primary: 'Our Bank',
+                    avgBalance: 89000,
+                    trend: 'increasing'
+                }
+            },
+            accountingSoftware: {
+                'Rodriguez Construction': {
+                    platform: 'QuickBooks Online',
+                    revenue: 2100000,
+                    profitability: 'stable'
+                },
+                'Chen Marketing': {
+                    platform: 'Xero',
+                    revenue: 510000,
+                    profitability: 'declining'
+                },
+                'Santos Consulting': {
+                    platform: 'QuickBooks Online',
+                    revenue: 295000,
+                    profitability: 'growing'
+                }
+            }
+        };
+
+        // Predictive analytics engine simulation
+        class PredictiveAnalytics {
+            constructor() {
+                this.models = {
+                    churnRisk: this.calculateChurnRisk.bind(this),
+                    upsellOpportunity: this.calculateUpsellOpportunity.bind(this),
+                    creditRisk: this.calculateCreditRisk.bind(this),
+                    growthPrediction: this.calculateGrowthPrediction.bind(this)
+                };
+            }
+
+            calculateChurnRisk(clientData) {
+                const factors = {
+                    depositTrend: clientData.bankAccounts.trend === 'declining' ? 0.4 : 0.1,
+                    competitorUsage: clientData.creditCards.primary !== 'Our Bank' ? 0.3 : 0.1,
+                    relationshipDepth: clientData.bankAccounts.primary === 'Our Bank' ? 0.1 : 0.4,
+                    utilization: clientData.creditCards.utilization > 70 ? 0.2 : 0.1
+                };
+                
+                return Math.min(Object.values(factors).reduce((sum, factor) => sum + factor, 0), 1);
+            }
+
+            calculateUpsellOpportunity(clientData) {
+                const factors = {
+                    revenue: clientData.accountingSoftware.revenue > 1000000 ? 0.3 : 0.2,
+                    growth: clientData.accountingSoftware.profitability === 'growing' ? 0.4 : 0.1,
+                    relationship: clientData.bankAccounts.primary === 'Our Bank' ? 0.2 : 0.1,
+                    utilization: clientData.creditCards.utilization > 70 ? 0.3 : 0.1
+                };
+                
+                return Math.min(Object.values(factors).reduce((sum, factor) => sum + factor, 0), 1);
+            }
+
+            calculateCreditRisk(clientData) {
+                const factors = {
+                    profitability: clientData.accountingSoftware.profitability === 'declining' ? 0.4 : 0.1,
+                    utilization: clientData.creditCards.utilization > 80 ? 0.3 : 0.1,
+                    balance: clientData.bankAccounts.avgBalance < 50000 ? 0.2 : 0.1,
+                    trend: clientData.bankAccounts.trend === 'declining' ? 0.3 : 0.1
+                };
+                
+                return Math.min(Object.values(factors).reduce((sum, factor) => sum + factor, 0), 1);
+            }
+
+            calculateGrowthPrediction(clientData) {
+                const factors = {
+                    profitability: clientData.accountingSoftware.profitability === 'growing' ? 0.4 : 0.1,
+                    bankTrend: clientData.bankAccounts.trend === 'increasing' ? 0.3 : 0.1,
+                    utilization: clientData.creditCards.utilization > 60 ? 0.2 : 0.1,
+                    revenue: clientData.accountingSoftware.revenue > 500000 ? 0.2 : 0.1
+                };
+                
+                return Math.min(Object.values(factors).reduce((sum, factor) => sum + factor, 0), 1);
+            }
+
+            generateInsights(clientName) {
+                const clientData = {
+                    creditCards: financialData.creditCards[clientName],
+                    bankAccounts: financialData.bankAccounts[clientName],
+                    accountingSoftware: financialData.accountingSoftware[clientName]
+                };
+
+                const scores = {};
+                for (const [modelName, modelFunc] of Object.entries(this.models)) {
+                    scores[modelName] = modelFunc(clientData);
+                }
+
+                return {
+                    scores,
+                    recommendations: this.generateRecommendations(clientName, scores),
+                    confidence: this.calculateConfidence(scores)
+                };
+            }
+
+            generateRecommendations(clientName, scores) {
+                const recommendations = [];
+                
+                if (scores.churnRisk > 0.6) {
+                    recommendations.push({
+                        type: 'retention',
+                        priority: 'high',
+                        action: 'Schedule immediate retention meeting'
+                    });
+                }
+                
+                if (scores.upsellOpportunity > 0.7) {
+                    recommendations.push({
+                        type: 'upsell',
+                        priority: 'medium',
+                        action: 'Present additional services'
+                    });
+                }
+                
+                if (scores.creditRisk > 0.5) {
+                    recommendations.push({
+                        type: 'risk',
+                        priority: 'high',
+                        action: 'Review credit exposure'
+                    });
+                }
+                
+                return recommendations;
+            }
+
+            calculateConfidence(scores) {
+                const variance = Object.values(scores).reduce((sum, score) => sum + Math.pow(score - 0.5, 2), 0) / Object.values(scores).length;
+                return Math.max(0.6, 1 - variance);
+            }
+        }
+
+        // Initialize analytics engine
+        const analytics = new PredictiveAnalytics();
+
+        // Real-time monitoring simulation
+        function updatePredictions() {
+            const clients = ['Rodriguez Construction', 'Chen Marketing', 'Santos Consulting'];
+            
+            clients.forEach(client => {
+                const insights = analytics.generateInsights(client);
+                console.log(`${client} Analytics:`, insights);
+            });
+        }
+
+        // Automated insight generation
+        function generateAutomatedInsights() {
+            const insights = [
+                {
+                    client: 'Rodriguez Construction',
+                    type: 'opportunity',
+                    priority: 'high',
+                    message: 'Equipment financing opportunity detected based on transaction patterns',
+                    confidence: 0.89
+                },
+                {
+                    client: 'Chen Marketing',
+                    type: 'churn',
+                    priority: 'high',
+                    message: 'Churn risk elevated due to declining engagement metrics',
+                    confidence: 0.76
+                },
+                {
+                    client: 'Santos Consulting',
+                    type: 'growth',
+                    priority: 'medium',
+                    message: 'Growth stage client ready for enhanced services',
+                    confidence: 0.92
+                }
+            ];
+            
+            return insights;
+        }
+
+        // Portfolio optimization algorithms
+        function optimizePortfolio() {
+            const portfolioMetrics = {
+                totalRevenue: 2800000,
+                upsellOpportunities: 47,
+                churnRiskClients: 8,
+                portfolioHealth: 0.942
+            };
+            
+            // Relationship manager efficiency optimization
+            const prioritizedClients = [
+                { name: 'Rodriguez Construction', score: 0.89, action: 'Equipment loan' },
+                { name: 'Santos Consulting', score: 0.92, action: 'Credit expansion' },
+                { name: 'Chen Marketing', score: 0.76, action: 'Retention' }
+            ];
+            
+            return {
+                metrics: portfolioMetrics,
+                priorities: prioritizedClients,
+                recommendations: generateAutomatedInsights()
+            };
+        }
+
+        // Performance optimization for portfolio management
+        function optimizeWorkflow() {
+            const workflowSteps = [
+                'Data integration validation',
+                'Predictive model execution',
+                'Insight generation',
+                'Priority ranking',
+                'Action recommendation',
+                'Performance tracking'
+            ];
+            
+            workflowSteps.forEach((step, index) => {
+                setTimeout(() => {
+                    console.log(`Workflow Step ${index + 1}: ${step} completed`);
+                }, index * 1000);
+            });
+        }
+
+        // Initialize real-time monitoring
+        updatePredictions();
+        optimizePortfolio();
+        optimizeWorkflow();
+
+        // Continuous learning simulation
+        setInterval(() => {
+            const metrics = document.querySelectorAll('.metric-value');
+            metrics.forEach(metric => {
+                // Simulate real-time updates
+                if (Math.random() > 0.8) {
+                    metric.style.color = 'var(--ds-blue-500)';
+                    setTimeout(() => {
+                        metric.style.color = 'var(--ds-gray-900)';
+                    }, 1000);
+                }
+            });
+        }, 5000);
+
+        // Interactive elements
+        document.addEventListener('click', (e) => {
+            if (e.target.matches('.action-btn')) {
+                const clientRow = e.target.closest('tr');
+                const clientName = clientRow.querySelector('.client-name').textContent;
+                
+                // Simulate action tracking
+                console.log(`Action taken for ${clientName}: ${e.target.textContent}`);
+                
+                // Update UI to show action taken
+                e.target.textContent = 'Scheduled';
+                e.target.style.background = 'var(--ds-green-500)';
+                e.target.style.borderColor = 'var(--ds-green-500)';
+                
+                setTimeout(() => {
+                    e.target.textContent = 'Completed';
+                }, 2000);
+            }
+            
+            if (e.target.matches('.filter-btn')) {
+                // Update active filter
+                document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+                e.target.classList.add('active');
+                
+                // Simulate data refresh
+                console.log(`Filter changed to: ${e.target.textContent}`);
+            }
+        });
+    </script>
+</body>
+</html>

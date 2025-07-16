@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Card Organization & Purpose-Based Switching - Small Business Banking</title>
+    <style>
+        /* Geist Design System Implementation */
+        :root {
+            /* Gray Scale - Primary neutral palette */
+            --ds-gray-100: #fafafa;
+            --ds-gray-200: #eaeaea;
+            --ds-gray-300: #999999;
+            --ds-gray-400: #888888;
+            --ds-gray-500: #666666;
+            --ds-gray-600: #444444;
+            --ds-gray-700: #333333;
+            --ds-gray-800: #222222;
+            --ds-gray-900: #111111;
+            --ds-gray-1000: #000000;
+
+            /* Blue - Interactive elements */
+            --ds-blue-100: #e1f5fe;
+            --ds-blue-500: #0070f3;
+            --ds-blue-600: #0061d5;
+            --ds-blue-700: #004fc4;
+
+            /* Status Colors */
+            --ds-red-500: #ee0000;
+            --ds-amber-500: #f5a623;
+            --ds-green-500: #00b341;
+            --ds-purple-500: #7c3aed;
+
+            /* Typography */
+            --font-size-h1: 2.25rem;
+            --font-size-h2: 1.875rem;
+            --font-size-h3: 1.5rem;
+            --font-size-h4: 1.25rem;
+            --font-size-base: 1rem;
+            --font-size-small: 0.875rem;
+            --font-size-xs: 0.75rem;
+
+            /* Spacing scale based on 8px grid */
+            --space-1: 0.25rem;
+            --space-2: 0.5rem;
+            --space-3: 0.75rem;
+            --space-4: 1rem;
+            --space-5: 1.25rem;
+            --space-6: 1.5rem;
+            --space-8: 2rem;
+            --space-12: 3rem;
+            --space-16: 4rem;
+        }
+
+        /* Base Geist Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Geist Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            font-size: var(--font-size-base);
+            line-height: 1.5;
+            color: var(--ds-gray-900);
+            background-color: var(--ds-gray-100);
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: var(--space-4);
+        }
+
+        /* Header Styles */
+        .header {
+            background: white;
+            border-bottom: 1px solid var(--ds-gray-200);
+            padding: var(--space-4) var(--space-6);
+            margin-bottom: var(--space-6);
+        }
+
+        .header-content {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--ds-blue-500), var(--ds-purple-500));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        /* Purpose-Based Card Organization */
+        .card-selector {
+            background: white;
+            border-radius: 12px;
+            border: 1px solid var(--ds-gray-200);
+            padding: var(--space-6);
+            margin-bottom: var(--space-6);
+        }
+
+        .selector-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-4);
+        }
+
+        .selector-title {
+            font-size: var(--font-size-h3);
+            font-weight: 600;
+            color: var(--ds-gray-900);
+        }
+
+        .purpose-tabs {
+            display: flex;
+            gap: var(--space-2);
+            margin-bottom: var(--space-6);
+            overflow-x: auto;
+            padding-bottom: var(--space-2);
+        }
+
+        .purpose-tab {
+            background: var(--ds-gray-100);
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 8px;
+            padding: var(--space-3) var(--space-4);
+            font-size: var(--font-size-small);
+            font-weight: 500;
+            color: var(--ds-gray-600);
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+
+        .purpose-tab.active {
+            background: var(--ds-blue-100);
+            border-color: var(--ds-blue-500);
+            color: var(--ds-blue-700);
+        }
+
+        .purpose-tab:hover {
+            background: var(--ds-gray-200);
+            transform: translateY(-1px);
+        }
+
+        .purpose-tab.active:hover {
+            background: var(--ds-blue-100);
+        }
+
+        .purpose-icon {
+            width: 16px;
+            height: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Card Grid Layout */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: var(--space-4);
+            margin-bottom: var(--space-6);
+        }
+
+        .business-card {
+            background: white;
+            border: 2px solid var(--ds-gray-200);
+            border-radius: 12px;
+            padding: var(--space-5);
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+            position: relative;
+        }
+
+        .business-card:hover {
+            border-color: var(--ds-blue-500);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 112, 243, 0.12);
+        }
+
+        .business-card.selected {
+            border-color: var(--ds-blue-500);
+            background: linear-gradient(135deg, #f8faff 0%, #f0f8ff 100%);
+        }
+
+        .business-card.recommended {
+            border-color: var(--ds-green-500);
+            background: linear-gradient(135deg, #f8fff9 0%, #f0fff2 100%);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: var(--space-4);
+        }
+
+        .card-info h3 {
+            font-size: var(--font-size-base);
+            font-weight: 600;
+            color: var(--ds-gray-900);
+            margin-bottom: var(--space-1);
+        }
+
+        .card-number {
+            font-family: 'Geist Mono', monospace;
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-500);
+        }
+
+        .card-status {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+
+        .status-badge {
+            padding: var(--space-1) var(--space-2);
+            border-radius: 4px;
+            font-size: var(--font-size-xs);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-badge.active {
+            background: var(--ds-green-500);
+            color: white;
+        }
+
+        .status-badge.recommended {
+            background: var(--ds-amber-500);
+            color: white;
+        }
+
+        .card-purpose {
+            margin-bottom: var(--space-4);
+        }
+
+        .purpose-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-1);
+            margin-bottom: var(--space-2);
+        }
+
+        .purpose-tag {
+            background: var(--ds-gray-100);
+            color: var(--ds-gray-600);
+            padding: var(--space-1) var(--space-2);
+            border-radius: 4px;
+            font-size: var(--font-size-xs);
+            font-weight: 500;
+        }
+
+        .purpose-tag.primary {
+            background: var(--ds-blue-100);
+            color: var(--ds-blue-700);
+        }
+
+        .card-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-3);
+            padding-top: var(--space-3);
+            border-top: 1px solid var(--ds-gray-200);
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: var(--font-size-base);
+            font-weight: 600;
+            color: var(--ds-gray-900);
+            margin-bottom: var(--space-1);
+        }
+
+        .stat-label {
+            font-size: var(--font-size-xs);
+            color: var(--ds-gray-500);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Smart Recommendations */
+        .recommendations {
+            background: white;
+            border-radius: 12px;
+            border: 1px solid var(--ds-gray-200);
+            padding: var(--space-6);
+            margin-bottom: var(--space-6);
+        }
+
+        .recommendation-item {
+            display: flex;
+            align-items: center;
+            padding: var(--space-4);
+            background: var(--ds-gray-100);
+            border-radius: 8px;
+            margin-bottom: var(--space-3);
+        }
+
+        .recommendation-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .recommendation-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--ds-green-500);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: var(--space-3);
+            color: white;
+        }
+
+        .recommendation-content {
+            flex: 1;
+        }
+
+        .recommendation-title {
+            font-weight: 600;
+            color: var(--ds-gray-900);
+            margin-bottom: var(--space-1);
+        }
+
+        .recommendation-subtitle {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-600);
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            display: flex;
+            gap: var(--space-3);
+            margin-top: var(--space-6);
+        }
+
+        .action-button {
+            background: var(--ds-blue-500);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: var(--space-3) var(--space-5);
+            font-size: var(--font-size-base);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+
+        .action-button:hover {
+            background: var(--ds-blue-600);
+            transform: translateY(-1px);
+        }
+
+        .action-button.secondary {
+            background: var(--ds-gray-200);
+            color: var(--ds-gray-700);
+        }
+
+        .action-button.secondary:hover {
+            background: var(--ds-gray-300);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: var(--space-2);
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .purpose-tabs {
+                flex-wrap: wrap;
+            }
+
+            .quick-actions {
+                flex-direction: column;
+            }
+        }
+
+        /* Loading States */
+        .loading {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        .spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid var(--ds-gray-300);
+            border-top: 2px solid var(--ds-blue-500);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Accessibility */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <h1 class="selector-title">Rodriguez Marketing Solutions</h1>
+            <div class="user-info">
+                <div class="avatar">AR</div>
+                <div>
+                    <div style="font-weight: 600; font-size: var(--font-size-small);">Alex Rodriguez</div>
+                    <div style="font-size: var(--font-size-xs); color: var(--ds-gray-500);">Business Owner</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Purpose-Based Card Selection -->
+        <section class="card-selector">
+            <div class="selector-header">
+                <h2 class="selector-title">Choose Card by Business Purpose</h2>
+                <div style="font-size: var(--font-size-small); color: var(--ds-gray-600);">
+                    Available Credit: <strong>$38,250</strong>
+                </div>
+            </div>
+
+            <!-- Purpose Category Tabs -->
+            <div class="purpose-tabs">
+                <button class="purpose-tab active" data-purpose="general">
+                    <span class="purpose-icon">🏢</span>
+                    General Business
+                </button>
+                <button class="purpose-tab" data-purpose="travel">
+                    <span class="purpose-icon">✈️</span>
+                    Travel & Clients
+                </button>
+                <button class="purpose-tab" data-purpose="equipment">
+                    <span class="purpose-icon">💻</span>
+                    Equipment & Software
+                </button>
+                <button class="purpose-tab" data-purpose="marketing">
+                    <span class="purpose-icon">📈</span>
+                    Marketing & Ads
+                </button>
+                <button class="purpose-tab" data-purpose="all">
+                    <span class="purpose-icon">📋</span>
+                    All Cards
+                </button>
+            </div>
+
+            <!-- Cards Grid -->
+            <div class="cards-grid">
+                <!-- Chase Ink Business Card -->
+                <div class="business-card recommended" data-categories="general,office,utilities">
+                    <div class="card-header">
+                        <div class="card-info">
+                            <h3>Chase Ink Business</h3>
+                            <div class="card-number">•••• 4829</div>
+                        </div>
+                        <div class="card-status">
+                            <div class="status-badge recommended">Recommended</div>
+                            <div class="status-badge active">Active</div>
+                        </div>
+                    </div>
+                    
+                    <div class="card-purpose">
+                        <div class="purpose-tags">
+                            <span class="purpose-tag primary">Primary Business</span>
+                            <span class="purpose-tag">Office Supplies</span>
+                            <span class="purpose-tag">Utilities</span>
+                            <span class="purpose-tag">General Expenses</span>
+                        </div>
+                        <div style="font-size: var(--font-size-small); color: var(--ds-gray-600); margin-top: var(--space-2);">
+                            Best for: Daily operations, recurring business expenses, office supplies
+                        </div>
+                    </div>
+
+                    <div class="card-stats">
+                        <div class="stat">
+                            <div class="stat-value">$3,240</div>
+                            <div class="stat-label">Available</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">12%</div>
+                            <div class="stat-label">Utilization</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Capital One Spark Card -->
+                <div class="business-card" data-categories="travel,entertainment,clients">
+                    <div class="card-header">
+                        <div class="card-info">
+                            <h3>Capital One Spark</h3>
+                            <div class="card-number">•••• 7391</div>
+                        </div>
+                        <div class="card-status">
+                            <div class="status-badge active">Active</div>
+                        </div>
+                    </div>
+                    
+                    <div class="card-purpose">
+                        <div class="purpose-tags">
+                            <span class="purpose-tag primary">Travel Rewards</span>
+                            <span class="purpose-tag">Client Meetings</span>
+                            <span class="purpose-tag">Entertainment</span>
+                            <span class="purpose-tag">Transportation</span>
+                        </div>
+                        <div style="font-size: var(--font-size-small); color: var(--ds-gray-600); margin-top: var(--space-2);">
+                            Best for: Business travel, client entertainment, restaurant meetings
+                        </div>
+                    </div>
+
+                    <div class="card-stats">
+                        <div class="stat">
+                            <div class="stat-value">$8,950</div>
+                            <div class="stat-label">Available</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">5%</div>
+                            <div class="stat-label">Utilization</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- American Express Business Card -->
+                <div class="business-card" data-categories="equipment,software,large-purchases">
+                    <div class="card-header">
+                        <div class="card-info">
+                            <h3>Amex Business Gold</h3>
+                            <div class="card-number">•••• 1247</div>
+                        </div>
+                        <div class="card-status">
+                            <div class="status-badge active">Active</div>
+                        </div>
+                    </div>
+                    
+                    <div class="card-purpose">
+                        <div class="purpose-tags">
+                            <span class="purpose-tag primary">Equipment</span>
+                            <span class="purpose-tag">Software</span>
+                            <span class="purpose-tag">Large Purchases</span>
+                            <span class="purpose-tag">Extended Warranty</span>
+                        </div>
+                        <div style="font-size: var(--font-size-small); color: var(--ds-gray-600); margin-top: var(--space-2);">
+                            Best for: Computer equipment, expensive software, business investments
+                        </div>
+                    </div>
+
+                    <div class="card-stats">
+                        <div class="stat">
+                            <div class="stat-value">$11,200</div>
+                            <div class="stat-label">Available</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">30%</div>
+                            <div class="stat-label">Utilization</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bank of America Business Card -->
+                <div class="business-card" data-categories="marketing,subscriptions,online">
+                    <div class="card-header">
+                        <div class="card-info">
+                            <h3>BofA Business</h3>
+                            <div class="card-number">•••• 9582</div>
+                        </div>
+                        <div class="card-status">
+                            <div class="status-badge active">Active</div>
+                        </div>
+                    </div>
+                    
+                    <div class="card-purpose">
+                        <div class="purpose-tags">
+                            <span class="purpose-tag primary">Digital Marketing</span>
+                            <span class="purpose-tag">Subscriptions</span>
+                            <span class="purpose-tag">Online Services</span>
+                            <span class="purpose-tag">Virtual Cards</span>
+                        </div>
+                        <div style="font-size: var(--font-size-small); color: var(--ds-gray-600); margin-top: var(--space-2);">
+                            Best for: Facebook ads, software subscriptions, online tools
+                        </div>
+                    </div>
+
+                    <div class="card-stats">
+                        <div class="stat">
+                            <div class="stat-value">$4,250</div>
+                            <div class="stat-label">Available</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">15%</div>
+                            <div class="stat-label">Utilization</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Personal Card (Business Use) -->
+                <div class="business-card" data-categories="mixed,emergency,backup">
+                    <div class="card-header">
+                        <div class="card-info">
+                            <h3>Personal Visa (Business)</h3>
+                            <div class="card-number">•••• 3456</div>
+                        </div>
+                        <div class="card-status">
+                            <div class="status-badge active">Active</div>
+                        </div>
+                    </div>
+                    
+                    <div class="card-purpose">
+                        <div class="purpose-tags">
+                            <span class="purpose-tag primary">Mixed Use</span>
+                            <span class="purpose-tag">Emergency</span>
+                            <span class="purpose-tag">Backup</span>
+                            <span class="purpose-tag">Small Purchases</span>
+                        </div>
+                        <div style="font-size: var(--font-size-small); color: var(--ds-gray-600); margin-top: var(--space-2);">
+                            Best for: Emergency expenses, backup option, small business purchases
+                        </div>
+                    </div>
+
+                    <div class="card-stats">
+                        <div class="stat">
+                            <div class="stat-value">$10,610</div>
+                            <div class="stat-label">Available</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">8%</div>
+                            <div class="stat-label">Utilization</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Smart Recommendations -->
+        <section class="recommendations">
+            <h3 style="margin-bottom: var(--space-4); font-size: var(--font-size-h4);">Smart Recommendations</h3>
+            
+            <div class="recommendation-item">
+                <div class="recommendation-icon">💡</div>
+                <div class="recommendation-content">
+                    <div class="recommendation-title">Use Chase Ink for Office Supplies</div>
+                    <div class="recommendation-subtitle">You're purchasing from Staples - Chase Ink offers 5x points on office supply stores this quarter</div>
+                </div>
+            </div>
+
+            <div class="recommendation-item">
+                <div class="recommendation-icon">✈️</div>
+                <div class="recommendation-content">
+                    <div class="recommendation-title">Capital One for Client Lunch</div>
+                    <div class="recommendation-subtitle">Restaurant purchases earn 2x miles, plus this expense qualifies for tax deduction as client entertainment</div>
+                </div>
+            </div>
+
+            <div class="recommendation-item">
+                <div class="recommendation-icon">📊</div>
+                <div class="recommendation-content">
+                    <div class="recommendation-title">BofA for Marketing Spend</div>
+                    <div class="recommendation-subtitle">Facebook ads and Google Ads earn cash back rewards, and virtual cards provide extra security</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <button class="action-button">
+                <span>💳</span>
+                Make Payment
+            </button>
+            <button class="action-button secondary">
+                <span>📊</span>
+                View Spending Report
+            </button>
+            <button class="action-button secondary">
+                <span>🏷️</span>
+                Categorize Expenses
+            </button>
+            <button class="action-button secondary">
+                <span>📁</span>
+                Export for Tax Prep
+            </button>
+        </div>
+    </main>
+
+    <script>
+        // Purpose-based card filtering and switching
+        class CardSwitcher {
+            constructor() {
+                this.currentPurpose = 'general';
+                this.cards = document.querySelectorAll('.business-card');
+                this.tabs = document.querySelectorAll('.purpose-tab');
+                this.recommendations = document.querySelector('.recommendations');
+                
+                this.bindEvents();
+                this.updateView();
+            }
+
+            bindEvents() {
+                // Purpose tab switching
+                this.tabs.forEach(tab => {
+                    tab.addEventListener('click', (e) => {
+                        const purpose = e.currentTarget.dataset.purpose;
+                        this.switchPurpose(purpose);
+                    });
+                });
+
+                // Card selection
+                this.cards.forEach(card => {
+                    card.addEventListener('click', (e) => {
+                        this.selectCard(e.currentTarget);
+                    });
+                });
+
+                // Keyboard navigation
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+                        this.handleKeyboardNavigation(e);
+                    }
+                });
+            }
+
+            switchPurpose(purpose) {
+                this.currentPurpose = purpose;
+                
+                // Update active tab
+                this.tabs.forEach(tab => {
+                    tab.classList.toggle('active', tab.dataset.purpose === purpose);
+                });
+
+                this.updateView();
+                this.updateRecommendations();
+            }
+
+            updateView() {
+                this.cards.forEach(card => {
+                    const categories = card.dataset.categories.split(',');
+                    const shouldShow = this.currentPurpose === 'all' || 
+                                     categories.includes(this.currentPurpose);
+                    
+                    card.style.display = shouldShow ? 'block' : 'none';
+                    
+                    // Highlight recommended cards for current purpose
+                    const isRecommended = this.getRecommendedCard() === card;
+                    card.classList.toggle('recommended', isRecommended);
+                    
+                    const recommendedBadge = card.querySelector('.status-badge.recommended');
+                    if (recommendedBadge) {
+                        recommendedBadge.style.display = isRecommended ? 'block' : 'none';
+                    }
+                });
+            }
+
+            getRecommendedCard() {
+                const recommendations = {
+                    'general': document.querySelector('[data-categories*="general"]'),
+                    'travel': document.querySelector('[data-categories*="travel"]'),
+                    'equipment': document.querySelector('[data-categories*="equipment"]'),
+                    'marketing': document.querySelector('[data-categories*="marketing"]'),
+                    'all': null
+                };
+                
+                return recommendations[this.currentPurpose];
+            }
+
+            selectCard(card) {
+                // Remove previous selection
+                this.cards.forEach(c => c.classList.remove('selected'));
+                
+                // Add selection to clicked card
+                card.classList.add('selected');
+                
+                // Animate selection
+                card.style.transform = 'scale(1.02)';
+                setTimeout(() => {
+                    card.style.transform = '';
+                }, 200);
+
+                // Update recommendations based on selected card
+                this.updateCardRecommendations(card);
+            }
+
+            updateRecommendations() {
+                const recommendationData = {
+                    'general': [
+                        {
+                            icon: '💡',
+                            title: 'Use Chase Ink for Office Supplies',
+                            subtitle: 'Earn 5x points on office supply purchases this quarter'
+                        },
+                        {
+                            icon: '🏢',
+                            title: 'Auto-categorize Recurring Bills',
+                            subtitle: 'Set up automatic categorization for utilities and rent payments'
+                        }
+                    ],
+                    'travel': [
+                        {
+                            icon: '✈️',
+                            title: 'Capital One for Travel Bookings',
+                            subtitle: 'Earn 2x miles on all travel purchases plus travel insurance'
+                        },
+                        {
+                            icon: '🍽️',
+                            title: 'Restaurant Rewards Active',
+                            subtitle: 'Client meals qualify for 3x points and business deductions'
+                        }
+                    ],
+                    'equipment': [
+                        {
+                            icon: '💻',
+                            title: 'Amex Extended Warranty',
+                            subtitle: 'Equipment purchases include 2-year extended warranty coverage'
+                        },
+                        {
+                            icon: '💰',
+                            title: 'Tax Deduction Opportunity',
+                            subtitle: 'Business equipment qualifies for Section 179 deduction'
+                        }
+                    ],
+                    'marketing': [
+                        {
+                            icon: '📊',
+                            title: 'BofA Cash Back for Ads',
+                            subtitle: 'Get 1.5% cash back on Facebook and Google advertising spend'
+                        },
+                        {
+                            icon: '🔒',
+                            title: 'Virtual Cards for Security',
+                            subtitle: 'Use virtual card numbers for online subscriptions and ads'
+                        }
+                    ]
+                };
+
+                const data = recommendationData[this.currentPurpose] || recommendationData['general'];
+                this.updateRecommendationDisplay(data);
+            }
+
+            updateCardRecommendations(card) {
+                const cardName = card.querySelector('h3').textContent;
+                
+                // Show contextual guidance based on selected card
+                const guidance = this.getCardGuidance(cardName);
+                this.showNotification(guidance);
+            }
+
+            getCardGuidance(cardName) {
+                const guidanceMap = {
+                    'Chase Ink Business': 'Perfect choice for office supplies and general business expenses. Track receipts for tax deductions.',
+                    'Capital One Spark': 'Great for travel and client entertainment. Remember to note business purpose for tax compliance.',
+                    'Amex Business Gold': 'Ideal for equipment purchases. Extended warranty and purchase protection included.',
+                    'BofA Business': 'Best for online purchases and subscriptions. Virtual cards available for extra security.',
+                    'Personal Visa (Business)': 'Remember to mark business expenses for proper categorization and tax tracking.'
+                };
+                
+                return guidanceMap[cardName] || 'Card selected successfully.';
+            }
+
+            updateRecommendationDisplay(data) {
+                const container = this.recommendations.querySelector('.recommendation-item').parentNode;
+                const existingItems = container.querySelectorAll('.recommendation-item');
+                
+                // Remove existing items
+                existingItems.forEach(item => item.remove());
+                
+                // Add new recommendations
+                data.forEach(rec => {
+                    const item = document.createElement('div');
+                    item.className = 'recommendation-item';
+                    item.innerHTML = `
+                        <div class="recommendation-icon">${rec.icon}</div>
+                        <div class="recommendation-content">
+                            <div class="recommendation-title">${rec.title}</div>
+                            <div class="recommendation-subtitle">${rec.subtitle}</div>
+                        </div>
+                    `;
+                    container.appendChild(item);
+                });
+            }
+
+            showNotification(message) {
+                // Create temporary notification
+                const notification = document.createElement('div');
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: var(--ds-green-500);
+                    color: white;
+                    padding: var(--space-4);
+                    border-radius: 8px;
+                    font-size: var(--font-size-small);
+                    max-width: 300px;
+                    z-index: 1000;
+                    animation: slideIn 0.3s ease-out;
+                `;
+                notification.textContent = message;
+                
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.style.animation = 'slideOut 0.3s ease-in';
+                    setTimeout(() => notification.remove(), 300);
+                }, 3000);
+            }
+
+            handleKeyboardNavigation(e) {
+                const activeTabIndex = Array.from(this.tabs).findIndex(tab => 
+                    tab.classList.contains('active')
+                );
+                
+                let newIndex;
+                if (e.key === 'ArrowLeft') {
+                    newIndex = activeTabIndex > 0 ? activeTabIndex - 1 : this.tabs.length - 1;
+                } else {
+                    newIndex = activeTabIndex < this.tabs.length - 1 ? activeTabIndex + 1 : 0;
+                }
+                
+                const newTab = this.tabs[newIndex];
+                this.switchPurpose(newTab.dataset.purpose);
+                newTab.focus();
+            }
+        }
+
+        // Initialize the card switcher when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            new CardSwitcher();
+            
+            // Add CSS for notifications
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes slideIn {
+                    from { transform: translateX(100%); opacity: 0; }
+                    to { transform: translateX(0); opacity: 1; }
+                }
+                @keyframes slideOut {
+                    from { transform: translateX(0); opacity: 1; }
+                    to { transform: translateX(100%); opacity: 0; }
+                }
+            `;
+            document.head.appendChild(style);
+        });
+
+        // Tax compliance helpers
+        function exportForTaxPrep() {
+            // Simulate tax export functionality
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                bottom: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: var(--ds-blue-500);
+                color: white;
+                padding: var(--space-4) var(--space-6);
+                border-radius: 8px;
+                font-size: var(--font-size-small);
+                z-index: 1000;
+            `;
+            notification.innerHTML = `
+                <div style="font-weight: 600; margin-bottom: var(--space-1);">Tax Export Ready</div>
+                <div>November 2024 expenses exported as CSV for QuickBooks import</div>
+            `;
+            
+            document.body.appendChild(notification);
+            setTimeout(() => notification.remove(), 4000);
+        }
+
+        // Bind export functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            const exportBtn = document.querySelector('.action-button:last-child');
+            if (exportBtn) {
+                exportBtn.addEventListener('click', exportForTaxPrep);
+            }
+        });
+    </script>
+</body>
+</html>

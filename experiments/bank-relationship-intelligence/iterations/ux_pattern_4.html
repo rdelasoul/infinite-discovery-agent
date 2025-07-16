@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Competitive Intelligence Analysis - Bank Relationship Intelligence</title>
+    <style>
+        /* Geist Design System Implementation */
+        :root {
+            /* Colors */
+            --ds-gray-100: #fafafa;
+            --ds-gray-200: #eaeaea;
+            --ds-gray-300: #999999;
+            --ds-gray-400: #888888;
+            --ds-gray-500: #666666;
+            --ds-gray-600: #444444;
+            --ds-gray-700: #333333;
+            --ds-gray-800: #222222;
+            --ds-gray-900: #111111;
+            --ds-gray-1000: #000000;
+            --ds-blue-100: #e1f5fe;
+            --ds-blue-500: #0070f3;
+            --ds-blue-600: #0061d5;
+            --ds-blue-700: #004fc4;
+            --ds-red-500: #ee0000;
+            --ds-amber-500: #f5a623;
+            --ds-green-500: #00c851;
+            --ds-purple-500: #7c3aed;
+            
+            /* Typography */
+            --font-size-h1: 2.25rem;
+            --font-size-h2: 1.875rem;
+            --font-size-h3: 1.5rem;
+            --font-size-h4: 1.25rem;
+            --font-size-base: 1rem;
+            --font-size-small: 0.875rem;
+            --font-size-xs: 0.75rem;
+            --line-height-normal: 1.5;
+            --line-height-tight: 1.25;
+            
+            /* Spacing */
+            --space-1: 0.25rem;
+            --space-2: 0.5rem;
+            --space-3: 0.75rem;
+            --space-4: 1rem;
+            --space-5: 1.25rem;
+            --space-6: 1.5rem;
+            --space-8: 2rem;
+            --space-10: 2.5rem;
+            --space-12: 3rem;
+            --space-16: 4rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Geist Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            font-size: var(--font-size-base);
+            line-height: var(--line-height-normal);
+            color: var(--ds-gray-900);
+            background-color: var(--ds-gray-100);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--space-6);
+        }
+
+        .header {
+            background: white;
+            padding: var(--space-6);
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            margin-bottom: var(--space-6);
+        }
+
+        .header h1 {
+            font-size: var(--font-size-h1);
+            font-weight: 600;
+            color: var(--ds-gray-900);
+            margin-bottom: var(--space-2);
+        }
+
+        .header .subtitle {
+            color: var(--ds-gray-500);
+            font-size: var(--font-size-base);
+        }
+
+        .competitive-dashboard {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: var(--space-6);
+            margin-bottom: var(--space-6);
+        }
+
+        .main-content {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .sidebar {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            padding: var(--space-6);
+            height: fit-content;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            padding: var(--space-5) var(--space-6);
+            border-bottom: 1px solid var(--ds-gray-200);
+        }
+
+        .section-header h2 {
+            font-size: var(--font-size-h3);
+            font-weight: 600;
+            color: var(--ds-gray-900);
+        }
+
+        .section-header .controls {
+            display: flex;
+            gap: var(--space-2);
+        }
+
+        .geist-button {
+            padding: var(--space-2) var(--space-4);
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 6px;
+            background: white;
+            color: var(--ds-gray-700);
+            cursor: pointer;
+            font-size: var(--font-size-small);
+            transition: all 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+        }
+
+        .geist-button:hover {
+            background: var(--ds-gray-100);
+            transform: translateY(-1px);
+        }
+
+        .geist-button--primary {
+            background: var(--ds-blue-500);
+            color: white;
+            border-color: var(--ds-blue-500);
+        }
+
+        .geist-button--primary:hover {
+            background: var(--ds-blue-600);
+        }
+
+        .tab-navigation {
+            display: flex;
+            border-bottom: 1px solid var(--ds-gray-200);
+            background: var(--ds-gray-100);
+        }
+
+        .tab-button {
+            padding: var(--space-3) var(--space-6);
+            border: none;
+            background: transparent;
+            color: var(--ds-gray-500);
+            cursor: pointer;
+            font-size: var(--font-size-small);
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+        }
+
+        .tab-button:hover {
+            color: var(--ds-gray-700);
+            background: var(--ds-gray-200);
+        }
+
+        .tab-button.active {
+            color: var(--ds-blue-500);
+            border-bottom-color: var(--ds-blue-500);
+            background: white;
+        }
+
+        .tab-content {
+            padding: var(--space-6);
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .competitive-matrix {
+            display: grid;
+            grid-template-columns: 200px repeat(4, 1fr);
+            gap: 1px;
+            background: var(--ds-gray-200);
+            border-radius: 6px;
+            overflow: hidden;
+            margin-bottom: var(--space-6);
+        }
+
+        .matrix-header {
+            background: var(--ds-gray-800);
+            color: white;
+            padding: var(--space-3);
+            font-weight: 600;
+            font-size: var(--font-size-small);
+        }
+
+        .matrix-cell {
+            background: white;
+            padding: var(--space-3);
+            font-size: var(--font-size-small);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .matrix-row-header {
+            background: var(--ds-gray-100);
+            font-weight: 600;
+            justify-content: flex-start;
+        }
+
+        .wallet-share-chart {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-4);
+            margin-bottom: var(--space-6);
+        }
+
+        .wallet-share-card {
+            background: white;
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 8px;
+            padding: var(--space-4);
+            text-align: center;
+        }
+
+        .wallet-share-card h3 {
+            font-size: var(--font-size-h4);
+            margin-bottom: var(--space-2);
+            color: var(--ds-gray-900);
+        }
+
+        .wallet-percentage {
+            font-size: var(--font-size-h2);
+            font-weight: 700;
+            margin-bottom: var(--space-2);
+        }
+
+        .wallet-percentage.primary {
+            color: var(--ds-blue-500);
+        }
+
+        .wallet-percentage.secondary {
+            color: var(--ds-amber-500);
+        }
+
+        .wallet-percentage.tertiary {
+            color: var(--ds-gray-500);
+        }
+
+        .competitive-insights {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--space-4);
+            margin-bottom: var(--space-6);
+        }
+
+        .insight-card {
+            background: var(--ds-gray-100);
+            border-radius: 8px;
+            padding: var(--space-4);
+            border-left: 4px solid var(--ds-blue-500);
+        }
+
+        .insight-card.opportunity {
+            border-left-color: var(--ds-green-500);
+        }
+
+        .insight-card.threat {
+            border-left-color: var(--ds-red-500);
+        }
+
+        .insight-card.neutral {
+            border-left-color: var(--ds-amber-500);
+        }
+
+        .insight-card h4 {
+            font-size: var(--font-size-h4);
+            margin-bottom: var(--space-2);
+            color: var(--ds-gray-900);
+        }
+
+        .insight-card p {
+            color: var(--ds-gray-600);
+            font-size: var(--font-size-small);
+        }
+
+        .client-relationship-map {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-4);
+            margin-bottom: var(--space-6);
+        }
+
+        .relationship-node {
+            background: white;
+            border: 2px solid var(--ds-gray-200);
+            border-radius: 8px;
+            padding: var(--space-4);
+            text-align: center;
+            transition: all 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+        }
+
+        .relationship-node:hover {
+            border-color: var(--ds-blue-500);
+            transform: translateY(-2px);
+        }
+
+        .relationship-node.primary {
+            border-color: var(--ds-blue-500);
+            background: var(--ds-blue-100);
+        }
+
+        .relationship-node.secondary {
+            border-color: var(--ds-amber-500);
+            background: #fef3c7;
+        }
+
+        .relationship-node.tertiary {
+            border-color: var(--ds-gray-400);
+        }
+
+        .relationship-node .bank-name {
+            font-weight: 600;
+            margin-bottom: var(--space-2);
+            color: var(--ds-gray-900);
+        }
+
+        .relationship-node .relationship-type {
+            font-size: var(--font-size-xs);
+            color: var(--ds-gray-500);
+            margin-bottom: var(--space-2);
+        }
+
+        .relationship-node .wallet-share {
+            font-size: var(--font-size-h4);
+            font-weight: 700;
+            color: var(--ds-gray-900);
+        }
+
+        .geist-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .geist-table th,
+        .geist-table td {
+            padding: var(--space-3);
+            text-align: left;
+            border-bottom: 1px solid var(--ds-gray-200);
+        }
+
+        .geist-table th {
+            font-weight: 600;
+            color: var(--ds-gray-900);
+            background: var(--ds-gray-100);
+        }
+
+        .geist-table tr:hover {
+            background: var(--ds-gray-100);
+        }
+
+        .geist-badge {
+            padding: var(--space-1) var(--space-2);
+            border-radius: 4px;
+            font-size: var(--font-size-xs);
+            font-weight: 500;
+            display: inline-block;
+        }
+
+        .geist-badge--primary {
+            background: var(--ds-blue-500);
+            color: white;
+        }
+
+        .geist-badge--secondary {
+            background: var(--ds-amber-500);
+            color: white;
+        }
+
+        .geist-badge--tertiary {
+            background: var(--ds-gray-400);
+            color: white;
+        }
+
+        .geist-badge--opportunity {
+            background: var(--ds-green-500);
+            color: white;
+        }
+
+        .geist-badge--threat {
+            background: var(--ds-red-500);
+            color: white;
+        }
+
+        .competitive-actions {
+            display: flex;
+            gap: var(--space-4);
+            margin-top: var(--space-6);
+        }
+
+        .action-item {
+            background: white;
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 8px;
+            padding: var(--space-4);
+            flex: 1;
+            text-align: center;
+        }
+
+        .action-item h4 {
+            font-size: var(--font-size-h4);
+            margin-bottom: var(--space-2);
+            color: var(--ds-gray-900);
+        }
+
+        .action-item p {
+            color: var(--ds-gray-600);
+            font-size: var(--font-size-small);
+            margin-bottom: var(--space-3);
+        }
+
+        .sidebar h3 {
+            font-size: var(--font-size-h4);
+            margin-bottom: var(--space-4);
+            color: var(--ds-gray-900);
+        }
+
+        .sidebar .summary-card {
+            background: var(--ds-gray-100);
+            border-radius: 8px;
+            padding: var(--space-4);
+            margin-bottom: var(--space-4);
+        }
+
+        .sidebar .summary-card h4 {
+            font-size: var(--font-size-base);
+            margin-bottom: var(--space-2);
+            color: var(--ds-gray-900);
+        }
+
+        .sidebar .summary-card .value {
+            font-size: var(--font-size-h3);
+            font-weight: 700;
+            color: var(--ds-blue-500);
+        }
+
+        .sidebar .summary-card .change {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-500);
+        }
+
+        .sidebar .summary-card .change.positive {
+            color: var(--ds-green-500);
+        }
+
+        .sidebar .summary-card .change.negative {
+            color: var(--ds-red-500);
+        }
+
+        .priority-actions {
+            list-style: none;
+        }
+
+        .priority-actions li {
+            display: flex;
+            align-items: center;
+            padding: var(--space-3);
+            background: white;
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 6px;
+            margin-bottom: var(--space-2);
+            font-size: var(--font-size-small);
+        }
+
+        .priority-actions li:hover {
+            background: var(--ds-gray-100);
+        }
+
+        .priority-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: var(--space-2);
+        }
+
+        .priority-dot.high {
+            background: var(--ds-red-500);
+        }
+
+        .priority-dot.medium {
+            background: var(--ds-amber-500);
+        }
+
+        .priority-dot.low {
+            background: var(--ds-green-500);
+        }
+
+        @media (max-width: 768px) {
+            .competitive-dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .competitive-matrix {
+                grid-template-columns: 150px repeat(2, 1fr);
+            }
+            
+            .wallet-share-chart {
+                grid-template-columns: 1fr;
+            }
+            
+            .competitive-insights {
+                grid-template-columns: 1fr;
+            }
+            
+            .client-relationship-map {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .competitive-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Competitive Intelligence Analysis</h1>
+            <p class="subtitle">Market Position Optimization for Small Business Portfolio</p>
+        </div>
+
+        <div class="competitive-dashboard">
+            <div class="main-content">
+                <div class="section-header">
+                    <h2>Competitive Market Analysis</h2>
+                    <div class="controls">
+                        <button class="geist-button">Export Report</button>
+                        <button class="geist-button geist-button--primary">Refresh Data</button>
+                    </div>
+                </div>
+
+                <div class="tab-navigation">
+                    <button class="tab-button active" data-tab="overview">Portfolio Overview</button>
+                    <button class="tab-button" data-tab="wallet-share">Wallet Share Analysis</button>
+                    <button class="tab-button" data-tab="competitive-matrix">Competitive Matrix</button>
+                    <button class="tab-button" data-tab="opportunities">Strategic Opportunities</button>
+                </div>
+
+                <div class="tab-content active" id="overview">
+                    <div class="wallet-share-chart">
+                        <div class="wallet-share-card">
+                            <h3>Primary Banking</h3>
+                            <div class="wallet-percentage primary">67%</div>
+                            <p>Our bank is primary relationship</p>
+                        </div>
+                        <div class="wallet-share-card">
+                            <h3>Secondary Banking</h3>
+                            <div class="wallet-percentage secondary">28%</div>
+                            <p>We are secondary relationship</p>
+                        </div>
+                        <div class="wallet-share-card">
+                            <h3>Tertiary Banking</h3>
+                            <div class="wallet-percentage tertiary">5%</div>
+                            <p>We are tertiary relationship</p>
+                        </div>
+                    </div>
+
+                    <div class="competitive-insights">
+                        <div class="insight-card opportunity">
+                            <h4>Expansion Opportunity</h4>
+                            <p>23 clients show increasing transaction volumes with competitors. Average opportunity: $847K in additional deposits.</p>
+                        </div>
+                        <div class="insight-card threat">
+                            <h4>Retention Risk</h4>
+                            <p>8 primary clients have opened new accounts with Chase Business Banking. Combined relationship value: $2.3M.</p>
+                        </div>
+                        <div class="insight-card neutral">
+                            <h4>Market Trend</h4>
+                            <p>Digital banking adoption in our SMB segment increased 34% YoY. Competitors leading in mobile check deposit.</p>
+                        </div>
+                        <div class="insight-card opportunity">
+                            <h4>Cross-sell Potential</h4>
+                            <p>41 clients using competitor treasury services. Estimated revenue opportunity: $156K annually.</p>
+                        </div>
+                    </div>
+
+                    <table class="geist-table">
+                        <thead>
+                            <tr>
+                                <th>Client</th>
+                                <th>Industry</th>
+                                <th>Our Relationship</th>
+                                <th>Primary Bank</th>
+                                <th>Wallet Share</th>
+                                <th>Opportunity</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Rodriguez Construction</td>
+                                <td>Construction</td>
+                                <td><span class="geist-badge geist-badge--primary">Primary</span></td>
+                                <td>First National</td>
+                                <td>78%</td>
+                                <td><span class="geist-badge geist-badge--opportunity">Treasury Services</span></td>
+                            </tr>
+                            <tr>
+                                <td>Chen Marketing</td>
+                                <td>Marketing</td>
+                                <td><span class="geist-badge geist-badge--secondary">Secondary</span></td>
+                                <td>Chase Business</td>
+                                <td>34%</td>
+                                <td><span class="geist-badge geist-badge--opportunity">Primary Relationship</span></td>
+                            </tr>
+                            <tr>
+                                <td>Thompson Legal</td>
+                                <td>Legal Services</td>
+                                <td><span class="geist-badge geist-badge--primary">Primary</span></td>
+                                <td>First National</td>
+                                <td>89%</td>
+                                <td><span class="geist-badge geist-badge--opportunity">Investment Services</span></td>
+                            </tr>
+                            <tr>
+                                <td>Kim Restaurant</td>
+                                <td>Food Service</td>
+                                <td><span class="geist-badge geist-badge--secondary">Secondary</span></td>
+                                <td>Bank of America</td>
+                                <td>41%</td>
+                                <td><span class="geist-badge geist-badge--threat">Payroll Services</span></td>
+                            </tr>
+                            <tr>
+                                <td>Santos Consulting</td>
+                                <td>Consulting</td>
+                                <td><span class="geist-badge geist-badge--primary">Primary</span></td>
+                                <td>First National</td>
+                                <td>92%</td>
+                                <td><span class="geist-badge geist-badge--opportunity">Credit Line</span></td>
+                            </tr>
+                            <tr>
+                                <td>Miller Automotive</td>
+                                <td>Automotive</td>
+                                <td><span class="geist-badge geist-badge--tertiary">Tertiary</span></td>
+                                <td>Wells Fargo</td>
+                                <td>12%</td>
+                                <td><span class="geist-badge geist-badge--opportunity">Full Relationship</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="tab-content" id="wallet-share">
+                    <div class="client-relationship-map">
+                        <div class="relationship-node primary">
+                            <div class="bank-name">First National</div>
+                            <div class="relationship-type">Primary Banking</div>
+                            <div class="wallet-share">67%</div>
+                        </div>
+                        <div class="relationship-node secondary">
+                            <div class="bank-name">Chase Business</div>
+                            <div class="relationship-type">Secondary Banking</div>
+                            <div class="wallet-share">28%</div>
+                        </div>
+                        <div class="relationship-node tertiary">
+                            <div class="bank-name">Bank of America</div>
+                            <div class="relationship-type">Tertiary Banking</div>
+                            <div class="wallet-share">3%</div>
+                        </div>
+                        <div class="relationship-node tertiary">
+                            <div class="bank-name">Wells Fargo</div>
+                            <div class="relationship-type">Tertiary Banking</div>
+                            <div class="wallet-share">2%</div>
+                        </div>
+                    </div>
+
+                    <table class="geist-table">
+                        <thead>
+                            <tr>
+                                <th>Client</th>
+                                <th>Our Share</th>
+                                <th>Competitor #1</th>
+                                <th>Share</th>
+                                <th>Competitor #2</th>
+                                <th>Share</th>
+                                <th>Opportunity</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Rodriguez Construction</td>
+                                <td>78%</td>
+                                <td>Wells Fargo</td>
+                                <td>15%</td>
+                                <td>Chase</td>
+                                <td>7%</td>
+                                <td>Treasury Services</td>
+                            </tr>
+                            <tr>
+                                <td>Chen Marketing</td>
+                                <td>34%</td>
+                                <td>Chase Business</td>
+                                <td>52%</td>
+                                <td>BofA</td>
+                                <td>14%</td>
+                                <td>Primary Relationship</td>
+                            </tr>
+                            <tr>
+                                <td>Thompson Legal</td>
+                                <td>89%</td>
+                                <td>PNC</td>
+                                <td>8%</td>
+                                <td>Fifth Third</td>
+                                <td>3%</td>
+                                <td>Investment Services</td>
+                            </tr>
+                            <tr>
+                                <td>Kim Restaurant</td>
+                                <td>41%</td>
+                                <td>Bank of America</td>
+                                <td>45%</td>
+                                <td>Wells Fargo</td>
+                                <td>14%</td>
+                                <td>Payroll Services</td>
+                            </tr>
+                            <tr>
+                                <td>Santos Consulting</td>
+                                <td>92%</td>
+                                <td>Chase</td>
+                                <td>5%</td>
+                                <td>Citi</td>
+                                <td>3%</td>
+                                <td>Credit Line</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="tab-content" id="competitive-matrix">
+                    <div class="competitive-matrix">
+                        <div class="matrix-header">Product/Service</div>
+                        <div class="matrix-header">First National</div>
+                        <div class="matrix-header">Chase Business</div>
+                        <div class="matrix-header">Bank of America</div>
+                        <div class="matrix-header">Wells Fargo</div>
+                        
+                        <div class="matrix-cell matrix-row-header">Business Checking</div>
+                        <div class="matrix-cell">$8/month</div>
+                        <div class="matrix-cell">$15/month</div>
+                        <div class="matrix-cell">$16/month</div>
+                        <div class="matrix-cell">$14/month</div>
+                        
+                        <div class="matrix-cell matrix-row-header">Credit Lines</div>
+                        <div class="matrix-cell">Prime + 1.5%</div>
+                        <div class="matrix-cell">Prime + 2.0%</div>
+                        <div class="matrix-cell">Prime + 1.75%</div>
+                        <div class="matrix-cell">Prime + 1.8%</div>
+                        
+                        <div class="matrix-cell matrix-row-header">Treasury Services</div>
+                        <div class="matrix-cell">$45/month</div>
+                        <div class="matrix-cell">$65/month</div>
+                        <div class="matrix-cell">$55/month</div>
+                        <div class="matrix-cell">$50/month</div>
+                        
+                        <div class="matrix-cell matrix-row-header">Mobile Banking</div>
+                        <div class="matrix-cell">4.2★</div>
+                        <div class="matrix-cell">4.7★</div>
+                        <div class="matrix-cell">4.1★</div>
+                        <div class="matrix-cell">4.5★</div>
+                        
+                        <div class="matrix-cell matrix-row-header">Payroll Services</div>
+                        <div class="matrix-cell">$2.50/employee</div>
+                        <div class="matrix-cell">$3.00/employee</div>
+                        <div class="matrix-cell">$2.25/employee</div>
+                        <div class="matrix-cell">$2.75/employee</div>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="opportunities">
+                    <div class="competitive-actions">
+                        <div class="action-item">
+                            <h4>Immediate Actions</h4>
+                            <p>High-impact opportunities requiring immediate attention</p>
+                            <button class="geist-button geist-button--primary">View 12 Actions</button>
+                        </div>
+                        <div class="action-item">
+                            <h4>Strategic Initiatives</h4>
+                            <p>Long-term competitive positioning improvements</p>
+                            <button class="geist-button">View 8 Initiatives</button>
+                        </div>
+                        <div class="action-item">
+                            <h4>Defensive Measures</h4>
+                            <p>Protect existing relationships from competitor threats</p>
+                            <button class="geist-button">View 6 Measures</button>
+                        </div>
+                    </div>
+
+                    <table class="geist-table">
+                        <thead>
+                            <tr>
+                                <th>Opportunity</th>
+                                <th>Client</th>
+                                <th>Current Competitor</th>
+                                <th>Revenue Potential</th>
+                                <th>Probability</th>
+                                <th>Action Required</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Primary Relationship</td>
+                                <td>Chen Marketing</td>
+                                <td>Chase Business</td>
+                                <td>$125K</td>
+                                <td>72%</td>
+                                <td>Competitive rate matching</td>
+                            </tr>
+                            <tr>
+                                <td>Treasury Services</td>
+                                <td>Rodriguez Construction</td>
+                                <td>Wells Fargo</td>
+                                <td>$45K</td>
+                                <td>89%</td>
+                                <td>Service demonstration</td>
+                            </tr>
+                            <tr>
+                                <td>Credit Line Expansion</td>
+                                <td>Santos Consulting</td>
+                                <td>N/A</td>
+                                <td>$78K</td>
+                                <td>95%</td>
+                                <td>Proactive offering</td>
+                            </tr>
+                            <tr>
+                                <td>Payroll Services</td>
+                                <td>Miller Automotive</td>
+                                <td>Bank of America</td>
+                                <td>$36K</td>
+                                <td>54%</td>
+                                <td>Competitive pricing</td>
+                            </tr>
+                            <tr>
+                                <td>Investment Services</td>
+                                <td>Thompson Legal</td>
+                                <td>PNC</td>
+                                <td>$92K</td>
+                                <td>67%</td>
+                                <td>Wealth management intro</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <h3>Portfolio Summary</h3>
+                
+                <div class="summary-card">
+                    <h4>Total Clients</h4>
+                    <div class="value">127</div>
+                    <div class="change positive">+8 this quarter</div>
+                </div>
+
+                <div class="summary-card">
+                    <h4>Average Wallet Share</h4>
+                    <div class="value">64%</div>
+                    <div class="change positive">+3.2% YoY</div>
+                </div>
+
+                <div class="summary-card">
+                    <h4>Competitive Threats</h4>
+                    <div class="value">23</div>
+                    <div class="change negative">+5 this month</div>
+                </div>
+
+                <div class="summary-card">
+                    <h4>Expansion Opportunities</h4>
+                    <div class="value">$2.8M</div>
+                    <div class="change positive">+12% potential</div>
+                </div>
+
+                <h3>Priority Actions</h3>
+                <ul class="priority-actions">
+                    <li>
+                        <div class="priority-dot high"></div>
+                        Contact Chen Marketing about primary relationship
+                    </li>
+                    <li>
+                        <div class="priority-dot high"></div>
+                        Schedule Rodriguez Construction treasury demo
+                    </li>
+                    <li>
+                        <div class="priority-dot medium"></div>
+                        Prepare Kim Restaurant retention strategy
+                    </li>
+                    <li>
+                        <div class="priority-dot medium"></div>
+                        Review Miller Automotive competitive pricing
+                    </li>
+                    <li>
+                        <div class="priority-dot low"></div>
+                        Analyze Santos Consulting credit needs
+                    </li>
+                    <li>
+                        <div class="priority-dot low"></div>
+                        Research Thompson Legal investment options
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tab Navigation
+        document.querySelectorAll('.tab-button').forEach(button => {
+            button.addEventListener('click', function() {
+                const targetTab = this.dataset.tab;
+                
+                // Remove active class from all buttons and contents
+                document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+                
+                // Add active class to clicked button and corresponding content
+                this.classList.add('active');
+                document.getElementById(targetTab).classList.add('active');
+            });
+        });
+
+        // Competitive Intelligence Data Integration
+        const competitiveData = {
+            clients: [
+                {
+                    name: "Rodriguez Construction",
+                    industry: "Construction",
+                    revenue: 2000000,
+                    ourRelationship: "Primary",
+                    primaryBank: "First National",
+                    walletShare: 78,
+                    competitors: [
+                        { bank: "Wells Fargo", share: 15, services: ["Equipment Loans"] },
+                        { bank: "Chase", share: 7, services: ["Credit Cards"] }
+                    ],
+                    opportunities: ["Treasury Services", "Equipment Financing"],
+                    riskFactors: ["Seasonal Cash Flow", "Equipment Age"]
+                },
+                {
+                    name: "Chen Marketing",
+                    industry: "Marketing",
+                    revenue: 500000,
+                    ourRelationship: "Secondary",
+                    primaryBank: "Chase Business",
+                    walletShare: 34,
+                    competitors: [
+                        { bank: "Chase Business", share: 52, services: ["Primary Checking", "Payroll"] },
+                        { bank: "Bank of America", share: 14, services: ["Savings", "Credit Cards"] }
+                    ],
+                    opportunities: ["Primary Relationship", "Digital Marketing Loans"],
+                    riskFactors: ["Client Diversification", "Digital Transition"]
+                },
+                {
+                    name: "Thompson Legal",
+                    industry: "Legal Services",
+                    revenue: 1200000,
+                    ourRelationship: "Primary",
+                    primaryBank: "First National",
+                    walletShare: 89,
+                    competitors: [
+                        { bank: "PNC", share: 8, services: ["Trust Services"] },
+                        { bank: "Fifth Third", share: 3, services: ["Investments"] }
+                    ],
+                    opportunities: ["Investment Services", "Trust Services"],
+                    riskFactors: ["Partner Retirement", "Succession Planning"]
+                },
+                {
+                    name: "Kim Restaurant",
+                    industry: "Food Service",
+                    revenue: 800000,
+                    ourRelationship: "Secondary",
+                    primaryBank: "Bank of America",
+                    walletShare: 41,
+                    competitors: [
+                        { bank: "Bank of America", share: 45, services: ["Primary Checking", "Merchant Services"] },
+                        { bank: "Wells Fargo", share: 14, services: ["Equipment Loans"] }
+                    ],
+                    opportunities: ["Payroll Services", "Working Capital"],
+                    riskFactors: ["Seasonal Revenue", "Labor Costs"]
+                },
+                {
+                    name: "Santos Consulting",
+                    industry: "Consulting",
+                    revenue: 300000,
+                    ourRelationship: "Primary",
+                    primaryBank: "First National",
+                    walletShare: 92,
+                    competitors: [
+                        { bank: "Chase", share: 5, services: ["Personal Banking"] },
+                        { bank: "Citi", share: 3, services: ["Credit Cards"] }
+                    ],
+                    opportunities: ["Credit Line Expansion", "Business Development"],
+                    riskFactors: ["Growth Volatility", "Client Concentration"]
+                }
+            ],
+            
+            marketIntelligence: {
+                trends: [
+                    { trend: "Digital Banking Adoption", impact: "High", opportunity: "Mobile Service Enhancement" },
+                    { trend: "Treasury Service Demand", impact: "Medium", opportunity: "Cash Management Solutions" },
+                    { trend: "Credit Line Competition", impact: "High", opportunity: "Competitive Rate Matching" }
+                ],
+                
+                competitorAnalysis: {
+                    "Chase Business": {
+                        strengths: ["Digital Platform", "Brand Recognition", "Product Range"],
+                        weaknesses: ["Pricing", "Local Service", "Relationship Depth"],
+                        marketShare: 28,
+                        threat: "High"
+                    },
+                    "Bank of America": {
+                        strengths: ["National Presence", "Technology", "Merchant Services"],
+                        weaknesses: ["Fees", "Customer Service", "Flexibility"],
+                        marketShare: 22,
+                        threat: "Medium"
+                    },
+                    "Wells Fargo": {
+                        strengths: ["Equipment Financing", "Industry Knowledge", "Local Presence"],
+                        weaknesses: ["Reputation", "Pricing", "Digital Platform"],
+                        marketShare: 18,
+                        threat: "Medium"
+                    }
+                }
+            },
+            
+            opportunityScoring: {
+                "Primary Relationship Conversion": {
+                    clients: ["Chen Marketing", "Kim Restaurant"],
+                    revenue: 157000,
+                    probability: 68,
+                    timeframe: "3-6 months"
+                },
+                "Treasury Services Expansion": {
+                    clients: ["Rodriguez Construction", "Thompson Legal"],
+                    revenue: 89000,
+                    probability: 84,
+                    timeframe: "1-3 months"
+                },
+                "Credit Line Growth": {
+                    clients: ["Santos Consulting", "Miller Automotive"],
+                    revenue: 112000,
+                    probability: 91,
+                    timeframe: "1-2 months"
+                }
+            }
+        };
+
+        // Real-time competitive intelligence updates
+        function updateCompetitiveIntelligence() {
+            // Simulate real-time market data updates
+            const updates = [
+                "New competitor pricing detected: Chase Business reduced credit line rates by 0.25%",
+                "Client alert: Kim Restaurant opened new account with Wells Fargo",
+                "Market opportunity: 3 prospects in construction industry seeking equipment financing",
+                "Competitive threat: Bank of America launching new SMB digital platform"
+            ];
+            
+            console.log("Competitive Intelligence Update:", updates[Math.floor(Math.random() * updates.length)]);
+        }
+
+        // Wallet share analysis
+        function analyzeWalletShare(clientData) {
+            const totalRevenue = clientData.reduce((sum, client) => sum + client.revenue, 0);
+            const avgWalletShare = clientData.reduce((sum, client) => sum + client.walletShare, 0) / clientData.length;
+            
+            return {
+                totalRevenue,
+                avgWalletShare,
+                primaryRelationships: clientData.filter(c => c.ourRelationship === "Primary").length,
+                expansionOpportunities: clientData.filter(c => c.walletShare < 70).length
+            };
+        }
+
+        // Competitive positioning analysis
+        function analyzeCompetitivePosition() {
+            const analysis = analyzeWalletShare(competitiveData.clients);
+            console.log("Portfolio Analysis:", analysis);
+            
+            // Identify high-priority opportunities
+            const highPriorityOpportunities = competitiveData.clients
+                .filter(client => client.walletShare < 50 && client.revenue > 400000)
+                .sort((a, b) => b.revenue - a.revenue);
+            
+            console.log("High Priority Opportunities:", highPriorityOpportunities);
+        }
+
+        // Initialize competitive intelligence dashboard
+        function initializeCompetitiveIntelligence() {
+            analyzeCompetitivePosition();
+            setInterval(updateCompetitiveIntelligence, 30000); // Update every 30 seconds
+        }
+
+        // Enhanced hover interactions for relationship nodes
+        document.querySelectorAll('.relationship-node').forEach(node => {
+            node.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-4px)';
+                this.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.15)';
+            });
+            
+            node.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+                this.style.boxShadow = 'none';
+            });
+        });
+
+        // Competitive intelligence workflow optimization
+        function optimizeCompetitiveWorkflow() {
+            // Progressive disclosure of competitive intelligence
+            const insights = document.querySelectorAll('.insight-card');
+            insights.forEach((insight, index) => {
+                insight.style.animationDelay = `${index * 0.1}s`;
+            });
+            
+            // Smart prioritization of competitive actions
+            const priorityActions = document.querySelectorAll('.priority-actions li');
+            priorityActions.forEach(action => {
+                action.addEventListener('click', function() {
+                    this.style.backgroundColor = '#e1f5fe';
+                    this.style.borderColor = '#0070f3';
+                });
+            });
+        }
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeCompetitiveIntelligence();
+            optimizeCompetitiveWorkflow();
+        });
+
+        // Export competitive intelligence report
+        function exportCompetitiveReport() {
+            const reportData = {
+                portfolioSummary: analyzeWalletShare(competitiveData.clients),
+                competitiveThreats: competitiveData.marketIntelligence.competitorAnalysis,
+                opportunities: competitiveData.opportunityScoring,
+                timestamp: new Date().toISOString()
+            };
+            
+            console.log("Competitive Intelligence Report:", reportData);
+            // In production, this would generate and download a PDF/Excel report
+        }
+
+        // Bind export functionality
+        document.querySelector('.controls .geist-button').addEventListener('click', exportCompetitiveReport);
+    </script>
+</body>
+</html>

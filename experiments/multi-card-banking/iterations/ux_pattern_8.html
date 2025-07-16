@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cash Flow & Credit Health Monitoring - Multi-Card Banking</title>
+    <style>
+        /* Geist Design System Implementation */
+        :root {
+            /* Gray Scale - Primary neutral palette */
+            --ds-gray-100: #fafafa;
+            --ds-gray-200: #eaeaea;
+            --ds-gray-300: #999999;
+            --ds-gray-400: #888888;
+            --ds-gray-500: #666666;
+            --ds-gray-600: #444444;
+            --ds-gray-700: #333333;
+            --ds-gray-800: #222222;
+            --ds-gray-900: #111111;
+            --ds-gray-1000: #000000;
+
+            /* Blue - Interactive elements */
+            --ds-blue-100: #e1f5fe;
+            --ds-blue-500: #0070f3;
+            --ds-blue-600: #0061d5;
+            --ds-blue-700: #004fc4;
+
+            /* Status Colors */
+            --ds-red-500: #ee0000;
+            --ds-amber-500: #f5a623;
+            --ds-green-500: #00b341;
+            --ds-purple-500: #7c3aed;
+
+            /* Typography */
+            --font-size-h1: 2.25rem;
+            --font-size-h2: 1.875rem;
+            --font-size-h3: 1.5rem;
+            --font-size-h4: 1.25rem;
+            --font-size-base: 1rem;
+            --font-size-small: 0.875rem;
+            --font-size-xs: 0.75rem;
+
+            /* Spacing scale based on 8px grid */
+            --space-1: 0.25rem;
+            --space-2: 0.5rem;
+            --space-3: 0.75rem;
+            --space-4: 1rem;
+            --space-5: 1.25rem;
+            --space-6: 1.5rem;
+            --space-8: 2rem;
+            --space-10: 2.5rem;
+            --space-12: 3rem;
+            --space-16: 4rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Geist Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-color: var(--ds-gray-100);
+            color: var(--ds-gray-900);
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--space-6);
+        }
+
+        .header {
+            margin-bottom: var(--space-8);
+        }
+
+        .header h1 {
+            font-size: var(--font-size-h1);
+            font-weight: 600;
+            color: var(--ds-gray-900);
+            margin-bottom: var(--space-2);
+        }
+
+        .header p {
+            font-size: var(--font-size-base);
+            color: var(--ds-gray-600);
+            margin-bottom: var(--space-6);
+        }
+
+        /* Cash Flow Overview Section */
+        .cash-flow-overview {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: var(--space-6);
+            margin-bottom: var(--space-8);
+        }
+
+        .cash-flow-chart {
+            background: white;
+            border-radius: 8px;
+            padding: var(--space-6);
+            border: 1px solid var(--ds-gray-200);
+        }
+
+        .cash-flow-summary {
+            background: white;
+            border-radius: 8px;
+            padding: var(--space-6);
+            border: 1px solid var(--ds-gray-200);
+        }
+
+        .section-title {
+            font-size: var(--font-size-h3);
+            font-weight: 600;
+            margin-bottom: var(--space-4);
+            color: var(--ds-gray-900);
+        }
+
+        .cash-flow-bars {
+            margin-top: var(--space-4);
+        }
+
+        .cash-flow-month {
+            display: flex;
+            align-items: center;
+            margin-bottom: var(--space-4);
+            padding: var(--space-3);
+            background: var(--ds-gray-100);
+            border-radius: 6px;
+        }
+
+        .month-label {
+            width: 80px;
+            font-size: var(--font-size-small);
+            font-weight: 500;
+            color: var(--ds-gray-600);
+        }
+
+        .flow-bars {
+            flex: 1;
+            margin: 0 var(--space-3);
+            position: relative;
+            height: 40px;
+        }
+
+        .revenue-bar, .expense-bar {
+            height: 18px;
+            border-radius: 4px;
+            margin-bottom: var(--space-1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .revenue-bar {
+            background: var(--ds-green-500);
+        }
+
+        .expense-bar {
+            background: var(--ds-blue-500);
+        }
+
+        .flow-amount {
+            font-size: var(--font-size-xs);
+            font-weight: 600;
+            color: var(--ds-gray-700);
+            min-width: 80px;
+            text-align: right;
+        }
+
+        .net-flow {
+            font-size: var(--font-size-small);
+            font-weight: 600;
+            margin-left: var(--space-2);
+        }
+
+        .positive { color: var(--ds-green-500); }
+        .negative { color: var(--ds-red-500); }
+
+        /* Credit Health Cards */
+        .credit-health-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--space-4);
+            margin-bottom: var(--space-8);
+        }
+
+        .credit-card {
+            background: white;
+            border-radius: 8px;
+            padding: var(--space-5);
+            border: 1px solid var(--ds-gray-200);
+            position: relative;
+        }
+
+        .credit-card.warning {
+            border-color: var(--ds-amber-500);
+            background: linear-gradient(145deg, #fff 0%, #fffbf0 100%);
+        }
+
+        .credit-card.danger {
+            border-color: var(--ds-red-500);
+            background: linear-gradient(145deg, #fff 0%, #fff5f5 100%);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: var(--space-4);
+        }
+
+        .card-info h3 {
+            font-size: var(--font-size-base);
+            font-weight: 600;
+            color: var(--ds-gray-900);
+            margin-bottom: var(--space-1);
+        }
+
+        .card-purpose {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-600);
+        }
+
+        .alert-badge {
+            padding: var(--space-1) var(--space-2);
+            border-radius: 4px;
+            font-size: var(--font-size-xs);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .alert-warning {
+            background: var(--ds-amber-500);
+            color: white;
+        }
+
+        .alert-danger {
+            background: var(--ds-red-500);
+            color: white;
+        }
+
+        .utilization-display {
+            margin-bottom: var(--space-4);
+        }
+
+        .utilization-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-2);
+        }
+
+        .utilization-label {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-600);
+            font-weight: 500;
+        }
+
+        .utilization-percentage {
+            font-size: var(--font-size-small);
+            font-weight: 600;
+        }
+
+        .utilization-bar {
+            height: 8px;
+            background: var(--ds-gray-200);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: var(--space-2);
+        }
+
+        .utilization-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .util-low { background: var(--ds-green-500); }
+        .util-medium { background: var(--ds-amber-500); }
+        .util-high { background: var(--ds-red-500); }
+
+        .card-amounts {
+            display: flex;
+            justify-content: space-between;
+            font-size: var(--font-size-small);
+        }
+
+        .amount-used, .amount-available {
+            color: var(--ds-gray-600);
+        }
+
+        .payment-due {
+            margin-top: var(--space-3);
+            padding: var(--space-3);
+            background: var(--ds-gray-100);
+            border-radius: 6px;
+        }
+
+        .payment-due-label {
+            font-size: var(--font-size-xs);
+            color: var(--ds-gray-600);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: var(--space-1);
+        }
+
+        .payment-due-date {
+            font-size: var(--font-size-small);
+            font-weight: 600;
+            color: var(--ds-gray-900);
+        }
+
+        .payment-due.urgent {
+            background: #fff5f5;
+            border: 1px solid var(--ds-red-500);
+        }
+
+        .payment-due.coming-soon {
+            background: #fffbf0;
+            border: 1px solid var(--ds-amber-500);
+        }
+
+        /* Alerts & Recommendations */
+        .alerts-section {
+            background: white;
+            border-radius: 8px;
+            padding: var(--space-6);
+            border: 1px solid var(--ds-gray-200);
+            margin-bottom: var(--space-8);
+        }
+
+        .alert-item {
+            display: flex;
+            align-items: flex-start;
+            padding: var(--space-4);
+            border-radius: 6px;
+            margin-bottom: var(--space-3);
+            border-left: 4px solid;
+        }
+
+        .alert-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .alert-high {
+            background: #fff5f5;
+            border-color: var(--ds-red-500);
+        }
+
+        .alert-medium {
+            background: #fffbf0;
+            border-color: var(--ds-amber-500);
+        }
+
+        .alert-info {
+            background: #f0f9ff;
+            border-color: var(--ds-blue-500);
+        }
+
+        .alert-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin-right: var(--space-3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: white;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .alert-high .alert-icon { background: var(--ds-red-500); }
+        .alert-medium .alert-icon { background: var(--ds-amber-500); }
+        .alert-info .alert-icon { background: var(--ds-blue-500); }
+
+        .alert-content {
+            flex: 1;
+        }
+
+        .alert-title {
+            font-size: var(--font-size-small);
+            font-weight: 600;
+            color: var(--ds-gray-900);
+            margin-bottom: var(--space-1);
+        }
+
+        .alert-description {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-600);
+            line-height: 1.4;
+        }
+
+        .alert-action {
+            margin-top: var(--space-2);
+        }
+
+        .alert-button {
+            font-size: var(--font-size-xs);
+            padding: var(--space-1) var(--space-3);
+            border-radius: 4px;
+            border: 1px solid var(--ds-blue-500);
+            background: white;
+            color: var(--ds-blue-500);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .alert-button:hover {
+            background: var(--ds-blue-500);
+            color: white;
+        }
+
+        /* Payment Schedule */
+        .payment-schedule {
+            background: white;
+            border-radius: 8px;
+            padding: var(--space-6);
+            border: 1px solid var(--ds-gray-200);
+        }
+
+        .schedule-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--space-3) 0;
+            border-bottom: 1px solid var(--ds-gray-200);
+        }
+
+        .schedule-item:last-child {
+            border-bottom: none;
+        }
+
+        .schedule-date {
+            display: flex;
+            flex-direction: column;
+            min-width: 100px;
+        }
+
+        .date-day {
+            font-size: var(--font-size-small);
+            font-weight: 600;
+            color: var(--ds-gray-900);
+        }
+
+        .date-month {
+            font-size: var(--font-size-xs);
+            color: var(--ds-gray-600);
+        }
+
+        .schedule-card {
+            flex: 1;
+            margin: 0 var(--space-4);
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-700);
+        }
+
+        .schedule-amount {
+            font-size: var(--font-size-small);
+            font-weight: 600;
+            color: var(--ds-gray-900);
+            min-width: 80px;
+            text-align: right;
+        }
+
+        .schedule-status {
+            margin-left: var(--space-3);
+            padding: var(--space-1) var(--space-2);
+            border-radius: 4px;
+            font-size: var(--font-size-xs);
+            font-weight: 500;
+        }
+
+        .status-due { background: var(--ds-red-500); color: white; }
+        .status-upcoming { background: var(--ds-amber-500); color: white; }
+        .status-scheduled { background: var(--ds-gray-200); color: var(--ds-gray-700); }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .cash-flow-overview {
+                grid-template-columns: 1fr;
+            }
+            
+            .credit-health-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: var(--space-4);
+            }
+            
+            .schedule-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: var(--space-2);
+            }
+            
+            .schedule-card,
+            .schedule-amount {
+                margin: 0;
+                text-align: left;
+            }
+        }
+
+        /* Interactive States */
+        .credit-card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transform: translateY(-1px);
+            transition: all 0.2s ease;
+        }
+
+        .alert-item:hover {
+            transform: translateX(4px);
+            transition: transform 0.2s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Cash Flow & Credit Health Monitor</h1>
+            <p>Track revenue, expenses, and credit utilization across all business cards to maintain healthy cash flow and business credit standing.</p>
+        </header>
+
+        <!-- Cash Flow Overview -->
+        <section class="cash-flow-overview">
+            <div class="cash-flow-chart">
+                <h2 class="section-title">Revenue vs Expenses (Last 6 Months)</h2>
+                <div class="cash-flow-bars">
+                    <div class="cash-flow-month">
+                        <div class="month-label">Feb</div>
+                        <div class="flow-bars">
+                            <div class="revenue-bar" style="width: 85%"></div>
+                            <div class="expense-bar" style="width: 78%"></div>
+                        </div>
+                        <div class="flow-amount">
+                            <div>$42,500</div>
+                            <div>$39,200</div>
+                        </div>
+                        <div class="net-flow positive">+$3,300</div>
+                    </div>
+                    <div class="cash-flow-month">
+                        <div class="month-label">Mar</div>
+                        <div class="flow-bars">
+                            <div class="revenue-bar" style="width: 92%"></div>
+                            <div class="expense-bar" style="width: 85%"></div>
+                        </div>
+                        <div class="flow-amount">
+                            <div>$46,000</div>
+                            <div>$42,800</div>
+                        </div>
+                        <div class="net-flow positive">+$3,200</div>
+                    </div>
+                    <div class="cash-flow-month">
+                        <div class="month-label">Apr</div>
+                        <div class="flow-bars">
+                            <div class="revenue-bar" style="width: 78%"></div>
+                            <div class="expense-bar" style="width: 88%"></div>
+                        </div>
+                        <div class="flow-amount">
+                            <div>$39,200</div>
+                            <div>$44,100</div>
+                        </div>
+                        <div class="net-flow negative">-$4,900</div>
+                    </div>
+                    <div class="cash-flow-month">
+                        <div class="month-label">May</div>
+                        <div class="flow-bars">
+                            <div class="revenue-bar" style="width: 88%"></div>
+                            <div class="expense-bar" style="width: 82%"></div>
+                        </div>
+                        <div class="flow-amount">
+                            <div>$44,100</div>
+                            <div>$41,200</div>
+                        </div>
+                        <div class="net-flow positive">+$2,900</div>
+                    </div>
+                    <div class="cash-flow-month">
+                        <div class="month-label">Jun</div>
+                        <div class="flow-bars">
+                            <div class="revenue-bar" style="width: 95%"></div>
+                            <div class="expense-bar" style="width: 75%"></div>
+                        </div>
+                        <div class="flow-amount">
+                            <div>$47,500</div>
+                            <div>$37,800</div>
+                        </div>
+                        <div class="net-flow positive">+$9,700</div>
+                    </div>
+                    <div class="cash-flow-month">
+                        <div class="month-label">Jul</div>
+                        <div class="flow-bars">
+                            <div class="revenue-bar" style="width: 100%"></div>
+                            <div class="expense-bar" style="width: 90%"></div>
+                        </div>
+                        <div class="flow-amount">
+                            <div>$50,000</div>
+                            <div>$45,200</div>
+                        </div>
+                        <div class="net-flow positive">+$4,800</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cash-flow-summary">
+                <h2 class="section-title">Cash Flow Summary</h2>
+                <div style="margin-bottom: var(--space-4);">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: var(--space-2);">
+                        <span style="color: var(--ds-gray-600);">Total Available Credit:</span>
+                        <span style="font-weight: 600;">$48,200</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: var(--space-2);">
+                        <span style="color: var(--ds-gray-600);">Current Utilization:</span>
+                        <span style="font-weight: 600; color: var(--ds-amber-500);">68.5%</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: var(--space-4);">
+                        <span style="color: var(--ds-gray-600);">Net Cash Flow (3mo avg):</span>
+                        <span style="font-weight: 600; color: var(--ds-green-500);">+$5,633</span>
+                    </div>
+                </div>
+                
+                <div style="padding: var(--space-4); background: var(--ds-gray-100); border-radius: 6px;">
+                    <h3 style="font-size: var(--font-size-small); font-weight: 600; margin-bottom: var(--space-2); color: var(--ds-gray-900);">Next Payment Due</h3>
+                    <div style="font-size: var(--font-size-base); font-weight: 600; color: var(--ds-red-500);">Jul 22 - Chase Ink ($2,845)</div>
+                    <div style="font-size: var(--font-size-small); color: var(--ds-gray-600); margin-top: var(--space-1);">Due in 6 days</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Credit Health Cards -->
+        <section class="credit-health-grid">
+            <div class="credit-card danger">
+                <div class="card-header">
+                    <div class="card-info">
+                        <h3>Chase Ink Business</h3>
+                        <div class="card-purpose">Primary Business Card</div>
+                    </div>
+                    <div class="alert-badge alert-danger">High Util</div>
+                </div>
+                
+                <div class="utilization-display">
+                    <div class="utilization-header">
+                        <span class="utilization-label">Credit Utilization</span>
+                        <span class="utilization-percentage" style="color: var(--ds-red-500);">89%</span>
+                    </div>
+                    <div class="utilization-bar">
+                        <div class="utilization-fill util-high" style="width: 89%"></div>
+                    </div>
+                    <div class="card-amounts">
+                        <span class="amount-used">Used: $13,350</span>
+                        <span class="amount-available">Available: $1,650</span>
+                    </div>
+                </div>
+                
+                <div class="payment-due urgent">
+                    <div class="payment-due-label">Payment Due</div>
+                    <div class="payment-due-date">July 22, 2024 - $2,845</div>
+                </div>
+            </div>
+
+            <div class="credit-card warning">
+                <div class="card-header">
+                    <div class="card-info">
+                        <h3>Capital One Spark</h3>
+                        <div class="card-purpose">Travel & Client Entertainment</div>
+                    </div>
+                    <div class="alert-badge alert-warning">Med Util</div>
+                </div>
+                
+                <div class="utilization-display">
+                    <div class="utilization-header">
+                        <span class="utilization-label">Credit Utilization</span>
+                        <span class="utilization-percentage" style="color: var(--ds-amber-500);">64%</span>
+                    </div>
+                    <div class="utilization-bar">
+                        <div class="utilization-fill util-medium" style="width: 64%"></div>
+                    </div>
+                    <div class="card-amounts">
+                        <span class="amount-used">Used: $6,400</span>
+                        <span class="amount-available">Available: $3,600</span>
+                    </div>
+                </div>
+                
+                <div class="payment-due coming-soon">
+                    <div class="payment-due-label">Payment Due</div>
+                    <div class="payment-due-date">July 28, 2024 - $1,420</div>
+                </div>
+            </div>
+
+            <div class="credit-card">
+                <div class="card-header">
+                    <div class="card-info">
+                        <h3>American Express Business</h3>
+                        <div class="card-purpose">Equipment & Large Purchases</div>
+                    </div>
+                </div>
+                
+                <div class="utilization-display">
+                    <div class="utilization-header">
+                        <span class="utilization-label">Credit Utilization</span>
+                        <span class="utilization-percentage" style="color: var(--ds-green-500);">28%</span>
+                    </div>
+                    <div class="utilization-bar">
+                        <div class="utilization-fill util-low" style="width: 28%"></div>
+                    </div>
+                    <div class="card-amounts">
+                        <span class="amount-used">Used: $2,240</span>
+                        <span class="amount-available">Available: $5,760</span>
+                    </div>
+                </div>
+                
+                <div class="payment-due">
+                    <div class="payment-due-label">Payment Due</div>
+                    <div class="payment-due-date">August 3, 2024 - $892</div>
+                </div>
+            </div>
+
+            <div class="credit-card">
+                <div class="card-header">
+                    <div class="card-info">
+                        <h3>Bank of America Business</h3>
+                        <div class="card-purpose">Software & Subscriptions</div>
+                    </div>
+                </div>
+                
+                <div class="utilization-display">
+                    <div class="utilization-header">
+                        <span class="utilization-label">Credit Utilization</span>
+                        <span class="utilization-percentage" style="color: var(--ds-green-500);">42%</span>
+                    </div>
+                    <div class="utilization-bar">
+                        <div class="utilization-fill util-low" style="width: 42%"></div>
+                    </div>
+                    <div class="card-amounts">
+                        <span class="amount-used">Used: $2,100</span>
+                        <span class="amount-available">Available: $2,900</span>
+                    </div>
+                </div>
+                
+                <div class="payment-due">
+                    <div class="payment-due-label">Payment Due</div>
+                    <div class="payment-due-date">August 8, 2024 - $685</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Alerts & Recommendations -->
+        <section class="alerts-section">
+            <h2 class="section-title">Cash Flow Alerts & Recommendations</h2>
+            
+            <div class="alert-item alert-high">
+                <div class="alert-icon">!</div>
+                <div class="alert-content">
+                    <div class="alert-title">Critical: High Credit Utilization on Primary Card</div>
+                    <div class="alert-description">Chase Ink Business is at 89% utilization. This could negatively impact your business credit score. Consider making an early payment or transferring some expenses to other cards.</div>
+                    <div class="alert-action">
+                        <a href="#" class="alert-button">Make Payment</a>
+                        <a href="#" class="alert-button">Transfer Balance</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="alert-item alert-medium">
+                <div class="alert-icon">⚠</div>
+                <div class="alert-content">
+                    <div class="alert-title">Upcoming Cash Flow Gap</div>
+                    <div class="alert-description">Based on payment schedule, you have $4,950 in card payments due by July 28th. Ensure sufficient cash flow to avoid late fees and credit impact.</div>
+                    <div class="alert-action">
+                        <a href="#" class="alert-button">View Payment Schedule</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="alert-item alert-info">
+                <div class="alert-icon">💡</div>
+                <div class="alert-content">
+                    <div class="alert-title">Optimization Opportunity</div>
+                    <div class="alert-description">You have $12,260 in available credit across 3 cards. Consider using AmEx Business for upcoming equipment purchases to improve utilization distribution.</div>
+                    <div class="alert-action">
+                        <a href="#" class="alert-button">Optimize Card Usage</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="alert-item alert-info">
+                <div class="alert-icon">📊</div>
+                <div class="alert-content">
+                    <div class="alert-title">Credit Health Improvement</div>
+                    <div class="alert-description">Keeping overall utilization below 30% across all cards would improve your business credit score. Target total usage of $14,460 or less.</div>
+                    <div class="alert-action">
+                        <a href="#" class="alert-button">Create Payment Plan</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Payment Schedule -->
+        <section class="payment-schedule">
+            <h2 class="section-title">Upcoming Payment Schedule</h2>
+            
+            <div class="schedule-item">
+                <div class="schedule-date">
+                    <div class="date-day">22</div>
+                    <div class="date-month">Jul</div>
+                </div>
+                <div class="schedule-card">Chase Ink Business</div>
+                <div class="schedule-amount">$2,845</div>
+                <div class="schedule-status status-due">Due Now</div>
+            </div>
+
+            <div class="schedule-item">
+                <div class="schedule-date">
+                    <div class="date-day">28</div>
+                    <div class="date-month">Jul</div>
+                </div>
+                <div class="schedule-card">Capital One Spark</div>
+                <div class="schedule-amount">$1,420</div>
+                <div class="schedule-status status-upcoming">6 Days</div>
+            </div>
+
+            <div class="schedule-item">
+                <div class="schedule-date">
+                    <div class="date-day">3</div>
+                    <div class="date-month">Aug</div>
+                </div>
+                <div class="schedule-card">American Express Business</div>
+                <div class="schedule-amount">$892</div>
+                <div class="schedule-status status-scheduled">12 Days</div>
+            </div>
+
+            <div class="schedule-item">
+                <div class="schedule-date">
+                    <div class="date-day">8</div>
+                    <div class="date-month">Aug</div>
+                </div>
+                <div class="schedule-card">Bank of America Business</div>
+                <div class="schedule-amount">$685</div>
+                <div class="schedule-status status-scheduled">17 Days</div>
+            </div>
+
+            <div class="schedule-item">
+                <div class="schedule-date">
+                    <div class="date-day">15</div>
+                    <div class="date-month">Aug</div>
+                </div>
+                <div class="schedule-card">Personal Card (Business Use)</div>
+                <div class="schedule-amount">$1,235</div>
+                <div class="schedule-status status-scheduled">24 Days</div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Dynamic utilization updates and interactive features
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate utilization bars on load
+            const utilizationBars = document.querySelectorAll('.utilization-fill');
+            setTimeout(() => {
+                utilizationBars.forEach(bar => {
+                    const width = bar.style.width;
+                    bar.style.width = '0%';
+                    setTimeout(() => {
+                        bar.style.width = width;
+                    }, 100);
+                });
+            }, 500);
+
+            // Cash flow bar animations
+            const cashFlowBars = document.querySelectorAll('.revenue-bar, .expense-bar');
+            setTimeout(() => {
+                cashFlowBars.forEach((bar, index) => {
+                    const width = bar.style.width;
+                    bar.style.width = '0%';
+                    setTimeout(() => {
+                        bar.style.width = width;
+                    }, index * 100);
+                });
+            }, 1000);
+
+            // Alert interaction handlers
+            const alertButtons = document.querySelectorAll('.alert-button');
+            alertButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const action = this.textContent;
+                    console.log(`Action triggered: ${action}`);
+                    
+                    // Simulate action feedback
+                    const originalText = this.textContent;
+                    this.textContent = 'Processing...';
+                    this.style.opacity = '0.6';
+                    
+                    setTimeout(() => {
+                        this.textContent = originalText;
+                        this.style.opacity = '1';
+                    }, 2000);
+                });
+            });
+
+            // Credit utilization threshold monitoring
+            function checkUtilizationThresholds() {
+                const cards = document.querySelectorAll('.credit-card');
+                cards.forEach(card => {
+                    const percentage = parseFloat(card.querySelector('.utilization-percentage').textContent);
+                    
+                    if (percentage > 80) {
+                        card.classList.add('danger');
+                        card.classList.remove('warning');
+                    } else if (percentage > 50) {
+                        card.classList.add('warning');
+                        card.classList.remove('danger');
+                    } else {
+                        card.classList.remove('danger', 'warning');
+                    }
+                });
+            }
+
+            // Real-time cash flow calculations
+            function updateCashFlowSummary() {
+                const months = document.querySelectorAll('.cash-flow-month');
+                let totalRevenue = 0;
+                let totalExpenses = 0;
+                
+                months.forEach(month => {
+                    const amounts = month.querySelectorAll('.flow-amount div');
+                    const revenue = parseFloat(amounts[0].textContent.replace('$', '').replace(',', ''));
+                    const expense = parseFloat(amounts[1].textContent.replace('$', '').replace(',', ''));
+                    
+                    totalRevenue += revenue;
+                    totalExpenses += expense;
+                });
+                
+                const avgNetFlow = (totalRevenue - totalExpenses) / months.length;
+                console.log(`Average net flow: $${avgNetFlow.toFixed(0)}`);
+            }
+
+            // Payment due date monitoring
+            function updatePaymentStatuses() {
+                const today = new Date();
+                const scheduleItems = document.querySelectorAll('.schedule-item');
+                
+                scheduleItems.forEach(item => {
+                    const dateElements = item.querySelector('.schedule-date');
+                    const day = parseInt(dateElements.querySelector('.date-day').textContent);
+                    const month = dateElements.querySelector('.date-month').textContent;
+                    
+                    // Calculate days until payment
+                    const monthMap = { 'Jul': 6, 'Aug': 7 };
+                    const paymentDate = new Date(2024, monthMap[month], day);
+                    const daysUntil = Math.ceil((paymentDate - today) / (1000 * 60 * 60 * 24));
+                    
+                    const statusElement = item.querySelector('.schedule-status');
+                    if (daysUntil <= 0) {
+                        statusElement.className = 'schedule-status status-due';
+                        statusElement.textContent = 'Due Now';
+                    } else if (daysUntil <= 7) {
+                        statusElement.className = 'schedule-status status-upcoming';
+                        statusElement.textContent = `${daysUntil} Days`;
+                    }
+                });
+            }
+
+            // Initialize monitoring systems
+            checkUtilizationThresholds();
+            updateCashFlowSummary();
+            updatePaymentStatuses();
+
+            // Auto-refresh data every 5 minutes
+            setInterval(() => {
+                updateCashFlowSummary();
+                updatePaymentStatuses();
+                checkUtilizationThresholds();
+            }, 300000);
+        });
+    </script>
+</body>
+</html>

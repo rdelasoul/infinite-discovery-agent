@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cross-Card Analytics & Business Intelligence - Multi-Card Banking Platform</title>
+    <style>
+        /* Geist Design System Implementation */
+        :root {
+            /* Gray Scale - Primary neutral palette */
+            --ds-gray-100: #fafafa;
+            --ds-gray-200: #eaeaea;
+            --ds-gray-300: #999999;
+            --ds-gray-400: #888888;
+            --ds-gray-500: #666666;
+            --ds-gray-600: #444444;
+            --ds-gray-700: #333333;
+            --ds-gray-800: #222222;
+            --ds-gray-900: #111111;
+            --ds-gray-1000: #000000;
+
+            /* Blue - Interactive elements */
+            --ds-blue-100: #e1f5fe;
+            --ds-blue-500: #0070f3;
+            --ds-blue-600: #0061d5;
+            --ds-blue-700: #004fc4;
+
+            /* Status Colors */
+            --ds-red-500: #ee0000;
+            --ds-amber-500: #f5a623;
+            --ds-green-500: #00b341;
+            --ds-purple-500: #7c3aed;
+
+            /* Typography */
+            --font-size-h1: 2.25rem;
+            --font-size-h2: 1.875rem;
+            --font-size-h3: 1.5rem;
+            --font-size-base: 1rem;
+            --font-size-small: 0.875rem;
+            --font-size-xs: 0.75rem;
+
+            /* Spacing scale based on 8px grid */
+            --space-1: 0.25rem;
+            --space-2: 0.5rem;
+            --space-3: 0.75rem;
+            --space-4: 1rem;
+            --space-6: 1.5rem;
+            --space-8: 2rem;
+            --space-12: 3rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Geist Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: var(--ds-gray-100);
+            color: var(--ds-gray-900);
+            line-height: 1.5;
+        }
+
+        /* Layout Components */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--space-8);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-8);
+            padding-bottom: var(--space-6);
+            border-bottom: 1px solid var(--ds-gray-200);
+        }
+
+        .header-left h1 {
+            font-size: var(--font-size-h2);
+            font-weight: 600;
+            margin-bottom: var(--space-2);
+        }
+
+        .header-meta {
+            color: var(--ds-gray-600);
+            font-size: var(--font-size-small);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: var(--space-4);
+        }
+
+        .time-period {
+            display: flex;
+            gap: var(--space-2);
+            background: white;
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 8px;
+            padding: var(--space-1);
+        }
+
+        .period-tab {
+            padding: var(--space-2) var(--space-4);
+            border-radius: 6px;
+            border: none;
+            background: transparent;
+            color: var(--ds-gray-600);
+            font-size: var(--font-size-small);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .period-tab.active {
+            background: var(--ds-blue-500);
+            color: white;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            padding: var(--space-3);
+            background: white;
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 8px;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--ds-blue-500);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        .user-info h3 {
+            font-size: var(--font-size-small);
+            font-weight: 600;
+        }
+
+        .user-role {
+            font-size: var(--font-size-xs);
+            color: var(--ds-gray-600);
+        }
+
+        /* Main Grid Layout */
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-8);
+            margin-bottom: var(--space-8);
+        }
+
+        .analytics-card {
+            background: white;
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 12px;
+            padding: var(--space-6);
+        }
+
+        .card-title {
+            font-size: var(--font-size-h3);
+            font-weight: 600;
+            margin-bottom: var(--space-6);
+        }
+
+        /* Department Spending Analysis */
+        .department-spending {
+            grid-column: 1 / -1;
+        }
+
+        .spending-chart {
+            display: flex;
+            align-items: end;
+            gap: var(--space-3);
+            height: 200px;
+            margin-bottom: var(--space-6);
+            padding: var(--space-4);
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 8px;
+            background: #fafafa;
+        }
+
+        .spending-bar {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            position: relative;
+        }
+
+        .bar {
+            width: 100%;
+            border-radius: 4px 4px 0 0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .bar:hover {
+            filter: brightness(1.1);
+        }
+
+        .bar-value {
+            position: absolute;
+            top: -24px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: var(--font-size-xs);
+            font-weight: 600;
+            color: var(--ds-gray-700);
+        }
+
+        .bar-label {
+            margin-top: var(--space-2);
+            font-size: var(--font-size-xs);
+            color: var(--ds-gray-600);
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .spending-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-6);
+        }
+
+        .summary-item {
+            text-align: center;
+        }
+
+        .summary-value {
+            font-size: var(--font-size-h2);
+            font-weight: 700;
+            margin-bottom: var(--space-1);
+        }
+
+        .summary-label {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-600);
+        }
+
+        .summary-change {
+            font-size: var(--font-size-xs);
+            margin-top: var(--space-1);
+        }
+
+        .change-positive {
+            color: var(--ds-green-500);
+        }
+
+        .change-negative {
+            color: var(--ds-red-500);
+        }
+
+        /* Vendor Relationship Analytics */
+        .vendor-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: var(--space-4);
+        }
+
+        .vendor-table th,
+        .vendor-table td {
+            text-align: left;
+            padding: var(--space-3);
+            border-bottom: 1px solid var(--ds-gray-200);
+        }
+
+        .vendor-table th {
+            font-weight: 600;
+            color: var(--ds-gray-700);
+            font-size: var(--font-size-small);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .vendor-name {
+            font-weight: 600;
+        }
+
+        .vendor-category {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-600);
+        }
+
+        .relationship-score {
+            display: inline-block;
+            padding: var(--space-1) var(--space-3);
+            border-radius: 12px;
+            font-size: var(--font-size-xs);
+            font-weight: 600;
+        }
+
+        .score-excellent {
+            background: #e8f5e8;
+            color: #1b5e1f;
+        }
+
+        .score-good {
+            background: #e1f5fe;
+            color: #004fc4;
+        }
+
+        .score-average {
+            background: #fff4e6;
+            color: #b45309;
+        }
+
+        /* Business Intelligence Insights */
+        .insights-grid {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-6);
+        }
+
+        .insight-card {
+            background: #f8f9fa;
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 8px;
+            padding: var(--space-6);
+        }
+
+        .insight-header {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            margin-bottom: var(--space-4);
+        }
+
+        .insight-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: white;
+        }
+
+        .insight-icon.savings {
+            background: var(--ds-green-500);
+        }
+
+        .insight-icon.risk {
+            background: var(--ds-red-500);
+        }
+
+        .insight-icon.optimization {
+            background: var(--ds-blue-500);
+        }
+
+        .insight-icon.trend {
+            background: var(--ds-purple-500);
+        }
+
+        .insight-title {
+            font-weight: 600;
+            color: var(--ds-gray-800);
+        }
+
+        .insight-value {
+            font-size: var(--font-size-h2);
+            font-weight: 700;
+            margin-bottom: var(--space-2);
+        }
+
+        .insight-description {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-600);
+            line-height: 1.4;
+        }
+
+        /* Cost Optimization Opportunities */
+        .optimization-list {
+            list-style: none;
+        }
+
+        .optimization-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--space-4);
+            margin-bottom: var(--space-3);
+            background: white;
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 8px;
+            transition: all 0.15s ease;
+        }
+
+        .optimization-item:hover {
+            border-color: var(--ds-blue-500);
+            box-shadow: 0 2px 8px rgba(0, 112, 243, 0.1);
+        }
+
+        .optimization-details {
+            flex: 1;
+        }
+
+        .optimization-title {
+            font-weight: 600;
+            margin-bottom: var(--space-1);
+        }
+
+        .optimization-description {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-600);
+        }
+
+        .optimization-impact {
+            text-align: right;
+        }
+
+        .impact-value {
+            font-size: var(--font-size-h3);
+            font-weight: 700;
+            color: var(--ds-green-500);
+        }
+
+        .impact-label {
+            font-size: var(--font-size-xs);
+            color: var(--ds-gray-600);
+        }
+
+        /* Strategic Decision Support */
+        .decision-metrics {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-6);
+            margin-bottom: var(--space-6);
+        }
+
+        .metric-card {
+            text-align: center;
+            padding: var(--space-4);
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .metric-value {
+            font-size: var(--font-size-h2);
+            font-weight: 700;
+            margin-bottom: var(--space-1);
+        }
+
+        .metric-label {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-600);
+        }
+
+        .metric-trend {
+            font-size: var(--font-size-xs);
+            margin-top: var(--space-1);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .analytics-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .insights-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .decision-metrics {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: var(--space-4);
+            }
+            
+            .header {
+                flex-direction: column;
+                gap: var(--space-4);
+                align-items: flex-start;
+            }
+            
+            .spending-summary {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <h1>Cross-Card Analytics & Business Intelligence</h1>
+                <div class="header-meta">Data period: Q4 2024 • 5 corporate cards • Advanced analytics enabled</div>
+            </div>
+            <div class="header-right">
+                <div class="time-period">
+                    <button class="period-tab" onclick="switchPeriod('30d')">30 Days</button>
+                    <button class="period-tab active" onclick="switchPeriod('q4')">Q4 2024</button>
+                    <button class="period-tab" onclick="switchPeriod('ytd')">YTD</button>
+                </div>
+                <div class="user-profile">
+                    <div class="avatar">SC</div>
+                    <div class="user-info">
+                        <h3>Sarah Chen</h3>
+                        <div class="user-role">Chief Financial Officer</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Department Spending Analysis -->
+        <section class="analytics-card department-spending">
+            <h2 class="card-title">Department Spending Analysis</h2>
+            
+            <div class="spending-chart" id="spending-chart">
+                <div class="spending-bar">
+                    <div class="bar" style="height: 85%; background: #7c3aed;">
+                        <div class="bar-value">$142K</div>
+                    </div>
+                    <div class="bar-label">Marketing</div>
+                </div>
+                <div class="spending-bar">
+                    <div class="bar" style="height: 75%; background: #0070f3;">
+                        <div class="bar-value">$126K</div>
+                    </div>
+                    <div class="bar-label">Operations</div>
+                </div>
+                <div class="spending-bar">
+                    <div class="bar" style="height: 65%; background: #00b341;">
+                        <div class="bar-value">$108K</div>
+                    </div>
+                    <div class="bar-label">IT</div>
+                </div>
+                <div class="spending-bar">
+                    <div class="bar" style="height: 45%; background: #f5a623;">
+                        <div class="bar-value">$75K</div>
+                    </div>
+                    <div class="bar-label">Executive</div>
+                </div>
+                <div class="spending-bar">
+                    <div class="bar" style="height: 25%; background: #ee0000;">
+                        <div class="bar-value">$42K</div>
+                    </div>
+                    <div class="bar-label">General</div>
+                </div>
+            </div>
+
+            <div class="spending-summary">
+                <div class="summary-item">
+                    <div class="summary-value">$493K</div>
+                    <div class="summary-label">Total Quarterly Spend</div>
+                    <div class="summary-change change-positive">↗ 8.5% vs Q3</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-value">$164K</div>
+                    <div class="summary-label">Average Monthly Spend</div>
+                    <div class="summary-change">Consistent trend</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-value">28.8%</div>
+                    <div class="summary-label">Marketing Spend Ratio</div>
+                    <div class="summary-change change-negative">↗ 3.2% over target</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-value">5.2%</div>
+                    <div class="summary-label">Cost per Revenue</div>
+                    <div class="summary-change change-positive">↓ 1.1% improved efficiency</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Analytics Grid -->
+        <div class="analytics-grid">
+            <!-- Vendor Relationship Analytics -->
+            <div class="analytics-card">
+                <h3 class="card-title">Top Vendor Relationships</h3>
+                <table class="vendor-table">
+                    <thead>
+                        <tr>
+                            <th>Vendor</th>
+                            <th>Quarterly Spend</th>
+                            <th>Relationship Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="vendor-name">Google Ads</div>
+                                <div class="vendor-category">Digital Marketing</div>
+                            </td>
+                            <td>$78,500</td>
+                            <td><span class="relationship-score score-excellent">Excellent</span></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="vendor-name">Salesforce</div>
+                                <div class="vendor-category">Software & Tools</div>
+                            </td>
+                            <td>$45,000</td>
+                            <td><span class="relationship-score score-good">Good</span></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="vendor-name">AWS</div>
+                                <div class="vendor-category">Cloud Infrastructure</div>
+                            </td>
+                            <td>$38,750</td>
+                            <td><span class="relationship-score score-excellent">Excellent</span></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="vendor-name">Microsoft</div>
+                                <div class="vendor-category">Software & Tools</div>
+                            </td>
+                            <td>$28,500</td>
+                            <td><span class="relationship-score score-good">Good</span></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="vendor-name">Office Depot</div>
+                                <div class="vendor-category">Office Supplies</div>
+                            </td>
+                            <td>$12,300</td>
+                            <td><span class="relationship-score score-average">Average</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Cost Optimization Opportunities -->
+            <div class="analytics-card">
+                <h3 class="card-title">Cost Optimization Opportunities</h3>
+                <ul class="optimization-list">
+                    <li class="optimization-item">
+                        <div class="optimization-details">
+                            <div class="optimization-title">Software License Consolidation</div>
+                            <div class="optimization-description">Unused Slack and Zoom licenses across departments</div>
+                        </div>
+                        <div class="optimization-impact">
+                            <div class="impact-value">$18K</div>
+                            <div class="impact-label">Annual Savings</div>
+                        </div>
+                    </li>
+                    <li class="optimization-item">
+                        <div class="optimization-details">
+                            <div class="optimization-title">Travel Policy Optimization</div>
+                            <div class="optimization-description">Advanced booking requirements for business travel</div>
+                        </div>
+                        <div class="optimization-impact">
+                            <div class="impact-value">$12K</div>
+                            <div class="impact-label">Projected Savings</div>
+                        </div>
+                    </li>
+                    <li class="optimization-item">
+                        <div class="optimization-details">
+                            <div class="optimization-title">Vendor Negotiation Leverage</div>
+                            <div class="optimization-description">Multi-year contracts with top 3 vendors</div>
+                        </div>
+                        <div class="optimization-impact">
+                            <div class="impact-value">$25K</div>
+                            <div class="impact-label">Potential Discount</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Business Intelligence Insights -->
+        <section class="analytics-card insights-grid">
+            <h2 class="card-title" style="grid-column: 1 / -1; margin-bottom: var(--space-6);">Business Intelligence Insights</h2>
+            
+            <div class="insight-card">
+                <div class="insight-header">
+                    <div class="insight-icon savings">$</div>
+                    <div class="insight-title">Cost Efficiency Gain</div>
+                </div>
+                <div class="insight-value">$55,000</div>
+                <div class="insight-description">
+                    Quarterly savings identified through cross-card spend analytics and automated categorization improvements.
+                </div>
+            </div>
+
+            <div class="insight-card">
+                <div class="insight-header">
+                    <div class="insight-icon optimization">⚡</div>
+                    <div class="insight-title">Process Optimization</div>
+                </div>
+                <div class="insight-value">3.2 days</div>
+                <div class="insight-description">
+                    Average time saved per expense report through automated reconciliation and smart categorization features.
+                </div>
+            </div>
+
+            <div class="insight-card">
+                <div class="insight-header">
+                    <div class="insight-icon risk">⚠</div>
+                    <div class="insight-title">Risk Mitigation</div>
+                </div>
+                <div class="insight-value">94%</div>
+                <div class="insight-description">
+                    Policy compliance rate improved through real-time approval workflows and automated limit enforcement.
+                </div>
+            </div>
+
+            <div class="insight-card">
+                <div class="insight-header">
+                    <div class="insight-icon trend">📈</div>
+                    <div class="insight-title">Predictive Analytics</div>
+                </div>
+                <div class="insight-value">+12%</div>
+                <div class="insight-description">
+                    Projected Q1 spending increase based on current trends and planned business expansion initiatives.
+                </div>
+            </div>
+        </section>
+
+        <!-- Strategic Decision Support -->
+        <section class="analytics-card">
+            <h2 class="card-title">Strategic Decision Support</h2>
+            
+            <div class="decision-metrics">
+                <div class="metric-card">
+                    <div class="metric-value">$2.85M</div>
+                    <div class="metric-label">Revenue per $ Spent</div>
+                    <div class="metric-trend change-positive">↗ 15% efficiency gain</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">67%</div>
+                    <div class="metric-label">Vendor Consolidation Rate</div>
+                    <div class="metric-trend">Optimize further</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">4.2</div>
+                    <div class="metric-label">Digital Transformation Score</div>
+                    <div class="metric-trend change-positive">↗ Above industry avg</div>
+                </div>
+            </div>
+
+            <div style="background: #f8f9fa; border-radius: 8px; padding: var(--space-6); border: 1px solid var(--ds-gray-200);">
+                <h4 style="font-weight: 600; margin-bottom: var(--space-4); color: var(--ds-gray-800);">Executive Recommendations</h4>
+                <ul style="list-style: none; gap: var(--space-3); display: flex; flex-direction: column;">
+                    <li style="display: flex; align-items: center; gap: var(--space-3);">
+                        <span style="width: 8px; height: 8px; background: var(--ds-green-500); border-radius: 50%;"></span>
+                        <span>Increase marketing budget allocation by 8% for Q1 based on ROI trends</span>
+                    </li>
+                    <li style="display: flex; align-items: center; gap: var(--space-3);">
+                        <span style="width: 8px; height: 8px; background: var(--ds-blue-500); border-radius: 50%;"></span>
+                        <span>Implement vendor consolidation strategy for software subscriptions</span>
+                    </li>
+                    <li style="display: flex; align-items: center; gap: var(--space-3);">
+                        <span style="width: 8px; height: 8px; background: var(--ds-amber-500); border-radius: 50%;"></span>
+                        <span>Review Capital One Spark utilization and consider credit limit adjustment</span>
+                    </li>
+                    <li style="display: flex; align-items: center; gap: var(--space-3);">
+                        <span style="width: 8px; height: 8px; background: var(--ds-purple-500); border-radius: 50%;"></span>
+                        <span>Explore automation opportunities for expense categorization workflows</span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Cross-card analytics and business intelligence optimization
+        let currentPeriod = 'q4';
+        
+        function switchPeriod(period) {
+            currentPeriod = period;
+            
+            // Update active tab
+            document.querySelectorAll('.period-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Simulate data refresh for different periods
+            refreshAnalyticsData(period);
+            
+            // Visual feedback
+            const charts = document.querySelectorAll('.spending-chart, .vendor-table, .optimization-list');
+            charts.forEach(chart => {
+                chart.style.opacity = '0.6';
+                setTimeout(() => {
+                    chart.style.opacity = '1';
+                }, 300);
+            });
+        }
+        
+        function refreshAnalyticsData(period) {
+            // Simulate different data for different periods
+            const periodData = {
+                '30d': {
+                    spending: ['$47K', '$42K', '$36K', '$25K', '$14K'],
+                    total: '$164K',
+                    efficiency: '↗ 5.2% vs prev month'
+                },
+                'q4': {
+                    spending: ['$142K', '$126K', '$108K', '$75K', '$42K'],
+                    total: '$493K',
+                    efficiency: '↗ 8.5% vs Q3'
+                },
+                'ytd': {
+                    spending: ['$485K', '$420K', '$365K', '$285K', '$168K'],
+                    total: '$1.72M',
+                    efficiency: '↗ 12.3% vs prev year'
+                }
+            };
+            
+            const data = periodData[period];
+            if (data) {
+                // Update chart values
+                const barValues = document.querySelectorAll('.bar-value');
+                barValues.forEach((value, index) => {
+                    if (data.spending[index]) {
+                        value.textContent = data.spending[index];
+                    }
+                });
+                
+                // Update summary
+                const totalValue = document.querySelector('.summary-value');
+                if (totalValue && data.total) {
+                    totalValue.textContent = data.total;
+                }
+            }
+        }
+        
+        // Interactive spending chart with hover details
+        document.querySelectorAll('.spending-bar').forEach(bar => {
+            bar.addEventListener('mouseenter', function() {
+                const department = this.querySelector('.bar-label').textContent;
+                const value = this.querySelector('.bar-value').textContent;
+                
+                // Create hover tooltip
+                const tooltip = document.createElement('div');
+                tooltip.style.cssText = `
+                    position: absolute;
+                    background: var(--ds-gray-900);
+                    color: white;
+                    padding: var(--space-3);
+                    border-radius: 6px;
+                    font-size: var(--font-size-small);
+                    z-index: 1000;
+                    pointer-events: none;
+                    top: -40px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    white-space: nowrap;
+                `;
+                tooltip.textContent = `${department}: ${value} (Click for details)`;
+                
+                this.style.position = 'relative';
+                this.appendChild(tooltip);
+            });
+            
+            bar.addEventListener('mouseleave', function() {
+                const tooltip = this.querySelector('[style*="position: absolute"]');
+                if (tooltip) {
+                    this.removeChild(tooltip);
+                }
+            });
+            
+            bar.addEventListener('click', function() {
+                const department = this.querySelector('.bar-label').textContent;
+                showDepartmentDrilldown(department);
+            });
+        });
+        
+        function showDepartmentDrilldown(department) {
+            // Simulate department-specific analytics
+            const departmentDetails = {
+                'Marketing': {
+                    topExpenses: ['Google Ads: $78K', 'Facebook Ads: $28K', 'Conference Booth: $15K'],
+                    efficiency: '3.2x ROI on digital campaigns',
+                    recommendation: 'Increase digital ad spend by 15%'
+                },
+                'Operations': {
+                    topExpenses: ['Office Rent: $45K', 'Utilities: $18K', 'Equipment: $25K'],
+                    efficiency: '8% cost reduction vs Q3',
+                    recommendation: 'Negotiate better rates with service providers'
+                },
+                'IT': {
+                    topExpenses: ['AWS: $38K', 'Software Licenses: $28K', 'Hardware: $22K'],
+                    efficiency: '95% infrastructure uptime',
+                    recommendation: 'Consolidate software subscriptions'
+                }
+            };
+            
+            const details = departmentDetails[department];
+            if (details) {
+                showAnalyticsModal(department, details);
+            }
+        }
+        
+        function showAnalyticsModal(department, details) {
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 2000;
+            `;
+            
+            const content = document.createElement('div');
+            content.style.cssText = `
+                background: white;
+                padding: var(--space-8);
+                border-radius: 12px;
+                max-width: 500px;
+                width: 90%;
+                max-height: 80vh;
+                overflow-y: auto;
+            `;
+            
+            content.innerHTML = `
+                <h3 style="margin-bottom: var(--space-6); font-size: var(--font-size-h3); font-weight: 600;">${department} Department Analytics</h3>
+                <div style="margin-bottom: var(--space-6);">
+                    <h4 style="margin-bottom: var(--space-3); font-weight: 600; color: var(--ds-gray-700);">Top Expenses</h4>
+                    <ul style="list-style: none; gap: var(--space-2); display: flex; flex-direction: column;">
+                        ${details.topExpenses.map(expense => `<li style="padding: var(--space-2); background: var(--ds-gray-100); border-radius: 4px;">${expense}</li>`).join('')}
+                    </ul>
+                </div>
+                <div style="margin-bottom: var(--space-6);">
+                    <h4 style="margin-bottom: var(--space-2); font-weight: 600; color: var(--ds-gray-700);">Efficiency Metric</h4>
+                    <p style="color: var(--ds-green-500); font-weight: 600;">${details.efficiency}</p>
+                </div>
+                <div style="margin-bottom: var(--space-6);">
+                    <h4 style="margin-bottom: var(--space-2); font-weight: 600; color: var(--ds-gray-700);">Recommendation</h4>
+                    <p style="color: var(--ds-gray-600);">${details.recommendation}</p>
+                </div>
+                <button onclick="this.closest('[style*=\"position: fixed\"]').remove()" 
+                        style="background: var(--ds-blue-500); color: white; border: none; padding: var(--space-3) var(--space-6); border-radius: 6px; cursor: pointer; font-weight: 500;">
+                    Close Details
+                </button>
+            `;
+            
+            modal.appendChild(content);
+            document.body.appendChild(modal);
+            
+            // Close on backdrop click
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    document.body.removeChild(modal);
+                }
+            });
+        }
+        
+        // Advanced analytics calculations
+        function calculateBusinessMetrics() {
+            // Real-time business intelligence calculations
+            const metrics = {
+                revenuePerDollar: 2.85,
+                vendorConsolidation: 67,
+                digitalTransformation: 4.2,
+                costEfficiency: 55000,
+                processOptimization: 3.2,
+                riskMitigation: 94,
+                predictiveGrowth: 12
+            };
+            
+            // Update metrics with slight variations to simulate real-time data
+            setInterval(() => {
+                Object.keys(metrics).forEach(key => {
+                    const element = document.querySelector(`[data-metric="${key}"]`);
+                    if (element) {
+                        const variation = (Math.random() - 0.5) * 0.1; // 10% variation
+                        const newValue = metrics[key] * (1 + variation);
+                        element.textContent = formatMetricValue(key, newValue);
+                    }
+                });
+            }, 10000); // Update every 10 seconds
+        }
+        
+        function formatMetricValue(metric, value) {
+            switch(metric) {
+                case 'revenuePerDollar':
+                    return '$' + value.toFixed(2) + 'M';
+                case 'vendorConsolidation':
+                case 'riskMitigation':
+                    return Math.round(value) + '%';
+                case 'digitalTransformation':
+                    return value.toFixed(1);
+                case 'costEfficiency':
+                    return '$' + Math.round(value).toLocaleString();
+                case 'processOptimization':
+                    return value.toFixed(1) + ' days';
+                case 'predictiveGrowth':
+                    return '+' + Math.round(value) + '%';
+                default:
+                    return value;
+            }
+        }
+        
+        // Enhanced vendor relationship tracking
+        document.querySelectorAll('.vendor-table tr').forEach((row, index) => {
+            if (index > 0) { // Skip header row
+                row.addEventListener('click', function() {
+                    const vendorName = this.querySelector('.vendor-name').textContent;
+                    showVendorAnalytics(vendorName);
+                });
+                
+                row.style.cursor = 'pointer';
+                row.addEventListener('mouseenter', function() {
+                    this.style.backgroundColor = 'var(--ds-gray-100)';
+                });
+                row.addEventListener('mouseleave', function() {
+                    this.style.backgroundColor = 'transparent';
+                });
+            }
+        });
+        
+        function showVendorAnalytics(vendorName) {
+            // Simulate detailed vendor analytics
+            console.log(`Loading detailed analytics for ${vendorName}`);
+            showToast(`Loading ${vendorName} relationship analytics...`);
+        }
+        
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: var(--ds-blue-500);
+                color: white;
+                padding: var(--space-4);
+                border-radius: 8px;
+                z-index: 1000;
+                font-weight: 500;
+                animation: slideIn 0.3s ease;
+            `;
+            toast.textContent = message;
+            
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => {
+                    if (document.body.contains(toast)) {
+                        document.body.removeChild(toast);
+                    }
+                }, 300);
+            }, 3000);
+        }
+        
+        // Initialize advanced analytics
+        document.addEventListener('DOMContentLoaded', function() {
+            calculateBusinessMetrics();
+            
+            // Add keyboard shortcuts for power users
+            document.addEventListener('keydown', function(e) {
+                if (e.altKey) {
+                    switch(e.key) {
+                        case '1':
+                            switchPeriod('30d');
+                            break;
+                        case '2':
+                            switchPeriod('q4');
+                            break;
+                        case '3':
+                            switchPeriod('ytd');
+                            break;
+                    }
+                }
+            });
+        });
+        
+        // Performance optimization for business intelligence
+        // Progressive enhancement - core analytics visible without JavaScript
+        // JavaScript enhances with interactive features and real-time updates
+        // Optimized for executive decision-making workflows
+    </script>
+</body>
+</html>

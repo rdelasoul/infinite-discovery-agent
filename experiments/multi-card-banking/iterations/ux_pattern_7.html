@@ -1,0 +1,1405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tax-Ready Expense Categorization System - Multi-Card Banking Platform</title>
+    <style>
+        /* Geist Design System Implementation */
+        :root {
+            /* Gray Scale - Primary neutral palette */
+            --ds-gray-100: #fafafa;
+            --ds-gray-200: #eaeaea;
+            --ds-gray-300: #999999;
+            --ds-gray-400: #888888;
+            --ds-gray-500: #666666;
+            --ds-gray-600: #444444;
+            --ds-gray-700: #333333;
+            --ds-gray-800: #222222;
+            --ds-gray-900: #111111;
+            --ds-gray-1000: #000000;
+
+            /* Blue - Interactive elements */
+            --ds-blue-100: #e1f5fe;
+            --ds-blue-500: #0070f3;
+            --ds-blue-600: #0061d5;
+            --ds-blue-700: #004fc4;
+
+            /* Status Colors */
+            --ds-red-500: #ee0000;
+            --ds-amber-500: #f5a623;
+            --ds-green-500: #00b341;
+            --ds-purple-500: #7c3aed;
+
+            /* Typography */
+            --font-size-h1: 2.25rem;
+            --font-size-h2: 1.875rem;
+            --font-size-h3: 1.5rem;
+            --font-size-h4: 1.25rem;
+            --font-size-base: 1rem;
+            --font-size-small: 0.875rem;
+            --font-size-xs: 0.75rem;
+
+            /* Spacing scale based on 8px grid */
+            --space-1: 0.25rem;
+            --space-2: 0.5rem;
+            --space-3: 0.75rem;
+            --space-4: 1rem;
+            --space-5: 1.25rem;
+            --space-6: 1.5rem;
+            --space-8: 2rem;
+            --space-10: 2.5rem;
+            --space-12: 3rem;
+            --space-16: 4rem;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Geist Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background-color: var(--ds-gray-100);
+            color: var(--ds-gray-900);
+            line-height: 1.5;
+        }
+
+        /* Layout Components */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: var(--space-4);
+        }
+
+        .header {
+            background: white;
+            border-bottom: 1px solid var(--ds-gray-200);
+            padding: var(--space-4) 0;
+            margin-bottom: var(--space-6);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 var(--space-4);
+        }
+
+        .logo {
+            font-size: var(--font-size-h3);
+            font-weight: 600;
+            color: var(--ds-blue-500);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--ds-blue-500);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        /* Grid Layout */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: var(--space-6);
+        }
+
+        .content-area {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-6);
+        }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-4);
+        }
+
+        /* Card Components */
+        .card {
+            background: white;
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: var(--space-4);
+            border-bottom: 1px solid var(--ds-gray-200);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-body {
+            padding: var(--space-4);
+        }
+
+        .card-title {
+            font-size: var(--font-size-h4);
+            font-weight: 600;
+            color: var(--ds-gray-900);
+        }
+
+        /* Button Components */
+        .button {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            padding: var(--space-2) var(--space-4);
+            border: 1px solid var(--ds-gray-300);
+            border-radius: 6px;
+            background: white;
+            color: var(--ds-gray-700);
+            font-size: var(--font-size-small);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+
+        .button:hover {
+            border-color: var(--ds-gray-400);
+            background: var(--ds-gray-100);
+        }
+
+        .button--primary {
+            background: var(--ds-blue-500);
+            border-color: var(--ds-blue-500);
+            color: white;
+        }
+
+        .button--primary:hover {
+            background: var(--ds-blue-600);
+            border-color: var(--ds-blue-600);
+        }
+
+        .button--small {
+            padding: var(--space-1) var(--space-3);
+            font-size: var(--font-size-xs);
+        }
+
+        /* Badge Components */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: var(--space-1) var(--space-2);
+            border-radius: 4px;
+            font-size: var(--font-size-xs);
+            font-weight: 500;
+        }
+
+        .badge--default {
+            background: var(--ds-gray-200);
+            color: var(--ds-gray-700);
+        }
+
+        .badge--success {
+            background: #e6f7e6;
+            color: var(--ds-green-500);
+        }
+
+        .badge--warning {
+            background: #fef7e6;
+            color: var(--ds-amber-500);
+        }
+
+        .badge--info {
+            background: var(--ds-blue-100);
+            color: var(--ds-blue-700);
+        }
+
+        /* Tax Categorization Specific Styles */
+        .categorization-interface {
+            background: white;
+            border-radius: 8px;
+            border: 1px solid var(--ds-gray-200);
+        }
+
+        .transaction-item {
+            padding: var(--space-4);
+            border-bottom: 1px solid var(--ds-gray-200);
+            display: grid;
+            grid-template-columns: 1fr 200px 180px 120px;
+            gap: var(--space-4);
+            align-items: center;
+        }
+
+        .transaction-item:last-child {
+            border-bottom: none;
+        }
+
+        .transaction-details h4 {
+            font-size: var(--font-size-base);
+            font-weight: 600;
+            margin-bottom: var(--space-1);
+        }
+
+        .transaction-meta {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-500);
+        }
+
+        .transaction-amount {
+            font-weight: 600;
+            text-align: right;
+        }
+
+        .category-selector {
+            position: relative;
+        }
+
+        .category-dropdown {
+            width: 100%;
+            padding: var(--space-2) var(--space-3);
+            border: 1px solid var(--ds-gray-300);
+            border-radius: 6px;
+            background: white;
+            font-size: var(--font-size-small);
+            cursor: pointer;
+        }
+
+        .category-dropdown:focus {
+            outline: none;
+            border-color: var(--ds-blue-500);
+            box-shadow: 0 0 0 2px var(--ds-blue-100);
+        }
+
+        .ai-suggestion {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            margin-top: var(--space-1);
+        }
+
+        .ai-icon {
+            width: 16px;
+            height: 16px;
+            background: var(--ds-purple-500);
+            border-radius: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        .confidence-indicator {
+            width: 40px;
+            height: 4px;
+            background: var(--ds-gray-200);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .confidence-fill {
+            height: 100%;
+            background: var(--ds-green-500);
+            transition: width 0.3s ease;
+        }
+
+        .confidence-fill.high {
+            background: var(--ds-green-500);
+        }
+
+        .confidence-fill.medium {
+            background: var(--ds-amber-500);
+        }
+
+        .confidence-fill.low {
+            background: var(--ds-red-500);
+        }
+
+        /* Tax Summary Panel */
+        .tax-summary {
+            background: white;
+            border-radius: 8px;
+            border: 1px solid var(--ds-gray-200);
+            padding: var(--space-4);
+        }
+
+        .tax-category-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--space-3) 0;
+            border-bottom: 1px solid var(--ds-gray-200);
+        }
+
+        .tax-category-item:last-child {
+            border-bottom: none;
+        }
+
+        .category-name {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-700);
+        }
+
+        .category-amount {
+            font-weight: 600;
+            color: var(--ds-gray-900);
+        }
+
+        .deduction-potential {
+            font-size: var(--font-size-xs);
+            color: var(--ds-green-500);
+            margin-top: var(--space-1);
+        }
+
+        /* Card Portfolio */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--space-4);
+        }
+
+        .business-card {
+            background: white;
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 8px;
+            padding: var(--space-4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-brand {
+            position: absolute;
+            top: var(--space-2);
+            right: var(--space-2);
+            font-size: var(--font-size-xs);
+            font-weight: bold;
+            padding: var(--space-1) var(--space-2);
+            border-radius: 4px;
+            background: var(--ds-gray-200);
+            color: var(--ds-gray-700);
+        }
+
+        .card-name {
+            font-weight: 600;
+            margin-bottom: var(--space-1);
+        }
+
+        .card-number {
+            font-family: 'Geist Mono', monospace;
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-500);
+            margin-bottom: var(--space-3);
+        }
+
+        .card-balance {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-2);
+        }
+
+        .balance-label {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-500);
+        }
+
+        .balance-amount {
+            font-weight: 600;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid var(--ds-gray-200);
+            margin-bottom: var(--space-4);
+        }
+
+        .tab {
+            padding: var(--space-3) var(--space-4);
+            border: none;
+            background: none;
+            color: var(--ds-gray-500);
+            font-size: var(--font-size-small);
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .tab.active {
+            color: var(--ds-blue-500);
+            border-bottom-color: var(--ds-blue-500);
+        }
+
+        .tab:hover {
+            color: var(--ds-gray-700);
+        }
+
+        /* Progress Indicator */
+        .progress-section {
+            margin-bottom: var(--space-6);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--ds-gray-200);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: var(--space-2);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--ds-green-500);
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-500);
+        }
+
+        /* Smart Learning Panel */
+        .learning-panel {
+            background: linear-gradient(135deg, #f8fafc 0%, #e1f5fe 100%);
+            border: 1px solid var(--ds-blue-200);
+            border-radius: 8px;
+            padding: var(--space-4);
+            margin-bottom: var(--space-4);
+        }
+
+        .learning-header {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            margin-bottom: var(--space-3);
+        }
+
+        .brain-icon {
+            width: 24px;
+            height: 24px;
+            background: var(--ds-purple-500);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .learning-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-4);
+            margin-top: var(--space-3);
+        }
+
+        .learning-stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: var(--font-size-h3);
+            font-weight: 600;
+            color: var(--ds-blue-600);
+        }
+
+        .stat-label {
+            font-size: var(--font-size-xs);
+            color: var(--ds-gray-600);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .transaction-item {
+                grid-template-columns: 1fr;
+                gap: var(--space-2);
+            }
+            
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: var(--space-3);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">SmallBiz Banking</div>
+            <div class="user-info">
+                <span class="badge badge--success">Tax Year 2024</span>
+                <span>Alex Rodriguez</span>
+                <div class="avatar">AR</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="main-grid">
+            <main class="content-area">
+                <div class="progress-section">
+                    <h2 style="margin-bottom: var(--space-3);">Tax-Ready Expense Categorization</h2>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 78%;"></div>
+                    </div>
+                    <div class="progress-text">
+                        <span>156 of 200 transactions categorized</span>
+                        <span>78% complete</span>
+                    </div>
+                </div>
+
+                <div class="learning-panel">
+                    <div class="learning-header">
+                        <div class="brain-icon">🧠</div>
+                        <div>
+                            <h3>AI Learning Progress</h3>
+                            <p style="font-size: var(--font-size-small); color: var(--ds-gray-600);">
+                                System is learning your categorization patterns to improve suggestions
+                            </p>
+                        </div>
+                    </div>
+                    <div class="learning-stats">
+                        <div class="learning-stat">
+                            <div class="stat-value">94%</div>
+                            <div class="stat-label">Accuracy Rate</div>
+                        </div>
+                        <div class="learning-stat">
+                            <div class="stat-value">127</div>
+                            <div class="stat-label">Corrections Learned</div>
+                        </div>
+                        <div class="learning-stat">
+                            <div class="stat-value">$3,420</div>
+                            <div class="stat-label">Deductions Optimized</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tabs">
+                    <button class="tab active">Uncategorized (44)</button>
+                    <button class="tab">Review Required (12)</button>
+                    <button class="tab">Completed (156)</button>
+                    <button class="tab">Tax Review</button>
+                </div>
+
+                <div class="categorization-interface">
+                    <div class="transaction-item">
+                        <div class="transaction-details">
+                            <h4>Office Depot - Supplies Purchase</h4>
+                            <div class="transaction-meta">
+                                Chase Ink Business • Dec 15, 2024 • 2:34 PM<br>
+                                Receipt: ✅ Uploaded • Mileage: N/A
+                            </div>
+                            <div class="ai-suggestion">
+                                <div class="ai-icon">AI</div>
+                                <span style="font-size: var(--font-size-xs); color: var(--ds-purple-500);">
+                                    High confidence suggestion
+                                </span>
+                                <div class="confidence-indicator">
+                                    <div class="confidence-fill high" style="width: 92%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="category-selector">
+                            <select class="category-dropdown">
+                                <option>Office Supplies & Equipment</option>
+                                <option>Marketing & Advertising</option>
+                                <option>Professional Services</option>
+                                <option>Travel & Meals</option>
+                                <option>Utilities & Communications</option>
+                                <option>Other Business Expenses</option>
+                            </select>
+                        </div>
+                        <div class="transaction-amount">-$142.50</div>
+                        <div>
+                            <button class="button button--primary button--small">Approve</button>
+                        </div>
+                    </div>
+
+                    <div class="transaction-item">
+                        <div class="transaction-details">
+                            <h4>Luigi's Italian Restaurant</h4>
+                            <div class="transaction-meta">
+                                Capital One Spark • Dec 14, 2024 • 7:45 PM<br>
+                                Receipt: ⚠️ Missing • Mileage: Added
+                            </div>
+                            <div class="ai-suggestion">
+                                <div class="ai-icon">AI</div>
+                                <span style="font-size: var(--font-size-xs); color: var(--ds-amber-500);">
+                                    Medium confidence - needs clarification
+                                </span>
+                                <div class="confidence-indicator">
+                                    <div class="confidence-fill medium" style="width: 67%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="category-selector">
+                            <select class="category-dropdown">
+                                <option>Business Meals (50% deductible)</option>
+                                <option>Client Entertainment</option>
+                                <option>Personal (Non-deductible)</option>
+                                <option>Travel & Meals</option>
+                            </select>
+                        </div>
+                        <div class="transaction-amount">-$89.75</div>
+                        <div>
+                            <button class="button button--small">Need Receipt</button>
+                        </div>
+                    </div>
+
+                    <div class="transaction-item">
+                        <div class="transaction-details">
+                            <h4>Adobe Creative Cloud</h4>
+                            <div class="transaction-meta">
+                                Bank of America Business • Dec 12, 2024 • Auto-pay<br>
+                                Receipt: ✅ Digital • Recurring: Monthly
+                            </div>
+                            <div class="ai-suggestion">
+                                <div class="ai-icon">AI</div>
+                                <span style="font-size: var(--font-size-xs); color: var(--ds-green-500);">
+                                    Auto-categorized from pattern
+                                </span>
+                                <div class="confidence-indicator">
+                                    <div class="confidence-fill high" style="width: 98%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="category-selector">
+                            <select class="category-dropdown">
+                                <option>Software & Subscriptions</option>
+                                <option>Marketing & Advertising</option>
+                                <option>Office Supplies & Equipment</option>
+                            </select>
+                        </div>
+                        <div class="transaction-amount">-$52.99</div>
+                        <div>
+                            <button class="button button--primary button--small">✓ Approved</button>
+                        </div>
+                    </div>
+
+                    <div class="transaction-item">
+                        <div class="transaction-details">
+                            <h4>Shell Gas Station</h4>
+                            <div class="transaction-meta">
+                                Chase Ink Business • Dec 11, 2024 • 8:15 AM<br>
+                                Receipt: ✅ Uploaded • Mileage: 45 miles
+                            </div>
+                            <div class="ai-suggestion">
+                                <div class="ai-icon">AI</div>
+                                <span style="font-size: var(--font-size-xs); color: var(--ds-green-500);">
+                                    Business trip detected
+                                </span>
+                                <div class="confidence-indicator">
+                                    <div class="confidence-fill high" style="width: 89%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="category-selector">
+                            <select class="category-dropdown">
+                                <option>Vehicle & Travel Expenses</option>
+                                <option>Personal (Non-deductible)</option>
+                                <option>Client Visits</option>
+                            </select>
+                        </div>
+                        <div class="transaction-amount">-$58.20</div>
+                        <div>
+                            <button class="button button--primary button--small">Approve</button>
+                        </div>
+                    </div>
+
+                    <div class="transaction-item">
+                        <div class="transaction-details">
+                            <h4>QuickBooks Online</h4>
+                            <div class="transaction-meta">
+                                American Express Business • Dec 10, 2024 • Auto-pay<br>
+                                Receipt: ✅ Digital • Recurring: Monthly
+                            </div>
+                            <div class="ai-suggestion">
+                                <div class="ai-icon">AI</div>
+                                <span style="font-size: var(--font-size-xs); color: var(--ds-green-500);">
+                                    Auto-categorized from pattern
+                                </span>
+                                <div class="confidence-indicator">
+                                    <div class="confidence-fill high" style="width: 96%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="category-selector">
+                            <select class="category-dropdown">
+                                <option>Professional Services</option>
+                                <option>Software & Subscriptions</option>
+                                <option>Office Supplies & Equipment</option>
+                            </select>
+                        </div>
+                        <div class="transaction-amount">-$35.00</div>
+                        <div>
+                            <button class="button button--primary button--small">✓ Approved</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: var(--space-6);">
+                    <div>
+                        <button class="button">Bulk Actions</button>
+                        <button class="button">Export for Review</button>
+                    </div>
+                    <div>
+                        <button class="button button--primary">Process Next Batch</button>
+                    </div>
+                </div>
+            </main>
+
+            <aside class="sidebar">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Tax Category Summary</h3>
+                        <span class="badge badge--info">2024 YTD</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="tax-summary">
+                            <div class="tax-category-item">
+                                <div>
+                                    <div class="category-name">Office Supplies & Equipment</div>
+                                    <div class="deduction-potential">100% deductible</div>
+                                </div>
+                                <div class="category-amount">$4,230</div>
+                            </div>
+                            <div class="tax-category-item">
+                                <div>
+                                    <div class="category-name">Software & Subscriptions</div>
+                                    <div class="deduction-potential">100% deductible</div>
+                                </div>
+                                <div class="category-amount">$1,890</div>
+                            </div>
+                            <div class="tax-category-item">
+                                <div>
+                                    <div class="category-name">Business Meals</div>
+                                    <div class="deduction-potential">50% deductible</div>
+                                </div>
+                                <div class="category-amount">$2,145</div>
+                            </div>
+                            <div class="tax-category-item">
+                                <div>
+                                    <div class="category-name">Vehicle & Travel</div>
+                                    <div class="deduction-potential">100% deductible</div>
+                                </div>
+                                <div class="category-amount">$3,567</div>
+                            </div>
+                            <div class="tax-category-item">
+                                <div>
+                                    <div class="category-name">Professional Services</div>
+                                    <div class="deduction-potential">100% deductible</div>
+                                </div>
+                                <div class="category-amount">$1,420</div>
+                            </div>
+                            <div class="tax-category-item">
+                                <div>
+                                    <div class="category-name">Marketing & Advertising</div>
+                                    <div class="deduction-potential">100% deductible</div>
+                                </div>
+                                <div class="category-amount">$890</div>
+                            </div>
+                        </div>
+                        <div style="margin-top: var(--space-4); padding-top: var(--space-4); border-top: 2px solid var(--ds-gray-200);">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <strong>Estimated Tax Savings</strong>
+                                <strong style="color: var(--ds-green-500); font-size: var(--font-size-h4);">$3,420</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Active Business Cards</h3>
+                    </div>
+                    <div class="card-body">
+                        <div style="display: flex; flex-direction: column; gap: var(--space-3);">
+                            <div class="business-card">
+                                <div class="card-brand">VISA</div>
+                                <div class="card-name">Chase Ink Business</div>
+                                <div class="card-number">•••• •••• •••• 4892</div>
+                                <div class="card-balance">
+                                    <span class="balance-label">This Month</span>
+                                    <span class="balance-amount">$2,340</span>
+                                </div>
+                                <div class="card-balance">
+                                    <span class="balance-label">Uncategorized</span>
+                                    <span class="balance-amount" style="color: var(--ds-amber-500);">18 items</span>
+                                </div>
+                            </div>
+
+                            <div class="business-card">
+                                <div class="card-brand">MC</div>
+                                <div class="card-name">Capital One Spark</div>
+                                <div class="card-number">•••• •••• •••• 7241</div>
+                                <div class="card-balance">
+                                    <span class="balance-label">This Month</span>
+                                    <span class="balance-amount">$1,890</span>
+                                </div>
+                                <div class="card-balance">
+                                    <span class="balance-label">Uncategorized</span>
+                                    <span class="balance-amount" style="color: var(--ds-amber-500);">12 items</span>
+                                </div>
+                            </div>
+
+                            <div class="business-card">
+                                <div class="card-brand">AMEX</div>
+                                <div class="card-name">American Express Business</div>
+                                <div class="card-number">•••• •••• •••• 8903</div>
+                                <div class="card-balance">
+                                    <span class="balance-label">This Month</span>
+                                    <span class="balance-amount">$945</span>
+                                </div>
+                                <div class="card-balance">
+                                    <span class="balance-label">Uncategorized</span>
+                                    <span class="balance-amount" style="color: var(--ds-amber-500);">8 items</span>
+                                </div>
+                            </div>
+
+                            <div class="business-card">
+                                <div class="card-brand">VISA</div>
+                                <div class="card-name">Bank of America Business</div>
+                                <div class="card-number">•••• •••• •••• 3456</div>
+                                <div class="card-balance">
+                                    <span class="balance-label">This Month</span>
+                                    <span class="balance-amount">$567</span>
+                                </div>
+                                <div class="card-balance">
+                                    <span class="balance-label">Uncategorized</span>
+                                    <span class="balance-amount" style="color: var(--ds-green-500);">✓ Complete</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Tax Compliance</h3>
+                        <span class="badge badge--success">On Track</span>
+                    </div>
+                    <div class="card-body">
+                        <div style="display: flex; flex-direction: column; gap: var(--space-3);">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span style="font-size: var(--font-size-small);">Missing Receipts</span>
+                                <span class="badge badge--warning">7 items</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span style="font-size: var(--font-size-small);">Mileage Tracking</span>
+                                <span class="badge badge--success">Complete</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span style="font-size: var(--font-size-small);">Mixed-Use Items</span>
+                                <span class="badge badge--warning">3 items</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span style="font-size: var(--font-size-small);">Quarterly Est. Tax</span>
+                                <span class="badge badge--info">Due Jan 15</span>
+                            </div>
+                            <button class="button button--primary" style="margin-top: var(--space-2);">
+                                Export Tax Report
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <script>
+        // Tax-Ready Expense Categorization System JavaScript
+        
+        // AI Learning and Suggestion System
+        class TaxCategorizationAI {
+            constructor() {
+                this.learningData = {
+                    patterns: new Map(),
+                    corrections: [],
+                    confidenceThreshold: 0.8
+                };
+                this.initializeSystem();
+            }
+
+            initializeSystem() {
+                // Initialize with pre-trained patterns for common business expenses
+                this.learningData.patterns.set('office depot', { category: 'Office Supplies & Equipment', confidence: 0.95 });
+                this.learningData.patterns.set('adobe', { category: 'Software & Subscriptions', confidence: 0.98 });
+                this.learningData.patterns.set('quickbooks', { category: 'Professional Services', confidence: 0.96 });
+                this.learningData.patterns.set('restaurant', { category: 'Business Meals', confidence: 0.65 });
+                this.learningData.patterns.set('gas station', { category: 'Vehicle & Travel', confidence: 0.85 });
+            }
+
+            suggestCategory(transaction) {
+                const merchant = transaction.merchant.toLowerCase();
+                const amount = transaction.amount;
+                const time = transaction.time;
+                
+                // Pattern matching
+                for (let [pattern, data] of this.learningData.patterns) {
+                    if (merchant.includes(pattern)) {
+                        return {
+                            category: data.category,
+                            confidence: data.confidence,
+                            reason: 'Pattern recognition from past transactions'
+                        };
+                    }
+                }
+
+                // Context-based suggestions
+                if (merchant.includes('restaurant') || merchant.includes('cafe')) {
+                    const isBusinessHours = this.isBusinessHours(time);
+                    return {
+                        category: isBusinessHours ? 'Business Meals' : 'Personal',
+                        confidence: isBusinessHours ? 0.67 : 0.45,
+                        reason: isBusinessHours ? 'During business hours' : 'Outside business hours'
+                    };
+                }
+
+                return {
+                    category: 'Other Business Expenses',
+                    confidence: 0.3,
+                    reason: 'No pattern match - manual review needed'
+                };
+            }
+
+            isBusinessHours(timeString) {
+                const hour = new Date(timeString).getHours();
+                return hour >= 8 && hour <= 18;
+            }
+
+            learnFromCorrection(transaction, originalSuggestion, userCategory) {
+                this.learningData.corrections.push({
+                    merchant: transaction.merchant,
+                    originalCategory: originalSuggestion,
+                    correctedCategory: userCategory,
+                    timestamp: new Date()
+                });
+
+                // Update patterns based on correction
+                const merchantKey = transaction.merchant.toLowerCase();
+                this.learningData.patterns.set(merchantKey, {
+                    category: userCategory,
+                    confidence: 0.9 // High confidence for user corrections
+                });
+            }
+        }
+
+        // Transaction Management System
+        class TransactionManager {
+            constructor() {
+                this.transactions = [];
+                this.categorizedCount = 156;
+                this.totalCount = 200;
+                this.ai = new TaxCategorizationAI();
+                this.initializeEventListeners();
+            }
+
+            initializeEventListeners() {
+                // Category dropdown changes
+                document.querySelectorAll('.category-dropdown').forEach(dropdown => {
+                    dropdown.addEventListener('change', (e) => {
+                        this.handleCategoryChange(e);
+                    });
+                });
+
+                // Approve buttons
+                document.querySelectorAll('.button--primary').forEach(button => {
+                    if (button.textContent.includes('Approve')) {
+                        button.addEventListener('click', (e) => {
+                            this.handleApproval(e);
+                        });
+                    }
+                });
+
+                // Tab switching
+                document.querySelectorAll('.tab').forEach(tab => {
+                    tab.addEventListener('click', (e) => {
+                        this.switchTab(e);
+                    });
+                });
+            }
+
+            handleCategoryChange(event) {
+                const dropdown = event.target;
+                const transactionItem = dropdown.closest('.transaction-item');
+                const approveButton = transactionItem.querySelector('.button--primary');
+                
+                // Update AI learning if this is a correction
+                const suggestion = transactionItem.querySelector('.ai-suggestion');
+                if (suggestion) {
+                    const originalCategory = dropdown.options[0].text;
+                    const newCategory = dropdown.value;
+                    
+                    if (originalCategory !== newCategory) {
+                        // This is a correction - update AI learning
+                        console.log(`Learning: ${originalCategory} → ${newCategory}`);
+                        this.updateLearningStats();
+                    }
+                }
+
+                // Enable approve button
+                if (approveButton && !approveButton.textContent.includes('✓')) {
+                    approveButton.textContent = 'Approve';
+                    approveButton.disabled = false;
+                }
+            }
+
+            handleApproval(event) {
+                const button = event.target;
+                const transactionItem = button.closest('.transaction-item');
+                
+                // Update button state
+                button.textContent = '✓ Approved';
+                button.disabled = true;
+                
+                // Update progress
+                this.categorizedCount++;
+                this.updateProgress();
+                
+                // Add fade effect and move to completed
+                transactionItem.style.opacity = '0.6';
+                transactionItem.style.transition = 'opacity 0.3s ease';
+                
+                setTimeout(() => {
+                    transactionItem.remove();
+                    this.updateTransactionCounts();
+                }, 1000);
+            }
+
+            switchTab(event) {
+                // Remove active class from all tabs
+                document.querySelectorAll('.tab').forEach(tab => {
+                    tab.classList.remove('active');
+                });
+                
+                // Add active class to clicked tab
+                event.target.classList.add('active');
+                
+                // Update content based on tab
+                this.updateTabContent(event.target.textContent);
+            }
+
+            updateProgress() {
+                const progressFill = document.querySelector('.progress-fill');
+                const progressText = document.querySelector('.progress-text');
+                const percentage = Math.round((this.categorizedCount / this.totalCount) * 100);
+                
+                progressFill.style.width = `${percentage}%`;
+                progressText.innerHTML = `
+                    <span>${this.categorizedCount} of ${this.totalCount} transactions categorized</span>
+                    <span>${percentage}% complete</span>
+                `;
+            }
+
+            updateLearningStats() {
+                const accuracyElement = document.querySelector('.stat-value');
+                const correctionsElement = document.querySelectorAll('.stat-value')[1];
+                const deductionsElement = document.querySelectorAll('.stat-value')[2];
+                
+                // Simulate improvement in accuracy
+                let currentAccuracy = parseInt(accuracyElement.textContent);
+                if (currentAccuracy < 96) {
+                    accuracyElement.textContent = `${currentAccuracy + 1}%`;
+                }
+                
+                // Increment corrections learned
+                let corrections = parseInt(correctionsElement.textContent);
+                correctionsElement.textContent = corrections + 1;
+                
+                // Update deductions optimized
+                let deductions = parseInt(deductionsElement.textContent.replace('$', '').replace(',', ''));
+                deductionsElement.textContent = `$${(deductions + 50).toLocaleString()}`;
+            }
+
+            updateTransactionCounts() {
+                const uncategorizedTab = document.querySelector('.tab.active');
+                if (uncategorizedTab.textContent.includes('Uncategorized')) {
+                    const currentCount = parseInt(uncategorizedTab.textContent.match(/\((\d+)\)/)[1]);
+                    uncategorizedTab.textContent = `Uncategorized (${currentCount - 1})`;
+                }
+            }
+
+            updateTabContent(tabText) {
+                // This would normally load different transaction sets
+                console.log(`Loading ${tabText} transactions`);
+            }
+        }
+
+        // Tax Compliance Checker
+        class TaxComplianceChecker {
+            constructor() {
+                this.complianceRules = {
+                    mealDeduction: 0.5, // 50% deductible for business meals
+                    receiptThreshold: 75, // Receipts required for expenses over $75
+                    mileageRate: 0.655 // 2024 IRS mileage rate per mile
+                };
+                this.initializeCompliance();
+            }
+
+            initializeCompliance() {
+                this.checkMissingReceipts();
+                this.validateMealDeductions();
+                this.trackMileage();
+            }
+
+            checkMissingReceipts() {
+                const transactions = document.querySelectorAll('.transaction-item');
+                let missingCount = 0;
+                
+                transactions.forEach(transaction => {
+                    const meta = transaction.querySelector('.transaction-meta');
+                    const amount = parseFloat(transaction.querySelector('.transaction-amount').textContent.replace('$', '').replace('-', ''));
+                    
+                    if (meta.textContent.includes('Missing') && amount > this.complianceRules.receiptThreshold) {
+                        missingCount++;
+                    }
+                });
+                
+                this.updateComplianceStatus('Missing Receipts', missingCount);
+            }
+
+            validateMealDeductions() {
+                // Check for proper meal categorization
+                const mealTransactions = document.querySelectorAll('[value*="Meals"]');
+                console.log(`Found ${mealTransactions.length} meal transactions for compliance review`);
+            }
+
+            trackMileage() {
+                // Verify mileage tracking for vehicle expenses
+                const vehicleTransactions = document.querySelectorAll('[value*="Vehicle"]');
+                console.log(`Tracking mileage for ${vehicleTransactions.length} vehicle transactions`);
+            }
+
+            updateComplianceStatus(type, count) {
+                const complianceItems = document.querySelectorAll('.card-body span');
+                complianceItems.forEach(item => {
+                    if (item.textContent.includes(type)) {
+                        const badge = item.nextElementSibling;
+                        badge.textContent = `${count} items`;
+                        badge.className = count > 0 ? 'badge badge--warning' : 'badge badge--success';
+                    }
+                });
+            }
+        }
+
+        // Deduction Optimizer
+        class DeductionOptimizer {
+            constructor() {
+                this.deductionRules = {
+                    'Office Supplies & Equipment': 1.0,
+                    'Software & Subscriptions': 1.0,
+                    'Business Meals': 0.5,
+                    'Vehicle & Travel': 1.0,
+                    'Professional Services': 1.0,
+                    'Marketing & Advertising': 1.0,
+                    'Personal': 0.0
+                };
+                this.calculateOptimizations();
+            }
+
+            calculateOptimizations() {
+                const categoryItems = document.querySelectorAll('.tax-category-item');
+                let totalSavings = 0;
+                
+                categoryItems.forEach(item => {
+                    const categoryName = item.querySelector('.category-name').textContent;
+                    const amount = parseFloat(item.querySelector('.category-amount').textContent.replace('$', '').replace(',', ''));
+                    const deductionRate = this.deductionRules[categoryName] || 1.0;
+                    
+                    const deductibleAmount = amount * deductionRate;
+                    const taxSavings = deductibleAmount * 0.24; // Assuming 24% tax bracket
+                    totalSavings += taxSavings;
+                    
+                    // Update deduction potential display
+                    const potentialElement = item.querySelector('.deduction-potential');
+                    if (potentialElement) {
+                        potentialElement.textContent = `${Math.round(deductionRate * 100)}% deductible`;
+                    }
+                });
+                
+                // Update total estimated savings
+                const savingsElement = document.querySelector('.card-body strong:last-child');
+                if (savingsElement) {
+                    savingsElement.textContent = `$${Math.round(totalSavings).toLocaleString()}`;
+                }
+            }
+        }
+
+        // Export and Integration Functions
+        class ExportManager {
+            constructor() {
+                this.initializeExportButtons();
+            }
+
+            initializeExportButtons() {
+                const exportButton = document.querySelector('button[textContent*="Export"]');
+                if (exportButton) {
+                    exportButton.addEventListener('click', () => {
+                        this.exportTaxReport();
+                    });
+                }
+            }
+
+            exportTaxReport() {
+                const taxData = this.compileTaxData();
+                
+                // Generate export in QuickBooks-compatible format
+                const qbExport = this.generateQuickBooksExport(taxData);
+                
+                // Generate export for tax software
+                const taxSoftwareExport = this.generateTaxSoftwareExport(taxData);
+                
+                console.log('Tax reports generated:', { qbExport, taxSoftwareExport });
+                
+                // In a real implementation, this would trigger file downloads
+                alert('Tax reports exported successfully!\n\n• QuickBooks import file\n• Tax software CSV\n• IRS Schedule C summary');
+            }
+
+            compileTaxData() {
+                const categories = {};
+                document.querySelectorAll('.tax-category-item').forEach(item => {
+                    const category = item.querySelector('.category-name').textContent;
+                    const amount = item.querySelector('.category-amount').textContent;
+                    categories[category] = amount;
+                });
+                
+                return {
+                    taxYear: 2024,
+                    businessName: 'Rodriguez Consulting LLC',
+                    categories: categories,
+                    totalDeductions: document.querySelector('.card-body strong:last-child').textContent,
+                    exportDate: new Date().toISOString()
+                };
+            }
+
+            generateQuickBooksExport(data) {
+                // QuickBooks IIF format simulation
+                return {
+                    format: 'IIF',
+                    data: data,
+                    filename: `QB_Export_${data.taxYear}_${Date.now()}.iif`
+                };
+            }
+
+            generateTaxSoftwareExport(data) {
+                // TurboTax/TaxAct compatible CSV
+                return {
+                    format: 'CSV',
+                    data: data,
+                    filename: `Tax_Categories_${data.taxYear}_${Date.now()}.csv`
+                };
+            }
+        }
+
+        // Real-time Card Balance Updates
+        class CardBalanceManager {
+            constructor() {
+                this.balances = new Map();
+                this.initializeBalances();
+                this.startRealtimeUpdates();
+            }
+
+            initializeBalances() {
+                document.querySelectorAll('.business-card').forEach(card => {
+                    const cardName = card.querySelector('.card-name').textContent;
+                    const balance = card.querySelector('.balance-amount').textContent;
+                    this.balances.set(cardName, parseFloat(balance.replace('$', '').replace(',', '')));
+                });
+            }
+
+            startRealtimeUpdates() {
+                // Simulate real-time balance updates
+                setInterval(() => {
+                    this.updateBalances();
+                }, 30000); // Update every 30 seconds
+            }
+
+            updateBalances() {
+                // In a real implementation, this would fetch from API
+                this.balances.forEach((balance, cardName) => {
+                    const fluctuation = (Math.random() - 0.5) * 100; // ±$50 random change
+                    const newBalance = Math.max(0, balance + fluctuation);
+                    this.balances.set(cardName, newBalance);
+                    
+                    // Update UI
+                    this.updateCardDisplay(cardName, newBalance);
+                });
+            }
+
+            updateCardDisplay(cardName, newBalance) {
+                const cards = document.querySelectorAll('.business-card');
+                cards.forEach(card => {
+                    if (card.querySelector('.card-name').textContent === cardName) {
+                        const balanceElement = card.querySelector('.balance-amount');
+                        balanceElement.textContent = `$${Math.round(newBalance).toLocaleString()}`;
+                        
+                        // Add subtle animation for updates
+                        balanceElement.style.transition = 'color 0.3s ease';
+                        balanceElement.style.color = 'var(--ds-blue-500)';
+                        setTimeout(() => {
+                            balanceElement.style.color = 'var(--ds-gray-900)';
+                        }, 1000);
+                    }
+                });
+            }
+        }
+
+        // Initialize all systems when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('Initializing Tax-Ready Expense Categorization System...');
+            
+            const transactionManager = new TransactionManager();
+            const complianceChecker = new TaxComplianceChecker();
+            const deductionOptimizer = new DeductionOptimizer();
+            const exportManager = new ExportManager();
+            const balanceManager = new CardBalanceManager();
+            
+            console.log('All systems initialized successfully');
+            
+            // Add keyboard shortcuts for power users
+            document.addEventListener('keydown', (e) => {
+                if (e.ctrlKey || e.metaKey) {
+                    switch(e.key) {
+                        case 'a':
+                            e.preventDefault();
+                            console.log('Approve all visible transactions');
+                            break;
+                        case 'e':
+                            e.preventDefault();
+                            console.log('Export tax report');
+                            break;
+                        case 'n':
+                            e.preventDefault();
+                            console.log('Next batch of transactions');
+                            break;
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

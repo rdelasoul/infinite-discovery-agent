@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Small Business Growth Analytics & Scaling Intelligence - Multi-Card Banking Flow</title>
+    <style>
+        /* Geist Design System Core */
+        :root {
+            /* Colors */
+            --ds-gray-100: #fafafa;
+            --ds-gray-200: #eaeaea;
+            --ds-gray-300: #999999;
+            --ds-gray-400: #888888;
+            --ds-gray-500: #666666;
+            --ds-gray-600: #444444;
+            --ds-gray-700: #333333;
+            --ds-gray-800: #222222;
+            --ds-gray-900: #111111;
+            --ds-blue-500: #0070f3;
+            --ds-blue-600: #0061d5;
+            --ds-green-500: #00875a;
+            --ds-amber-500: #f5a623;
+            --ds-red-500: #ee0000;
+            --ds-purple-500: #7c3aed;
+            
+            /* Typography */
+            --font-sans: 'Geist Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            --font-mono: 'Geist Mono', 'SF Mono', 'Monaco', 'Consolas', monospace;
+            
+            /* Spacing */
+            --space-1: 0.25rem;
+            --space-2: 0.5rem;
+            --space-3: 0.75rem;
+            --space-4: 1rem;
+            --space-5: 1.25rem;
+            --space-6: 1.5rem;
+            --space-8: 2rem;
+            --space-10: 2.5rem;
+            --space-12: 3rem;
+            --space-16: 4rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            line-height: 1.5;
+            color: var(--ds-gray-900);
+            background-color: var(--ds-gray-100);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--space-6);
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            border-bottom: 1px solid var(--ds-gray-200);
+            padding: var(--space-4) var(--space-6);
+            margin-bottom: var(--space-8);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--ds-gray-900);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+        }
+
+        .avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--ds-blue-500);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        /* Growth Analytics Dashboard */
+        .growth-dashboard {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-6);
+            margin-bottom: var(--space-8);
+        }
+
+        .growth-overview {
+            background: white;
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 8px;
+            padding: var(--space-6);
+        }
+
+        .growth-overview h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: var(--space-4);
+            color: var(--ds-gray-900);
+        }
+
+        .growth-metrics {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--space-4);
+        }
+
+        .metric-card {
+            background: var(--ds-gray-100);
+            border-radius: 6px;
+            padding: var(--space-4);
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--ds-blue-500);
+            margin-bottom: var(--space-1);
+        }
+
+        .metric-label {
+            font-size: 0.875rem;
+            color: var(--ds-gray-500);
+            margin-bottom: var(--space-1);
+        }
+
+        .metric-trend {
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .trend-positive {
+            color: var(--ds-green-500);
+        }
+
+        .trend-negative {
+            color: var(--ds-red-500);
+        }
+
+        /* Scaling Intelligence Panel */
+        .scaling-intelligence {
+            background: white;
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 8px;
+            padding: var(--space-6);
+        }
+
+        .scaling-recommendations {
+            margin-top: var(--space-4);
+        }
+
+        .recommendation-item {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--space-3);
+            padding: var(--space-3);
+            border-radius: 6px;
+            margin-bottom: var(--space-3);
+            background: var(--ds-gray-100);
+        }
+
+        .recommendation-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--ds-blue-500);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .recommendation-content {
+            flex: 1;
+        }
+
+        .recommendation-title {
+            font-weight: 600;
+            color: var(--ds-gray-900);
+            margin-bottom: var(--space-1);
+        }
+
+        .recommendation-description {
+            font-size: 0.875rem;
+            color: var(--ds-gray-500);
+            margin-bottom: var(--space-2);
+        }
+
+        .recommendation-action {
+            font-size: 0.75rem;
+            color: var(--ds-blue-500);
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        /* Multi-Card Growth Analysis */
+        .multi-card-analysis {
+            background: white;
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 8px;
+            padding: var(--space-6);
+            margin-bottom: var(--space-8);
+        }
+
+        .card-growth-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--space-4);
+            margin-top: var(--space-4);
+        }
+
+        .card-growth-item {
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 6px;
+            padding: var(--space-4);
+            position: relative;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-3);
+        }
+
+        .card-name {
+            font-weight: 600;
+            color: var(--ds-gray-900);
+        }
+
+        .card-usage-badge {
+            background: var(--ds-blue-500);
+            color: white;
+            padding: var(--space-1) var(--space-2);
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .card-growth-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: var(--space-3);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-weight: 600;
+            color: var(--ds-gray-900);
+            font-size: 0.875rem;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--ds-gray-500);
+        }
+
+        .growth-progress {
+            background: var(--ds-gray-200);
+            height: 4px;
+            border-radius: 2px;
+            overflow: hidden;
+            margin-bottom: var(--space-2);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--ds-blue-500);
+            transition: width 0.3s ease;
+        }
+
+        .growth-insight {
+            font-size: 0.75rem;
+            color: var(--ds-gray-500);
+            font-style: italic;
+        }
+
+        /* Scaling Timeline */
+        .scaling-timeline {
+            background: white;
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 8px;
+            padding: var(--space-6);
+            margin-bottom: var(--space-8);
+        }
+
+        .timeline-container {
+            position: relative;
+            margin-top: var(--space-4);
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--ds-gray-200);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: var(--space-12);
+            margin-bottom: var(--space-6);
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 12px;
+            top: 6px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: white;
+            border: 3px solid var(--ds-blue-500);
+        }
+
+        .timeline-dot.current {
+            background: var(--ds-blue-500);
+        }
+
+        .timeline-dot.completed {
+            background: var(--ds-green-500);
+            border-color: var(--ds-green-500);
+        }
+
+        .timeline-content {
+            background: var(--ds-gray-100);
+            border-radius: 6px;
+            padding: var(--space-4);
+        }
+
+        .timeline-title {
+            font-weight: 600;
+            color: var(--ds-gray-900);
+            margin-bottom: var(--space-2);
+        }
+
+        .timeline-description {
+            font-size: 0.875rem;
+            color: var(--ds-gray-500);
+            margin-bottom: var(--space-3);
+        }
+
+        .timeline-metrics {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-3);
+        }
+
+        .timeline-metric {
+            text-align: center;
+            padding: var(--space-2);
+            background: white;
+            border-radius: 4px;
+        }
+
+        .timeline-metric-value {
+            font-weight: 600;
+            color: var(--ds-blue-500);
+            font-size: 0.875rem;
+        }
+
+        .timeline-metric-label {
+            font-size: 0.75rem;
+            color: var(--ds-gray-500);
+        }
+
+        /* Expansion Opportunities */
+        .expansion-opportunities {
+            background: white;
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 8px;
+            padding: var(--space-6);
+            margin-bottom: var(--space-8);
+        }
+
+        .opportunities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--space-4);
+            margin-top: var(--space-4);
+        }
+
+        .opportunity-card {
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 6px;
+            padding: var(--space-4);
+            position: relative;
+        }
+
+        .opportunity-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-3);
+        }
+
+        .opportunity-title {
+            font-weight: 600;
+            color: var(--ds-gray-900);
+        }
+
+        .opportunity-impact {
+            background: var(--ds-green-500);
+            color: white;
+            padding: var(--space-1) var(--space-2);
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .opportunity-impact.medium {
+            background: var(--ds-amber-500);
+        }
+
+        .opportunity-impact.high {
+            background: var(--ds-purple-500);
+        }
+
+        .opportunity-description {
+            font-size: 0.875rem;
+            color: var(--ds-gray-500);
+            margin-bottom: var(--space-3);
+        }
+
+        .opportunity-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: var(--space-3);
+        }
+
+        .opportunity-stat {
+            text-align: center;
+        }
+
+        .opportunity-stat-value {
+            font-weight: 600;
+            color: var(--ds-gray-900);
+            font-size: 0.875rem;
+        }
+
+        .opportunity-stat-label {
+            font-size: 0.75rem;
+            color: var(--ds-gray-500);
+        }
+
+        .opportunity-action {
+            background: var(--ds-blue-500);
+            color: white;
+            border: none;
+            padding: var(--space-2) var(--space-4);
+            border-radius: 4px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .opportunity-action:hover {
+            background: var(--ds-blue-600);
+            transform: translateY(-1px);
+        }
+
+        /* Financial Health Score */
+        .financial-health {
+            background: white;
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 8px;
+            padding: var(--space-6);
+            margin-bottom: var(--space-8);
+        }
+
+        .health-score-container {
+            display: flex;
+            align-items: center;
+            gap: var(--space-6);
+            margin-top: var(--space-4);
+        }
+
+        .health-score-circle {
+            position: relative;
+            width: 120px;
+            height: 120px;
+        }
+
+        .health-score-svg {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+
+        .health-score-bg {
+            fill: none;
+            stroke: var(--ds-gray-200);
+            stroke-width: 8;
+        }
+
+        .health-score-progress {
+            fill: none;
+            stroke: var(--ds-green-500);
+            stroke-width: 8;
+            stroke-linecap: round;
+            stroke-dasharray: 314;
+            stroke-dashoffset: 94;
+            transition: stroke-dashoffset 0.5s ease;
+        }
+
+        .health-score-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .health-score-number {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--ds-green-500);
+        }
+
+        .health-score-label {
+            font-size: 0.75rem;
+            color: var(--ds-gray-500);
+        }
+
+        .health-factors {
+            flex: 1;
+        }
+
+        .health-factor {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--space-3);
+            margin-bottom: var(--space-2);
+            background: var(--ds-gray-100);
+            border-radius: 6px;
+        }
+
+        .health-factor-label {
+            font-weight: 500;
+            color: var(--ds-gray-900);
+        }
+
+        .health-factor-score {
+            font-weight: 600;
+            color: var(--ds-green-500);
+        }
+
+        .health-factor-score.warning {
+            color: var(--ds-amber-500);
+        }
+
+        .health-factor-score.critical {
+            color: var(--ds-red-500);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .growth-dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .card-growth-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .opportunities-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .health-score-container {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* Buttons */
+        .btn {
+            border: none;
+            padding: var(--space-2) var(--space-4);
+            border-radius: 4px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: var(--ds-blue-500);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--ds-blue-600);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: var(--ds-gray-200);
+            color: var(--ds-gray-700);
+        }
+
+        .btn-secondary:hover {
+            background: var(--ds-gray-300);
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <h1>FlexFlow Business Banking</h1>
+            <div class="user-info">
+                <span>Alex Rodriguez, CEO</span>
+                <div class="avatar">AR</div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="growth-dashboard">
+            <div class="growth-overview">
+                <h2>Business Growth Analytics</h2>
+                <div class="growth-metrics">
+                    <div class="metric-card">
+                        <div class="metric-value">287%</div>
+                        <div class="metric-label">Revenue Growth</div>
+                        <div class="metric-trend trend-positive">↑ 24% this quarter</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">8.2</div>
+                        <div class="metric-label">Team Size</div>
+                        <div class="metric-trend trend-positive">↑ 3 employees added</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">$45K</div>
+                        <div class="metric-label">Monthly Expenses</div>
+                        <div class="metric-trend trend-positive">↑ 12% (growth related)</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">94%</div>
+                        <div class="metric-label">Scaling Readiness</div>
+                        <div class="metric-trend trend-positive">↑ Ready for 10-person team</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="scaling-intelligence">
+                <h2>Scaling Intelligence</h2>
+                <div class="scaling-recommendations">
+                    <div class="recommendation-item">
+                        <div class="recommendation-icon">1</div>
+                        <div class="recommendation-content">
+                            <div class="recommendation-title">Expand Equipment Credit Line</div>
+                            <div class="recommendation-description">Based on 3 new hires and current productivity trends, you'll need $15K additional equipment budget</div>
+                            <div class="recommendation-action">View Equipment Financing Options →</div>
+                        </div>
+                    </div>
+                    <div class="recommendation-item">
+                        <div class="recommendation-icon">2</div>
+                        <div class="recommendation-content">
+                            <div class="recommendation-title">Implement Team Expense Cards</div>
+                            <div class="recommendation-description">Employee spending patterns suggest individual cards would save 15 hours/month in expense processing</div>
+                            <div class="recommendation-action">Set Up Team Cards →</div>
+                        </div>
+                    </div>
+                    <div class="recommendation-item">
+                        <div class="recommendation-icon">3</div>
+                        <div class="recommendation-content">
+                            <div class="recommendation-title">Optimize Tax Strategy</div>
+                            <div class="recommendation-description">Current spending patterns suggest $8K in additional deductions with proper categorization</div>
+                            <div class="recommendation-action">Review Tax Optimization →</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="multi-card-analysis">
+            <h2>Multi-Card Growth Analysis</h2>
+            <div class="card-growth-grid">
+                <div class="card-growth-item">
+                    <div class="card-header">
+                        <span class="card-name">Chase Ink Business</span>
+                        <span class="card-usage-badge">Primary</span>
+                    </div>
+                    <div class="card-growth-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">$8,420</div>
+                            <div class="stat-label">Monthly Volume</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">156%</div>
+                            <div class="stat-label">Growth Rate</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">73%</div>
+                            <div class="stat-label">Utilization</div>
+                        </div>
+                    </div>
+                    <div class="growth-progress">
+                        <div class="progress-fill" style="width: 73%"></div>
+                    </div>
+                    <div class="growth-insight">Optimal for operational expenses, approaching capacity</div>
+                </div>
+
+                <div class="card-growth-item">
+                    <div class="card-header">
+                        <span class="card-name">Capital One Spark</span>
+                        <span class="card-usage-badge">Travel</span>
+                    </div>
+                    <div class="card-growth-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">$3,280</div>
+                            <div class="stat-label">Monthly Volume</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">340%</div>
+                            <div class="stat-label">Growth Rate</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">41%</div>
+                            <div class="stat-label">Utilization</div>
+                        </div>
+                    </div>
+                    <div class="growth-progress">
+                        <div class="progress-fill" style="width: 41%"></div>
+                    </div>
+                    <div class="growth-insight">Strong growth in client meetings, room for expansion</div>
+                </div>
+
+                <div class="card-growth-item">
+                    <div class="card-header">
+                        <span class="card-name">Amex Business Gold</span>
+                        <span class="card-usage-badge">Equipment</span>
+                    </div>
+                    <div class="card-growth-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">$2,650</div>
+                            <div class="stat-label">Monthly Volume</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">89%</div>
+                            <div class="stat-label">Growth Rate</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">33%</div>
+                            <div class="stat-label">Utilization</div>
+                        </div>
+                    </div>
+                    <div class="growth-progress">
+                        <div class="progress-fill" style="width: 33%"></div>
+                    </div>
+                    <div class="growth-insight">Steady equipment purchases, seasonal pattern observed</div>
+                </div>
+
+                <div class="card-growth-item">
+                    <div class="card-header">
+                        <span class="card-name">Bank of America</span>
+                        <span class="card-usage-badge">Software</span>
+                    </div>
+                    <div class="card-growth-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">$1,890</div>
+                            <div class="stat-label">Monthly Volume</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">245%</div>
+                            <div class="stat-label">Growth Rate</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">38%</div>
+                            <div class="stat-label">Utilization</div>
+                        </div>
+                    </div>
+                    <div class="growth-progress">
+                        <div class="progress-fill" style="width: 38%"></div>
+                    </div>
+                    <div class="growth-insight">SaaS scaling with team growth, predictable increases</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="scaling-timeline">
+            <h2>Business Scaling Timeline</h2>
+            <div class="timeline-container">
+                <div class="timeline-line"></div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot completed"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">Solo Founder Stage (0-1 employees)</div>
+                        <div class="timeline-description">Basic expense tracking, single card management, personal-business separation</div>
+                        <div class="timeline-metrics">
+                            <div class="timeline-metric">
+                                <div class="timeline-metric-value">$2,500</div>
+                                <div class="timeline-metric-label">Monthly Expenses</div>
+                            </div>
+                            <div class="timeline-metric">
+                                <div class="timeline-metric-value">1</div>
+                                <div class="timeline-metric-label">Business Card</div>
+                            </div>
+                            <div class="timeline-metric">
+                                <div class="timeline-metric-value">Basic</div>
+                                <div class="timeline-metric-label">Tracking</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot completed"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">Small Team Stage (2-5 employees)</div>
+                        <div class="timeline-description">Multi-card specialization, team expense management, automated categorization</div>
+                        <div class="timeline-metrics">
+                            <div class="timeline-metric">
+                                <div class="timeline-metric-value">$18,500</div>
+                                <div class="timeline-metric-label">Monthly Expenses</div>
+                            </div>
+                            <div class="timeline-metric">
+                                <div class="timeline-metric-value">3</div>
+                                <div class="timeline-metric-label">Business Cards</div>
+                            </div>
+                            <div class="timeline-metric">
+                                <div class="timeline-metric-value">Smart</div>
+                                <div class="timeline-metric-label">Automation</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot current"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">Growth Stage (6-10 employees)</div>
+                        <div class="timeline-description">Advanced analytics, scaling support, team card distribution, growth intelligence</div>
+                        <div class="timeline-metrics">
+                            <div class="timeline-metric">
+                                <div class="timeline-metric-value">$45,000</div>
+                                <div class="timeline-metric-label">Monthly Expenses</div>
+                            </div>
+                            <div class="timeline-metric">
+                                <div class="timeline-metric-value">5</div>
+                                <div class="timeline-metric-label">Business Cards</div>
+                            </div>
+                            <div class="timeline-metric">
+                                <div class="timeline-metric-value">Growth</div>
+                                <div class="timeline-metric-label">Intelligence</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">Small Enterprise Stage (10+ employees)</div>
+                        <div class="timeline-description">Department budgets, advanced approvals, integration with enterprise tools</div>
+                        <div class="timeline-metrics">
+                            <div class="timeline-metric">
+                                <div class="timeline-metric-value">$85,000</div>
+                                <div class="timeline-metric-label">Monthly Expenses</div>
+                            </div>
+                            <div class="timeline-metric">
+                                <div class="timeline-metric-value">8+</div>
+                                <div class="timeline-metric-label">Business Cards</div>
+                            </div>
+                            <div class="timeline-metric">
+                                <div class="timeline-metric-value">Enterprise</div>
+                                <div class="timeline-metric-label">Features</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="expansion-opportunities">
+            <h2>Business Expansion Opportunities</h2>
+            <div class="opportunities-grid">
+                <div class="opportunity-card">
+                    <div class="opportunity-header">
+                        <span class="opportunity-title">New Office Space</span>
+                        <span class="opportunity-impact high">High Impact</span>
+                    </div>
+                    <div class="opportunity-description">
+                        Spending patterns suggest team productivity would increase 23% with dedicated office space
+                    </div>
+                    <div class="opportunity-stats">
+                        <div class="opportunity-stat">
+                            <div class="opportunity-stat-value">$4,200</div>
+                            <div class="opportunity-stat-label">Monthly Cost</div>
+                        </div>
+                        <div class="opportunity-stat">
+                            <div class="opportunity-stat-value">18%</div>
+                            <div class="opportunity-stat-label">ROI Increase</div>
+                        </div>
+                        <div class="opportunity-stat">
+                            <div class="opportunity-stat-value">6 months</div>
+                            <div class="opportunity-stat-label">Payback</div>
+                        </div>
+                    </div>
+                    <button class="opportunity-action">Explore Office Options</button>
+                </div>
+
+                <div class="opportunity-card">
+                    <div class="opportunity-header">
+                        <span class="opportunity-title">Marketing Expansion</span>
+                        <span class="opportunity-impact medium">Medium Impact</span>
+                    </div>
+                    <div class="opportunity-description">
+                        Current customer acquisition cost suggests 2.5x marketing budget would be profitable
+                    </div>
+                    <div class="opportunity-stats">
+                        <div class="opportunity-stat">
+                            <div class="opportunity-stat-value">$2,800</div>
+                            <div class="opportunity-stat-label">Monthly Budget</div>
+                        </div>
+                        <div class="opportunity-stat">
+                            <div class="opportunity-stat-value">340%</div>
+                            <div class="opportunity-stat-label">Potential ROI</div>
+                        </div>
+                        <div class="opportunity-stat">
+                            <div class="opportunity-stat-value">3 months</div>
+                            <div class="opportunity-stat-label">Ramp Time</div>
+                        </div>
+                    </div>
+                    <button class="opportunity-action">Plan Marketing Scale</button>
+                </div>
+
+                <div class="opportunity-card">
+                    <div class="opportunity-header">
+                        <span class="opportunity-title">Equipment Upgrade</span>
+                        <span class="opportunity-impact">Standard Impact</span>
+                    </div>
+                    <div class="opportunity-description">
+                        Team efficiency metrics indicate 15% productivity gain with updated equipment
+                    </div>
+                    <div class="opportunity-stats">
+                        <div class="opportunity-stat">
+                            <div class="opportunity-stat-value">$12,000</div>
+                            <div class="opportunity-stat-label">One-time Cost</div>
+                        </div>
+                        <div class="opportunity-stat">
+                            <div class="opportunity-stat-value">15%</div>
+                            <div class="opportunity-stat-label">Efficiency Gain</div>
+                        </div>
+                        <div class="opportunity-stat">
+                            <div class="opportunity-stat-value">8 months</div>
+                            <div class="opportunity-stat-label">Payback</div>
+                        </div>
+                    </div>
+                    <button class="opportunity-action">Review Equipment</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="financial-health">
+            <h2>Business Financial Health Score</h2>
+            <div class="health-score-container">
+                <div class="health-score-circle">
+                    <svg class="health-score-svg" viewBox="0 0 120 120">
+                        <circle class="health-score-bg" cx="60" cy="60" r="50"></circle>
+                        <circle class="health-score-progress" cx="60" cy="60" r="50"></circle>
+                    </svg>
+                    <div class="health-score-text">
+                        <div class="health-score-number">87</div>
+                        <div class="health-score-label">Excellent</div>
+                    </div>
+                </div>
+                <div class="health-factors">
+                    <div class="health-factor">
+                        <span class="health-factor-label">Cash Flow Management</span>
+                        <span class="health-factor-score">92/100</span>
+                    </div>
+                    <div class="health-factor">
+                        <span class="health-factor-label">Credit Utilization</span>
+                        <span class="health-factor-score">89/100</span>
+                    </div>
+                    <div class="health-factor">
+                        <span class="health-factor-label">Growth Sustainability</span>
+                        <span class="health-factor-score">85/100</span>
+                    </div>
+                    <div class="health-factor">
+                        <span class="health-factor-label">Tax Compliance</span>
+                        <span class="health-factor-score">90/100</span>
+                    </div>
+                    <div class="health-factor">
+                        <span class="health-factor-label">Expense Control</span>
+                        <span class="health-factor-score warning">78/100</span>
+                    </div>
+                    <div class="health-factor">
+                        <span class="health-factor-label">Scaling Readiness</span>
+                        <span class="health-factor-score">94/100</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Growth Analytics Interactive Features
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate progress bars on load
+            const progressBars = document.querySelectorAll('.progress-fill');
+            progressBars.forEach(bar => {
+                const width = bar.style.width;
+                bar.style.width = '0%';
+                setTimeout(() => {
+                    bar.style.width = width;
+                }, 300);
+            });
+
+            // Animate health score
+            const healthScore = document.querySelector('.health-score-progress');
+            if (healthScore) {
+                setTimeout(() => {
+                    healthScore.style.strokeDashoffset = '94'; // 87% of 314
+                }, 500);
+            }
+
+            // Interactive recommendation clicks
+            const recommendations = document.querySelectorAll('.recommendation-action');
+            recommendations.forEach(action => {
+                action.addEventListener('click', function() {
+                    const title = this.parentElement.querySelector('.recommendation-title').textContent;
+                    showScalingModal(title);
+                });
+            });
+
+            // Opportunity action buttons
+            const opportunityActions = document.querySelectorAll('.opportunity-action');
+            opportunityActions.forEach(action => {
+                action.addEventListener('click', function() {
+                    const title = this.parentElement.querySelector('.opportunity-title').textContent;
+                    showOpportunityModal(title);
+                });
+            });
+
+            // Timeline interaction
+            const timelineDots = document.querySelectorAll('.timeline-dot');
+            timelineDots.forEach(dot => {
+                dot.addEventListener('click', function() {
+                    const title = this.parentElement.querySelector('.timeline-title').textContent;
+                    showTimelineDetails(title);
+                });
+            });
+        });
+
+        function showScalingModal(title) {
+            // Simulate modal for scaling recommendations
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.5);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 1000;
+            `;
+            
+            modal.innerHTML = `
+                <div style="background: white; padding: 2rem; border-radius: 8px; max-width: 500px; width: 90%;">
+                    <h3 style="margin-bottom: 1rem; color: var(--ds-gray-900);">${title}</h3>
+                    <p style="color: var(--ds-gray-500); margin-bottom: 1.5rem;">
+                        Detailed scaling analysis and implementation steps would be displayed here.
+                    </p>
+                    <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+                        <button onclick="this.parentElement.parentElement.parentElement.remove()" 
+                                style="padding: 0.5rem 1rem; border: 1px solid var(--ds-gray-300); background: white; border-radius: 4px; cursor: pointer;">
+                            Cancel
+                        </button>
+                        <button onclick="this.parentElement.parentElement.parentElement.remove()" 
+                                style="padding: 0.5rem 1rem; border: none; background: var(--ds-blue-500); color: white; border-radius: 4px; cursor: pointer;">
+                            Implement
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+
+        function showOpportunityModal(title) {
+            // Simulate modal for expansion opportunities
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.5);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 1000;
+            `;
+            
+            modal.innerHTML = `
+                <div style="background: white; padding: 2rem; border-radius: 8px; max-width: 500px; width: 90%;">
+                    <h3 style="margin-bottom: 1rem; color: var(--ds-gray-900);">${title}</h3>
+                    <p style="color: var(--ds-gray-500); margin-bottom: 1.5rem;">
+                        Detailed opportunity analysis and financial projections would be displayed here.
+                    </p>
+                    <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+                        <button onclick="this.parentElement.parentElement.parentElement.remove()" 
+                                style="padding: 0.5rem 1rem; border: 1px solid var(--ds-gray-300); background: white; border-radius: 4px; cursor: pointer;">
+                            Cancel
+                        </button>
+                        <button onclick="this.parentElement.parentElement.parentElement.remove()" 
+                                style="padding: 0.5rem 1rem; border: none; background: var(--ds-blue-500); color: white; border-radius: 4px; cursor: pointer;">
+                            Explore
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+
+        function showTimelineDetails(title) {
+            // Simulate timeline stage details
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.5);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 1000;
+            `;
+            
+            modal.innerHTML = `
+                <div style="background: white; padding: 2rem; border-radius: 8px; max-width: 500px; width: 90%;">
+                    <h3 style="margin-bottom: 1rem; color: var(--ds-gray-900);">${title}</h3>
+                    <p style="color: var(--ds-gray-500); margin-bottom: 1.5rem;">
+                        Detailed stage analysis and progression metrics would be displayed here.
+                    </p>
+                    <button onclick="this.parentElement.parentElement.remove()" 
+                            style="padding: 0.5rem 1rem; border: none; background: var(--ds-blue-500); color: white; border-radius: 4px; cursor: pointer;">
+                        Close
+                    </button>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+
+        // Real-time growth metrics simulation
+        function updateGrowthMetrics() {
+            const metrics = document.querySelectorAll('.metric-value');
+            metrics.forEach(metric => {
+                const currentValue = parseFloat(metric.textContent.replace(/[^\d.]/g, ''));
+                const variation = (Math.random() - 0.5) * 0.02; // ±1% variation
+                const newValue = currentValue * (1 + variation);
+                
+                if (metric.textContent.includes('%')) {
+                    metric.textContent = Math.round(newValue) + '%';
+                } else if (metric.textContent.includes('$')) {
+                    metric.textContent = '$' + Math.round(newValue / 1000) + 'K';
+                } else {
+                    metric.textContent = newValue.toFixed(1);
+                }
+            });
+        }
+
+        // Update metrics every 30 seconds for demo
+        setInterval(updateGrowthMetrics, 30000);
+    </script>
+</body>
+</html>

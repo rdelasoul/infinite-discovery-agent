@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Owner-Bookkeeper Collaboration Interface - Multi-Card Banking Flow</title>
+    <style>
+        /* Geist Design System implementation */
+        :root {
+            /* Colors */
+            --ds-gray-100: #fafafa;
+            --ds-gray-200: #eaeaea;
+            --ds-gray-300: #999999;
+            --ds-gray-400: #888888;
+            --ds-gray-500: #666666;
+            --ds-gray-600: #444444;
+            --ds-gray-700: #333333;
+            --ds-gray-800: #222222;
+            --ds-gray-900: #111111;
+            --ds-gray-1000: #000000;
+            --ds-blue-100: #e1f5fe;
+            --ds-blue-500: #0070f3;
+            --ds-blue-600: #0061d5;
+            --ds-blue-700: #004fc4;
+            --ds-red-500: #ee0000;
+            --ds-amber-500: #f5a623;
+            --ds-green-500: #22c55e;
+            --ds-purple-500: #7c3aed;
+
+            /* Typography */
+            --font-size-xs: 0.75rem;
+            --font-size-small: 0.875rem;
+            --font-size-base: 1rem;
+            --font-size-large: 1.125rem;
+            --font-size-h4: 1.25rem;
+            --font-size-h3: 1.5rem;
+            --font-size-h2: 1.875rem;
+            --font-size-h1: 2.25rem;
+
+            /* Spacing */
+            --space-1: 0.25rem;
+            --space-2: 0.5rem;
+            --space-3: 0.75rem;
+            --space-4: 1rem;
+            --space-5: 1.25rem;
+            --space-6: 1.5rem;
+            --space-8: 2rem;
+            --space-10: 2.5rem;
+            --space-12: 3rem;
+            --space-16: 4rem;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Geist Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background-color: var(--ds-gray-100);
+            color: var(--ds-gray-900);
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: var(--space-4);
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            border-bottom: 1px solid var(--ds-gray-200);
+            padding: var(--space-4) 0;
+            margin-bottom: var(--space-6);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 var(--space-4);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--ds-blue-500);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: var(--font-size-small);
+        }
+
+        .user-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user-name {
+            font-weight: 600;
+            color: var(--ds-gray-900);
+            font-size: var(--font-size-base);
+        }
+
+        .user-role {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-500);
+        }
+
+        /* Role Switch */
+        .role-switch {
+            display: flex;
+            background: var(--ds-gray-100);
+            border-radius: 8px;
+            padding: var(--space-1);
+            gap: var(--space-1);
+        }
+
+        .role-option {
+            padding: var(--space-2) var(--space-4);
+            border-radius: 6px;
+            border: none;
+            background: transparent;
+            color: var(--ds-gray-600);
+            cursor: pointer;
+            font-size: var(--font-size-small);
+            font-weight: 500;
+            transition: all 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+        }
+
+        .role-option.active {
+            background: white;
+            color: var(--ds-gray-900);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Main Layout */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-6);
+            margin-bottom: var(--space-8);
+        }
+
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: var(--space-6);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--ds-gray-200);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: var(--space-5);
+        }
+
+        .card-title {
+            font-size: var(--font-size-h3);
+            font-weight: 600;
+            color: var(--ds-gray-900);
+        }
+
+        .card-subtitle {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-500);
+            margin-top: var(--space-1);
+        }
+
+        /* Task List */
+        .task-list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-3);
+        }
+
+        .task-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            padding: var(--space-4);
+            background: var(--ds-gray-100);
+            border-radius: 8px;
+            border: 1px solid var(--ds-gray-200);
+            transition: all 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+        }
+
+        .task-item:hover {
+            border-color: var(--ds-blue-500);
+            background: var(--ds-blue-100);
+        }
+
+        .task-checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--ds-gray-300);
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+        }
+
+        .task-checkbox.checked {
+            background: var(--ds-green-500);
+            border-color: var(--ds-green-500);
+            color: white;
+        }
+
+        .task-content {
+            flex: 1;
+        }
+
+        .task-title {
+            font-weight: 500;
+            color: var(--ds-gray-900);
+            font-size: var(--font-size-base);
+        }
+
+        .task-meta {
+            display: flex;
+            gap: var(--space-4);
+            margin-top: var(--space-1);
+        }
+
+        .task-assignee, .task-due, .task-priority {
+            font-size: var(--font-size-xs);
+            color: var(--ds-gray-500);
+        }
+
+        /* Status Badges */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: var(--space-1) var(--space-2);
+            border-radius: 6px;
+            font-size: var(--font-size-xs);
+            font-weight: 500;
+            gap: var(--space-1);
+        }
+
+        .status-badge.pending {
+            background: var(--ds-amber-500);
+            color: white;
+        }
+
+        .status-badge.review {
+            background: var(--ds-blue-500);
+            color: white;
+        }
+
+        .status-badge.approved {
+            background: var(--ds-green-500);
+            color: white;
+        }
+
+        .status-badge.urgent {
+            background: var(--ds-red-500);
+            color: white;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            margin-top: var(--space-4);
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: var(--space-2);
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-600);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--ds-gray-200);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--ds-green-500);
+            transition: width 0.3s ease;
+        }
+
+        /* Transaction Review */
+        .transaction-list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-3);
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .transaction-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--space-3);
+            background: var(--ds-gray-100);
+            border-radius: 8px;
+            border: 1px solid var(--ds-gray-200);
+        }
+
+        .transaction-details {
+            flex: 1;
+        }
+
+        .transaction-merchant {
+            font-weight: 500;
+            color: var(--ds-gray-900);
+            font-size: var(--font-size-base);
+        }
+
+        .transaction-meta {
+            display: flex;
+            gap: var(--space-4);
+            margin-top: var(--space-1);
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-500);
+        }
+
+        .transaction-amount {
+            font-weight: 600;
+            color: var(--ds-gray-900);
+            font-size: var(--font-size-base);
+        }
+
+        .transaction-actions {
+            display: flex;
+            gap: var(--space-2);
+            margin-left: var(--space-4);
+        }
+
+        /* Buttons */
+        .btn {
+            padding: var(--space-2) var(--space-4);
+            border-radius: 6px;
+            border: none;
+            font-size: var(--font-size-small);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+
+        .btn-primary {
+            background: var(--ds-blue-500);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--ds-blue-600);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: var(--ds-gray-200);
+            color: var(--ds-gray-700);
+        }
+
+        .btn-secondary:hover {
+            background: var(--ds-gray-300);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--ds-gray-600);
+            border: 1px solid var(--ds-gray-300);
+        }
+
+        .btn-ghost:hover {
+            background: var(--ds-gray-100);
+            border-color: var(--ds-gray-400);
+        }
+
+        .btn-success {
+            background: var(--ds-green-500);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #16a34a;
+        }
+
+        /* Communication */
+        .communication-panel {
+            grid-column: 1 / -1;
+        }
+
+        .communication-thread {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-4);
+            max-height: 300px;
+            overflow-y: auto;
+            margin-bottom: var(--space-4);
+        }
+
+        .message {
+            display: flex;
+            gap: var(--space-3);
+        }
+
+        .message.owner {
+            flex-direction: row-reverse;
+        }
+
+        .message-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--ds-blue-500);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--font-size-xs);
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .message.bookkeeper .message-avatar {
+            background: var(--ds-purple-500);
+        }
+
+        .message-content {
+            background: white;
+            padding: var(--space-3);
+            border-radius: 12px;
+            border: 1px solid var(--ds-gray-200);
+            max-width: 70%;
+        }
+
+        .message.owner .message-content {
+            background: var(--ds-blue-500);
+            color: white;
+        }
+
+        .message-text {
+            font-size: var(--font-size-small);
+            margin-bottom: var(--space-1);
+        }
+
+        .message-time {
+            font-size: var(--font-size-xs);
+            opacity: 0.7;
+        }
+
+        /* Monthly Summary */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-4);
+            margin-bottom: var(--space-6);
+        }
+
+        .summary-item {
+            text-align: center;
+            padding: var(--space-4);
+            background: var(--ds-gray-100);
+            border-radius: 8px;
+        }
+
+        .summary-value {
+            font-size: var(--font-size-h3);
+            font-weight: 600;
+            color: var(--ds-gray-900);
+            margin-bottom: var(--space-1);
+        }
+
+        .summary-label {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-500);
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--space-4);
+            margin-bottom: var(--space-6);
+        }
+
+        .bank-card {
+            background: linear-gradient(135deg, var(--ds-blue-600), var(--ds-blue-700));
+            color: white;
+            padding: var(--space-5);
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bank-card.chase {
+            background: linear-gradient(135deg, #1a365d, #2d3748);
+        }
+
+        .bank-card.capital-one {
+            background: linear-gradient(135deg, #c53030, #e53e3e);
+        }
+
+        .bank-card.amex {
+            background: linear-gradient(135deg, #2d3748, #4a5568);
+        }
+
+        .card-name {
+            font-size: var(--font-size-small);
+            opacity: 0.9;
+            margin-bottom: var(--space-2);
+        }
+
+        .card-balance {
+            font-size: var(--font-size-h3);
+            font-weight: 600;
+            margin-bottom: var(--space-1);
+        }
+
+        .card-limit {
+            font-size: var(--font-size-xs);
+            opacity: 0.8;
+        }
+
+        .card-status {
+            position: absolute;
+            top: var(--space-3);
+            right: var(--space-3);
+            padding: var(--space-1) var(--space-2);
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            font-size: var(--font-size-xs);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: var(--space-4);
+                align-items: stretch;
+            }
+
+            .summary-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="user-info">
+                <div class="avatar">AR</div>
+                <div class="user-details">
+                    <div class="user-name">Alex Rodriguez</div>
+                    <div class="user-role">Business Owner</div>
+                </div>
+            </div>
+            <div class="role-switch">
+                <button class="role-option active" data-role="owner">Owner View</button>
+                <button class="role-option" data-role="bookkeeper">Bookkeeper View</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <h1 class="card-title">Owner-Bookkeeper Collaboration Dashboard</h1>
+        <p class="card-subtitle">Collaborative financial management for Rodriguez Consulting LLC</p>
+
+        <!-- Monthly Progress Summary -->
+        <div class="card" style="margin-bottom: var(--space-6);">
+            <div class="card-header">
+                <div>
+                    <h2 class="card-title">November 2024 Reconciliation Progress</h2>
+                    <p class="card-subtitle">Owner-Bookkeeper collaboration status</p>
+                </div>
+            </div>
+            
+            <div class="summary-grid">
+                <div class="summary-item">
+                    <div class="summary-value">156</div>
+                    <div class="summary-label">Total Transactions</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-value">89%</div>
+                    <div class="summary-label">Auto-Categorized</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-value">12</div>
+                    <div class="summary-label">Need Review</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-value">5</div>
+                    <div class="summary-label">Pending Approval</div>
+                </div>
+            </div>
+
+            <div class="progress-container">
+                <div class="progress-label">
+                    <span>Monthly Reconciliation</span>
+                    <span>78% Complete</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 78%"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-layout">
+            <!-- Task Management -->
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <h3 class="card-title">Active Tasks</h3>
+                        <p class="card-subtitle">Collaborative workflow assignments</p>
+                    </div>
+                </div>
+
+                <div class="task-list">
+                    <div class="task-item">
+                        <div class="task-checkbox checked">✓</div>
+                        <div class="task-content">
+                            <div class="task-title">Categorize Q4 client meeting expenses</div>
+                            <div class="task-meta">
+                                <span class="task-assignee">Assigned: Maria Santos</span>
+                                <span class="task-due">Due: Nov 15</span>
+                            </div>
+                        </div>
+                        <div class="status-badge approved">Completed</div>
+                    </div>
+
+                    <div class="task-item">
+                        <div class="task-checkbox"></div>
+                        <div class="task-content">
+                            <div class="task-title">Review equipment purchases >$500</div>
+                            <div class="task-meta">
+                                <span class="task-assignee">Assigned: Alex Rodriguez</span>
+                                <span class="task-due">Due: Nov 18</span>
+                            </div>
+                        </div>
+                        <div class="status-badge pending">Owner Review</div>
+                    </div>
+
+                    <div class="task-item">
+                        <div class="task-checkbox"></div>
+                        <div class="task-content">
+                            <div class="task-title">Match receipts to Nov 1-7 transactions</div>
+                            <div class="task-meta">
+                                <span class="task-assignee">Assigned: Maria Santos</span>
+                                <span class="task-due">Due: Nov 20</span>
+                            </div>
+                        </div>
+                        <div class="status-badge review">In Progress</div>
+                    </div>
+
+                    <div class="task-item">
+                        <div class="task-checkbox"></div>
+                        <div class="task-content">
+                            <div class="task-title">Approve travel expense reclassifications</div>
+                            <div class="task-meta">
+                                <span class="task-assignee">Assigned: Alex Rodriguez</span>
+                                <span class="task-due">Due: Nov 16</span>
+                            </div>
+                        </div>
+                        <div class="status-badge urgent">Urgent</div>
+                    </div>
+
+                    <div class="task-item">
+                        <div class="task-checkbox"></div>
+                        <div class="task-content">
+                            <div class="task-title">Generate monthly tax category report</div>
+                            <div class="task-meta">
+                                <span class="task-assignee">Assigned: Maria Santos</span>
+                                <span class="task-due">Due: Nov 25</span>
+                            </div>
+                        </div>
+                        <div class="status-badge pending">Pending</div>
+                    </div>
+                </div>
+
+                <div style="margin-top: var(--space-4); display: flex; gap: var(--space-3);">
+                    <button class="btn btn-primary">Create New Task</button>
+                    <button class="btn btn-ghost">View All Tasks</button>
+                </div>
+            </div>
+
+            <!-- Transaction Review Queue -->
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <h3 class="card-title">Pending Owner Review</h3>
+                        <p class="card-subtitle">5 transactions require approval</p>
+                    </div>
+                </div>
+
+                <div class="transaction-list">
+                    <div class="transaction-item">
+                        <div class="transaction-details">
+                            <div class="transaction-merchant">MacBook Pro 16" - Apple Store</div>
+                            <div class="transaction-meta">
+                                <span>Nov 12 • Chase Business</span>
+                                <span>Category: Equipment</span>
+                                <span>Note: Annual laptop upgrade</span>
+                            </div>
+                        </div>
+                        <div class="transaction-amount">$2,899.00</div>
+                        <div class="transaction-actions">
+                            <button class="btn btn-success">Approve</button>
+                            <button class="btn btn-ghost">Edit</button>
+                        </div>
+                    </div>
+
+                    <div class="transaction-item">
+                        <div class="transaction-details">
+                            <div class="transaction-merchant">Adobe Creative Cloud Pro</div>
+                            <div class="transaction-meta">
+                                <span>Nov 10 • AmEx Business</span>
+                                <span>Category: Software</span>
+                                <span>Note: Annual subscription renewal</span>
+                            </div>
+                        </div>
+                        <div class="transaction-amount">$599.88</div>
+                        <div class="transaction-actions">
+                            <button class="btn btn-success">Approve</button>
+                            <button class="btn btn-ghost">Edit</button>
+                        </div>
+                    </div>
+
+                    <div class="transaction-item">
+                        <div class="transaction-details">
+                            <div class="transaction-merchant">Marriott Downtown - Client Meeting</div>
+                            <div class="transaction-meta">
+                                <span>Nov 8 • Capital One Travel</span>
+                                <span>Category: Travel & Entertainment</span>
+                                <span>Note: Pending receipt verification</span>
+                            </div>
+                        </div>
+                        <div class="transaction-amount">$425.60</div>
+                        <div class="transaction-actions">
+                            <button class="btn btn-success">Approve</button>
+                            <button class="btn btn-ghost">Query</button>
+                        </div>
+                    </div>
+
+                    <div class="transaction-item">
+                        <div class="transaction-details">
+                            <div class="transaction-merchant">LinkedIn Premium Business</div>
+                            <div class="transaction-meta">
+                                <span>Nov 5 • Bank of America</span>
+                                <span>Category: Marketing</span>
+                                <span>Note: Monthly subscription</span>
+                            </div>
+                        </div>
+                        <div class="transaction-amount">$119.95</div>
+                        <div class="transaction-actions">
+                            <button class="btn btn-success">Approve</button>
+                            <button class="btn btn-ghost">Edit</button>
+                        </div>
+                    </div>
+
+                    <div class="transaction-item">
+                        <div class="transaction-details">
+                            <div class="transaction-merchant">Legal Consultation - Johnson & Associates</div>
+                            <div class="transaction-meta">
+                                <span>Nov 3 • Chase Business</span>
+                                <span>Category: Professional Services</span>
+                                <span>Note: Contract review session</span>
+                            </div>
+                        </div>
+                        <div class="transaction-amount">$750.00</div>
+                        <div class="transaction-actions">
+                            <button class="btn btn-success">Approve</button>
+                            <button class="btn btn-ghost">Edit</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: var(--space-4); display: flex; gap: var(--space-3);">
+                    <button class="btn btn-primary">Approve All</button>
+                    <button class="btn btn-secondary">Bulk Edit</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Communication Panel -->
+        <div class="card communication-panel">
+            <div class="card-header">
+                <div>
+                    <h3 class="card-title">Owner-Bookkeeper Communication</h3>
+                    <p class="card-subtitle">Real-time collaboration and handoff notes</p>
+                </div>
+            </div>
+
+            <div class="communication-thread">
+                <div class="message bookkeeper">
+                    <div class="message-avatar">MS</div>
+                    <div class="message-content">
+                        <div class="message-text">Hi Alex! I've completed the Q4 client meeting expense categorization. Found some travel expenses that might qualify for additional deductions. Could you review the Marriott charge from Nov 8? The receipt shows it was an overnight stay for the Johnson client meeting.</div>
+                        <div class="message-time">Today, 2:15 PM</div>
+                    </div>
+                </div>
+
+                <div class="message owner">
+                    <div class="message-avatar">AR</div>
+                    <div class="message-content">
+                        <div class="message-text">Thanks Maria! Yes, that was definitely a business overnight stay. I'll approve it under Travel & Entertainment. The Johnson contract review was a big win - worth the overnight stay to close it.</div>
+                        <div class="message-time">Today, 2:45 PM</div>
+                    </div>
+                </div>
+
+                <div class="message bookkeeper">
+                    <div class="message-avatar">MS</div>
+                    <div class="message-content">
+                        <div class="message-text">Perfect! I've flagged it for maximum deduction. Also heads up - the Adobe renewal went through early this month instead of December. Should we adjust the Q4 projections? I can prepare the amendment if you'd like.</div>
+                        <div class="message-time">Today, 3:10 PM</div>
+                    </div>
+                </div>
+
+                <div class="message owner">
+                    <div class="message-avatar">AR</div>
+                    <div class="message-content">
+                        <div class="message-text">Good catch! Yes, please prepare the amendment. Early renewal actually works better for our cash flow this quarter. You can approve similar software renewals under $1000 going forward - I trust your judgment on these.</div>
+                        <div class="message-time">Today, 4:20 PM</div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: var(--space-3); align-items: center; padding: var(--space-4); background: var(--ds-gray-100); border-radius: 8px;">
+                <input type="text" placeholder="Type a message to Maria..." style="flex: 1; padding: var(--space-3); border: 1px solid var(--ds-gray-300); border-radius: 6px; font-size: var(--font-size-small);">
+                <button class="btn btn-primary">Send</button>
+            </div>
+        </div>
+
+        <!-- Multi-Card Overview -->
+        <div class="card" style="margin-top: var(--space-6);">
+            <div class="card-header">
+                <div>
+                    <h3 class="card-title">Business Cards Overview</h3>
+                    <p class="card-subtitle">Real-time status across all payment methods</p>
+                </div>
+            </div>
+
+            <div class="cards-grid">
+                <div class="bank-card chase">
+                    <div class="card-status">Primary</div>
+                    <div class="card-name">Chase Ink Business</div>
+                    <div class="card-balance">$2,450.80</div>
+                    <div class="card-limit">$2,450 of $15,000 used</div>
+                </div>
+
+                <div class="bank-card capital-one">
+                    <div class="card-status">Travel</div>
+                    <div class="card-name">Capital One Spark</div>
+                    <div class="card-balance">$1,125.40</div>
+                    <div class="card-limit">$1,125 of $10,000 used</div>
+                </div>
+
+                <div class="bank-card amex">
+                    <div class="card-status">Equipment</div>
+                    <div class="card-name">AmEx Business Gold</div>
+                    <div class="card-balance">$3,299.00</div>
+                    <div class="card-limit">$3,299 of $8,000 used</div>
+                </div>
+
+                <div class="bank-card">
+                    <div class="card-status">Software</div>
+                    <div class="card-name">Bank of America Business</div>
+                    <div class="card-balance">$890.15</div>
+                    <div class="card-limit">$890 of $5,000 used</div>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: var(--space-3); margin-top: var(--space-4);">
+                <button class="btn btn-primary">View Detailed Reports</button>
+                <button class="btn btn-secondary">Export for QuickBooks</button>
+                <button class="btn btn-ghost">Schedule Monthly Review</button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Role switching functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const roleOptions = document.querySelectorAll('.role-option');
+            const userInfo = document.querySelector('.user-details');
+            
+            roleOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    roleOptions.forEach(opt => opt.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const role = this.dataset.role;
+                    if (role === 'bookkeeper') {
+                        userInfo.querySelector('.user-name').textContent = 'Maria Santos';
+                        userInfo.querySelector('.user-role').textContent = 'Part-time Bookkeeper';
+                        document.querySelector('.avatar').textContent = 'MS';
+                        
+                        // Show bookkeeper-specific view
+                        showBookkeeperView();
+                    } else {
+                        userInfo.querySelector('.user-name').textContent = 'Alex Rodriguez';
+                        userInfo.querySelector('.user-role').textContent = 'Business Owner';
+                        document.querySelector('.avatar').textContent = 'AR';
+                        
+                        // Show owner-specific view
+                        showOwnerView();
+                    }
+                });
+            });
+            
+            // Task completion functionality
+            const taskCheckboxes = document.querySelectorAll('.task-checkbox');
+            taskCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('click', function() {
+                    this.classList.toggle('checked');
+                    if (this.classList.contains('checked')) {
+                        this.innerHTML = '✓';
+                        const statusBadge = this.closest('.task-item').querySelector('.status-badge');
+                        statusBadge.className = 'status-badge approved';
+                        statusBadge.textContent = 'Completed';
+                    } else {
+                        this.innerHTML = '';
+                        const statusBadge = this.closest('.task-item').querySelector('.status-badge');
+                        statusBadge.className = 'status-badge pending';
+                        statusBadge.textContent = 'Pending';
+                    }
+                    updateProgress();
+                });
+            });
+            
+            // Transaction approval functionality
+            const approveButtons = document.querySelectorAll('.btn-success');
+            approveButtons.forEach(button => {
+                if (button.textContent === 'Approve') {
+                    button.addEventListener('click', function() {
+                        const transactionItem = this.closest('.transaction-item');
+                        transactionItem.style.opacity = '0.6';
+                        this.textContent = 'Approved';
+                        this.disabled = true;
+                        updateProgress();
+                    });
+                }
+            });
+            
+            function updateProgress() {
+                const completed = document.querySelectorAll('.task-checkbox.checked').length;
+                const total = document.querySelectorAll('.task-checkbox').length;
+                const percentage = Math.round((completed / total) * 100);
+                
+                document.querySelector('.progress-fill').style.width = percentage + '%';
+                document.querySelector('.progress-label span:last-child').textContent = percentage + '% Complete';
+            }
+            
+            function showBookkeeperView() {
+                // Highlight bookkeeper-specific tasks and hide owner-only elements
+                const taskItems = document.querySelectorAll('.task-item');
+                taskItems.forEach(item => {
+                    const assignee = item.querySelector('.task-assignee').textContent;
+                    if (assignee.includes('Maria Santos')) {
+                        item.style.border = '2px solid var(--ds-purple-500)';
+                    } else {
+                        item.style.opacity = '0.6';
+                    }
+                });
+                
+                // Hide approval actions for bookkeeper
+                const approvalCard = document.querySelector('.card h3');
+                if (approvalCard && approvalCard.textContent === 'Pending Owner Review') {
+                    approvalCard.closest('.card').style.opacity = '0.6';
+                    approvalCard.closest('.card').style.pointerEvents = 'none';
+                }
+            }
+            
+            function showOwnerView() {
+                // Reset view for owner
+                const taskItems = document.querySelectorAll('.task-item');
+                taskItems.forEach(item => {
+                    item.style.border = '1px solid var(--ds-gray-200)';
+                    item.style.opacity = '1';
+                });
+                
+                // Enable approval actions for owner
+                const approvalCard = document.querySelector('.card h3');
+                if (approvalCard && approvalCard.textContent === 'Pending Owner Review') {
+                    approvalCard.closest('.card').style.opacity = '1';
+                    approvalCard.closest('.card').style.pointerEvents = 'auto';
+                }
+            }
+        });
+    </script>
+</body>
+</html>

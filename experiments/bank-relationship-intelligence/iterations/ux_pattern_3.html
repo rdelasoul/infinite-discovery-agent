@@ -1,0 +1,1641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Risk Assessment & Monitoring - Bank Relationship Intelligence</title>
+    <style>
+        /* Geist Design System Implementation */
+        :root {
+            /* Colors */
+            --ds-gray-100: #fafafa;
+            --ds-gray-200: #eaeaea;
+            --ds-gray-300: #999999;
+            --ds-gray-400: #888888;
+            --ds-gray-500: #666666;
+            --ds-gray-600: #444444;
+            --ds-gray-700: #333333;
+            --ds-gray-800: #222222;
+            --ds-gray-900: #111111;
+            --ds-gray-1000: #000000;
+            --ds-blue-100: #e1f5fe;
+            --ds-blue-500: #0070f3;
+            --ds-blue-600: #0061d5;
+            --ds-blue-700: #004fc4;
+            --ds-red-500: #ee0000;
+            --ds-amber-500: #f5a623;
+            --ds-green-500: #00a000;
+            --ds-purple-500: #7c3aed;
+            
+            /* Typography */
+            --font-size-xs: 0.75rem;
+            --font-size-small: 0.875rem;
+            --font-size-base: 1rem;
+            --font-size-large: 1.125rem;
+            --font-size-h4: 1.25rem;
+            --font-size-h3: 1.5rem;
+            --font-size-h2: 1.875rem;
+            --font-size-h1: 2.25rem;
+            --line-height-tight: 1.25;
+            --line-height-normal: 1.5;
+            --line-height-relaxed: 1.75;
+            
+            /* Spacing */
+            --space-1: 0.25rem;
+            --space-2: 0.5rem;
+            --space-3: 0.75rem;
+            --space-4: 1rem;
+            --space-5: 1.25rem;
+            --space-6: 1.5rem;
+            --space-8: 2rem;
+            --space-10: 2.5rem;
+            --space-12: 3rem;
+            --space-16: 4rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Geist Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background-color: var(--ds-gray-100);
+            color: var(--ds-gray-900);
+            line-height: var(--line-height-normal);
+        }
+
+        /* Layout Components */
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--space-6);
+        }
+
+        .header {
+            background: white;
+            border-bottom: 1px solid var(--ds-gray-200);
+            padding: var(--space-4) var(--space-6);
+            margin-bottom: var(--space-6);
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title {
+            font-size: var(--font-size-h2);
+            font-weight: 600;
+            color: var(--ds-gray-900);
+        }
+
+        .header-meta {
+            display: flex;
+            align-items: center;
+            gap: var(--space-4);
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-600);
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-6);
+            margin-bottom: var(--space-6);
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        /* Card Components */
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: var(--space-6);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--ds-gray-200);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-4);
+        }
+
+        .card-title {
+            font-size: var(--font-size-h4);
+            font-weight: 600;
+            color: var(--ds-gray-900);
+        }
+
+        .card-actions {
+            display: flex;
+            gap: var(--space-2);
+        }
+
+        /* Risk Assessment Components */
+        .risk-overview {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-4);
+            margin-bottom: var(--space-6);
+        }
+
+        .risk-metric {
+            text-align: center;
+            padding: var(--space-4);
+            background: var(--ds-gray-100);
+            border-radius: 6px;
+            border: 1px solid var(--ds-gray-200);
+        }
+
+        .risk-metric-value {
+            font-size: var(--font-size-h3);
+            font-weight: 700;
+            margin-bottom: var(--space-1);
+        }
+
+        .risk-metric-label {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-600);
+            margin-bottom: var(--space-1);
+        }
+
+        .risk-metric-change {
+            font-size: var(--font-size-xs);
+            font-weight: 500;
+        }
+
+        .risk-critical { color: var(--ds-red-500); }
+        .risk-high { color: var(--ds-amber-500); }
+        .risk-medium { color: var(--ds-blue-500); }
+        .risk-low { color: var(--ds-green-500); }
+
+        /* Alert Components */
+        .alert-list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-3);
+        }
+
+        .alert-item {
+            padding: var(--space-4);
+            border-radius: 6px;
+            border-left: 4px solid;
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+        }
+
+        .alert-critical {
+            background: #fef2f2;
+            border-color: var(--ds-red-500);
+        }
+
+        .alert-warning {
+            background: #fffbeb;
+            border-color: var(--ds-amber-500);
+        }
+
+        .alert-info {
+            background: #eff6ff;
+            border-color: var(--ds-blue-500);
+        }
+
+        .alert-content {
+            flex: 1;
+        }
+
+        .alert-title {
+            font-weight: 600;
+            font-size: var(--font-size-small);
+            margin-bottom: var(--space-1);
+        }
+
+        .alert-description {
+            font-size: var(--font-size-xs);
+            color: var(--ds-gray-600);
+        }
+
+        .alert-time {
+            font-size: var(--font-size-xs);
+            color: var(--ds-gray-500);
+        }
+
+        /* Portfolio Health Components */
+        .health-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--space-4);
+        }
+
+        .health-item {
+            padding: var(--space-4);
+            border-radius: 6px;
+            border: 1px solid var(--ds-gray-200);
+            background: white;
+        }
+
+        .health-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-3);
+        }
+
+        .health-company {
+            font-weight: 600;
+            color: var(--ds-gray-900);
+        }
+
+        .health-score {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+
+        .health-score-value {
+            font-weight: 700;
+            font-size: var(--font-size-large);
+        }
+
+        .health-details {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-2);
+        }
+
+        .health-metric {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: var(--font-size-small);
+        }
+
+        .health-trend {
+            display: flex;
+            align-items: center;
+            gap: var(--space-1);
+            font-size: var(--font-size-xs);
+        }
+
+        /* Progress Components */
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: var(--ds-gray-200);
+            border-radius: 3px;
+            overflow: hidden;
+            margin: var(--space-2) 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+
+        .progress-critical { background: var(--ds-red-500); }
+        .progress-warning { background: var(--ds-amber-500); }
+        .progress-good { background: var(--ds-green-500); }
+        .progress-excellent { background: var(--ds-blue-500); }
+
+        /* Table Components */
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: var(--font-size-small);
+        }
+
+        .table th,
+        .table td {
+            padding: var(--space-3);
+            text-align: left;
+            border-bottom: 1px solid var(--ds-gray-200);
+        }
+
+        .table th {
+            background: var(--ds-gray-100);
+            font-weight: 600;
+            color: var(--ds-gray-700);
+        }
+
+        .table tbody tr:hover {
+            background: var(--ds-gray-100);
+        }
+
+        /* Badge Components */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: var(--space-1) var(--space-2);
+            border-radius: 4px;
+            font-size: var(--font-size-xs);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-critical {
+            background: #fef2f2;
+            color: var(--ds-red-500);
+        }
+
+        .badge-warning {
+            background: #fffbeb;
+            color: var(--ds-amber-500);
+        }
+
+        .badge-good {
+            background: #f0f9ff;
+            color: var(--ds-blue-500);
+        }
+
+        .badge-excellent {
+            background: #f0fdf4;
+            color: var(--ds-green-500);
+        }
+
+        /* Button Components */
+        .button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-2);
+            padding: var(--space-2) var(--space-4);
+            border-radius: 6px;
+            font-size: var(--font-size-small);
+            font-weight: 500;
+            text-decoration: none;
+            border: 1px solid;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+        }
+
+        .button-primary {
+            background: var(--ds-blue-500);
+            color: white;
+            border-color: var(--ds-blue-500);
+        }
+
+        .button-primary:hover {
+            background: var(--ds-blue-600);
+            border-color: var(--ds-blue-600);
+            transform: translateY(-1px);
+        }
+
+        .button-secondary {
+            background: white;
+            color: var(--ds-gray-700);
+            border-color: var(--ds-gray-300);
+        }
+
+        .button-secondary:hover {
+            border-color: var(--ds-gray-400);
+            background: var(--ds-gray-100);
+        }
+
+        .button-small {
+            padding: var(--space-1) var(--space-2);
+            font-size: var(--font-size-xs);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .grid-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .risk-overview {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .health-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .main-container {
+                padding: var(--space-4);
+            }
+        }
+
+        /* Risk Model Components */
+        .risk-model-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-6);
+        }
+
+        .scenario-analysis {
+            background: var(--ds-gray-100);
+            padding: var(--space-4);
+            border-radius: 6px;
+            border: 1px solid var(--ds-gray-200);
+        }
+
+        .scenario-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-3);
+        }
+
+        .scenario-title {
+            font-weight: 600;
+            color: var(--ds-gray-900);
+        }
+
+        .scenario-impact {
+            font-size: var(--font-size-small);
+            padding: var(--space-1) var(--space-2);
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .impact-high {
+            background: #fef2f2;
+            color: var(--ds-red-500);
+        }
+
+        .impact-medium {
+            background: #fffbeb;
+            color: var(--ds-amber-500);
+        }
+
+        .impact-low {
+            background: #f0fdf4;
+            color: var(--ds-green-500);
+        }
+
+        .scenario-metrics {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-3);
+            margin-top: var(--space-3);
+        }
+
+        .scenario-metric {
+            text-align: center;
+            padding: var(--space-2);
+            background: white;
+            border-radius: 4px;
+            border: 1px solid var(--ds-gray-200);
+        }
+
+        .scenario-metric-value {
+            font-weight: 700;
+            font-size: var(--font-size-large);
+            margin-bottom: var(--space-1);
+        }
+
+        .scenario-metric-label {
+            font-size: var(--font-size-xs);
+            color: var(--ds-gray-600);
+        }
+
+        /* Concentration Risk Components */
+        .concentration-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-4);
+        }
+
+        .concentration-item {
+            padding: var(--space-4);
+            background: white;
+            border-radius: 6px;
+            border: 1px solid var(--ds-gray-200);
+            text-align: center;
+        }
+
+        .concentration-label {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-600);
+            margin-bottom: var(--space-2);
+        }
+
+        .concentration-value {
+            font-size: var(--font-size-h3);
+            font-weight: 700;
+            margin-bottom: var(--space-1);
+        }
+
+        .concentration-threshold {
+            font-size: var(--font-size-xs);
+            color: var(--ds-gray-500);
+        }
+
+        .concentration-bar {
+            height: 4px;
+            background: var(--ds-gray-200);
+            border-radius: 2px;
+            margin: var(--space-2) 0;
+            overflow: hidden;
+        }
+
+        .concentration-fill {
+            height: 100%;
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+
+        /* Interactive Elements */
+        .interactive-element {
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+        }
+
+        .interactive-element:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip-text {
+            visibility: hidden;
+            width: 200px;
+            background-color: var(--ds-gray-800);
+            color: white;
+            text-align: center;
+            border-radius: 6px;
+            padding: var(--space-2);
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: var(--font-size-xs);
+        }
+
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Status Indicators */
+        .status-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: var(--space-2);
+        }
+
+        .status-healthy { background: var(--ds-green-500); }
+        .status-warning { background: var(--ds-amber-500); }
+        .status-critical { background: var(--ds-red-500); }
+        .status-unknown { background: var(--ds-gray-400); }
+
+        /* Animation for Loading States */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .loading {
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        /* Focus Management */
+        .button:focus,
+        .interactive-element:focus {
+            outline: 2px solid var(--ds-blue-500);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <!-- Header Section -->
+        <header class="header">
+            <div class="header-content">
+                <div>
+                    <h1 class="header-title">Risk Assessment & Monitoring</h1>
+                    <p style="color: var(--ds-gray-600); font-size: var(--font-size-small); margin-top: var(--space-1);">
+                        Predictive Portfolio Protection System
+                    </p>
+                </div>
+                <div class="header-meta">
+                    <span>Portfolio: 127 Active Clients</span>
+                    <span>Last Updated: 2 minutes ago</span>
+                    <span>Risk Analyst: Lisa Rodriguez</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Risk Overview Metrics -->
+        <div class="risk-overview">
+            <div class="risk-metric">
+                <div class="risk-metric-value risk-critical">18</div>
+                <div class="risk-metric-label">Critical Alerts</div>
+                <div class="risk-metric-change risk-critical">+3 vs yesterday</div>
+            </div>
+            <div class="risk-metric">
+                <div class="risk-metric-value risk-high">34</div>
+                <div class="risk-metric-label">High Risk Clients</div>
+                <div class="risk-metric-change risk-high">+2 vs yesterday</div>
+            </div>
+            <div class="risk-metric">
+                <div class="risk-metric-value risk-medium">67.3</div>
+                <div class="risk-metric-label">Avg Health Score</div>
+                <div class="risk-metric-change risk-medium">-2.1 vs last week</div>
+            </div>
+            <div class="risk-metric">
+                <div class="risk-metric-value risk-low">8.2%</div>
+                <div class="risk-metric-label">Portfolio Risk</div>
+                <div class="risk-metric-change risk-low">-0.3% vs last month</div>
+            </div>
+        </div>
+
+        <div class="grid-container">
+            <!-- Critical Alerts -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Critical Risk Alerts</h2>
+                    <div class="card-actions">
+                        <button class="button button-secondary button-small">View All</button>
+                        <button class="button button-primary button-small">Configure</button>
+                    </div>
+                </div>
+                <div class="alert-list">
+                    <div class="alert-item alert-critical">
+                        <div class="alert-content">
+                            <div class="alert-title">Chen Marketing - Payment Default Risk</div>
+                            <div class="alert-description">
+                                3 consecutive late payments, credit utilization >90%, declining cash flow pattern
+                            </div>
+                        </div>
+                        <div class="alert-time">12 min ago</div>
+                    </div>
+                    <div class="alert-item alert-critical">
+                        <div class="alert-content">
+                            <div class="alert-title">Kim Restaurant - Covenant Violation</div>
+                            <div class="alert-description">
+                                Debt service coverage ratio below 1.2x threshold, seasonal revenue decline
+                            </div>
+                        </div>
+                        <div class="alert-time">28 min ago</div>
+                    </div>
+                    <div class="alert-item alert-warning">
+                        <div class="alert-content">
+                            <div class="alert-title">Santos Consulting - Rapid Growth Risk</div>
+                            <div class="alert-description">
+                                300% revenue growth triggering stress test, increased credit line utilization
+                            </div>
+                        </div>
+                        <div class="alert-time">45 min ago</div>
+                    </div>
+                    <div class="alert-item alert-warning">
+                        <div class="alert-content">
+                            <div class="alert-title">Thompson Legal - Concentration Risk</div>
+                            <div class="alert-description">
+                                85% revenue from single client, increased counterparty risk exposure
+                            </div>
+                        </div>
+                        <div class="alert-time">1 hour ago</div>
+                    </div>
+                    <div class="alert-item alert-info">
+                        <div class="alert-content">
+                            <div class="alert-title">Rodriguez Construction - Seasonal Pattern</div>
+                            <div class="alert-description">
+                                Expected Q1 cash flow decline, historical pattern confirmed
+                            </div>
+                        </div>
+                        <div class="alert-time">2 hours ago</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Early Warning System -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Early Warning Indicators</h2>
+                    <div class="card-actions">
+                        <button class="button button-secondary button-small">Model Settings</button>
+                    </div>
+                </div>
+                <div class="health-grid">
+                    <div class="health-item">
+                        <div class="health-header">
+                            <div class="health-company">Chen Marketing</div>
+                            <div class="health-score">
+                                <div class="health-score-value risk-critical">23</div>
+                                <span class="badge badge-critical">Critical</span>
+                            </div>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill progress-critical" style="width: 23%"></div>
+                        </div>
+                        <div class="health-details">
+                            <div class="health-metric">
+                                <span>Payment History</span>
+                                <span class="risk-critical">3 Late</span>
+                            </div>
+                            <div class="health-metric">
+                                <span>Credit Utilization</span>
+                                <span class="risk-critical">94%</span>
+                            </div>
+                            <div class="health-metric">
+                                <span>Cash Flow Trend</span>
+                                <div class="health-trend risk-critical">
+                                    <span>↓</span>
+                                    <span>-34%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="health-item">
+                        <div class="health-header">
+                            <div class="health-company">Kim Restaurant</div>
+                            <div class="health-score">
+                                <div class="health-score-value risk-critical">31</div>
+                                <span class="badge badge-critical">Critical</span>
+                            </div>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill progress-critical" style="width: 31%"></div>
+                        </div>
+                        <div class="health-details">
+                            <div class="health-metric">
+                                <span>DSCR Ratio</span>
+                                <span class="risk-critical">0.89x</span>
+                            </div>
+                            <div class="health-metric">
+                                <span>Seasonal Impact</span>
+                                <span class="risk-critical">High</span>
+                            </div>
+                            <div class="health-metric">
+                                <span>Revenue Trend</span>
+                                <div class="health-trend risk-critical">
+                                    <span>↓</span>
+                                    <span>-28%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="health-item">
+                        <div class="health-header">
+                            <div class="health-company">Santos Consulting</div>
+                            <div class="health-score">
+                                <div class="health-score-value risk-high">58</div>
+                                <span class="badge badge-warning">Watch</span>
+                            </div>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill progress-warning" style="width: 58%"></div>
+                        </div>
+                        <div class="health-details">
+                            <div class="health-metric">
+                                <span>Growth Rate</span>
+                                <span class="risk-high">+312%</span>
+                            </div>
+                            <div class="health-metric">
+                                <span>Credit Usage</span>
+                                <span class="risk-high">78%</span>
+                            </div>
+                            <div class="health-metric">
+                                <span>Volatility</span>
+                                <div class="health-trend risk-high">
+                                    <span>↑</span>
+                                    <span>High</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="health-item">
+                        <div class="health-header">
+                            <div class="health-company">Thompson Legal</div>
+                            <div class="health-score">
+                                <div class="health-score-value risk-medium">72</div>
+                                <span class="badge badge-good">Stable</span>
+                            </div>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill progress-good" style="width: 72%"></div>
+                        </div>
+                        <div class="health-details">
+                            <div class="health-metric">
+                                <span>Client Concentration</span>
+                                <span class="risk-high">85%</span>
+                            </div>
+                            <div class="health-metric">
+                                <span>Payment History</span>
+                                <span class="risk-low">Perfect</span>
+                            </div>
+                            <div class="health-metric">
+                                <span>Profitability</span>
+                                <div class="health-trend risk-low">
+                                    <span>↑</span>
+                                    <span>+12%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Portfolio Risk Analysis -->
+        <div class="grid-container">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Portfolio Concentration Risk</h2>
+                    <div class="card-actions">
+                        <button class="button button-secondary button-small">Export</button>
+                        <button class="button button-primary button-small">Rebalance</button>
+                    </div>
+                </div>
+                <div class="concentration-grid">
+                    <div class="concentration-item">
+                        <div class="concentration-label">Industry - Construction</div>
+                        <div class="concentration-value risk-high">28.4%</div>
+                        <div class="concentration-threshold">Threshold: 25%</div>
+                        <div class="concentration-bar">
+                            <div class="concentration-fill progress-warning" style="width: 85%"></div>
+                        </div>
+                    </div>
+                    <div class="concentration-item">
+                        <div class="concentration-label">Geography - Metro Area</div>
+                        <div class="concentration-value risk-medium">67.2%</div>
+                        <div class="concentration-threshold">Threshold: 70%</div>
+                        <div class="concentration-bar">
+                            <div class="concentration-fill progress-good" style="width: 67%"></div>
+                        </div>
+                    </div>
+                    <div class="concentration-item">
+                        <div class="concentration-label">Credit Grade - B+</div>
+                        <div class="concentration-value risk-low">18.9%</div>
+                        <div class="concentration-threshold">Threshold: 30%</div>
+                        <div class="concentration-bar">
+                            <div class="concentration-fill progress-excellent" style="width: 45%"></div>
+                        </div>
+                    </div>
+                    <div class="concentration-item">
+                        <div class="concentration-label">Loan Size - $500K+</div>
+                        <div class="concentration-value risk-high">31.7%</div>
+                        <div class="concentration-threshold">Threshold: 30%</div>
+                        <div class="concentration-bar">
+                            <div class="concentration-fill progress-warning" style="width: 89%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Stress Test Scenarios</h2>
+                    <div class="card-actions">
+                        <button class="button button-secondary button-small">Run Custom</button>
+                        <button class="button button-primary button-small">Schedule</button>
+                    </div>
+                </div>
+                <div class="risk-model-container">
+                    <div class="scenario-analysis">
+                        <div class="scenario-header">
+                            <div class="scenario-title">Economic Downturn</div>
+                            <div class="scenario-impact impact-high">High Impact</div>
+                        </div>
+                        <div class="scenario-metrics">
+                            <div class="scenario-metric">
+                                <div class="scenario-metric-value risk-critical">$4.2M</div>
+                                <div class="scenario-metric-label">Expected Loss</div>
+                            </div>
+                            <div class="scenario-metric">
+                                <div class="scenario-metric-value risk-critical">23</div>
+                                <div class="scenario-metric-label">Clients at Risk</div>
+                            </div>
+                            <div class="scenario-metric">
+                                <div class="scenario-metric-value risk-critical">18%</div>
+                                <div class="scenario-metric-label">Portfolio Impact</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="scenario-analysis">
+                        <div class="scenario-header">
+                            <div class="scenario-title">Interest Rate Spike</div>
+                            <div class="scenario-impact impact-medium">Medium Impact</div>
+                        </div>
+                        <div class="scenario-metrics">
+                            <div class="scenario-metric">
+                                <div class="scenario-metric-value risk-high">$2.8M</div>
+                                <div class="scenario-metric-label">Expected Loss</div>
+                            </div>
+                            <div class="scenario-metric">
+                                <div class="scenario-metric-value risk-high">16</div>
+                                <div class="scenario-metric-label">Clients at Risk</div>
+                            </div>
+                            <div class="scenario-metric">
+                                <div class="scenario-metric-value risk-high">12%</div>
+                                <div class="scenario-metric-label">Portfolio Impact</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Predictive Risk Models -->
+        <div class="card full-width">
+            <div class="card-header">
+                <h2 class="card-title">Predictive Risk Analytics</h2>
+                <div class="card-actions">
+                    <button class="button button-secondary button-small">Model Performance</button>
+                    <button class="button button-primary button-small">Retrain Models</button>
+                </div>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Client</th>
+                        <th>Current Risk Score</th>
+                        <th>30-Day Prediction</th>
+                        <th>90-Day Prediction</th>
+                        <th>Default Probability</th>
+                        <th>Key Risk Factors</th>
+                        <th>Recommended Actions</th>
+                        <th>Last Updated</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items: center;">
+                                <span class="status-indicator status-critical"></span>
+                                <div>
+                                    <div style="font-weight: 600;">Chen Marketing</div>
+                                    <div style="font-size: var(--font-size-xs); color: var(--ds-gray-600);">Marketing Services</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="badge badge-critical">23</span>
+                        </td>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: var(--space-2);">
+                                <span class="badge badge-critical">18</span>
+                                <div style="color: var(--ds-red-500); font-size: var(--font-size-xs);">↓ -5</div>
+                            </div>
+                        </td>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: var(--space-2);">
+                                <span class="badge badge-critical">14</span>
+                                <div style="color: var(--ds-red-500); font-size: var(--font-size-xs);">↓ -9</div>
+                            </div>
+                        </td>
+                        <td>
+                            <div style="font-weight: 600; color: var(--ds-red-500);">
+                                24.7%
+                            </div>
+                        </td>
+                        <td>
+                            <div style="font-size: var(--font-size-xs);">
+                                Payment delays, high utilization, declining revenue
+                            </div>
+                        </td>
+                        <td>
+                            <div style="font-size: var(--font-size-xs);">
+                                Immediate meeting, restructure terms, credit review
+                            </div>
+                        </td>
+                        <td>
+                            <div style="font-size: var(--font-size-xs); color: var(--ds-gray-600);">
+                                2 min ago
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items: center;">
+                                <span class="status-indicator status-critical"></span>
+                                <div>
+                                    <div style="font-weight: 600;">Kim Restaurant</div>
+                                    <div style="font-size: var(--font-size-xs); color: var(--ds-gray-600);">Food Service</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="badge badge-critical">31</span>
+                        </td>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: var(--space-2);">
+                                <span class="badge badge-critical">28</span>
+                                <div style="color: var(--ds-red-500); font-size: var(--font-size-xs);">↓ -3</div>
+                            </div>
+                        </td>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: var(--space-2);">
+                                <span class="badge badge-warning">42</span>
+                                <div style="color: var(--ds-amber-500); font-size: var(--font-size-xs);">↑ +11</div>
+                            </div>
+                        </td>
+                        <td>
+                            <div style="font-weight: 600; color: var(--ds-red-500);">
+                                18.3%
+                            </div>
+                        </td>
+                        <td>
+                            <div style="font-size: var(--font-size-xs);">
+                                Seasonal decline, covenant breach, cash flow stress
+                            </div>
+                        </td>
+                        <td>
+                            <div style="font-size: var(--font-size-xs);">
+                                Working capital facility, seasonal adjustment
+                            </div>
+                        </td>
+                        <td>
+                            <div style="font-size: var(--font-size-xs); color: var(--ds-gray-600);">
+                                5 min ago
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items: center;">
+                                <span class="status-indicator status-warning"></span>
+                                <div>
+                                    <div style="font-weight: 600;">Santos Consulting</div>
+                                    <div style="font-size: var(--font-size-xs); color: var(--ds-gray-600);">IT Consulting</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="badge badge-warning">58</span>
+                        </td>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: var(--space-2);">
+                                <span class="badge badge-good">65</span>
+                                <div style="color: var(--ds-green-500); font-size: var(--font-size-xs);">↑ +7</div>
+                            </div>
+                        </td>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: var(--space-2);">
+                                <span class="badge badge-good">72</span>
+                                <div style="color: var(--ds-green-500); font-size: var(--font-size-xs);">↑ +14</div>
+                            </div>
+                        </td>
+                        <td>
+                            <div style="font-weight: 600; color: var(--ds-amber-500);">
+                                8.4%
+                            </div>
+                        </td>
+                        <td>
+                            <div style="font-size: var(--font-size-xs);">
+                                Rapid growth, high volatility, limited history
+                            </div>
+                        </td>
+                        <td>
+                            <div style="font-size: var(--font-size-xs);">
+                                Monitor quarterly, credit increase consideration
+                            </div>
+                        </td>
+                        <td>
+                            <div style="font-size: var(--font-size-xs); color: var(--ds-gray-600);">
+                                8 min ago
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items: center;">
+                                <span class="status-indicator status-healthy"></span>
+                                <div>
+                                    <div style="font-weight: 600;">Thompson Legal</div>
+                                    <div style="font-size: var(--font-size-xs); color: var(--ds-gray-600);">Legal Services</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="badge badge-good">72</span>
+                        </td>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: var(--space-2);">
+                                <span class="badge badge-good">74</span>
+                                <div style="color: var(--ds-green-500); font-size: var(--font-size-xs);">↑ +2</div>
+                            </div>
+                        </td>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: var(--space-2);">
+                                <span class="badge badge-good">68</span>
+                                <div style="color: var(--ds-amber-500); font-size: var(--font-size-xs);">↓ -4</div>
+                            </div>
+                        </td>
+                        <td>
+                            <div style="font-weight: 600; color: var(--ds-blue-500);">
+                                3.2%
+                            </div>
+                        </td>
+                        <td>
+                            <div style="font-size: var(--font-size-xs);">
+                                Client concentration, stable but concentrated
+                            </div>
+                        </td>
+                        <td>
+                            <div style="font-size: var(--font-size-xs);">
+                                Diversification strategy, new client development
+                            </div>
+                        </td>
+                        <td>
+                            <div style="font-size: var(--font-size-xs); color: var(--ds-gray-600);">
+                                12 min ago
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items: center;">
+                                <span class="status-indicator status-healthy"></span>
+                                <div>
+                                    <div style="font-weight: 600;">Rodriguez Construction</div>
+                                    <div style="font-size: var(--font-size-xs); color: var(--ds-gray-600);">Construction</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="badge badge-excellent">85</span>
+                        </td>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: var(--space-2);">
+                                <span class="badge badge-good">78</span>
+                                <div style="color: var(--ds-amber-500); font-size: var(--font-size-xs);">↓ -7</div>
+                            </div>
+                        </td>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: var(--space-2);">
+                                <span class="badge badge-excellent">82</span>
+                                <div style="color: var(--ds-green-500); font-size: var(--font-size-xs);">↑ +4</div>
+                            </div>
+                        </td>
+                        <td>
+                            <div style="font-weight: 600; color: var(--ds-green-500);">
+                                1.8%
+                            </div>
+                        </td>
+                        <td>
+                            <div style="font-size: var(--font-size-xs);">
+                                Seasonal pattern, strong fundamentals
+                            </div>
+                        </td>
+                        <td>
+                            <div style="font-size: var(--font-size-xs);">
+                                Equipment loan opportunity, line increase
+                            </div>
+                        </td>
+                        <td>
+                            <div style="font-size: var(--font-size-xs); color: var(--ds-gray-600);">
+                                15 min ago
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Risk Assessment & Monitoring Interactive Features
+        class RiskMonitoringSystem {
+            constructor() {
+                this.initializeRealTimeUpdates();
+                this.setupInteractiveElements();
+                this.initializeAlertSystem();
+                this.setupRiskModelInteractions();
+            }
+
+            // Real-time data updates simulation
+            initializeRealTimeUpdates() {
+                setInterval(() => {
+                    this.updateRiskMetrics();
+                    this.updateAlerts();
+                    this.updatePredictions();
+                }, 30000); // Update every 30 seconds
+            }
+
+            setupInteractiveElements() {
+                // Interactive health score cards
+                document.querySelectorAll('.health-item').forEach(item => {
+                    item.addEventListener('click', (e) => {
+                        const company = e.currentTarget.querySelector('.health-company').textContent;
+                        this.showDetailedRiskAnalysis(company);
+                    });
+                });
+
+                // Interactive alert items
+                document.querySelectorAll('.alert-item').forEach(alert => {
+                    alert.addEventListener('click', (e) => {
+                        const title = e.currentTarget.querySelector('.alert-title').textContent;
+                        this.showAlertDetails(title);
+                    });
+                });
+
+                // Interactive table rows
+                document.querySelectorAll('.table tbody tr').forEach(row => {
+                    row.addEventListener('click', (e) => {
+                        const client = e.currentTarget.querySelector('td:first-child').textContent.trim();
+                        this.showClientRiskProfile(client);
+                    });
+                });
+            }
+
+            initializeAlertSystem() {
+                // Real-time alert monitoring
+                this.alertQueue = [];
+                this.processAlerts();
+                
+                // Setup alert actions
+                document.querySelectorAll('.alert-item').forEach(alert => {
+                    alert.addEventListener('mouseenter', (e) => {
+                        const alertElement = e.currentTarget;
+                        this.showAlertActions(alertElement);
+                    });
+                });
+            }
+
+            setupRiskModelInteractions() {
+                // Scenario analysis interactions
+                document.querySelectorAll('.scenario-analysis').forEach(scenario => {
+                    scenario.addEventListener('click', (e) => {
+                        const scenarioTitle = e.currentTarget.querySelector('.scenario-title').textContent;
+                        this.showScenarioDetails(scenarioTitle);
+                    });
+                });
+
+                // Progress bar interactions
+                document.querySelectorAll('.progress-bar').forEach(bar => {
+                    bar.addEventListener('click', (e) => {
+                        const rect = e.currentTarget.getBoundingClientRect();
+                        const clickX = e.clientX - rect.left;
+                        const percentage = (clickX / rect.width) * 100;
+                        this.showRiskThresholdDetails(percentage);
+                    });
+                });
+            }
+
+            updateRiskMetrics() {
+                // Simulate real-time metric updates
+                const metrics = document.querySelectorAll('.risk-metric-value');
+                metrics.forEach(metric => {
+                    const currentValue = parseFloat(metric.textContent);
+                    const variation = (Math.random() - 0.5) * 0.1;
+                    const newValue = currentValue + variation;
+                    
+                    if (metric.textContent.includes('%')) {
+                        metric.textContent = newValue.toFixed(1) + '%';
+                    } else if (metric.textContent.includes('.')) {
+                        metric.textContent = newValue.toFixed(1);
+                    } else {
+                        metric.textContent = Math.round(newValue);
+                    }
+                });
+            }
+
+            updateAlerts() {
+                // Add new alerts periodically
+                const alertTypes = ['critical', 'warning', 'info'];
+                const companies = ['Chen Marketing', 'Kim Restaurant', 'Santos Consulting', 'Thompson Legal'];
+                const riskFactors = [
+                    'Payment delay detected',
+                    'Credit utilization spike',
+                    'Covenant threshold breach',
+                    'Cash flow volatility increase',
+                    'Industry sector risk change'
+                ];
+
+                if (Math.random() < 0.1) { // 10% chance of new alert
+                    const newAlert = {
+                        type: alertTypes[Math.floor(Math.random() * alertTypes.length)],
+                        company: companies[Math.floor(Math.random() * companies.length)],
+                        factor: riskFactors[Math.floor(Math.random() * riskFactors.length)],
+                        timestamp: new Date()
+                    };
+                    this.addAlert(newAlert);
+                }
+            }
+
+            updatePredictions() {
+                // Update prediction models
+                document.querySelectorAll('.table tbody tr').forEach(row => {
+                    const predictionCells = row.querySelectorAll('td:nth-child(3), td:nth-child(4)');
+                    predictionCells.forEach(cell => {
+                        const badge = cell.querySelector('.badge');
+                        if (badge) {
+                            const currentValue = parseInt(badge.textContent);
+                            const variation = Math.floor((Math.random() - 0.5) * 4);
+                            const newValue = Math.max(1, Math.min(100, currentValue + variation));
+                            badge.textContent = newValue;
+                            this.updateBadgeColor(badge, newValue);
+                        }
+                    });
+                });
+            }
+
+            showDetailedRiskAnalysis(company) {
+                // Show detailed risk analysis modal
+                const modal = document.createElement('div');
+                modal.className = 'risk-analysis-modal';
+                modal.innerHTML = `
+                    <div class="modal-content">
+                        <h3>Detailed Risk Analysis - ${company}</h3>
+                        <div class="analysis-sections">
+                            <div class="section">
+                                <h4>Financial Health Indicators</h4>
+                                <div class="indicators">
+                                    <div>Cash Flow Trend: Declining 34%</div>
+                                    <div>Debt Service Coverage: 0.89x</div>
+                                    <div>Working Capital: $45,000</div>
+                                    <div>Credit Utilization: 94%</div>
+                                </div>
+                            </div>
+                            <div class="section">
+                                <h4>Risk Factors</h4>
+                                <ul>
+                                    <li>3 consecutive late payments</li>
+                                    <li>High credit utilization</li>
+                                    <li>Declining revenue trend</li>
+                                    <li>Seasonal business volatility</li>
+                                </ul>
+                            </div>
+                            <div class="section">
+                                <h4>Recommended Actions</h4>
+                                <ul>
+                                    <li>Schedule immediate review meeting</li>
+                                    <li>Consider credit line adjustment</li>
+                                    <li>Implement enhanced monitoring</li>
+                                    <li>Review covenant structure</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <button onclick="this.parentElement.parentElement.remove()">Close</button>
+                    </div>
+                `;
+                document.body.appendChild(modal);
+            }
+
+            showAlertDetails(title) {
+                // Show alert detail modal
+                console.log(`Showing details for alert: ${title}`);
+                // Implementation for alert details modal
+            }
+
+            showClientRiskProfile(client) {
+                // Show comprehensive client risk profile
+                console.log(`Showing risk profile for: ${client}`);
+                // Implementation for client risk profile modal
+            }
+
+            showAlertActions(alertElement) {
+                // Show contextual actions for alert
+                const actions = document.createElement('div');
+                actions.className = 'alert-actions';
+                actions.innerHTML = `
+                    <button class="action-button">Acknowledge</button>
+                    <button class="action-button">Escalate</button>
+                    <button class="action-button">View Details</button>
+                `;
+                alertElement.appendChild(actions);
+                
+                setTimeout(() => {
+                    if (actions.parentElement) {
+                        actions.remove();
+                    }
+                }, 3000);
+            }
+
+            showScenarioDetails(scenarioTitle) {
+                // Show detailed scenario analysis
+                console.log(`Showing scenario details for: ${scenarioTitle}`);
+                // Implementation for scenario details modal
+            }
+
+            showRiskThresholdDetails(percentage) {
+                // Show risk threshold information
+                console.log(`Showing threshold details for: ${percentage}%`);
+                // Implementation for threshold details tooltip
+            }
+
+            addAlert(alert) {
+                // Add new alert to the alert list
+                const alertList = document.querySelector('.alert-list');
+                const alertElement = document.createElement('div');
+                alertElement.className = `alert-item alert-${alert.type}`;
+                alertElement.innerHTML = `
+                    <div class="alert-content">
+                        <div class="alert-title">${alert.company} - ${alert.factor}</div>
+                        <div class="alert-description">
+                            Automated risk monitoring system detected anomaly requiring attention
+                        </div>
+                    </div>
+                    <div class="alert-time">Just now</div>
+                `;
+                alertList.insertBefore(alertElement, alertList.firstChild);
+                
+                // Remove oldest alert if too many
+                if (alertList.children.length > 10) {
+                    alertList.removeChild(alertList.lastChild);
+                }
+            }
+
+            updateBadgeColor(badge, value) {
+                // Update badge color based on value
+                badge.className = badge.className.replace(/badge-\w+/, '');
+                if (value < 40) {
+                    badge.classList.add('badge-critical');
+                } else if (value < 60) {
+                    badge.classList.add('badge-warning');
+                } else if (value < 80) {
+                    badge.classList.add('badge-good');
+                } else {
+                    badge.classList.add('badge-excellent');
+                }
+            }
+
+            processAlerts() {
+                // Process alert queue and trigger notifications
+                setInterval(() => {
+                    if (this.alertQueue.length > 0) {
+                        const alert = this.alertQueue.shift();
+                        this.triggerNotification(alert);
+                    }
+                }, 5000);
+            }
+
+            triggerNotification(alert) {
+                // Trigger browser notification for critical alerts
+                if (alert.type === 'critical' && 'Notification' in window) {
+                    if (Notification.permission === 'granted') {
+                        new Notification(`Critical Risk Alert: ${alert.company}`, {
+                            body: alert.factor,
+                            icon: '/favicon.ico'
+                        });
+                    }
+                }
+            }
+        }
+
+        // Initialize the risk monitoring system
+        document.addEventListener('DOMContentLoaded', () => {
+            new RiskMonitoringSystem();
+            
+            // Request notification permission
+            if ('Notification' in window && Notification.permission === 'default') {
+                Notification.requestPermission();
+            }
+        });
+
+        // Portfolio health scoring algorithm
+        function calculateHealthScore(metrics) {
+            const weights = {
+                paymentHistory: 0.3,
+                creditUtilization: 0.25,
+                cashFlowTrend: 0.2,
+                profitability: 0.15,
+                industryRisk: 0.1
+            };
+            
+            let score = 0;
+            Object.keys(weights).forEach(key => {
+                score += (metrics[key] || 0) * weights[key];
+            });
+            
+            return Math.max(0, Math.min(100, score));
+        }
+
+        // Risk concentration analysis
+        function analyzeConcentrationRisk(portfolio) {
+            const concentrations = {
+                industry: {},
+                geography: {},
+                loanSize: {},
+                creditGrade: {}
+            };
+            
+            portfolio.forEach(client => {
+                concentrations.industry[client.industry] = 
+                    (concentrations.industry[client.industry] || 0) + client.exposure;
+                concentrations.geography[client.location] = 
+                    (concentrations.geography[client.location] || 0) + client.exposure;
+                concentrations.loanSize[client.sizeCategory] = 
+                    (concentrations.loanSize[client.sizeCategory] || 0) + client.exposure;
+                concentrations.creditGrade[client.grade] = 
+                    (concentrations.creditGrade[client.grade] || 0) + client.exposure;
+            });
+            
+            return concentrations;
+        }
+
+        // Predictive modeling functions
+        function predictDefaultProbability(clientData) {
+            const factors = {
+                paymentHistory: clientData.latePayments * 0.15,
+                creditUtilization: Math.max(0, (clientData.utilization - 70) * 0.01),
+                cashFlowTrend: Math.max(0, (-clientData.cashFlowChange) * 0.05),
+                industryRisk: clientData.industryRiskScore * 0.1,
+                economicConditions: 0.03
+            };
+            
+            const baseRate = 0.02; // 2% base default rate
+            const riskAdjustment = Object.values(factors).reduce((sum, factor) => sum + factor, 0);
+            
+            return Math.min(1, baseRate + riskAdjustment);
+        }
+
+        // Stress testing simulation
+        function runStressTest(scenario, portfolio) {
+            const impacts = {
+                'Economic Downturn': {
+                    defaultRateMultiplier: 3.5,
+                    exposureAtDefault: 0.6,
+                    recoveryRate: 0.4
+                },
+                'Interest Rate Spike': {
+                    defaultRateMultiplier: 2.2,
+                    exposureAtDefault: 0.5,
+                    recoveryRate: 0.55
+                }
+            };
+            
+            const impact = impacts[scenario];
+            if (!impact) return null;
+            
+            let totalLoss = 0;
+            let clientsAtRisk = 0;
+            
+            portfolio.forEach(client => {
+                const stressedDefaultRate = client.defaultProbability * impact.defaultRateMultiplier;
+                if (stressedDefaultRate > 0.1) { // 10% threshold
+                    clientsAtRisk++;
+                    const expectedLoss = client.exposure * impact.exposureAtDefault * (1 - impact.recoveryRate);
+                    totalLoss += expectedLoss * stressedDefaultRate;
+                }
+            });
+            
+            return {
+                expectedLoss: totalLoss,
+                clientsAtRisk: clientsAtRisk,
+                portfolioImpact: totalLoss / portfolio.reduce((sum, c) => sum + c.exposure, 0)
+            };
+        }
+
+        // Early warning system
+        function checkEarlyWarnings(client) {
+            const warnings = [];
+            
+            if (client.latePayments >= 2) {
+                warnings.push('Payment pattern deterioration');
+            }
+            
+            if (client.creditUtilization > 85) {
+                warnings.push('High credit utilization');
+            }
+            
+            if (client.cashFlowTrend < -20) {
+                warnings.push('Declining cash flow');
+            }
+            
+            if (client.covenantStatus === 'breach') {
+                warnings.push('Covenant violation');
+            }
+            
+            return warnings;
+        }
+
+        // Real-time monitoring functions
+        function monitorRealTimeRisk() {
+            setInterval(() => {
+                // Simulate real-time risk monitoring
+                const clients = document.querySelectorAll('.health-item');
+                clients.forEach(client => {
+                    const score = client.querySelector('.health-score-value');
+                    if (score) {
+                        const currentScore = parseInt(score.textContent);
+                        const newScore = currentScore + (Math.random() - 0.5) * 2;
+                        score.textContent = Math.max(0, Math.min(100, Math.round(newScore)));
+                        
+                        // Update visual indicators
+                        const progressBar = client.querySelector('.progress-fill');
+                        if (progressBar) {
+                            progressBar.style.width = `${newScore}%`;
+                        }
+                    }
+                });
+            }, 10000); // Update every 10 seconds
+        }
+
+        // Initialize real-time monitoring
+        monitorRealTimeRisk();
+    </script>
+</body>
+</html>

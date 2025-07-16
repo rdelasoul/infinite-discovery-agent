@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cash Flow Forecasting - Multi-Card Banking Platform</title>
+    <style>
+        /* Geist Design System Implementation */
+        :root {
+            /* Gray Scale - Primary neutral palette */
+            --ds-gray-100: #fafafa;
+            --ds-gray-200: #eaeaea;
+            --ds-gray-300: #999999;
+            --ds-gray-400: #888888;
+            --ds-gray-500: #666666;
+            --ds-gray-600: #444444;
+            --ds-gray-700: #333333;
+            --ds-gray-800: #222222;
+            --ds-gray-900: #111111;
+            --ds-gray-1000: #000000;
+
+            /* Blue - Interactive elements */
+            --ds-blue-100: #e1f5fe;
+            --ds-blue-500: #0070f3;
+            --ds-blue-600: #0061d5;
+            --ds-blue-700: #004fc4;
+
+            /* Status Colors */
+            --ds-red-500: #ee0000;
+            --ds-amber-500: #f5a623;
+            --ds-green-500: #00b341;
+            --ds-purple-500: #7c3aed;
+
+            /* Typography */
+            --font-size-h1: 2.25rem;
+            --font-size-h2: 1.875rem;
+            --font-size-h3: 1.5rem;
+            --font-size-base: 1rem;
+            --font-size-small: 0.875rem;
+            --font-size-xs: 0.75rem;
+
+            /* Spacing scale based on 8px grid */
+            --space-1: 0.25rem;
+            --space-2: 0.5rem;
+            --space-3: 0.75rem;
+            --space-4: 1rem;
+            --space-6: 1.5rem;
+            --space-8: 2rem;
+            --space-12: 3rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Geist Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: var(--ds-gray-100);
+            color: var(--ds-gray-900);
+            line-height: 1.5;
+        }
+
+        /* Layout Components */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--space-8);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-8);
+            padding-bottom: var(--space-6);
+            border-bottom: 1px solid var(--ds-gray-200);
+        }
+
+        .header-left h1 {
+            font-size: var(--font-size-h2);
+            font-weight: 600;
+            margin-bottom: var(--space-2);
+        }
+
+        .header-meta {
+            color: var(--ds-gray-600);
+            font-size: var(--font-size-small);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: var(--space-4);
+        }
+
+        .forecast-period {
+            display: flex;
+            gap: var(--space-2);
+            background: white;
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 8px;
+            padding: var(--space-1);
+        }
+
+        .period-tab {
+            padding: var(--space-2) var(--space-4);
+            border-radius: 6px;
+            border: none;
+            background: transparent;
+            color: var(--ds-gray-600);
+            font-size: var(--font-size-small);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .period-tab.active {
+            background: var(--ds-blue-500);
+            color: white;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            padding: var(--space-3);
+            background: white;
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 8px;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--ds-blue-500);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        .user-info h3 {
+            font-size: var(--font-size-small);
+            font-weight: 600;
+        }
+
+        .user-role {
+            font-size: var(--font-size-xs);
+            color: var(--ds-gray-600);
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-8);
+            margin-bottom: var(--space-8);
+        }
+
+        /* Cash Flow Overview */
+        .cash-flow-overview {
+            grid-column: 1 / -1;
+            background: white;
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 12px;
+            padding: var(--space-6);
+            margin-bottom: var(--space-8);
+        }
+
+        .overview-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-6);
+        }
+
+        .section-title {
+            font-size: var(--font-size-h3);
+            font-weight: 600;
+        }
+
+        .view-toggle {
+            display: flex;
+            gap: var(--space-2);
+            background: var(--ds-gray-100);
+            border-radius: 6px;
+            padding: var(--space-1);
+        }
+
+        .toggle-btn {
+            padding: var(--space-2) var(--space-3);
+            border-radius: 4px;
+            border: none;
+            background: transparent;
+            color: var(--ds-gray-600);
+            font-size: var(--font-size-xs);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .toggle-btn.active {
+            background: white;
+            color: var(--ds-gray-900);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .forecast-chart {
+            height: 300px;
+            background: var(--ds-gray-100);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: var(--space-6);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chart-placeholder {
+            color: var(--ds-gray-500);
+            font-size: var(--font-size-small);
+            text-align: center;
+        }
+
+        .chart-bars {
+            display: flex;
+            align-items: end;
+            gap: var(--space-2);
+            height: 200px;
+            padding: var(--space-4);
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+
+        .chart-bar {
+            flex: 1;
+            background: var(--ds-blue-500);
+            border-radius: 4px 4px 0 0;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .chart-bar.forecast {
+            background: var(--ds-blue-300);
+            opacity: 0.7;
+        }
+
+        .chart-bar.negative {
+            background: var(--ds-red-500);
+        }
+
+        .chart-bar.positive {
+            background: var(--ds-green-500);
+        }
+
+        .chart-value {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: var(--font-size-xs);
+            font-weight: 600;
+            color: var(--ds-gray-700);
+        }
+
+        .chart-label {
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: var(--font-size-xs);
+            color: var(--ds-gray-600);
+        }
+
+        .cash-flow-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: var(--space-6);
+        }
+
+        .metric {
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: var(--font-size-h2);
+            font-weight: 700;
+            margin-bottom: var(--space-1);
+        }
+
+        .metric-value.positive {
+            color: var(--ds-green-500);
+        }
+
+        .metric-value.negative {
+            color: var(--ds-red-500);
+        }
+
+        .metric-value.warning {
+            color: var(--ds-amber-500);
+        }
+
+        .metric-label {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-600);
+            margin-bottom: var(--space-1);
+        }
+
+        .metric-trend {
+            font-size: var(--font-size-xs);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-1);
+        }
+
+        .trend-up {
+            color: var(--ds-green-500);
+        }
+
+        .trend-down {
+            color: var(--ds-red-500);
+        }
+
+        /* Payment Schedule */
+        .payment-schedule {
+            background: white;
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 12px;
+            padding: var(--space-6);
+        }
+
+        .schedule-timeline {
+            position: relative;
+            margin-top: var(--space-6);
+        }
+
+        .timeline-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-4);
+            margin-bottom: var(--space-4);
+            position: relative;
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 30px;
+            width: 2px;
+            height: calc(100% + var(--space-4));
+            background: var(--ds-gray-200);
+        }
+
+        .timeline-item:last-child::before {
+            display: none;
+        }
+
+        .timeline-dot {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--font-size-xs);
+            font-weight: 600;
+            background: white;
+            border: 2px solid var(--ds-gray-300);
+            position: relative;
+            z-index: 1;
+        }
+
+        .timeline-dot.urgent {
+            background: var(--ds-red-500);
+            color: white;
+            border-color: var(--ds-red-500);
+        }
+
+        .timeline-dot.upcoming {
+            background: var(--ds-amber-500);
+            color: white;
+            border-color: var(--ds-amber-500);
+        }
+
+        .timeline-dot.scheduled {
+            background: var(--ds-green-500);
+            color: white;
+            border-color: var(--ds-green-500);
+        }
+
+        .timeline-content {
+            flex: 1;
+        }
+
+        .timeline-title {
+            font-weight: 600;
+            margin-bottom: var(--space-1);
+        }
+
+        .timeline-meta {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-600);
+            margin-bottom: var(--space-1);
+        }
+
+        .timeline-amount {
+            font-weight: 600;
+            font-size: var(--font-size-base);
+        }
+
+        /* Credit Utilization */
+        .credit-utilization {
+            background: white;
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 12px;
+            padding: var(--space-6);
+        }
+
+        .utilization-cards {
+            margin-top: var(--space-6);
+        }
+
+        .utilization-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--space-4) 0;
+            border-bottom: 1px solid var(--ds-gray-200);
+        }
+
+        .utilization-item:last-child {
+            border-bottom: none;
+        }
+
+        .card-info {
+            flex: 1;
+        }
+
+        .card-name {
+            font-weight: 500;
+            margin-bottom: var(--space-1);
+        }
+
+        .card-limits {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-600);
+        }
+
+        .utilization-visual {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            min-width: 200px;
+        }
+
+        .utilization-bar {
+            flex: 1;
+            height: 8px;
+            background: var(--ds-gray-200);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .utilization-fill {
+            height: 100%;
+            transition: width 0.3s ease;
+        }
+
+        .utilization-low {
+            background: var(--ds-green-500);
+        }
+
+        .utilization-medium {
+            background: var(--ds-amber-500);
+        }
+
+        .utilization-high {
+            background: var(--ds-red-500);
+        }
+
+        .utilization-percent {
+            font-weight: 600;
+            font-size: var(--font-size-small);
+            min-width: 40px;
+            text-align: right;
+        }
+
+        /* Liquidity Forecast */
+        .liquidity-forecast {
+            grid-column: 1 / -1;
+            background: white;
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 12px;
+            padding: var(--space-6);
+        }
+
+        .forecast-scenarios {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--space-6);
+            margin-top: var(--space-6);
+        }
+
+        .scenario-card {
+            background: var(--ds-gray-100);
+            border-radius: 8px;
+            padding: var(--space-4);
+            text-align: center;
+        }
+
+        .scenario-card.optimistic {
+            background: #e8f5e8;
+            border: 1px solid var(--ds-green-500);
+        }
+
+        .scenario-card.realistic {
+            background: var(--ds-blue-100);
+            border: 1px solid var(--ds-blue-500);
+        }
+
+        .scenario-card.conservative {
+            background: #fff4e6;
+            border: 1px solid var(--ds-amber-500);
+        }
+
+        .scenario-title {
+            font-weight: 600;
+            margin-bottom: var(--space-3);
+        }
+
+        .scenario-value {
+            font-size: var(--font-size-h3);
+            font-weight: 700;
+            margin-bottom: var(--space-2);
+        }
+
+        .scenario-description {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-600);
+        }
+
+        /* Alerts */
+        .cash-flow-alerts {
+            margin-bottom: var(--space-8);
+        }
+
+        .alert {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            padding: var(--space-4);
+            border-radius: 8px;
+            margin-bottom: var(--space-3);
+        }
+
+        .alert-critical {
+            background: #fff1f0;
+            border: 1px solid var(--ds-red-500);
+        }
+
+        .alert-warning {
+            background: #fff4e6;
+            border: 1px solid var(--ds-amber-500);
+        }
+
+        .alert-info {
+            background: var(--ds-blue-100);
+            border: 1px solid var(--ds-blue-500);
+        }
+
+        .alert-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--font-size-xs);
+            font-weight: 600;
+        }
+
+        .alert-critical .alert-icon {
+            background: var(--ds-red-500);
+            color: white;
+        }
+
+        .alert-warning .alert-icon {
+            background: var(--ds-amber-500);
+            color: white;
+        }
+
+        .alert-info .alert-icon {
+            background: var(--ds-blue-500);
+            color: white;
+        }
+
+        .alert-content {
+            flex: 1;
+        }
+
+        .alert-title {
+            font-weight: 600;
+            margin-bottom: var(--space-1);
+        }
+
+        .alert-description {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-600);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .forecast-scenarios {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: var(--space-4);
+            }
+            
+            .header {
+                flex-direction: column;
+                gap: var(--space-4);
+                align-items: flex-start;
+            }
+            
+            .forecast-period {
+                flex-wrap: wrap;
+            }
+            
+            .cash-flow-metrics {
+                grid-template-columns: repeat(2, 1fr);
+                gap: var(--space-4);
+            }
+            
+            .utilization-visual {
+                min-width: 120px;
+            }
+            
+            .timeline-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: var(--space-2);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <h1>Cash Flow Forecasting</h1>
+                <div class="header-meta">90-day forecast • 5 active cards • Next payment in 3 days</div>
+            </div>
+            <div class="header-right">
+                <div class="forecast-period">
+                    <button class="period-tab" onclick="switchPeriod('30')">30 Days</button>
+                    <button class="period-tab active" onclick="switchPeriod('90')">90 Days</button>
+                    <button class="period-tab" onclick="switchPeriod('180')">6 Months</button>
+                    <button class="period-tab" onclick="switchPeriod('365')">1 Year</button>
+                </div>
+                <div class="user-profile">
+                    <div class="avatar">SC</div>
+                    <div class="user-info">
+                        <h3>Sarah Chen</h3>
+                        <div class="user-role">Chief Financial Officer</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Cash Flow Alerts -->
+        <div class="cash-flow-alerts">
+            <div class="alert alert-critical">
+                <div class="alert-icon">!</div>
+                <div class="alert-content">
+                    <div class="alert-title">Critical Payment Due</div>
+                    <div class="alert-description">AmEx Corporate payment of $45,750 is due in 3 days. Ensure sufficient account balance to avoid late fees.</div>
+                </div>
+            </div>
+
+            <div class="alert alert-warning">
+                <div class="alert-icon">⚠</div>
+                <div class="alert-content">
+                    <div class="alert-title">Credit Utilization Alert</div>
+                    <div class="alert-description">Capital One Spark approaching 90% utilization. Consider payment or credit limit increase to maintain optimal credit rating.</div>
+                </div>
+            </div>
+
+            <div class="alert alert-info">
+                <div class="alert-icon">i</div>
+                <div class="alert-content">
+                    <div class="alert-title">Seasonal Spending Pattern</div>
+                    <div class="alert-description">Q4 marketing spend typically increases 25%. Current forecast suggests budget variance of $15,000.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cash Flow Overview -->
+        <div class="cash-flow-overview">
+            <div class="overview-header">
+                <h2 class="section-title">Cash Flow Forecast - Next 90 Days</h2>
+                <div class="view-toggle">
+                    <button class="toggle-btn active" onclick="toggleView('combined')">Combined</button>
+                    <button class="toggle-btn" onclick="toggleView('individual')">By Card</button>
+                    <button class="toggle-btn" onclick="toggleView('department')">By Department</button>
+                </div>
+            </div>
+
+            <div class="forecast-chart" id="forecast-chart">
+                <div class="chart-bars">
+                    <div class="chart-bar positive" style="height: 60%;">
+                        <div class="chart-value">+$125K</div>
+                        <div class="chart-label">Week 1</div>
+                    </div>
+                    <div class="chart-bar negative" style="height: 80%;">
+                        <div class="chart-value">-$85K</div>
+                        <div class="chart-label">Week 2</div>
+                    </div>
+                    <div class="chart-bar negative" style="height: 70%;">
+                        <div class="chart-value">-$65K</div>
+                        <div class="chart-label">Week 3</div>
+                    </div>
+                    <div class="chart-bar positive" style="height: 45%;">
+                        <div class="chart-value">+$45K</div>
+                        <div class="chart-label">Week 4</div>
+                    </div>
+                    <div class="chart-bar forecast negative" style="height: 55%;">
+                        <div class="chart-value">-$75K</div>
+                        <div class="chart-label">Week 5</div>
+                    </div>
+                    <div class="chart-bar forecast negative" style="height: 65%;">
+                        <div class="chart-value">-$95K</div>
+                        <div class="chart-label">Week 6</div>
+                    </div>
+                    <div class="chart-bar forecast positive" style="height: 40%;">
+                        <div class="chart-value">+$35K</div>
+                        <div class="chart-label">Week 7</div>
+                    </div>
+                    <div class="chart-bar forecast negative" style="height: 50%;">
+                        <div class="chart-value">-$55K</div>
+                        <div class="chart-label">Week 8</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cash-flow-metrics">
+                <div class="metric">
+                    <div class="metric-value positive">$208,950</div>
+                    <div class="metric-label">Available Credit</div>
+                    <div class="metric-trend trend-up">↗ $15K vs last week</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value negative">$78,500</div>
+                    <div class="metric-label">Total Outstanding</div>
+                    <div class="metric-trend trend-up">↗ 12% vs last month</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value warning">$142,750</div>
+                    <div class="metric-label">90-Day Forecast</div>
+                    <div class="metric-trend">Projected outflow</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">27.3%</div>
+                    <div class="metric-label">Avg Utilization</div>
+                    <div class="metric-trend trend-up">↗ 3.2% vs target</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value positive">$65,200</div>
+                    <div class="metric-label">Payment Buffer</div>
+                    <div class="metric-trend">Safety margin</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Grid -->
+        <div class="dashboard-grid">
+            <!-- Payment Schedule -->
+            <div class="payment-schedule">
+                <h3 class="section-title">Upcoming Payments</h3>
+                <div class="schedule-timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-dot urgent">3</div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">AmEx Corporate Platinum</div>
+                            <div class="timeline-meta">Due: March 15, 2024 • Statement balance</div>
+                            <div class="timeline-amount" style="color: var(--ds-red-500);">$45,750</div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-dot upcoming">7</div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">Capital One Spark</div>
+                            <div class="timeline-meta">Due: March 19, 2024 • Marketing spend</div>
+                            <div class="timeline-amount" style="color: var(--ds-amber-500);">$29,750</div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-dot scheduled">12</div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">Chase Ink Business</div>
+                            <div class="timeline-meta">Due: March 24, 2024 • Operations expenses</div>
+                            <div class="timeline-amount" style="color: var(--ds-green-500);">$16,250</div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-dot scheduled">18</div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">Citi Corporate Card</div>
+                            <div class="timeline-meta">Due: March 30, 2024 • IT department</div>
+                            <div class="timeline-amount" style="color: var(--ds-green-500);">$17,500</div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-dot scheduled">25</div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">Bank of America Business</div>
+                            <div class="timeline-meta">Due: April 6, 2024 • Employee expenses</div>
+                            <div class="timeline-amount" style="color: var(--ds-green-500);">$1,250</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Credit Utilization -->
+            <div class="credit-utilization">
+                <h3 class="section-title">Credit Utilization Monitor</h3>
+                <div class="utilization-cards">
+                    <div class="utilization-item">
+                        <div class="card-info">
+                            <div class="card-name">AmEx Corporate Platinum</div>
+                            <div class="card-limits">$11,750 used of $50,000 limit</div>
+                        </div>
+                        <div class="utilization-visual">
+                            <div class="utilization-bar">
+                                <div class="utilization-fill utilization-low" style="width: 23.5%;"></div>
+                            </div>
+                            <div class="utilization-percent">23.5%</div>
+                        </div>
+                    </div>
+
+                    <div class="utilization-item">
+                        <div class="card-info">
+                            <div class="card-name">Chase Ink Business</div>
+                            <div class="card-limits">$16,250 used of $25,000 limit</div>
+                        </div>
+                        <div class="utilization-visual">
+                            <div class="utilization-bar">
+                                <div class="utilization-fill utilization-medium" style="width: 65%;"></div>
+                            </div>
+                            <div class="utilization-percent">65%</div>
+                        </div>
+                    </div>
+
+                    <div class="utilization-item">
+                        <div class="card-info">
+                            <div class="card-name">Capital One Spark</div>
+                            <div class="card-limits">$29,750 used of $35,000 limit</div>
+                        </div>
+                        <div class="utilization-visual">
+                            <div class="utilization-bar">
+                                <div class="utilization-fill utilization-high" style="width: 85%;"></div>
+                            </div>
+                            <div class="utilization-percent">85%</div>
+                        </div>
+                    </div>
+
+                    <div class="utilization-item">
+                        <div class="card-info">
+                            <div class="card-name">Citi Corporate Card</div>
+                            <div class="card-limits">$17,500 used of $40,000 limit</div>
+                        </div>
+                        <div class="utilization-visual">
+                            <div class="utilization-bar">
+                                <div class="utilization-fill utilization-medium" style="width: 43.75%;"></div>
+                            </div>
+                            <div class="utilization-percent">43.8%</div>
+                        </div>
+                    </div>
+
+                    <div class="utilization-item">
+                        <div class="card-info">
+                            <div class="card-name">Bank of America Business</div>
+                            <div class="card-limits">$1,250 used of $5,000 limit</div>
+                        </div>
+                        <div class="utilization-visual">
+                            <div class="utilization-bar">
+                                <div class="utilization-fill utilization-low" style="width: 25%;"></div>
+                            </div>
+                            <div class="utilization-percent">25%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Liquidity Forecast -->
+        <div class="liquidity-forecast">
+            <h3 class="section-title">Liquidity Scenarios - 90 Day Outlook</h3>
+            <div class="forecast-scenarios">
+                <div class="scenario-card optimistic">
+                    <div class="scenario-title">Optimistic Scenario</div>
+                    <div class="scenario-value" style="color: var(--ds-green-500);">$285,000</div>
+                    <div class="scenario-description">
+                        Assuming 15% reduction in variable expenses and early collection of outstanding receivables
+                    </div>
+                </div>
+
+                <div class="scenario-card realistic">
+                    <div class="scenario-title">Realistic Scenario</div>
+                    <div class="scenario-value" style="color: var(--ds-blue-500);">$208,950</div>
+                    <div class="scenario-description">
+                        Based on current spending patterns and historical payment cycles
+                    </div>
+                </div>
+
+                <div class="scenario-card conservative">
+                    <div class="scenario-title">Conservative Scenario</div>
+                    <div class="scenario-value" style="color: var(--ds-amber-500);">$165,750</div>
+                    <div class="scenario-description">
+                        Accounting for 20% increase in variable costs and delayed receivables
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Cash flow forecasting optimization and state management
+        let currentPeriod = '90';
+        let currentView = 'combined';
+        
+        function switchPeriod(period) {
+            currentPeriod = period;
+            
+            // Update active tab
+            document.querySelectorAll('.period-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Update forecast data and visualization
+            updateForecastData(period);
+            
+            showToast(`Switched to ${period}-day forecast`, 'info');
+        }
+        
+        function toggleView(view) {
+            currentView = view;
+            
+            // Update active toggle
+            document.querySelectorAll('.toggle-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Update chart visualization
+            updateChartView(view);
+            
+            showToast(`Viewing ${view} cash flow`, 'info');
+        }
+        
+        function updateForecastData(period) {
+            // Simulate different forecast periods
+            const chart = document.getElementById('forecast-chart');
+            const bars = chart.querySelectorAll('.chart-bar');
+            
+            // Generate forecast data based on period
+            const periodMultiplier = {
+                '30': 0.5,
+                '90': 1,
+                '180': 1.5,
+                '365': 2
+            };
+            
+            const multiplier = periodMultiplier[period] || 1;
+            
+            bars.forEach((bar, index) => {
+                const basValue = [125, -85, -65, 45, -75, -95, 35, -55][index] || 0;
+                const newValue = Math.round(basValue * multiplier);
+                const valueElement = bar.querySelector('.chart-value');
+                
+                if (valueElement) {
+                    const sign = newValue >= 0 ? '+' : '';
+                    valueElement.textContent = `${sign}$${Math.abs(newValue)}K`;
+                }
+                
+                // Update bar height based on new value
+                const height = Math.min(90, Math.abs(newValue) / 2);
+                bar.style.height = `${height}%`;
+                
+                // Update color based on value
+                bar.className = `chart-bar ${newValue >= 0 ? 'positive' : 'negative'} ${bar.classList.contains('forecast') ? 'forecast' : ''}`;
+            });
+            
+            // Update metrics
+            updateMetrics(multiplier);
+        }
+        
+        function updateMetrics(multiplier) {
+            const metrics = [
+                { selector: '.metric-value.positive', base: 208950, format: '$' },
+                { selector: '.metric-value.negative', base: 78500, format: '$' },
+                { selector: '.metric-value.warning', base: 142750, format: '$' },
+                { selector: '.metric-value:nth-of-type(4)', base: 27.3, format: '%' },
+                { selector: '.metric-value.positive:last-of-type', base: 65200, format: '$' }
+            ];
+            
+            metrics.forEach(metric => {
+                const element = document.querySelector(metric.selector);
+                if (element) {
+                    const newValue = Math.round(metric.base * multiplier);
+                    if (metric.format === '$') {
+                        element.textContent = `$${newValue.toLocaleString()}`;
+                    } else {
+                        element.textContent = `${newValue}${metric.format}`;
+                    }
+                }
+            });
+        }
+        
+        function updateChartView(view) {
+            const bars = document.querySelectorAll('.chart-bar');
+            
+            // Animate transition between views
+            bars.forEach((bar, index) => {
+                bar.style.transition = 'all 0.5s ease';
+                
+                // Simulate different data sets for different views
+                let heightMultiplier = 1;
+                
+                switch(view) {
+                    case 'individual':
+                        heightMultiplier = 0.8 + (index % 3) * 0.3;
+                        break;
+                    case 'department':
+                        heightMultiplier = 0.6 + (index % 4) * 0.2;
+                        break;
+                    case 'combined':
+                    default:
+                        heightMultiplier = 1;
+                        break;
+                }
+                
+                const currentHeight = parseInt(bar.style.height);
+                const newHeight = Math.max(20, currentHeight * heightMultiplier);
+                bar.style.height = `${newHeight}%`;
+            });
+        }
+        
+        // Real-time utilization monitoring
+        function updateUtilization() {
+            const utilizationFills = document.querySelectorAll('.utilization-fill');
+            const utilizationPercents = document.querySelectorAll('.utilization-percent');
+            
+            utilizationFills.forEach((fill, index) => {
+                if (Math.random() < 0.1) { // 10% chance of update
+                    const currentWidth = parseFloat(fill.style.width) || 0;
+                    const change = (Math.random() - 0.5) * 2; // Random change up to ±1%
+                    const newWidth = Math.max(0, Math.min(100, currentWidth + change));
+                    
+                    fill.style.width = `${newWidth}%`;
+                    utilizationPercents[index].textContent = `${newWidth.toFixed(1)}%`;
+                    
+                    // Update color based on new utilization
+                    fill.className = 'utilization-fill';
+                    if (newWidth < 30) {
+                        fill.classList.add('utilization-low');
+                    } else if (newWidth < 70) {
+                        fill.classList.add('utilization-medium');
+                    } else {
+                        fill.classList.add('utilization-high');
+                    }
+                }
+            });
+        }
+        
+        // Payment reminder system
+        function checkPaymentReminders() {
+            const timelineDots = document.querySelectorAll('.timeline-dot');
+            
+            timelineDots.forEach(dot => {
+                const daysUntil = parseInt(dot.textContent);
+                
+                if (daysUntil <= 3 && !dot.classList.contains('urgent')) {
+                    dot.classList.add('urgent');
+                    dot.classList.remove('upcoming', 'scheduled');
+                    
+                    // Show critical payment alert
+                    showToast(`Critical: Payment due in ${daysUntil} days`, 'error');
+                } else if (daysUntil <= 7 && !dot.classList.contains('urgent') && !dot.classList.contains('upcoming')) {
+                    dot.classList.add('upcoming');
+                    dot.classList.remove('scheduled');
+                }
+            });
+        }
+        
+        // Scenario modeling
+        function runScenarioAnalysis() {
+            const scenarios = document.querySelectorAll('.scenario-card');
+            
+            scenarios.forEach(scenario => {
+                const valueElement = scenario.querySelector('.scenario-value');
+                const currentValue = parseInt(valueElement.textContent.replace(/[$,]/g, ''));
+                
+                // Simulate market volatility
+                const volatility = Math.random() * 0.05; // Up to 5% change
+                const direction = Math.random() < 0.5 ? -1 : 1;
+                const newValue = Math.round(currentValue * (1 + (volatility * direction)));
+                
+                valueElement.textContent = `$${newValue.toLocaleString()}`;
+                
+                // Visual indicator of change
+                if (direction > 0) {
+                    valueElement.style.transform = 'scale(1.05)';
+                    setTimeout(() => {
+                        valueElement.style.transform = 'scale(1)';
+                    }, 300);
+                }
+            });
+        }
+        
+        // Cash flow optimization suggestions
+        function suggestOptimizations() {
+            const suggestions = [
+                "Consider early payment discount for AmEx card to save 2% on interest",
+                "Capital One utilization is high - consider balance transfer to optimize credit mix",
+                "Seasonal Q4 spending pattern detected - prepare for 25% budget increase",
+                "Payment timing could be optimized to improve cash flow by $8,500",
+                "Vendor consolidation opportunity identified - potential savings of $2,200/month"
+            ];
+            
+            if (Math.random() < 0.3) { // 30% chance of showing suggestion
+                const suggestion = suggestions[Math.floor(Math.random() * suggestions.length)];
+                showToast(suggestion, 'info');
+            }
+        }
+        
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            let backgroundColor;
+            
+            switch(type) {
+                case 'success':
+                    backgroundColor = 'var(--ds-green-500)';
+                    break;
+                case 'warning':
+                    backgroundColor = 'var(--ds-amber-500)';
+                    break;
+                case 'error':
+                    backgroundColor = 'var(--ds-red-500)';
+                    break;
+                default:
+                    backgroundColor = 'var(--ds-blue-500)';
+            }
+            
+            toast.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${backgroundColor};
+                color: white;
+                padding: var(--space-4);
+                border-radius: 8px;
+                z-index: 1000;
+                font-weight: 500;
+                max-width: 350px;
+                animation: slideInRight 0.3s ease;
+            `;
+            toast.textContent = message;
+            
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.animation = 'slideOutRight 0.3s ease';
+                setTimeout(() => {
+                    document.body.removeChild(toast);
+                }, 300);
+            }, 4000);
+        }
+        
+        // Predictive analytics
+        function runPredictiveAnalysis() {
+            // Simulate ML-based predictions
+            const forecastBars = document.querySelectorAll('.chart-bar.forecast');
+            
+            forecastBars.forEach(bar => {
+                // Simulate prediction confidence
+                const confidence = 0.7 + Math.random() * 0.3; // 70-100% confidence
+                bar.style.opacity = confidence;
+                
+                // Add confidence indicator
+                let confidenceIndicator = bar.querySelector('.confidence-indicator');
+                if (!confidenceIndicator) {
+                    confidenceIndicator = document.createElement('div');
+                    confidenceIndicator.className = 'confidence-indicator';
+                    confidenceIndicator.style.cssText = `
+                        position: absolute;
+                        bottom: -35px;
+                        left: 50%;
+                        transform: translateX(-50%);
+                        font-size: var(--font-size-xs);
+                        color: var(--ds-gray-500);
+                    `;
+                    bar.appendChild(confidenceIndicator);
+                }
+                confidenceIndicator.textContent = `${Math.round(confidence * 100)}%`;
+            });
+        }
+        
+        // Initialize cash flow monitoring
+        function initializeCashFlowMonitoring() {
+            // Set up real-time monitoring
+            setInterval(updateUtilization, 15000); // Every 15 seconds
+            setInterval(checkPaymentReminders, 60000); // Every minute
+            setInterval(runScenarioAnalysis, 30000); // Every 30 seconds
+            setInterval(suggestOptimizations, 45000); // Every 45 seconds
+            setInterval(runPredictiveAnalysis, 20000); // Every 20 seconds
+            
+            // Initial setup
+            updateForecastData(currentPeriod);
+            checkPaymentReminders();
+        }
+        
+        // Keyboard shortcuts for CFO efficiency
+        document.addEventListener('keydown', function(e) {
+            if (e.altKey) {
+                switch(e.key) {
+                    case '1':
+                        switchPeriod('30');
+                        break;
+                    case '2':
+                        switchPeriod('90');
+                        break;
+                    case '3':
+                        switchPeriod('180');
+                        break;
+                    case '4':
+                        switchPeriod('365');
+                        break;
+                    case 'c':
+                        toggleView('combined');
+                        break;
+                    case 'i':
+                        toggleView('individual');
+                        break;
+                    case 'd':
+                        toggleView('department');
+                        break;
+                }
+            }
+        });
+        
+        // Add CSS animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideInRight {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            
+            @keyframes slideOutRight {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+            
+            .chart-bar {
+                transition: height 0.3s ease, background-color 0.3s ease;
+            }
+            
+            .utilization-fill {
+                transition: width 0.5s ease, background-color 0.3s ease;
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeCashFlowMonitoring();
+            
+            // Welcome message
+            setTimeout(() => {
+                showToast('Cash flow monitoring active - Real-time updates enabled', 'success');
+            }, 1000);
+        });
+        
+        // Performance optimization for financial forecasting
+        // Progressive enhancement - works without JavaScript for core financial data viewing
+        // JavaScript enhances with real-time updates, predictive analytics, and interactive forecasting
+    </script>
+</body>
+</html>

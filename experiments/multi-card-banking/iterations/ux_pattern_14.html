@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cross-Card Spending Intelligence - Multi-Card Banking Flow</title>
+    <style>
+        /* Geist Design System implementation */
+        :root {
+            /* Colors */
+            --ds-gray-100: #fafafa;
+            --ds-gray-200: #eaeaea;
+            --ds-gray-300: #999999;
+            --ds-gray-400: #888888;
+            --ds-gray-500: #666666;
+            --ds-gray-600: #444444;
+            --ds-gray-700: #333333;
+            --ds-gray-800: #222222;
+            --ds-gray-900: #111111;
+            --ds-gray-1000: #000000;
+            --ds-blue-100: #e1f5fe;
+            --ds-blue-500: #0070f3;
+            --ds-blue-600: #0061d5;
+            --ds-blue-700: #004fc4;
+            --ds-red-500: #ee0000;
+            --ds-amber-500: #f5a623;
+            --ds-green-500: #22c55e;
+            --ds-purple-500: #7c3aed;
+            --ds-orange-500: #ff6b35;
+            --ds-teal-500: #14b8a6;
+
+            /* Typography */
+            --font-size-xs: 0.75rem;
+            --font-size-small: 0.875rem;
+            --font-size-base: 1rem;
+            --font-size-large: 1.125rem;
+            --font-size-h4: 1.25rem;
+            --font-size-h3: 1.5rem;
+            --font-size-h2: 1.875rem;
+            --font-size-h1: 2.25rem;
+
+            /* Spacing */
+            --space-1: 0.25rem;
+            --space-2: 0.5rem;
+            --space-3: 0.75rem;
+            --space-4: 1rem;
+            --space-5: 1.25rem;
+            --space-6: 1.5rem;
+            --space-8: 2rem;
+            --space-10: 2.5rem;
+            --space-12: 3rem;
+            --space-16: 4rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Geist Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            line-height: 1.5;
+            color: var(--ds-gray-900);
+            background-color: var(--ds-gray-100);
+            font-size: var(--font-size-base);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--space-4);
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            border-bottom: 1px solid var(--ds-gray-200);
+            padding: var(--space-4) 0;
+            margin-bottom: var(--space-6);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: var(--font-size-h3);
+            font-weight: 600;
+            color: var(--ds-gray-900);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+        }
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--ds-blue-500);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: var(--font-size-small);
+        }
+
+        /* Navigation */
+        .nav-tabs {
+            display: flex;
+            gap: var(--space-2);
+            margin-bottom: var(--space-6);
+            border-bottom: 1px solid var(--ds-gray-200);
+        }
+
+        .nav-tab {
+            padding: var(--space-3) var(--space-4);
+            border: none;
+            background: none;
+            cursor: pointer;
+            color: var(--ds-gray-600);
+            font-size: var(--font-size-small);
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .nav-tab.active {
+            color: var(--ds-blue-500);
+            border-bottom-color: var(--ds-blue-500);
+        }
+
+        .nav-tab:hover {
+            color: var(--ds-blue-500);
+        }
+
+        /* Main Content */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: var(--space-6);
+        }
+
+        .analytics-section {
+            background: white;
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 8px;
+            padding: var(--space-6);
+            margin-bottom: var(--space-6);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: var(--space-4);
+        }
+
+        .section-title {
+            font-size: var(--font-size-h4);
+            font-weight: 600;
+            color: var(--ds-gray-900);
+        }
+
+        .time-filter {
+            display: flex;
+            gap: var(--space-2);
+            padding: var(--space-1);
+            background: var(--ds-gray-100);
+            border-radius: 6px;
+        }
+
+        .time-filter button {
+            padding: var(--space-2) var(--space-3);
+            border: none;
+            background: none;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-600);
+            transition: all 0.2s ease;
+        }
+
+        .time-filter button.active {
+            background: white;
+            color: var(--ds-gray-900);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Intelligence Cards */
+        .intelligence-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--space-4);
+            margin-bottom: var(--space-6);
+        }
+
+        .intelligence-card {
+            background: white;
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 8px;
+            padding: var(--space-4);
+            transition: all 0.2s ease;
+        }
+
+        .intelligence-card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .intelligence-card-header {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            margin-bottom: var(--space-3);
+        }
+
+        .intelligence-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: var(--font-size-small);
+        }
+
+        .insight-title {
+            font-weight: 600;
+            color: var(--ds-gray-900);
+            font-size: var(--font-size-base);
+        }
+
+        .insight-value {
+            font-size: var(--font-size-h3);
+            font-weight: 700;
+            color: var(--ds-gray-900);
+            margin-bottom: var(--space-2);
+        }
+
+        .insight-description {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-600);
+            margin-bottom: var(--space-3);
+        }
+
+        .insight-trend {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            font-size: var(--font-size-small);
+        }
+
+        .trend-indicator {
+            display: flex;
+            align-items: center;
+            gap: var(--space-1);
+            padding: var(--space-1) var(--space-2);
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .trend-up {
+            background: rgba(34, 197, 94, 0.1);
+            color: var(--ds-green-500);
+        }
+
+        .trend-down {
+            background: rgba(238, 0, 0, 0.1);
+            color: var(--ds-red-500);
+        }
+
+        .trend-neutral {
+            background: rgba(245, 166, 35, 0.1);
+            color: var(--ds-amber-500);
+        }
+
+        /* Cross-Card Analysis */
+        .cross-card-analysis {
+            background: white;
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 8px;
+            padding: var(--space-6);
+            margin-bottom: var(--space-6);
+        }
+
+        .card-correlation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--space-4);
+            margin: var(--space-4) 0;
+        }
+
+        .correlation-card {
+            background: var(--ds-gray-100);
+            border-radius: 8px;
+            padding: var(--space-4);
+            border-left: 4px solid var(--ds-blue-500);
+        }
+
+        .correlation-cards {
+            display: flex;
+            gap: var(--space-2);
+            margin-bottom: var(--space-2);
+        }
+
+        .mini-card {
+            background: white;
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 4px;
+            padding: var(--space-2);
+            font-size: var(--font-size-xs);
+            font-weight: 600;
+        }
+
+        .correlation-insight {
+            font-weight: 600;
+            color: var(--ds-gray-900);
+            margin-bottom: var(--space-2);
+        }
+
+        .correlation-details {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-600);
+            margin-bottom: var(--space-3);
+        }
+
+        .correlation-actions {
+            display: flex;
+            gap: var(--space-2);
+        }
+
+        /* Spending Patterns */
+        .pattern-analysis {
+            background: white;
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 8px;
+            padding: var(--space-6);
+            margin-bottom: var(--space-6);
+        }
+
+        .pattern-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--space-4);
+            margin-top: var(--space-4);
+        }
+
+        .pattern-card {
+            background: var(--ds-gray-100);
+            border-radius: 8px;
+            padding: var(--space-4);
+            position: relative;
+        }
+
+        .pattern-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: var(--space-3);
+        }
+
+        .pattern-title {
+            font-weight: 600;
+            color: var(--ds-gray-900);
+            font-size: var(--font-size-base);
+        }
+
+        .pattern-confidence {
+            background: var(--ds-blue-500);
+            color: white;
+            padding: var(--space-1) var(--space-2);
+            border-radius: 4px;
+            font-size: var(--font-size-xs);
+            font-weight: 600;
+        }
+
+        .pattern-visualization {
+            height: 80px;
+            background: white;
+            border-radius: 4px;
+            margin-bottom: var(--space-3);
+            display: flex;
+            align-items: end;
+            padding: var(--space-2);
+            gap: var(--space-1);
+        }
+
+        .pattern-bar {
+            flex: 1;
+            background: var(--ds-blue-500);
+            border-radius: 2px;
+            min-height: 8px;
+            opacity: 0.7;
+        }
+
+        .pattern-bar.high {
+            height: 100%;
+            opacity: 1;
+        }
+
+        .pattern-bar.medium {
+            height: 60%;
+            opacity: 0.8;
+        }
+
+        .pattern-bar.low {
+            height: 30%;
+            opacity: 0.6;
+        }
+
+        .pattern-details {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-600);
+            margin-bottom: var(--space-3);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-4);
+        }
+
+        .sidebar-card {
+            background: white;
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 8px;
+            padding: var(--space-4);
+        }
+
+        .sidebar-title {
+            font-weight: 600;
+            color: var(--ds-gray-900);
+            margin-bottom: var(--space-3);
+        }
+
+        .quick-actions {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-2);
+        }
+
+        .action-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            padding: var(--space-3);
+            border-radius: 6px;
+            background: var(--ds-gray-100);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .action-item:hover {
+            background: var(--ds-gray-200);
+        }
+
+        .action-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: var(--font-size-xs);
+        }
+
+        .action-text {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-700);
+        }
+
+        /* Buttons */
+        .btn {
+            padding: var(--space-2) var(--space-4);
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: var(--font-size-small);
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: var(--ds-blue-500);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--ds-blue-600);
+        }
+
+        .btn-secondary {
+            background: var(--ds-gray-200);
+            color: var(--ds-gray-700);
+        }
+
+        .btn-secondary:hover {
+            background: var(--ds-gray-300);
+        }
+
+        .btn-ghost {
+            background: none;
+            color: var(--ds-gray-600);
+            border: 1px solid var(--ds-gray-200);
+        }
+
+        .btn-ghost:hover {
+            background: var(--ds-gray-100);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .intelligence-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .card-correlation-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .pattern-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .analytics-section {
+            animation: fadeIn 0.3s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">Rodriguez Construction</div>
+                <div class="user-info">
+                    <span>Alex Rodriguez</span>
+                    <div class="user-avatar">AR</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="nav-tabs">
+            <button class="nav-tab">Dashboard</button>
+            <button class="nav-tab">Cards</button>
+            <button class="nav-tab active">Intelligence</button>
+            <button class="nav-tab">Reports</button>
+            <button class="nav-tab">Settings</button>
+        </div>
+
+        <div class="main-content">
+            <div class="main-panel">
+                <div class="analytics-section">
+                    <div class="section-header">
+                        <h2 class="section-title">Cross-Card Spending Intelligence</h2>
+                        <div class="time-filter">
+                            <button>7D</button>
+                            <button class="active">30D</button>
+                            <button>90D</button>
+                            <button>1Y</button>
+                        </div>
+                    </div>
+
+                    <div class="intelligence-grid">
+                        <div class="intelligence-card">
+                            <div class="intelligence-card-header">
+                                <div class="intelligence-icon" style="background: var(--ds-blue-500);">$</div>
+                                <div class="insight-title">Total Cross-Card Spending</div>
+                            </div>
+                            <div class="insight-value">$18,450</div>
+                            <div class="insight-description">Across 4 active business cards this month</div>
+                            <div class="insight-trend">
+                                <div class="trend-indicator trend-up">
+                                    <span>↑</span>
+                                    <span>12%</span>
+                                </div>
+                                <span>vs last month</span>
+                            </div>
+                        </div>
+
+                        <div class="intelligence-card">
+                            <div class="intelligence-card-header">
+                                <div class="intelligence-icon" style="background: var(--ds-green-500);">%</div>
+                                <div class="insight-title">Optimization Score</div>
+                            </div>
+                            <div class="insight-value">87%</div>
+                            <div class="insight-description">Cards used efficiently for category rewards</div>
+                            <div class="insight-trend">
+                                <div class="trend-indicator trend-up">
+                                    <span>↑</span>
+                                    <span>5%</span>
+                                </div>
+                                <span>improved this month</span>
+                            </div>
+                        </div>
+
+                        <div class="intelligence-card">
+                            <div class="intelligence-card-header">
+                                <div class="intelligence-icon" style="background: var(--ds-purple-500);">🎯</div>
+                                <div class="insight-title">Pattern Confidence</div>
+                            </div>
+                            <div class="insight-value">94%</div>
+                            <div class="insight-description">AI confidence in spending pattern recognition</div>
+                            <div class="insight-trend">
+                                <div class="trend-indicator trend-up">
+                                    <span>↑</span>
+                                    <span>8%</span>
+                                </div>
+                                <span>more accurate</span>
+                            </div>
+                        </div>
+
+                        <div class="intelligence-card">
+                            <div class="intelligence-card-header">
+                                <div class="intelligence-icon" style="background: var(--ds-orange-500);">⚡</div>
+                                <div class="insight-title">Potential Savings</div>
+                            </div>
+                            <div class="insight-value">$340</div>
+                            <div class="insight-description">Monthly savings from card optimization</div>
+                            <div class="insight-trend">
+                                <div class="trend-indicator trend-up">
+                                    <span>↑</span>
+                                    <span>$45</span>
+                                </div>
+                                <span>vs last month</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cross-card-analysis">
+                    <div class="section-header">
+                        <h2 class="section-title">Cross-Card Correlation Analysis</h2>
+                        <button class="btn btn-secondary">View Details</button>
+                    </div>
+
+                    <div class="card-correlation-grid">
+                        <div class="correlation-card">
+                            <div class="correlation-cards">
+                                <div class="mini-card" style="background: var(--ds-blue-100);">Chase Ink</div>
+                                <div class="mini-card" style="background: var(--ds-green-100);">Capital One</div>
+                            </div>
+                            <div class="correlation-insight">Equipment purchases trigger insurance claims</div>
+                            <div class="correlation-details">
+                                When equipment purchases exceed $2,000 on Chase Ink, insurance claims typically follow within 2-3 weeks on Capital One Spark. This pattern occurs 85% of the time.
+                            </div>
+                            <div class="correlation-actions">
+                                <button class="btn btn-primary">Set Alert</button>
+                                <button class="btn btn-ghost">Learn More</button>
+                            </div>
+                        </div>
+
+                        <div class="correlation-card">
+                            <div class="correlation-cards">
+                                <div class="mini-card" style="background: var(--ds-purple-100);">Amex Business</div>
+                                <div class="mini-card" style="background: var(--ds-orange-100);">Personal Card</div>
+                            </div>
+                            <div class="correlation-insight">Travel expenses align with client entertainment</div>
+                            <div class="correlation-details">
+                                Client travel on Amex Business correlates with client entertainment expenses on personal card. Average delay: 1-2 days. Pattern strength: 92%.
+                            </div>
+                            <div class="correlation-actions">
+                                <button class="btn btn-primary">Optimize</button>
+                                <button class="btn btn-ghost">View History</button>
+                            </div>
+                        </div>
+
+                        <div class="correlation-card">
+                            <div class="correlation-cards">
+                                <div class="mini-card" style="background: var(--ds-teal-100);">All Cards</div>
+                            </div>
+                            <div class="correlation-insight">Month-end spending surge pattern</div>
+                            <div class="correlation-details">
+                                Spending increases 45% across all cards during last week of each month. Driven by supplier payments and project completions.
+                            </div>
+                            <div class="correlation-actions">
+                                <button class="btn btn-primary">Plan Ahead</button>
+                                <button class="btn btn-ghost">Set Budget</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pattern-analysis">
+                    <div class="section-header">
+                        <h2 class="section-title">Intelligent Spending Patterns</h2>
+                        <button class="btn btn-secondary">Export Analysis</button>
+                    </div>
+
+                    <div class="pattern-grid">
+                        <div class="pattern-card">
+                            <div class="pattern-header">
+                                <div class="pattern-title">Seasonal Equipment Purchases</div>
+                                <div class="pattern-confidence">96%</div>
+                            </div>
+                            <div class="pattern-visualization">
+                                <div class="pattern-bar low"></div>
+                                <div class="pattern-bar medium"></div>
+                                <div class="pattern-bar high"></div>
+                                <div class="pattern-bar high"></div>
+                                <div class="pattern-bar medium"></div>
+                                <div class="pattern-bar low"></div>
+                                <div class="pattern-bar low"></div>
+                            </div>
+                            <div class="pattern-details">
+                                Peak equipment spending occurs March-May ($8,500 avg) and September-October ($7,200 avg). Chase Ink preferred for large purchases to maximize warranty benefits.
+                            </div>
+                            <div class="correlation-actions">
+                                <button class="btn btn-primary">Prepare Budget</button>
+                                <button class="btn btn-ghost">View Details</button>
+                            </div>
+                        </div>
+
+                        <div class="pattern-card">
+                            <div class="pattern-header">
+                                <div class="pattern-title">Client Entertainment Clusters</div>
+                                <div class="pattern-confidence">89%</div>
+                            </div>
+                            <div class="pattern-visualization">
+                                <div class="pattern-bar medium"></div>
+                                <div class="pattern-bar high"></div>
+                                <div class="pattern-bar low"></div>
+                                <div class="pattern-bar medium"></div>
+                                <div class="pattern-bar high"></div>
+                                <div class="pattern-bar low"></div>
+                                <div class="pattern-bar medium"></div>
+                            </div>
+                            <div class="pattern-details">
+                                Client entertainment spending clusters around project milestones. Capital One Spark used 78% of time for travel rewards. Average: $450/month.
+                            </div>
+                            <div class="correlation-actions">
+                                <button class="btn btn-primary">Optimize Card</button>
+                                <button class="btn btn-ghost">Track ROI</button>
+                            </div>
+                        </div>
+
+                        <div class="pattern-card">
+                            <div class="pattern-header">
+                                <div class="pattern-title">Subscription Management</div>
+                                <div class="pattern-confidence">93%</div>
+                            </div>
+                            <div class="pattern-visualization">
+                                <div class="pattern-bar medium"></div>
+                                <div class="pattern-bar medium"></div>
+                                <div class="pattern-bar medium"></div>
+                                <div class="pattern-bar high"></div>
+                                <div class="pattern-bar medium"></div>
+                                <div class="pattern-bar medium"></div>
+                                <div class="pattern-bar medium"></div>
+                            </div>
+                            <div class="pattern-details">
+                                $1,240/month in recurring subscriptions across cards. Bank of America Business handles 65% for virtual card security. Potential $180/month savings identified.
+                            </div>
+                            <div class="correlation-actions">
+                                <button class="btn btn-primary">Audit Subscriptions</button>
+                                <button class="btn btn-ghost">Save Money</button>
+                            </div>
+                        </div>
+
+                        <div class="pattern-card">
+                            <div class="pattern-header">
+                                <div class="pattern-title">Cash Flow Optimization</div>
+                                <div class="pattern-confidence">91%</div>
+                            </div>
+                            <div class="pattern-visualization">
+                                <div class="pattern-bar high"></div>
+                                <div class="pattern-bar low"></div>
+                                <div class="pattern-bar medium"></div>
+                                <div class="pattern-bar high"></div>
+                                <div class="pattern-bar low"></div>
+                                <div class="pattern-bar medium"></div>
+                                <div class="pattern-bar high"></div>
+                            </div>
+                            <div class="pattern-details">
+                                Payment timing optimization across 4 cards saves $290/month in interest. Different due dates create 18-day average float period.
+                            </div>
+                            <div class="correlation-actions">
+                                <button class="btn btn-primary">Optimize Timing</button>
+                                <button class="btn btn-ghost">Set Reminders</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <div class="sidebar-card">
+                    <h3 class="sidebar-title">Quick Insights</h3>
+                    <div class="quick-actions">
+                        <div class="action-item">
+                            <div class="action-icon" style="background: var(--ds-blue-500);">📊</div>
+                            <div class="action-text">Generate Monthly Report</div>
+                        </div>
+                        <div class="action-item">
+                            <div class="action-icon" style="background: var(--ds-green-500);">💡</div>
+                            <div class="action-text">View Optimization Tips</div>
+                        </div>
+                        <div class="action-item">
+                            <div class="action-icon" style="background: var(--ds-purple-500);">🎯</div>
+                            <div class="action-text">Set Spending Goals</div>
+                        </div>
+                        <div class="action-item">
+                            <div class="action-icon" style="background: var(--ds-orange-500);">⚡</div>
+                            <div class="action-text">Enable Smart Alerts</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-card">
+                    <h3 class="sidebar-title">Top Correlations</h3>
+                    <div style="space-y: var(--space-3);">
+                        <div style="margin-bottom: var(--space-3);">
+                            <div style="font-weight: 600; font-size: var(--font-size-small); margin-bottom: var(--space-1);">
+                                Equipment → Insurance
+                            </div>
+                            <div style="font-size: var(--font-size-xs); color: var(--ds-gray-600);">
+                                85% correlation strength
+                            </div>
+                        </div>
+                        <div style="margin-bottom: var(--space-3);">
+                            <div style="font-weight: 600; font-size: var(--font-size-small); margin-bottom: var(--space-1);">
+                                Travel → Entertainment
+                            </div>
+                            <div style="font-size: var(--font-size-xs); color: var(--ds-gray-600);">
+                                92% correlation strength
+                            </div>
+                        </div>
+                        <div style="margin-bottom: var(--space-3);">
+                            <div style="font-weight: 600; font-size: var(--font-size-small); margin-bottom: var(--space-1);">
+                                Month-end → All Cards
+                            </div>
+                            <div style="font-size: var(--font-size-xs); color: var(--ds-gray-600);">
+                                78% correlation strength
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-card">
+                    <h3 class="sidebar-title">AI Recommendations</h3>
+                    <div style="space-y: var(--space-3);">
+                        <div style="margin-bottom: var(--space-3);">
+                            <div style="font-weight: 600; font-size: var(--font-size-small); margin-bottom: var(--space-1);">
+                                Switch subscription payments to Bank of America
+                            </div>
+                            <div style="font-size: var(--font-size-xs); color: var(--ds-gray-600);">
+                                Save $45/month with virtual cards
+                            </div>
+                        </div>
+                        <div style="margin-bottom: var(--space-3);">
+                            <div style="font-weight: 600; font-size: var(--font-size-small); margin-bottom: var(--space-1);">
+                                Consolidate equipment purchases
+                            </div>
+                            <div style="font-size: var(--font-size-xs); color: var(--ds-gray-600);">
+                                Better warranty coverage on Chase Ink
+                            </div>
+                        </div>
+                        <div style="margin-bottom: var(--space-3);">
+                            <div style="font-weight: 600; font-size: var(--font-size-small); margin-bottom: var(--space-1);">
+                                Optimize payment timing
+                            </div>
+                            <div style="font-size: var(--font-size-xs); color: var(--ds-gray-600);">
+                                Extend float period by 3 days
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Cross-card analytics simulation
+        class CrossCardAnalytics {
+            constructor() {
+                this.cards = [
+                    { name: 'Chase Ink Business', type: 'primary', color: '#0070f3' },
+                    { name: 'Capital One Spark', type: 'travel', color: '#22c55e' },
+                    { name: 'Amex Business', type: 'equipment', color: '#7c3aed' },
+                    { name: 'Bank of America Business', type: 'subscriptions', color: '#f5a623' },
+                    { name: 'Personal Card (Business)', type: 'mixed', color: '#ff6b35' }
+                ];
+                
+                this.patterns = {
+                    seasonal: this.generateSeasonalPattern(),
+                    correlation: this.generateCorrelationData(),
+                    optimization: this.calculateOptimizationScore()
+                };
+                
+                this.initializeEventListeners();
+                this.updateAnalytics();
+            }
+            
+            generateSeasonalPattern() {
+                return {
+                    equipment: [2500, 3200, 8500, 7800, 6200, 4100, 3500, 4200, 7200, 6800, 5100, 3800],
+                    travel: [1200, 1400, 2100, 1800, 2400, 2200, 1900, 2100, 2300, 1800, 1500, 1100],
+                    subscriptions: [1240, 1240, 1240, 1280, 1240, 1240, 1240, 1240, 1240, 1280, 1240, 1240]
+                };
+            }
+            
+            generateCorrelationData() {
+                return [
+                    {
+                        cards: ['Chase Ink', 'Capital One'],
+                        pattern: 'Equipment → Insurance',
+                        strength: 85,
+                        insight: 'Large equipment purchases trigger insurance claims',
+                        delay: '2-3 weeks'
+                    },
+                    {
+                        cards: ['Amex Business', 'Personal Card'],
+                        pattern: 'Travel → Entertainment',
+                        strength: 92,
+                        insight: 'Client travel aligns with entertainment expenses',
+                        delay: '1-2 days'
+                    },
+                    {
+                        cards: ['All Cards'],
+                        pattern: 'Month-end Surge',
+                        strength: 78,
+                        insight: 'Spending increases 45% in last week of month',
+                        delay: 'Weekly cycle'
+                    }
+                ];
+            }
+            
+            calculateOptimizationScore() {
+                const factors = {
+                    cardUtilization: 0.89,
+                    rewardMaximization: 0.91,
+                    paymentTiming: 0.85,
+                    categoryAlignment: 0.93,
+                    fraudPrevention: 0.88
+                };
+                
+                const weighted = Object.values(factors).reduce((sum, val) => sum + val, 0) / Object.keys(factors).length;
+                return Math.round(weighted * 100);
+            }
+            
+            initializeEventListeners() {
+                // Time filter buttons
+                document.querySelectorAll('.time-filter button').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        document.querySelectorAll('.time-filter button').forEach(b => b.classList.remove('active'));
+                        e.target.classList.add('active');
+                        this.updateAnalytics();
+                    });
+                });
+                
+                // Intelligence card interactions
+                document.querySelectorAll('.intelligence-card').forEach(card => {
+                    card.addEventListener('click', () => {
+                        this.showDetailedAnalysis(card);
+                    });
+                });
+                
+                // Pattern card interactions
+                document.querySelectorAll('.pattern-card').forEach(card => {
+                    card.addEventListener('mouseenter', () => {
+                        this.highlightPattern(card);
+                    });
+                });
+                
+                // Quick actions
+                document.querySelectorAll('.action-item').forEach(item => {
+                    item.addEventListener('click', (e) => {
+                        this.handleQuickAction(e.target.closest('.action-item'));
+                    });
+                });
+            }
+            
+            updateAnalytics() {
+                this.animateCounters();
+                this.updatePatternVisualizations();
+                this.refreshCorrelations();
+            }
+            
+            animateCounters() {
+                const counters = document.querySelectorAll('.insight-value');
+                counters.forEach(counter => {
+                    const target = counter.textContent;
+                    const isPercent = target.includes('%');
+                    const isDollar = target.includes('$');
+                    const value = parseInt(target.replace(/[^\d]/g, ''));
+                    
+                    let current = 0;
+                    const increment = value / 50;
+                    const timer = setInterval(() => {
+                        current += increment;
+                        if (current >= value) {
+                            current = value;
+                            clearInterval(timer);
+                        }
+                        
+                        let display = Math.round(current);
+                        if (isDollar) display = '$' + display.toLocaleString();
+                        if (isPercent) display = display + '%';
+                        
+                        counter.textContent = display;
+                    }, 20);
+                });
+            }
+            
+            updatePatternVisualizations() {
+                document.querySelectorAll('.pattern-visualization').forEach(viz => {
+                    const bars = viz.querySelectorAll('.pattern-bar');
+                    bars.forEach((bar, index) => {
+                        setTimeout(() => {
+                            bar.style.opacity = '1';
+                            bar.style.transform = 'scaleY(1)';
+                        }, index * 50);
+                    });
+                });
+            }
+            
+            refreshCorrelations() {
+                const correlationCards = document.querySelectorAll('.correlation-card');
+                correlationCards.forEach((card, index) => {
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, index * 100);
+                });
+            }
+            
+            showDetailedAnalysis(card) {
+                const title = card.querySelector('.insight-title').textContent;
+                // Simulate detailed analysis modal
+                console.log(`Showing detailed analysis for: ${title}`);
+            }
+            
+            highlightPattern(card) {
+                const bars = card.querySelectorAll('.pattern-bar');
+                bars.forEach(bar => {
+                    bar.style.backgroundColor = 'var(--ds-purple-500)';
+                });
+                
+                setTimeout(() => {
+                    bars.forEach(bar => {
+                        bar.style.backgroundColor = 'var(--ds-blue-500)';
+                    });
+                }, 1000);
+            }
+            
+            handleQuickAction(actionItem) {
+                const text = actionItem.querySelector('.action-text').textContent;
+                
+                switch(text) {
+                    case 'Generate Monthly Report':
+                        this.generateReport();
+                        break;
+                    case 'View Optimization Tips':
+                        this.showOptimizationTips();
+                        break;
+                    case 'Set Spending Goals':
+                        this.setSpendingGoals();
+                        break;
+                    case 'Enable Smart Alerts':
+                        this.enableSmartAlerts();
+                        break;
+                }
+            }
+            
+            generateReport() {
+                // Simulate report generation
+                const toast = document.createElement('div');
+                toast.textContent = 'Monthly cross-card analysis report generated successfully!';
+                toast.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: var(--ds-green-500);
+                    color: white;
+                    padding: var(--space-3) var(--space-4);
+                    border-radius: 6px;
+                    z-index: 1000;
+                    font-size: var(--font-size-small);
+                    font-weight: 600;
+                `;
+                
+                document.body.appendChild(toast);
+                setTimeout(() => toast.remove(), 3000);
+            }
+            
+            showOptimizationTips() {
+                console.log('Showing optimization tips based on cross-card analysis');
+            }
+            
+            setSpendingGoals() {
+                console.log('Setting up intelligent spending goals across all cards');
+            }
+            
+            enableSmartAlerts() {
+                console.log('Enabling cross-card correlation alerts');
+            }
+        }
+        
+        // Initialize the cross-card analytics system
+        document.addEventListener('DOMContentLoaded', () => {
+            new CrossCardAnalytics();
+        });
+        
+        // Real-time updates simulation
+        setInterval(() => {
+            // Simulate real-time pattern updates
+            const confidenceElements = document.querySelectorAll('.pattern-confidence');
+            confidenceElements.forEach(elem => {
+                const current = parseInt(elem.textContent);
+                const variation = Math.random() * 4 - 2; // ±2%
+                const newValue = Math.min(100, Math.max(80, current + variation));
+                elem.textContent = Math.round(newValue) + '%';
+            });
+        }, 30000); // Update every 30 seconds
+    </script>
+</body>
+</html>
