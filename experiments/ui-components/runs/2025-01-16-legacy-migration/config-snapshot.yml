@@ -1,0 +1,18 @@
+# Configuration snapshot for legacy migration run
+# Generated: 2025-01-16 (Legacy Migration)
+
+dependencies:
+  design-systems: []
+  spec-modules: []
+  data: []
+
+experiment:
+  type: "ui-components"
+  output_format: "both"  # Had both single-file and multi-file
+  naming_pattern: "ui_hybrid_{iteration}.html"
+
+# Legacy run notes:
+# - Migrated existing 35 single-file iterations
+# - Migrated existing 5 multi-file iterations  
+# - No shared dependencies were used in original iterations
+# - Pure themed hybrid components without design system constraints

@@ -1,0 +1,33 @@
+# UI Components Specification Configuration
+
+# Shared dependencies to include when running /infinite ui-components
+dependencies:
+  # Design system dependencies (optional)
+  design-systems: []
+    # - geist-core         # Include for design system constraints
+    # - geist-components   # Include for component guidelines
+  
+  # Specification modules (optional) 
+  spec-modules: []
+    # - accessibility-standards      # Include for WCAG compliance requirements
+    # - performance-requirements     # Include for 60fps animation standards
+    # - realistic-data-requirements  # Include for authentic dummy data guidelines
+  
+  # Data sets (optional)
+  data: []
+    # - ecommerce-data    # Include for product/shopping scenarios
+    # - banking-data      # Include for financial interface scenarios
+
+# Experiment configuration
+experiment:
+  type: "ui-components"
+  output_format: "single-file"  # All outputs go to runs/[timestamp]/iterations/
+  naming_pattern: "ui_hybrid_{iteration}.html"
+
+# Notes:
+# - Uncomment dependencies to include them in spec resolution
+# - UI Components typically focus on visual themes rather than business data
+# - Design system dependencies useful when wanting consistent component patterns
+# - Performance requirements important for animation-heavy components
+# - This configuration can be modified between runs to change scope
+# - Each run creates a timestamped directory with complete snapshots

@@ -1,0 +1,31 @@
+# Perantara Reps Homepage Specification Configuration
+
+# Shared dependencies to include when running /infinite website-homepages/perantara-reps
+dependencies:
+  # Design system dependencies (optional for brand-focused homepages)
+  design-systems: []
+    # - geist-core         # Include for consistent typography and spacing
+    # - geist-components   # Include for component-based homepage sections
+  
+  # Specification modules (recommended for professional homepages)
+  spec-modules:
+    - accessibility-standards      # Essential for professional business website
+    - performance-requirements     # Critical for good user experience and SEO
+    # - realistic-data-requirements # Include if homepage needs business data context
+  
+  # Data sets (optional for homepage context)
+  data: []
+    # - ecommerce-data    # Include if homepage features product/service showcases
+
+# Experiment configuration
+experiment:
+  type: "website-homepages"
+  project: "perantara-reps"
+  output_format: "single-file"
+  naming_pattern: "perantara_homepage_{iteration}.html"
+
+# Project context:
+# - New Zealand DMC targeting Indonesian travel agents
+# - "Global-Local Connector" branding approach
+# - Cultural authenticity and premium business positioning
+# - Trust-building and professional credibility focus

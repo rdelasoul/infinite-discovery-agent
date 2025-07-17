@@ -1,0 +1,21 @@
+# Configuration snapshot for legacy migration run
+# Generated: 2025-01-16 (Legacy Migration)
+
+dependencies:
+  design-systems: []
+  spec-modules:
+    - accessibility-standards
+    - performance-requirements
+  data: []
+
+experiment:
+  type: "website-homepages"
+  project: "perantara-reps"
+  output_format: "single-file"
+  naming_pattern: "perantara_homepage_{iteration}.html"
+
+# Legacy run notes:
+# - Migrated 8 existing homepage iterations
+# - Mix of component and full homepage variations
+# - Focus on NZ DMC branding for Indonesian travel market
+# - Cultural authenticity and premium positioning themes

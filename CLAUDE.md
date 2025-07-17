@@ -54,30 +54,51 @@ The project uses Claude Code's custom commands feature with enhanced auto-discov
 - `.claude/commands/prime.md` - Context priming command for repository familiarization
 - `.claude/settings.json` - Permissions configuration allowing Write, MultiEdit, Edit, and Bash
 
-### Distributed Specification System
+### Enhanced Specification & Dependency System
 - **Experiment-specific specs**: Each experiment type has its own `experiments/{type}/spec.md`
+- **Dependency configuration**: `experiments/{type}/spec-config.yml` controls shared component inclusion
+- **Shared dependencies**: `experiments/shared/` provides reusable components across all experiment types
 - **Template library**: `templates/` directory provides specification templates for new experiment types
-- **Quality standards**: Ultra-detailed specifications (236+ lines) with theme development guidance
+- **Quality standards**: Ultra-detailed specifications with modular quality requirements
 - **Evolution strategies**: How iterations should build upon each other with progressive sophistication
 
-### Experiment Types
+#### **Shared Dependencies Structure**
+- **`experiments/shared/design-systems/`** - Reusable design frameworks (Geist system with 9+ files)
+- **`experiments/shared/spec-modules/`** - Modular quality standards (accessibility, performance, realistic data)
+- **`experiments/shared/data/`** - Realistic business context (banking, e-commerce, healthcare scenarios)
+
+#### **Dependency Resolution Process**
+1. Read experiment's `spec-config.yml` for dependency requirements
+2. Resolve and include content from `shared/design-systems/`, `shared/spec-modules/`, and `shared/data/`
+3. Create consolidated specification with all dependencies integrated
+4. Provide complete context to AI agents for enhanced generation quality
+
+### Experiment Types with Enhanced Run Management
 - **`experiments/ui-components/`** - Themed hybrid UI components (original focus)
-  - Single-file format: `single-file/ui_hybrid_X.html`
-  - Multi-file format: `multi-file/ui_hybrid_X/index.html`
-  - Spec: Ultra-detailed 236-line specification for themed hybrid components
+  - **Run pattern**: `runs/YYYY-MM-DD-HHMMSS/iterations/ui_hybrid_X.html`
+  - **Dependencies**: Optional design systems, performance standards
+  - **Spec**: Ultra-detailed specification for themed hybrid components
+  - **Current access**: Via `current/iterations/` symlink
 
 - **`experiments/functional-ux-patterns/`** - Workflow optimization through pattern innovation
-  - Format: `iterations/ux_pattern_X.html`
-  - Focus: Function-first exploration with design system constraints
-  - Patterns: Information architecture, interaction models, cognitive load optimization
+  - **Run pattern**: `runs/YYYY-MM-DD-HHMMSS/iterations/ux_pattern_X.html`
+  - **Dependencies**: Geist design system + banking data + realistic data requirements
+  - **Focus**: Function-first exploration with design system constraints
+  - **Patterns**: Information architecture, interaction models, cognitive load optimization
 
 - **`experiments/website-homepages/`** - Complete homepage iterations
-  - Project-specific: `perantara-reps/`, `portfolio-site/`
-  - Format: `iterations/[project_name]_homepage_X.html`
-  - Focus: Brand consistency with design approach variations
+  - **Project-specific**: `perantara-reps/`, `portfolio-site/`
+  - **Run pattern**: `runs/YYYY-MM-DD-HHMMSS/iterations/[project_name]_homepage_X.html`
+  - **Dependencies**: Accessibility + performance standards per project
+  - **Focus**: Brand consistency with design approach variations
 
-- **`experiments/interactions/`** - Micro-interactions and animations (ready for specs)
-- **`experiments/ui-innovations/`** - Novel UI paradigms (ready for specs)
+- **`experiments/interactions/`** - Micro-interactions and animations
+  - **Dependencies**: Accessibility + performance standards (essential for 60fps)
+  - **Run pattern**: `runs/YYYY-MM-DD-HHMMSS/iterations/interaction_X.html`
+
+- **`experiments/ui-innovations/`** - Novel UI paradigms
+  - **Dependencies**: Accessibility + performance (innovations must remain inclusive)
+  - **Run pattern**: `runs/YYYY-MM-DD-HHMMSS/iterations/ui_innovation_X.html`
 
 ### Multi-Agent Orchestration Pattern
 The infinite command implements sophisticated parallel agent coordination:
@@ -87,21 +108,52 @@ The infinite command implements sophisticated parallel agent coordination:
 4. **Wave-Based Generation** - For infinite mode, manages successive agent waves
 5. **Context Management** - Optimizes context usage across all agents
 
-### Enhanced Content Organization
-- **`experiments/ui-components/single-file/`** - 35+ themed hybrid components in single HTML files
-- **`experiments/ui-components/multi-file/`** - Component examples with separated HTML/CSS/JS
-- **`experiments/website-homepages/perantara-reps/iterations/`** - NZ DMC homepage variations
-- **`experiments/website-homepages/portfolio-site/iterations/`** - Portfolio homepage iterations
+### Enhanced Content Organization with Run Management
+- **`experiments/shared/`** - Reusable components across all experiment types
+  - `design-systems/` - 9+ comprehensive Geist design system files
+  - `spec-modules/` - Accessibility, performance, and data quality standards
+  - `data/` - Realistic business context (banking, e-commerce scenarios)
+- **`experiments/ui-components/runs/`** - Timestamped execution history
+  - `2025-01-16-legacy-migration/` - 35+ themed hybrid components (legacy)
+  - `[current-timestamp]/iterations/` - Latest generated components
+  - `current/` - Symlink to most recent run
+- **`experiments/functional-ux-patterns/runs/`** - UX pattern execution history with Geist constraints
+- **`experiments/website-homepages/*/runs/`** - Project-specific homepage execution history
+- **`experiments/interactions/runs/`** - Animation and micro-interaction execution history
+- **`experiments/ui-innovations/runs/`** - Novel paradigm execution history
 - **`archive/`** - All original experiments preserved with full attribution and date stamps
 - **`templates/`** - Specification templates for creating new experiment types
 
-### Key Implementation Details
-- **Multi-experiment coordination**: Sub-agents can work across different experiment types simultaneously
-- **Enhanced context sharing**: Complete specification analysis, existing iterations, and unique creative assignments
-- **Intelligent parallel execution**: Task tool coordination with batch sizes optimized by count and experiment type
-- **Progressive sophistication**: Each wave explores more advanced innovation dimensions
-- **Quality consistency**: Theme-first development and spec compliance maintained across all experiment types
-- **Scalable architecture**: Easy addition of new experiment types using template specifications
+#### **Run Directory Structure**
+Each timestamped run contains:
+```
+runs/YYYY-MM-DD-HHMMSS/
+├── spec-snapshot.md          # Exact spec version used
+├── config-snapshot.yml       # Dependency configuration used
+├── dependencies/             # Resolved shared components
+│   ├── design-systems/      # Design system files used
+│   ├── spec-modules/        # Quality modules used
+│   └── data/                # Data sets used
+└── iterations/              # Generated results
+```
+
+### Enhanced Implementation Details
+- **Dependency resolution**: Automatic inclusion of shared design systems, modules, and data based on `spec-config.yml`
+- **Run-based execution**: Each `/infinite` command creates timestamped runs with complete snapshots
+- **Enhanced context sharing**: Complete specification analysis, resolved dependencies, historical runs, and unique creative assignments
+- **Multi-experiment coordination**: Sub-agents can work across different experiment types with shared dependencies
+- **Intelligent parallel execution**: Task tool coordination with dependency-aware batch optimization
+- **Progressive sophistication**: Each wave explores more advanced innovation dimensions with enhanced dependency utilization
+- **Quality consistency**: Shared modules ensure consistent accessibility, performance, and data standards across all experiment types
+- **Iterative workflow**: Easy spec refinement with preserved history and dependency evolution tracking
+- **Scalable architecture**: Easy addition of new experiment types, shared components, and dependency configurations
+
+#### **Dependency Resolution Workflow**
+1. **Configuration Analysis**: Read `spec-config.yml` for dependency requirements
+2. **Component Resolution**: Include content from `shared/design-systems/`, `shared/spec-modules/`, and `shared/data/`
+3. **Snapshot Creation**: Create timestamped run with spec, config, and resolved dependencies
+4. **Agent Context**: Provide sub-agents with complete consolidated specification and dependency context
+5. **Historical Awareness**: Ensure uniqueness across all previous runs and dependency configurations
 
 ### Theme-First Development Approach
 - **Distinctive personalities**: Every iteration embodies a unique design language and emotional character
@@ -140,6 +192,102 @@ The infinite command implements sophisticated parallel agent coordination:
 - Completely novel UI paradigms that replace existing interaction patterns
 - Revolutionary approaches to common interface elements
 - Experimental interaction models while maintaining usability
+
+## Iterative Spec Development Workflow
+
+### **Enhanced Workflow for Continuous Improvement**
+The new architecture enables effortless iteration on specifications based on results without any manual folder management:
+
+#### **1. Initial Exploration**
+```bash
+# Start with a basic configuration
+/infinite ui-components 5
+```
+- Creates `runs/[timestamp]/` with initial spec and dependencies
+- Generates 5 iterations with current specification approach
+- Results accessible via `current/iterations/`
+
+#### **2. Analysis & Refinement**
+```bash
+# Analyze results and identify improvements needed
+# Edit spec.md to narrow scope or change approach
+# Edit spec-config.yml to add/remove dependencies
+```
+- **Spec Evolution**: Modify `spec.md` based on what worked/didn't work
+- **Dependency Adjustment**: Add design systems for consistency, remove for creative freedom
+- **Data Context**: Include realistic data for business contexts, exclude for pure visual exploration
+
+#### **3. Refined Execution**
+```bash
+# Run with refined specification
+/infinite ui-components 3
+```
+- Creates new `runs/[timestamp]/` with updated spec and dependencies  
+- Preserves complete history of previous approach
+- Updates `current/` symlink to latest run
+
+#### **4. Comparative Analysis**
+```bash
+# Compare approaches easily
+ls experiments/ui-components/runs/
+# 2025-01-16-143022/ (initial approach)
+# 2025-01-17-091435/ (refined approach)
+```
+- **Side-by-side comparison**: Different spec versions and their results
+- **Dependency impact**: See how shared components affected quality
+- **Evolution tracking**: Clear progression from initial to refined approaches
+
+#### **5. Continuous Iteration**
+- **No folder proliferation**: Edit specs freely, automatic organization
+- **Complete context preservation**: Every run preserves its complete context
+- **Easy rollback**: Return to previous approaches anytime
+- **Dependency evolution**: Track how shared components improve over iterations
+
+### **Dependency Configuration Evolution Examples**
+
+#### **Visual Theme Focus**
+```yaml
+# experiments/ui-components/spec-config.yml
+dependencies:
+  design-systems: []  # No constraints for creative freedom
+  spec-modules: 
+    - performance-requirements  # Essential for animations
+  data: []  # Pure visual exploration
+```
+
+#### **Business Context Focus**  
+```yaml
+# experiments/functional-ux-patterns/spec-config.yml
+dependencies:
+  design-systems:
+    - geist-core
+    - geist-components  # Consistent business interface
+  spec-modules:
+    - accessibility-standards   # Professional compliance
+    - realistic-data-requirements
+  data:
+    - banking-data  # Rich business context
+```
+
+#### **Innovation with Constraints**
+```yaml
+# experiments/ui-innovations/spec-config.yml  
+dependencies:
+  design-systems:
+    - geist-core  # Base framework to innovate within
+  spec-modules:
+    - accessibility-standards  # Non-negotiable inclusivity
+    - performance-requirements # Revolutionary but performant
+  data: []  # Focus on interaction paradigms
+```
+
+### **Benefits of Enhanced Workflow**
+- ✅ **Effortless iteration**: Edit specs freely without manual setup
+- ✅ **Complete history**: Every approach preserved with its context
+- ✅ **Dependency flexibility**: Mix and match shared components between runs
+- ✅ **Easy comparison**: Clear evolution tracking across spec versions
+- ✅ **No context loss**: Return to any previous approach with complete reproducibility
+- ✅ **Scalable exploration**: Add new dependencies or experiment types seamlessly
 
 ## Quality Standards for All Experiments
 

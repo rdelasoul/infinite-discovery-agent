@@ -1,0 +1,26 @@
+# Configuration snapshot for legacy migration run
+# Generated: 2025-01-16 (Legacy Migration)
+
+dependencies:
+  design-systems:
+    - geist-core
+    - geist-components
+    - geist-data
+  spec-modules:
+    - accessibility-standards
+    - performance-requirements
+    - realistic-data-requirements
+  data:
+    - banking-data
+
+experiment:
+  type: "functional-ux-patterns"
+  domain: "bank-relationship-intelligence"
+  output_format: "single-file"
+  naming_pattern: "ux_pattern_{iteration}.html"
+
+# Legacy run notes:
+# - Migrated 5 existing UX pattern iterations
+# - Focus on banking relationship intelligence workflows
+# - Heavy use of realistic banking data for authentic context
+# - Professional enterprise banking interface requirements

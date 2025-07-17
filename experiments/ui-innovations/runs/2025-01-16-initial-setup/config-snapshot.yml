@@ -1,0 +1,20 @@
+# Configuration snapshot for initial setup
+# Generated: 2025-01-16 (Initial Setup)
+
+dependencies:
+  design-systems: []
+  spec-modules:
+    - accessibility-standards
+    - performance-requirements
+  data: []
+
+experiment:
+  type: "ui-innovations"
+  output_format: "single-file"
+  naming_pattern: "ui_innovation_{iteration}.html"
+
+# Initial setup notes:
+# - No existing iterations (new experiment type)
+# - Focus on accessibility and performance within revolutionary UI concepts
+# - Ready for novel interaction paradigm exploration
+# - Design system constraints intentionally omitted for radical innovation freedom

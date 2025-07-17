@@ -1,0 +1,22 @@
+# Configuration snapshot for legacy migration run  
+# Generated: 2025-01-16 (Legacy Migration)
+
+dependencies:
+  design-systems:
+    - geist-core
+    - geist-components
+  spec-modules:
+    - realistic-data-requirements
+  data:
+    - banking-data
+
+experiment:
+  type: "functional-ux-patterns"
+  output_format: "single-file"
+  naming_pattern: "ux_pattern_{iteration}.html"
+
+# Legacy run notes:
+# - Migrated 1 existing UX pattern iteration
+# - Original spec included Geist design system dependencies
+# - Focused on realistic business data for authentic workflows
+# - Emphasized function-first exploration within design constraints

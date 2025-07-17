@@ -1,0 +1,32 @@
+# Bank Relationship Intelligence Specification Configuration
+
+# Shared dependencies to include when running /infinite bank-relationship-intelligence
+dependencies:
+  # Design system dependencies (recommended for business applications)
+  design-systems:
+    - geist-core         # Essential for professional business interface
+    - geist-components   # Consistent component patterns for enterprise UX
+    - geist-data         # Data display components for financial information
+  
+  # Specification modules (essential for banking interfaces)
+  spec-modules:
+    - accessibility-standards      # Critical for financial service compliance
+    - performance-requirements     # Essential for responsive data interfaces
+    - realistic-data-requirements  # Critical for authentic banking workflow context
+  
+  # Data sets (core requirement for banking UX)
+  data:
+    - banking-data       # Essential for realistic bank relationship patterns
+
+# Experiment configuration
+experiment:
+  type: "functional-ux-patterns"
+  domain: "bank-relationship-intelligence"
+  output_format: "single-file"
+  naming_pattern: "ux_pattern_{iteration}.html"
+
+# Domain context:
+# - Banking relationship management and intelligence
+# - Customer account analysis and insights
+# - Financial data visualization and workflows
+# - Professional enterprise banking interface standards

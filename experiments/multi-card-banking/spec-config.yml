@@ -1,0 +1,33 @@
+# Multi-Card Banking Specification Configuration
+
+# Shared dependencies to include when running /infinite multi-card-banking
+dependencies:
+  # Design system dependencies (recommended for banking applications)
+  design-systems:
+    - geist-core         # Professional banking interface foundation
+    - geist-components   # Consistent component patterns for financial UX
+    - geist-data         # Data components for account and card information
+    - geist-forms        # Form components for card management workflows
+  
+  # Specification modules (essential for banking interfaces)
+  spec-modules:
+    - accessibility-standards      # Critical for financial service compliance
+    - performance-requirements     # Essential for secure, fast banking operations
+    - realistic-data-requirements  # Critical for authentic multi-card scenarios
+  
+  # Data sets (core requirement for banking UX)
+  data:
+    - banking-data       # Essential for realistic multi-card banking patterns
+
+# Experiment configuration
+experiment:
+  type: "functional-ux-patterns"
+  domain: "multi-card-banking"
+  output_format: "single-file"
+  naming_pattern: "ux_pattern_{iteration}.html"
+
+# Domain context:
+# - Multiple credit/debit card management
+# - Card switching and selection workflows
+# - Account reconciliation across multiple cards
+# - Banking security and authentication patterns

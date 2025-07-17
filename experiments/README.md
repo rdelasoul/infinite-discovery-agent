@@ -21,6 +21,52 @@ claude
 /infinite ui-components infinite
 ```
 
+## 🚀 Enhanced Structure & Workflow
+
+### **Shared Dependencies**
+All experiments can now leverage shared components from `shared/`:
+- **Design Systems** (`shared/design-systems/`): Geist and other design frameworks
+- **Spec Modules** (`shared/spec-modules/`): Reusable requirements (accessibility, performance, data)
+- **Data Sets** (`shared/data/`): Realistic business context (banking, e-commerce)
+
+### **Run-Based Organization**
+Each `/infinite` execution creates a timestamped run:
+```
+experiments/ui-components/
+├── spec.md                    # Current working spec (edit freely)
+├── spec-config.yml           # Dependency configuration
+├── runs/                     # Execution history
+│   ├── 2025-01-16-143022/   # Timestamped run
+│   │   ├── spec-snapshot.md  # Spec version used
+│   │   ├── config-snapshot.yml
+│   │   ├── dependencies/     # Resolved dependencies
+│   │   └── iterations/       # Generated results
+│   └── 2025-01-17-091435/   # New run
+├── current -> runs/[latest]  # Symlink to most recent
+└── README.md
+```
+
+### **Iterative Workflow**
+1. **Edit spec**: Modify `spec.md` and `spec-config.yml` as needed
+2. **Run experiments**: `/infinite ui-components 5` (auto-creates timestamped run)
+3. **Analyze results**: Check `current/iterations/` for latest results
+4. **Compare approaches**: Previous runs preserved for comparison
+5. **Refine and repeat**: No manual folder creation required
+
+### **Dependency Configuration Example**
+```yaml
+# experiments/ui-components/spec-config.yml
+dependencies:
+  design-systems:
+    - geist-core          # Typography, colors, spacing
+    - geist-components    # Component patterns
+  spec-modules:
+    - accessibility-standards    # WCAG compliance
+    - performance-requirements   # 60fps animations
+  data:
+    - ecommerce-data      # Product/shopping context
+```
+
 ## Experiment Types
 
 ### 🎨 UI Components (`ui-components/`)
@@ -30,9 +76,9 @@ claude
 
 **Concept**: "Two birds with one stone" efficiency by combining functions like Search + Autocomplete + Filters + Recent Items into single components with themes like Organic Nature, Digital Minimalism, Cyberpunk, etc.
 
-**Outputs**: 
-- `single-file/` - All-in-one HTML files
-- `multi-file/` - Separated HTML/CSS/JS
+**Outputs**: Results appear in `runs/[timestamp]/iterations/`
+- Themed hybrid components with distinctive design personalities
+- Multiple UI functions combined into elegant solutions
 
 ---
 
@@ -92,7 +138,7 @@ claude
 
 1. **Create directory structure**:
    ```bash
-   mkdir -p experiments/[experiment-name]/iterations
+   mkdir -p experiments/[experiment-name]/runs
    ```
 
 2. **Create specification**:
@@ -101,11 +147,23 @@ claude
    # Edit spec.md with specific requirements
    ```
 
-3. **Add README.md**:
-   Document the experiment's purpose, usage, and examples.
+3. **Create dependency configuration**:
+   ```bash
+   cp experiments/ui-components/spec-config.yml experiments/[experiment-name]/spec-config.yml
+   # Edit to specify needed dependencies from shared/
+   ```
 
-4. **Update this index**:
-   Add the new experiment type to the list above.
+4. **Add README.md**:
+   Document the experiment's purpose, usage, examples, and recommended dependencies.
+
+5. **Test the setup**:
+   ```bash
+   /infinite [experiment-name] 1
+   ```
+   This will create the first timestamped run and verify the configuration works.
+
+6. **Update this index**:
+   Add the new experiment type to the list above with its dependency recommendations.
 
 ## Best Practices
 

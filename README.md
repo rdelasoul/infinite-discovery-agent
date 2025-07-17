@@ -76,29 +76,56 @@ Completely novel UI paradigms that replace existing interaction patterns with re
 
 **Goal**: Invent entirely new ways to interact with interfaces while maintaining usability
 
-## 📁 Directory Structure
+## 📁 Enhanced Directory Structure
 
 ```
 experiments/
-├── ui-components/           # Themed hybrid UI components
-│   ├── spec.md             # Detailed specification (236 lines!)
-│   ├── single-file/        # All-in-one HTML files (35+ iterations)
-│   ├── multi-file/         # Separated HTML/CSS/JS (5 examples)
+├── shared/                        # 🆕 Reusable components
+│   ├── design-systems/           # Geist & other design system files
+│   │   ├── geist-core.md         # Colors, typography, spacing
+│   │   ├── geist-components.md   # Component patterns
+│   │   └── [9 comprehensive files]
+│   ├── spec-modules/             # Reusable specification components
+│   │   ├── accessibility-standards.md
+│   │   ├── performance-requirements.md
+│   │   └── realistic-data-requirements.md
+│   └── data/                     # Realistic business data sets
+│       ├── banking-data.md       # Financial services context
+│       └── ecommerce-data.md     # Retail & shopping context
+├── ui-components/
+│   ├── spec.md                   # Current working specification
+│   ├── spec-config.yml           # Dependency configuration
+│   ├── runs/                     # Timestamped execution history
+│   │   ├── 2025-01-16-legacy-migration/
+│   │   │   ├── spec-snapshot.md   # Spec version used
+│   │   │   ├── config-snapshot.yml
+│   │   │   ├── dependencies/      # Resolved dependencies
+│   │   │   └── iterations/        # Generated results (35+ files)
+│   │   └── [future timestamped runs]
+│   ├── current -> runs/[latest]   # Symlink to most recent
 │   └── README.md
+├── functional-ux-patterns/        # Workflow optimization patterns
+│   ├── spec.md                   # Function-first exploration
+│   ├── spec-config.yml           # Geist + banking data dependencies
+│   ├── runs/                     # Execution history
+│   └── current -> runs/[latest]
 ├── website-homepages/
-│   ├── perantara-reps/     # NZ DMC website iterations
-│   ├── portfolio-site/     # Portfolio website variations
-│   └── README.md
-├── interactions/           # Ready for new experiments
-├── ui-innovations/         # Ready for novel paradigms
+│   ├── perantara-reps/           # NZ DMC project
+│   │   ├── spec.md               # Brand-specific requirements
+│   │   ├── spec-config.yml       # Project dependencies
+│   │   ├── runs/                 # Project iteration history
+│   │   └── current -> runs/[latest]
+│   └── portfolio-site/           # Portfolio variations
+├── interactions/                  # Micro-interactions & animations
+├── ui-innovations/               # Novel UI paradigms
 └── README.md
 
-templates/                  # Specification templates
+templates/                        # Specification templates
 ├── ui-component-spec-template.md
 ├── website-spec-template.md
 └── interaction-spec-template.md
 
-archive/                    # All original work preserved
+archive/                          # All original work preserved
 └── [dated directories with full attribution]
 ```
 
@@ -118,10 +145,14 @@ archive/                    # All original work preserved
 /infinite website-homepages/perantara-reps 3
 ```
 
-### **Auto-Discovery Magic**
+### **Enhanced Auto-Discovery & Dependency Resolution**
 - 🔍 **Automatic spec detection**: Finds `experiments/{experiment-path}/spec.md`
-- 📂 **Smart output routing**: Uses appropriate directories (`single-file/`, `iterations/`, etc.)
-- 🚀 **Zero configuration**: Just specify experiment type and count
+- ⚙️ **Dependency resolution**: Reads `spec-config.yml` and resolves shared components
+- 📦 **Smart component inclusion**: Auto-includes design systems, modules, and data sets
+- 📁 **Timestamped runs**: Creates `runs/YYYY-MM-DD-HHMMSS/` for each execution
+- 📸 **Complete snapshots**: Preserves spec, config, and dependencies for reproducibility
+- 🔗 **Current symlink**: Always points to latest run for easy access
+- 🚀 **Zero manual setup**: Just specify experiment type and count
 
 ### **Command Examples**
 
@@ -182,8 +213,39 @@ archive/                    # All original work preserved
    ```
 
 3. **Explore the result**:
-   - Check `experiments/ui-components/single-file/` for your new component
+   - Check `experiments/ui-components/current/iterations/` for your new component
    - Open the HTML file in a browser to see the themed hybrid functionality
+
+### **Iterative Spec Development Workflow**
+The new structure makes it easy to refine specifications based on results:
+
+1. **Run initial experiments**:
+   ```bash
+   /infinite ui-components 5
+   ```
+
+2. **Analyze results** in `experiments/ui-components/current/iterations/`
+
+3. **Refine the specification**:
+   - Edit `experiments/ui-components/spec.md` to narrow scope
+   - Update `experiments/ui-components/spec-config.yml` to change dependencies
+   - Add/remove design systems, modules, or data sets as needed
+
+4. **Run refined experiments**:
+   ```bash
+   /infinite ui-components 3
+   ```
+
+5. **Compare approaches**:
+   - New results in `experiments/ui-components/runs/[new-timestamp]/`
+   - Previous results preserved in `experiments/ui-components/runs/[old-timestamp]/`
+   - Easy comparison between different spec versions and their outcomes
+
+**Benefits**:
+- ✅ No manual folder creation required
+- ✅ Complete history of spec evolution and results
+- ✅ Mix and match dependencies between runs
+- ✅ Easy rollback to previous approaches
 
 ### **Create New Experiment Types**
 1. **Use a template**:
@@ -191,7 +253,11 @@ archive/                    # All original work preserved
    cp templates/ui-component-spec-template.md experiments/my-experiment/spec.md
    ```
 
-2. **Customize the specification** with your requirements
+2. **Create dependency configuration**:
+   ```bash
+   cp experiments/ui-components/spec-config.yml experiments/my-experiment/spec-config.yml
+   # Edit to specify needed dependencies
+   ```
 
 3. **Run your experiment**:
    ```bash
