@@ -14,11 +14,20 @@ Parse the following from "$ARGUMENTS":
 **Auto-Discovery:**
 - spec_file: `experiments/{experiment_path}/spec.md`
 - config_file: `experiments/{experiment_path}/spec-config.yml`
-- output_dir: `experiments/{experiment_path}/current/iterations/`
+- run_timestamp: `YYYY-MM-DD-HHMMSS` (current timestamp)
+- run_dir: `experiments/{experiment_path}/runs/{run_timestamp}/`
+- output_dir: `experiments/{experiment_path}/runs/{run_timestamp}/iterations/`
 
 **PHASE 1: QUICK SETUP**
 
-**1.1 Dependency Resolution:**
+**1.1 Run Directory Creation:**
+Create timestamped run with essential structure:
+- Create `experiments/{experiment_path}/runs/{run_timestamp}/`
+- Create `experiments/{experiment_path}/runs/{run_timestamp}/iterations/`
+- Copy `spec.md` to `runs/{run_timestamp}/spec-snapshot.md`
+- Copy `spec-config.yml` to `runs/{run_timestamp}/config-snapshot.yml`
+
+**1.2 Dependency Resolution:**
 Read config_file for essential dependencies only:
 - Include design-systems files if specified
 - Include critical spec-modules (accessibility, performance)
@@ -26,18 +35,20 @@ Read config_file for essential dependencies only:
 - Include data sets if needed
 - Skip extensive dependency copying and snapshots
 
-**1.2 Spec Preparation:**
+**1.3 Spec Preparation:**
 Create lightweight consolidated spec:
 - Base spec from spec_file
 - Essential dependency content only
-- Skip redundant documentation sections
+- **Strip ultra-thinking directives** - Remove sections containing "Ultra-Thinking Directive", "Before creating", "deeply consider", and extensive thinking prompts
+- Keep core requirements: file naming, structure, quality standards, technical specs
+- Skip redundant documentation sections and token-heavy analysis prompts
 
 **PHASE 2: FAST GENERATION**
 
 **2.1 Historical Context (Minimal):**
 Quick scan of existing iterations to avoid duplicates:
-- Check current/iterations/ for existing files
-- Identify starting iteration number
+- Check all previous runs in `runs/` directory for existing files
+- Identify starting iteration number across all runs
 - Skip extensive historical analysis
 
 **2.2 Direct Agent Deployment:**
@@ -52,8 +63,8 @@ For "infinite": Launch waves of 3-5 agents until context limits
 TASK: Generate iteration [NUMBER] for [EXPERIMENT_PATH]
 
 CONTEXT:
-- Spec: [consolidated specification]
-- Output: experiments/{experiment_path}/current/iterations/
+- Spec: [streamlined consolidated specification - ultra-thinking directives removed]
+- Output: experiments/{experiment_path}/runs/{run_timestamp}/iterations/
 - Iteration: [NUMBER]
 - Dependencies: [essential deps only]
 
@@ -62,7 +73,8 @@ REQUIREMENTS:
 2. Ensure uniqueness from existing iterations
 3. Use dependencies appropriately
 4. Create functional, accessible output
-5. File: experiments/{experiment_path}/current/iterations/[filename]
+5. File: experiments/{experiment_path}/runs/{run_timestamp}/iterations/[filename]
+6. Focus on efficient implementation without extensive analysis
 
 DELIVERABLE: Single functional file as specified
 ```
@@ -71,7 +83,7 @@ DELIVERABLE: Single functional file as specified
 - Launch all agents simultaneously using Task tool
 - Minimal coordination overhead
 - Basic completion monitoring
-- Simple file organization
+- Update `current` symlink to point to new run after completion
 
 **PHASE 3: QUICK INFINITE MODE**
 For infinite generation:
@@ -93,6 +105,7 @@ WHILE context allows:
 - Direct generation approach
 - Essential dependencies only
 - Streamlined agent coordination
+- **Ultra-thinking directives removed** from spec content
 
 **Quality Maintained:**
 - Spec compliance required
@@ -100,10 +113,18 @@ WHILE context allows:
 - Functional output standards
 - Dependency integration
 
-**Efficiency:**
-- 70-80% fewer tokens than /infinite
+**Token Efficiency:**
+- 70-80% fewer tokens than /infinite (achieved by removing ultra-thinking directives)
 - Faster execution times
 - Essential features only
 - Direct output generation
+- Streamlined specification content
 
-Begin execution by quickly analyzing the experiment spec, resolving essential dependencies, and launching parallel Sub Agents for direct generation with minimal coordination overhead.
+Begin execution by:
+1. Creating timestamped run directory with snapshots
+2. Quickly analyzing the experiment spec and resolving essential dependencies
+3. **Stripping ultra-thinking directives** from spec content to create streamlined specification
+4. Launching parallel Sub Agents for direct generation with minimal coordination overhead
+5. Updating `current` symlink to point to new run upon completion
+
+This maintains the proper run-based architecture while achieving true token efficiency through streamlined spec preparation and fast execution approach.

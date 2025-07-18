@@ -1,0 +1,1249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perantara Reps - Your Trusted NZ DMC Partner</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #2563eb;
+            --electric-indigo: #6366f1;
+            --indonesia-gold: #d97706;
+            --batik-teal: #0891b2;
+            --warm-white: #fefefe;
+            --soft-gray: #f8fafc;
+            --text-dark: #1e293b;
+            --text-medium: #475569;
+            --text-light: #64748b;
+            --border-color: #e2e8f0;
+            --shadow-soft: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+            --shadow-medium: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --gradient-hero: linear-gradient(135deg, var(--primary-blue) 0%, var(--electric-indigo) 50%, var(--batik-teal) 100%);
+            --gradient-accent: linear-gradient(45deg, var(--indonesia-gold) 0%, var(--electric-indigo) 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* Cultural Bridge Pattern Background */
+        .cultural-pattern {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cultural-pattern::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 25% 25%, var(--batik-teal) 2px, transparent 2px),
+                radial-gradient(circle at 75% 75%, var(--indonesia-gold) 1px, transparent 1px);
+            background-size: 80px 80px, 60px 60px;
+            opacity: 0.1;
+            z-index: 0;
+        }
+
+        /* Navigation */
+        .nav-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 70px;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-medium);
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-blue);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .cta-button {
+            background: var(--gradient-hero);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        /* Mobile Navigation */
+        .mobile-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+        }
+
+        .mobile-toggle span {
+            width: 24px;
+            height: 3px;
+            background: var(--text-dark);
+            transition: 0.3s;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: var(--gradient-hero);
+            color: white;
+            padding: 120px 0 80px;
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-tagline {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-visual {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .bridge-visual {
+            width: 400px;
+            height: 300px;
+            position: relative;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .bridge-icons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .flag-icon {
+            width: 80px;
+            height: 60px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .nz-flag {
+            background: linear-gradient(45deg, #1e40af, #3b82f6);
+        }
+
+        .id-flag {
+            background: linear-gradient(45deg, #dc2626, #fbbf24);
+        }
+
+        .bridge-connector {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 120px;
+            height: 4px;
+            background: var(--gradient-accent);
+            border-radius: 2px;
+            animation: pulse 2s infinite;
+        }
+
+        .bridge-connector::before,
+        .bridge-connector::after {
+            content: '';
+            position: absolute;
+            top: -8px;
+            width: 0;
+            height: 0;
+            border: 8px solid transparent;
+        }
+
+        .bridge-connector::before {
+            left: -16px;
+            border-right-color: var(--indonesia-gold);
+        }
+
+        .bridge-connector::after {
+            right: -16px;
+            border-left-color: var(--electric-indigo);
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 0.7; transform: translate(-50%, -50%) scale(1.05); }
+        }
+
+        /* Section Styling */
+        .section {
+            padding: 80px 0;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-medium);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* What Makes Us Different */
+        .difference-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+        }
+
+        .difference-card {
+            background: var(--warm-white);
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .difference-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-accent);
+        }
+
+        .difference-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .difference-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-hero);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .difference-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .difference-description {
+            color: var(--text-medium);
+            line-height: 1.6;
+        }
+
+        /* Why Choose Us */
+        .choose-us {
+            background: var(--soft-gray);
+        }
+
+        .reasons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .reason-item {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow-soft);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .reason-item:hover {
+            transform: translateY(-2px);
+        }
+
+        .reason-number {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: white;
+            margin: 0 auto 1rem;
+            font-size: 1.25rem;
+        }
+
+        .reason-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .reason-description {
+            color: var(--text-medium);
+            font-size: 0.95rem;
+        }
+
+        /* How We Work */
+        .process-timeline {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .process-step {
+            position: relative;
+            text-align: center;
+            padding: 2rem 1rem;
+        }
+
+        .step-number {
+            width: 80px;
+            height: 80px;
+            background: var(--gradient-hero);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            margin: 0 auto 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .process-step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            top: 40px;
+            right: -1rem;
+            width: 2rem;
+            height: 2px;
+            background: var(--gradient-accent);
+            z-index: 1;
+        }
+
+        .step-title {
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--text-dark);
+        }
+
+        .step-description {
+            color: var(--text-medium);
+            font-size: 0.95rem;
+        }
+
+        /* Testimonials */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonial-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow-soft);
+            border-left: 4px solid var(--batik-teal);
+            position: relative;
+        }
+
+        .testimonial-quote {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            color: var(--text-dark);
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: white;
+        }
+
+        .author-info h4 {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            color: var(--text-dark);
+        }
+
+        .author-info p {
+            color: var(--text-medium);
+            font-size: 0.9rem;
+        }
+
+        /* Contact Form */
+        .contact {
+            background: var(--soft-gray);
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .contact-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .contact-info p {
+            color: var(--text-medium);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .contact-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .contact-method {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--text-dark);
+            transition: transform 0.3s ease;
+        }
+
+        .contact-method:hover {
+            transform: translateX(4px);
+        }
+
+        .contact-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-hero);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .contact-form {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .whatsapp-option {
+            background: #25d366;
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .whatsapp-option a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--text-dark);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            line-height: 2;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 1rem;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-toggle {
+                display: flex;
+            }
+
+            .hero-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 2rem;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .bridge-visual {
+                width: 300px;
+                height: 200px;
+            }
+
+            .flag-icon {
+                width: 60px;
+                height: 45px;
+                font-size: 0.8rem;
+            }
+
+            .bridge-connector {
+                width: 80px;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .difference-grid,
+            .reasons-grid,
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .process-step:not(:last-child)::after {
+                display: none;
+            }
+
+            .hero-cta {
+                justify-content: center;
+            }
+
+            .nav-container {
+                padding: 0 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                padding: 100px 0 60px;
+            }
+
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+
+            .hero-tagline {
+                font-size: 1.1rem;
+            }
+
+            .section {
+                padding: 60px 0;
+            }
+
+            .difference-card,
+            .contact-form {
+                padding: 1.5rem;
+            }
+
+            .bridge-visual {
+                width: 250px;
+                height: 150px;
+            }
+
+            .bridge-icons {
+                padding: 1rem;
+            }
+        }
+
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Focus styles for keyboard navigation */
+        .cta-button:focus,
+        .nav-links a:focus,
+        .contact-method:focus,
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: 2px solid var(--primary-blue);
+            outline-offset: 2px;
+        }
+
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            :root {
+                --text-dark: #000000;
+                --text-medium: #333333;
+                --border-color: #666666;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav-header" role="navigation" aria-label="Main navigation">
+        <div class="nav-container">
+            <div class="logo">Perantara Reps</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#testimonials">Stories</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <a href="#contact" class="cta-button">Get Started</a>
+            <div class="mobile-toggle" aria-label="Toggle mobile menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero cultural-pattern">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1>The NZ DMC that Indonesian travel agents actually recommend</h1>
+                <p class="hero-tagline">Your trusted cousin in New Zealand - bridging cultures, connecting dreams, delivering experiences that Indonesian travelers will never forget.</p>
+                <div class="hero-cta">
+                    <a href="#contact" class="cta-button">Start Partnership</a>
+                    <a href="#about" class="cta-button" style="background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3);">Learn More</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="bridge-visual">
+                    <div class="bridge-icons">
+                        <div class="flag-icon nz-flag">🇳🇿 NZ</div>
+                        <div class="bridge-connector"></div>
+                        <div class="flag-icon id-flag">🇮🇩 ID</div>
+                    </div>
+                    <p style="color: rgba(255,255,255,0.9); font-weight: 500; margin-top: 1rem;">Cultural Bridge Excellence</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- What Makes Us Different -->
+    <section id="about" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">What Makes Us Different</h2>
+                <p class="section-subtitle">We're not just another DMC - we're your cultural bridge to authentic New Zealand experiences</p>
+            </div>
+            <div class="difference-grid">
+                <div class="difference-card">
+                    <div class="difference-icon">🏔️</div>
+                    <h3 class="difference-title">Born from Indonesian Dreams</h3>
+                    <p class="difference-description">Founded by Indonesian-NZ cultural connectors who understand exactly what Indonesian travelers seek in New Zealand. We live the bridge between both worlds daily.</p>
+                </div>
+                <div class="difference-card">
+                    <div class="difference-icon">🤝</div>
+                    <h3 class="difference-title">Your Trusted Cousin Approach</h3>
+                    <p class="difference-description">We treat your clients like family visiting their NZ cousin. Personal care, insider knowledge, and genuine warmth that makes every traveler feel at home.</p>
+                </div>
+                <div class="difference-card">
+                    <div class="difference-icon">⚡</div>
+                    <h3 class="difference-title">48-Hour Response Guarantee</h3>
+                    <p class="difference-description">Indonesian business pace meets Kiwi efficiency. Every inquiry, every change, every emergency gets our full attention within 48 hours, guaranteed.</p>
+                </div>
+                <div class="difference-card">
+                    <div class="difference-icon">🎯</div>
+                    <h3 class="difference-title">Indonesian-Curated Experiences</h3>
+                    <p class="difference-description">Every itinerary crafted specifically for Indonesian preferences - from halal dining options to culturally significant sites that resonate with Indonesian heritage.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Travel Agents Choose Us -->
+    <section class="section choose-us">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Why Travel Agents Choose Us</h2>
+                <p class="section-subtitle">Built specifically for Indonesian travel professionals who demand excellence</p>
+            </div>
+            <div class="reasons-grid">
+                <div class="reason-item">
+                    <div class="reason-number">1</div>
+                    <h3 class="reason-title">Indonesian Client Expertise</h3>
+                    <p class="reason-description">Deep understanding of Indonesian travel patterns, preferences, and cultural sensitivities. Your clients feel understood from day one.</p>
+                </div>
+                <div class="reason-item">
+                    <div class="reason-number">2</div>
+                    <h3 class="reason-title">Rapid Response System</h3>
+                    <p class="reason-description">48-hour response guarantee on all communications. Your urgent requests never wait, your clients never worry.</p>
+                </div>
+                <div class="reason-item">
+                    <div class="reason-number">3</div>
+                    <h3 class="reason-title">Cultural Intelligence</h3>
+                    <p class="reason-description">Bilingual support team trained in Indonesian business culture and hospitality expectations. Communication that clicks instantly.</p>
+                </div>
+                <div class="reason-item">
+                    <div class="reason-number">4</div>
+                    <h3 class="reason-title">Flexible Partnership Terms</h3>
+                    <p class="reason-description">Commission structures and payment terms designed for Indonesian travel industry dynamics. Business partnerships that actually work.</p>
+                </div>
+                <div class="reason-item">
+                    <div class="reason-number">5</div>
+                    <h3 class="reason-title">Quality Assurance Promise</h3>
+                    <p class="reason-description">Every service delivery measured against Indonesian hospitality standards. Your reputation stays protected with every client we serve.</p>
+                </div>
+                <div class="reason-item">
+                    <div class="reason-number">6</div>
+                    <h3 class="reason-title">Local Insider Access</h3>
+                    <p class="reason-description">Exclusive partnerships with NZ operators who specialize in Indonesian guest experiences. Access others simply don't have.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How We Work Together -->
+    <section id="services" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">How We Work Together</h2>
+                <p class="section-subtitle">Simple, transparent process designed for busy Indonesian travel professionals</p>
+            </div>
+            <div class="process-timeline">
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <h3 class="step-title">Initial Partnership</h3>
+                    <p class="step-description">Quick 30-minute call to understand your client base and establish partnership terms. Start sending clients immediately.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <h3 class="step-title">Client Briefing</h3>
+                    <p class="step-description">Share client preferences, travel style, and cultural considerations. We create tailored itinerary proposals within 48 hours.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <h3 class="step-title">Seamless Execution</h3>
+                    <p class="step-description">We handle all ground arrangements while keeping you informed. Your clients experience NZ like visiting family.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">4</div>
+                    <h3 class="step-title">Ongoing Support</h3>
+                    <p class="step-description">24/7 support during travel, post-trip follow-up, and continuous partnership development for long-term success.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Real Agent Stories -->
+    <section id="testimonials" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Real Agent Stories</h2>
+                <p class="section-subtitle">Indonesian travel professionals sharing their Perantara Reps experience</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <p class="testimonial-quote">"Finally found a DMC that truly understands Indonesian travelers. My clients come back with stories like they visited family in New Zealand. Perantara Reps gets the cultural nuances that matter."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">SR</div>
+                        <div class="author-info">
+                            <h4>Sari Rahayu</h4>
+                            <p>Director, Indonesia Premium Travel</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-quote">"Their 48-hour response isn't marketing talk - it's reality. When my client needed last-minute changes during Ramadan, they rearranged everything perfectly. Professional service with genuine Indonesian warmth."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">DH</div>
+                        <div class="author-info">
+                            <h4>Dimas Haryanto</h4>
+                            <p>Operations Manager, Jakarta Adventure Tours</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-quote">"Working with Perantara Reps feels like having a reliable cousin in New Zealand. They anticipate what Indonesian families need before we even ask. My clients trust me more because I partner with them."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">NW</div>
+                        <div class="author-info">
+                            <h4>Novi Wijaya</h4>
+                            <p>Senior Travel Consultant, Bali Elite Tours</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section contact">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Start Your Partnership Today</h2>
+                <p class="section-subtitle">Ready to offer your clients the NZ experience they deserve?</p>
+            </div>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3>Let's Connect Like Family</h3>
+                    <p>Whether you're sending your first client or your hundredth, we're here to make every New Zealand journey extraordinary. Reach out in the way that works best for you.</p>
+                    <div class="contact-methods">
+                        <a href="mailto:partners@perantarareps.co.nz" class="contact-method">
+                            <div class="contact-icon">📧</div>
+                            <div>
+                                <strong>Email Partnership</strong>
+                                <p>partners@perantarareps.co.nz</p>
+                            </div>
+                        </a>
+                        <a href="https://wa.me/6421234567" class="contact-method" style="background: linear-gradient(135deg, #25d366, #20b954); color: white;">
+                            <div class="contact-icon">💬</div>
+                            <div>
+                                <strong>WhatsApp Direct</strong>
+                                <p>+64 21 234 567 (Instant Response)</p>
+                            </div>
+                        </a>
+                        <a href="tel:+6499876543" class="contact-method">
+                            <div class="contact-icon">📞</div>
+                            <div>
+                                <strong>Direct Line</strong>
+                                <p>+64 9 987 6543</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <form class="contact-form" id="partnershipForm">
+                    <h3 style="margin-bottom: 1.5rem; color: var(--text-dark);">Partnership Inquiry</h3>
+                    <div class="whatsapp-option">
+                        <a href="https://wa.me/6421234567?text=Hi%20Perantara%20Reps,%20I'm%20interested%20in%20becoming%20a%20partner%20agent">
+                            💬 Prefer WhatsApp? Click here for instant connection
+                        </a>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Your Name *</label>
+                        <input type="text" id="name" name="name" required aria-required="true">
+                    </div>
+                    <div class="form-group">
+                        <label for="company">Travel Agency Name *</label>
+                        <input type="text" id="company" name="company" required aria-required="true">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" required aria-required="true">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone/WhatsApp Number</label>
+                        <input type="tel" id="phone" name="phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="clientVolume">Monthly Client Volume</label>
+                        <select id="clientVolume" name="clientVolume">
+                            <option value="">Select volume range</option>
+                            <option value="1-5">1-5 clients per month</option>
+                            <option value="6-15">6-15 clients per month</option>
+                            <option value="16-30">16-30 clients per month</option>
+                            <option value="30+">30+ clients per month</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Tell us about your client base and how we can serve them best</label>
+                        <textarea id="message" name="message" placeholder="What types of experiences do your Indonesian clients typically seek in New Zealand?"></textarea>
+                    </div>
+                    <button type="submit" class="cta-button" style="width: 100%;">Start Partnership</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Perantara Reps</h4>
+                    <p style="color: rgba(255,255,255,0.8); margin-bottom: 1rem;">Your trusted cultural bridge to authentic New Zealand experiences.</p>
+                    <p style="color: rgba(255,255,255,0.6);">Connecting Indonesian dreams with Kiwi hospitality since 2019.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <a href="#home">Home</a><br>
+                    <a href="#about">About Us</a><br>
+                    <a href="#services">Services</a><br>
+                    <a href="#testimonials">Agent Stories</a><br>
+                    <a href="#contact">Partnership</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <a href="mailto:partners@perantarareps.co.nz">partners@perantarareps.co.nz</a><br>
+                    <a href="tel:+6499876543">+64 9 987 6543</a><br>
+                    <a href="https://wa.me/6421234567">WhatsApp: +64 21 234 567</a><br>
+                    <span style="color: rgba(255,255,255,0.6);">Auckland, New Zealand</span>
+                </div>
+                <div class="footer-section">
+                    <h4>Business Hours</h4>
+                    <span style="color: rgba(255,255,255,0.8);">Monday - Friday: 8:00 AM - 6:00 PM NZST</span><br>
+                    <span style="color: rgba(255,255,255,0.8);">Weekend: Emergency support available</span><br>
+                    <span style="color: rgba(255,255,255,0.6);">Indonesian Time Zone Support</span>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Perantara Reps. Licensed New Zealand DMC. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Navigation Toggle
+        const mobileToggle = document.querySelector('.mobile-toggle');
+        const navLinks = document.querySelector('.nav-links');
+
+        mobileToggle.addEventListener('click', () => {
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+        });
+
+        // Smooth Scrolling for Navigation Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Header Background on Scroll
+        const header = document.querySelector('.nav-header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+                header.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+                header.style.boxShadow = 'none';
+            }
+        });
+
+        // Form Submission
+        document.getElementById('partnershipForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+            
+            // Simple validation
+            if (!data.name || !data.company || !data.email) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+            
+            // Simulate form submission
+            const submitButton = this.querySelector('button[type="submit"]');
+            const originalText = submitButton.textContent;
+            submitButton.textContent = 'Sending...';
+            submitButton.disabled = true;
+            
+            setTimeout(() => {
+                alert('Thank you for your partnership inquiry! We\'ll respond within 48 hours via your preferred contact method.');
+                this.reset();
+                submitButton.textContent = originalText;
+                submitButton.disabled = false;
+            }, 2000);
+        });
+
+        // Intersection Observer for Animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe cards and sections for animation
+        document.querySelectorAll('.difference-card, .reason-item, .testimonial-card, .process-step').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+
+        // WhatsApp Integration Helper
+        function openWhatsApp(message = '') {
+            const phoneNumber = '6421234567';
+            const encodedMessage = encodeURIComponent(message || 'Hi Perantara Reps, I\'m interested in becoming a partner agent');
+            window.open(`https://wa.me/${phoneNumber}?text=${encodedMessage}`, '_blank');
+        }
+
+        // Cultural bridge animation enhancement
+        const bridgeConnector = document.querySelector('.bridge-connector');
+        if (bridgeConnector) {
+            setInterval(() => {
+                bridgeConnector.style.background = bridgeConnector.style.background === 'var(--gradient-accent)' 
+                    ? 'linear-gradient(45deg, var(--batik-teal), var(--indonesia-gold))' 
+                    : 'var(--gradient-accent)';
+            }, 3000);
+        }
+
+        // Accessibility: Skip to main content
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Tab' && e.target === document.body) {
+                const skipLink = document.createElement('a');
+                skipLink.href = '#home';
+                skipLink.textContent = 'Skip to main content';
+                skipLink.style.position = 'absolute';
+                skipLink.style.top = '-40px';
+                skipLink.style.left = '6px';
+                skipLink.style.background = 'var(--primary-blue)';
+                skipLink.style.color = 'white';
+                skipLink.style.padding = '8px';
+                skipLink.style.textDecoration = 'none';
+                skipLink.style.borderRadius = '4px';
+                skipLink.style.zIndex = '9999';
+                
+                skipLink.addEventListener('focus', () => {
+                    skipLink.style.top = '6px';
+                });
+                
+                skipLink.addEventListener('blur', () => {
+                    skipLink.style.top = '-40px';
+                });
+                
+                document.body.prepend(skipLink);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perantara Reps - The NZ DMC Indonesian Travel Agents Trust</title>
+    <style>
+        :root {
+            --electric-indigo: #6366f1;
+            --electric-indigo-light: #8b5cf6;
+            --electric-indigo-dark: #4338ca;
+            --professional-blue: #2563eb;
+            --vibrant-purple: #7c3aed;
+            --energetic-pink: #ec4899;
+            --success-green: #10b981;
+            --warning-amber: #f59e0b;
+            --text-dark: #1e293b;
+            --text-medium: #475569;
+            --text-light: #64748b;
+            --surface-white: #ffffff;
+            --surface-light: #f8fafc;
+            --surface-medium: #e2e8f0;
+            --gradient-primary: linear-gradient(135deg, var(--electric-indigo) 0%, var(--vibrant-purple) 50%, var(--energetic-pink) 100%);
+            --gradient-secondary: linear-gradient(90deg, var(--professional-blue) 0%, var(--electric-indigo) 100%);
+            --gradient-accent: linear-gradient(45deg, var(--electric-indigo-light) 0%, var(--electric-indigo) 100%);
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* Header with Dynamic Gradient */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--surface-medium);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .header.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: var(--shadow-md);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .logo {
+            font-size: 1.75rem;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
+        }
+
+        .nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav a {
+            text-decoration: none;
+            color: var(--text-medium);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .nav a:hover {
+            color: var(--electric-indigo);
+            transform: translateY(-1px);
+        }
+
+        .nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 50%;
+            background: var(--gradient-primary);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav a:hover::after {
+            width: 100%;
+        }
+
+        .cta-button {
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-md);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-dark);
+            cursor: pointer;
+        }
+
+        /* Hero Section with Animated Gradient */
+        .hero {
+            background: var(--gradient-primary);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, transparent 50%, rgba(255,255,255,0.1) 100%);
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { transform: translateX(-100%); }
+            50% { transform: translateX(100%); }
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            text-align: center;
+            color: white;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            font-weight: 400;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-cta {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: center;
+            margin-top: 2rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn-primary {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+            padding: 1rem 2rem;
+            border-radius: 16px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            background: rgba(255,255,255,0.25);
+            border-color: rgba(255,255,255,0.5);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid rgba(255,255,255,0.5);
+            padding: 1rem 2rem;
+            border-radius: 16px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Section Styling */
+        .section {
+            padding: 5rem 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: var(--gradient-secondary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-medium);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* What Makes Us Different */
+        .differences-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .difference-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow-lg);
+            transition: all 0.3s ease;
+            border: 1px solid var(--surface-medium);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .difference-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-primary);
+        }
+
+        .difference-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .difference-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-accent);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .difference-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .difference-description {
+            color: var(--text-medium);
+            line-height: 1.7;
+        }
+
+        /* Why Choose Us */
+        .why-choose {
+            background: var(--surface-light);
+        }
+
+        .reasons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .reason-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .reason-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .reason-number {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.2rem;
+            margin: 0 auto 1.5rem;
+        }
+
+        .reason-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .reason-description {
+            color: var(--text-medium);
+            line-height: 1.6;
+        }
+
+        /* How We Work */
+        .process-timeline {
+            display: grid;
+            gap: 3rem;
+            margin-top: 3rem;
+            position: relative;
+        }
+
+        .process-step {
+            display: grid;
+            grid-template-columns: 80px 1fr;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .step-number {
+            width: 80px;
+            height: 80px;
+            background: var(--gradient-primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 1.8rem;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .step-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow-md);
+        }
+
+        .step-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .step-description {
+            color: var(--text-medium);
+            line-height: 1.6;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            background: var(--surface-light);
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .testimonial-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+        }
+
+        .testimonial-quote {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: var(--text-dark);
+            margin-bottom: 2rem;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .author-info h4 {
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 0.25rem;
+        }
+
+        .author-info p {
+            color: var(--text-medium);
+            font-size: 0.9rem;
+        }
+
+        /* Contact Form */
+        .contact-form {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow-xl);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--surface-medium);
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: var(--surface-white);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--electric-indigo);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .whatsapp-btn {
+            background: var(--success-green);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .whatsapp-btn:hover {
+            background: #059669;
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--text-dark);
+            color: white;
+            padding: 3rem 0 2rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .footer-section p, .footer-section a {
+            color: rgba(255,255,255,0.8);
+            line-height: 1.6;
+            text-decoration: none;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 1.5rem;
+            text-align: center;
+            color: rgba(255,255,255,0.6);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .differences-grid,
+            .reasons-grid,
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .process-step {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .form-buttons {
+                flex-direction: column;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Focus styles */
+        *:focus {
+            outline: 2px solid var(--electric-indigo);
+            outline-offset: 2px;
+        }
+
+        /* Skip to content */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 6px;
+            background: var(--electric-indigo);
+            color: white;
+            padding: 8px;
+            text-decoration: none;
+            border-radius: 4px;
+            z-index: 1001;
+        }
+
+        .skip-link:focus {
+            top: 6px;
+        }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <header class="header" id="header">
+        <div class="header-content">
+            <div class="logo">Perantara Reps</div>
+            <nav class="nav" role="navigation" aria-label="Main navigation">
+                <a href="#about">About</a>
+                <a href="#why-choose">Why Choose Us</a>
+                <a href="#how-we-work">How We Work</a>
+                <a href="#testimonials">Stories</a>
+                <a href="#contact">Contact</a>
+            </nav>
+            <a href="#contact" class="cta-button">Get Started</a>
+            <button class="mobile-menu-btn" aria-label="Open mobile menu">☰</button>
+        </div>
+    </header>
+
+    <main id="main-content">
+        <section class="hero" role="banner">
+            <div class="hero-content">
+                <h1>The NZ DMC that Indonesian travel agents actually recommend</h1>
+                <p class="hero-subtitle">Your trusted cousin in New Zealand. We speak your language, understand your clients, and deliver experiences that build your reputation.</p>
+                <div class="hero-cta">
+                    <div class="hero-buttons">
+                        <a href="#contact" class="btn-primary">Start Partnership</a>
+                        <a href="#how-we-work" class="btn-secondary">See How We Work</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="about">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">What Makes Us Different</h2>
+                    <p class="section-subtitle">We're not just another DMC. We're your Indonesian-speaking partners who understand both cultures.</p>
+                </div>
+                <div class="differences-grid">
+                    <div class="difference-card">
+                        <div class="difference-icon">🇮🇩</div>
+                        <h3 class="difference-title">Indonesian Cultural Intelligence</h3>
+                        <p class="difference-description">We understand Indonesian travel preferences, halal requirements, prayer times, and cultural sensitivities. Your clients feel understood from day one.</p>
+                    </div>
+                    <div class="difference-card">
+                        <div class="difference-icon">⚡</div>
+                        <h3 class="difference-title">48-Hour Response Guarantee</h3>
+                        <p class="difference-description">Quick quotes, instant communication, real-time updates. We know Indonesian travel agents need speed to close deals with their clients.</p>
+                    </div>
+                    <div class="difference-card">
+                        <div class="difference-icon">🤝</div>
+                        <h3 class="difference-title">Agent-First Partnership</h3>
+                        <p class="difference-description">We make you look good. Professional documentation, branded materials, and support that enhances your reputation with Indonesian travelers.</p>
+                    </div>
+                    <div class="difference-card">
+                        <div class="difference-icon">🗺️</div>
+                        <h3 class="difference-title">Local NZ Expertise</h3>
+                        <p class="difference-description">Born and raised Kiwis with deep local knowledge. We know the hidden gems, best local suppliers, and how to navigate New Zealand like family.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section why-choose" id="why-choose">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Why Travel Agents Choose Us</h2>
+                    <p class="section-subtitle">Built specifically for Indonesian travel agents who demand excellence</p>
+                </div>
+                <div class="reasons-grid">
+                    <div class="reason-card">
+                        <div class="reason-number">1</div>
+                        <h3 class="reason-title">Indonesian Client Expertise</h3>
+                        <p class="reason-description">We understand Indonesian travel patterns, group dynamics, and expectations. From halal dining to shopping preferences, we've got it covered.</p>
+                    </div>
+                    <div class="reason-card">
+                        <div class="reason-number">2</div>
+                        <h3 class="reason-title">48-Hour Response Promise</h3>
+                        <p class="reason-description">Lightning-fast quotes and communications. We know you need to respond to your clients quickly to win their business.</p>
+                    </div>
+                    <div class="reason-card">
+                        <div class="reason-number">3</div>
+                        <h3 class="reason-title">Cultural Intelligence</h3>
+                        <p class="reason-description">Bilingual guides, culturally appropriate experiences, and deep understanding of Indonesian customs and preferences.</p>
+                    </div>
+                    <div class="reason-card">
+                        <div class="reason-number">4</div>
+                        <h3 class="reason-title">Agent Support</h3>
+                        <p class="reason-description">Professional materials, emergency support, and systems designed to make you look like the expert you are.</p>
+                    </div>
+                    <div class="reason-card">
+                        <div class="reason-number">5</div>
+                        <h3 class="reason-title">Proven Track Record</h3>
+                        <p class="reason-description">Years of successful partnerships with Indonesian travel agents and thousands of happy Indonesian travelers.</p>
+                    </div>
+                    <div class="reason-card">
+                        <div class="reason-number">6</div>
+                        <h3 class="reason-title">Local Network</h3>
+                        <p class="reason-description">Exclusive access to authentic NZ experiences and the best local suppliers at competitive rates.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="how-we-work">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">How We Work Together</h2>
+                    <p class="section-subtitle">A streamlined process designed for Indonesian travel agent success</p>
+                </div>
+                <div class="process-timeline">
+                    <div class="process-step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h3 class="step-title">Partnership Setup</h3>
+                            <p class="step-description">Quick onboarding with your agency details, client preferences, and communication style. We adapt to your way of working.</p>
+                        </div>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h3 class="step-title">Fast Quote Delivery</h3>
+                            <p class="step-description">Send us your requirements via WhatsApp or email. Receive detailed, professional quotes within 48 hours, ready to present to your clients.</p>
+                        </div>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h3 class="step-title">Seamless Booking</h3>
+                            <p class="step-description">Simple booking process with flexible payment terms. We handle all NZ logistics while you focus on your Indonesian clients.</p>
+                        </div>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h3 class="step-title">Exceptional Delivery</h3>
+                            <p class="step-description">Professional ground services, Indonesian-speaking guides, and real-time updates. Your clients have an amazing experience, you get the credit.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section testimonials" id="testimonials">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Real Agent Stories</h2>
+                    <p class="section-subtitle">Indonesian travel agents sharing their success with Perantara Reps</p>
+                </div>
+                <div class="testimonials-grid">
+                    <div class="testimonial-card">
+                        <p class="testimonial-quote">"Perantara Reps mengubah bisnis saya. Klien Indonesia saya selalu puas dengan layanan mereka, dan saya mendapat lebih banyak referral. They really understand our culture!"</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">SR</div>
+                            <div class="author-info">
+                                <h4>Sari Rahayu</h4>
+                                <p>Golden Travel Jakarta</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <p class="testimonial-quote">"Their 48-hour response time is incredible. I can quote my clients immediately and they appreciate the halal-friendly options. Professional service that makes me look good."</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">AM</div>
+                            <div class="author-info">
+                                <h4>Ahmad Maulana</h4>
+                                <p>Nusantara Tours Surabaya</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <p class="testimonial-quote">"Working with Perantara Reps feels like having family in New Zealand. They understand Indonesian travelers and deliver exactly what we promise our clients."</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">DW</div>
+                            <div class="author-info">
+                                <h4>Dewi Wulandari</h4>
+                                <p>Prima Holiday Bandung</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="contact">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Start Your Partnership</h2>
+                    <p class="section-subtitle">Ready to offer your Indonesian clients the best New Zealand experience?</p>
+                </div>
+                <form class="contact-form" aria-label="Contact form">
+                    <div class="form-group">
+                        <label for="agency-name" class="form-label">Agency Name *</label>
+                        <input type="text" id="agency-name" name="agency-name" class="form-input" required aria-required="true">
+                    </div>
+                    <div class="form-group">
+                        <label for="contact-person" class="form-label">Contact Person *</label>
+                        <input type="text" id="contact-person" name="contact-person" class="form-input" required aria-required="true">
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email *</label>
+                        <input type="email" id="email" name="email" class="form-input" required aria-required="true">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone" class="form-label">WhatsApp Number *</label>
+                        <input type="tel" id="phone" name="phone" class="form-input" required aria-required="true" placeholder="+62...">
+                    </div>
+                    <div class="form-group">
+                        <label for="city" class="form-label">City/Location</label>
+                        <input type="text" id="city" name="city" class="form-input" placeholder="Jakarta, Surabaya, Bandung, etc.">
+                    </div>
+                    <div class="form-group">
+                        <label for="message" class="form-label">Tell us about your agency and needs</label>
+                        <textarea id="message" name="message" class="form-input form-textarea" placeholder="Number of clients per year, types of tours, special requirements..."></textarea>
+                    </div>
+                    <div class="form-buttons">
+                        <button type="submit" class="cta-button">Send Partnership Request</button>
+                        <a href="https://wa.me/6421234567?text=Hi%20Perantara%20Reps%2C%20I%27m%20interested%20in%20partnering%20with%20you%20for%20Indonesian%20travelers%20to%20New%20Zealand" class="whatsapp-btn" target="_blank" rel="noopener noreferrer">
+                            📱 WhatsApp Us Now
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Perantara Reps</h3>
+                    <p>Your trusted cousin in New Zealand, connecting Indonesian travelers with authentic Kiwi experiences since 2018.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>For Travel Agents</h3>
+                    <p>Email: agents@perantarareps.nz</p>
+                    <p>WhatsApp: +64 21 234 567</p>
+                    <p>Response time: Under 48 hours</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Services</h3>
+                    <p>Ground handling</p>
+                    <p>Cultural tours</p>
+                    <p>Halal-friendly experiences</p>
+                    <p>Group management</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Coverage</h3>
+                    <p>Auckland & surrounds</p>
+                    <p>Rotorua & Bay of Plenty</p>
+                    <p>Wellington region</p>
+                    <p>South Island highlights</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Perantara Reps. Licensed New Zealand tour operator. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Header scroll effect
+        const header = document.getElementById('header');
+        let lastScrollY = window.scrollY;
+
+        window.addEventListener('scroll', () => {
+            const currentScrollY = window.scrollY;
+            
+            if (currentScrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+            
+            lastScrollY = currentScrollY;
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const headerHeight = header.offsetHeight;
+                    const targetPosition = target.offsetTop - headerHeight;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Form submission
+        const contactForm = document.querySelector('.contact-form');
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Basic form validation
+            const requiredFields = contactForm.querySelectorAll('[required]');
+            let isValid = true;
+            
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    isValid = false;
+                    field.style.borderColor = '#ef4444';
+                } else {
+                    field.style.borderColor = '#e2e8f0';
+                }
+            });
+            
+            if (isValid) {
+                // Simulate form submission
+                const submitBtn = contactForm.querySelector('[type="submit"]');
+                const originalText = submitBtn.textContent;
+                submitBtn.textContent = 'Sending...';
+                submitBtn.disabled = true;
+                
+                setTimeout(() => {
+                    alert('Terima kasih! Your partnership request has been sent. We\'ll respond within 48 hours.');
+                    contactForm.reset();
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                }, 2000);
+            } else {
+                alert('Please fill in all required fields.');
+            }
+        });
+
+        // Add animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animation
+        document.querySelectorAll('.difference-card, .reason-card, .testimonial-card, .process-step').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+
+        // Mobile menu functionality (basic)
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const nav = document.querySelector('.nav');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!mobileMenuBtn.contains(e.target) && !nav.contains(e.target)) {
+                nav.style.display = 'none';
+            }
+        });
+
+        // Performance optimization: Throttle scroll events
+        let ticking = false;
+
+        function throttle(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                if (!timeout) {
+                    timeout = setTimeout(() => {
+                        func.apply(this, args);
+                        timeout = null;
+                    }, wait);
+                }
+            };
+        }
+
+        // Accessibility: Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                nav.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

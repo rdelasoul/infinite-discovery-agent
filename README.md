@@ -6,9 +6,10 @@ Enhanced infinite agentic loop system for UI/UX experimentation through parallel
 
 | Command | Purpose |
 |---------|---------|
-| `/infinite ui-components 5` | Generate 5 themed UI components |
-| `/infinite website-homepages/project 3` | Generate 3 homepage variations |
-| `/infinite interactions 10` | Generate 10 micro-interactions |
+| `/infinite ui-components 5` | Generate 5 themed UI components (full analysis) |
+| `/quick ui-components 5` | Generate 5 themed UI components (fast iteration) |
+| `/infinite website-homepages/project 3` | Generate 3 homepage variations (complete workflow) |
+| `/quick website-homepages/project 3` | Generate 3 homepage variations (rapid prototyping) |
 | `/infinite [type] infinite` | Continuous generation mode |
 | `/moodboard create name` | Create aesthetic direction guide |
 | `/prime` | Load repository context |
@@ -47,8 +48,11 @@ experiments/
 # Start Claude Code
 claude
 
-# Generate your first component
+# Generate your first component (full analysis)
 /infinite ui-components 1
+
+# Or use fast iteration mode
+/quick ui-components 1
 
 # View result
 open experiments/ui-components/current/iterations/
@@ -57,12 +61,15 @@ open experiments/ui-components/current/iterations/
 ## Command Syntax
 
 ```bash
-# Basic pattern
-/infinite [experiment-type] [count]
+# Basic patterns
+/infinite [experiment-type] [count]          # Full analysis with complete dependency resolution
+/quick [experiment-type] [count]             # Fast iteration mode (70-80% fewer tokens)
 
 # Examples
-/infinite ui-components 5                    # 5 themed components
-/infinite website-homepages/project-name 3  # 3 homepage variations
+/infinite ui-components 5                    # 5 themed components (full analysis)
+/quick ui-components 5                       # 5 themed components (fast iteration)
+/infinite website-homepages/project-name 3  # 3 homepage variations (complete workflow)
+/quick website-homepages/project-name 3     # 3 homepage variations (rapid prototyping)
 /infinite interactions infinite              # Continuous mode
 ```
 
@@ -108,10 +115,10 @@ The `current/` symlink always points to the latest run.
 
 ## Workflow: Iterative Spec Development
 
-1. **Initial run**: `/infinite ui-components 5`
+1. **Initial run**: `/infinite ui-components 5` (or `/quick ui-components 5` for rapid prototyping)
 2. **Analyze results**: Check `current/iterations/`
 3. **Refine spec**: Edit `spec.md` and `spec-config.yml`
-4. **New run**: `/infinite ui-components 3`
+4. **New run**: `/infinite ui-components 3` (or `/quick` for fast iteration)
 5. **Compare**: Previous runs preserved in `runs/` directory
 
 Benefits:

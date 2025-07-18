@@ -71,15 +71,17 @@ This repository implements a sophisticated infinite agentic loop pattern with re
 
 ## Enhanced Usage Patterns
 
-The dependency-enhanced `/infinite` command supports:
+The dependency-enhanced `/infinite` and `/quick` commands support:
 
-**Core Command Pattern:**
-- `/infinite [experiment-type] [count]` - Generate iterations of any experiment type
-- `/infinite [experiment-type] infinite` - Continuous generation mode
+**Core Command Patterns:**
+- `/infinite [experiment-type] [count]` - Full analysis and generation with complete dependency resolution
+- `/infinite [experiment-type] infinite` - Continuous generation mode with progressive sophistication
+- `/quick [experiment-type] [count]` - Fast iteration mode (70-80% fewer tokens, essential dependencies only)
 
 **Advanced Workflow:**
 - Edit `experiments/[type]/spec.md` and `spec-config.yml` to refine approach
 - Run `/infinite [type] [count]` to create timestamped run with resolved dependencies
+- Use `/quick [type] [count]` for rapid prototyping and fast iteration
 - Analyze results in `experiments/[type]/current/iterations/`
 - Compare with previous runs to understand spec evolution impact
 - System auto-discovers all experiment types and handles dependency resolution

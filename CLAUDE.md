@@ -16,16 +16,19 @@ Built on the brilliant foundation of the original infinite agentic loop concept,
 claude
 ```
 
-Then use the `/infinite` slash command with simplified syntax and auto-discovery:
+Then use the `/infinite` or `/quick` slash commands with simplified syntax and auto-discovery:
 
 ```bash
-# Basic syntax pattern:
-/infinite [experiment-type] [count]          # Small batch
-/infinite [experiment-type] infinite         # Continuous generation
+# Basic syntax patterns:
+/infinite [experiment-type] [count]          # Full analysis with complete dependency resolution
+/infinite [experiment-type] infinite         # Continuous generation with progressive sophistication
+/quick [experiment-type] [count]             # Fast iteration mode (70-80% fewer tokens)
 
 # Examples (see experiments/ directory for all available types):
-/infinite ui-components 5                    # Themed hybrid components
-/infinite website-homepages/project-name 3  # Homepage iterations
+/infinite ui-components 5                    # Themed hybrid components (full analysis)
+/quick ui-components 5                       # Themed hybrid components (fast iteration)
+/infinite website-homepages/project-name 3  # Homepage iterations (complete workflow)
+/quick website-homepages/project-name 3     # Homepage iterations (rapid prototyping)
 ```
 
 ### Auto-Discovery System
@@ -38,6 +41,7 @@ Then use the `/infinite` slash command with simplified syntax and auto-discovery
 ### Enhanced Command System
 The project uses Claude Code's custom commands feature with enhanced auto-discovery:
 - `.claude/commands/infinite.md` - Enhanced infinite loop orchestrator with auto-discovery
+- `.claude/commands/quick.md` - Fast iteration mode for rapid UI/UX experimentation (70-80% fewer tokens)
 - `.claude/commands/prime.md` - Context priming command for repository familiarization
 - `.claude/commands/moodboard.md` - Visual inspiration and aesthetic direction management
 - `.claude/settings.json` - Permissions configuration allowing Write, MultiEdit, Edit, and Bash
