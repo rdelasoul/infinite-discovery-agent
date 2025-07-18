@@ -17,29 +17,25 @@ READ:
 ## Shared Dependencies Understanding
 
 READ:
-    experiments/shared/design-systems/geist-core.md
-    experiments/shared/design-systems/geist-components.md
-    experiments/shared/spec-modules/accessibility-standards.md
-    experiments/shared/spec-modules/performance-requirements.md
-    experiments/shared/spec-modules/realistic-data-requirements.md
-    experiments/shared/data/banking-data.md
-    experiments/shared/data/ecommerce-data.md
+    experiments/shared/README.md
+    experiments/shared/design-systems/README.md
+    experiments/shared/spec-modules/README.md
+    experiments/shared/moodboards/README.md
+    experiments/shared/data/README.md
 
-## Dependency Configuration Analysis
+## Discover Available Experiment Types
 
-READ:
-    experiments/ui-components/spec-config.yml
-    experiments/functional-ux-patterns/spec-config.yml
-    experiments/interactions/spec-config.yml
-    experiments/ui-innovations/spec-config.yml
+RUN:
+    find experiments -maxdepth 2 -name "README.md" | grep -v experiments/README.md | head -10
 
-## Experiment Types & Run Patterns Understanding
+READ the discovered experiment type README files to understand the current available experiment types and their purposes.
 
-READ:
-    experiments/ui-components/README.md
-    experiments/website-homepages/README.md  
-    experiments/interactions/README.md
-    experiments/ui-innovations/README.md
+## Current System Analysis
+
+RUN:
+    ls -la experiments/*/current
+
+Analyze current symlinks to understand recent experiment activity.
 
 ## Enhanced System Architecture Context
 
@@ -77,27 +73,24 @@ This repository implements a sophisticated infinite agentic loop pattern with re
 
 The dependency-enhanced `/infinite` command supports:
 
-**Core Commands:**
-- `/infinite ui-components [count]` - Themed hybrid UI components
-- `/infinite functional-ux-patterns [count]` - Workflow optimization patterns  
-- `/infinite website-homepages/[project] [count]` - Complete homepage iterations
-- `/infinite interactions [count]` - Micro-interactions and animations
-- `/infinite ui-innovations [count]` - Novel UI paradigms
+**Core Command Pattern:**
+- `/infinite [experiment-type] [count]` - Generate iterations of any experiment type
+- `/infinite [experiment-type] infinite` - Continuous generation mode
 
-**Advanced Workflow Examples:**
-- Edit `spec.md` and `spec-config.yml` to refine scope and dependencies
-- Run `/infinite ui-components 5` to create timestamped run with resolved dependencies
-- Analyze results in `current/iterations/`
+**Advanced Workflow:**
+- Edit `experiments/[type]/spec.md` and `spec-config.yml` to refine approach
+- Run `/infinite [type] [count]` to create timestamped run with resolved dependencies
+- Analyze results in `experiments/[type]/current/iterations/`
 - Compare with previous runs to understand spec evolution impact
-- Iterate infinitely without manual organization
+- System auto-discovers all experiment types and handles dependency resolution
 
-## Current Run Analysis
+## System Architecture Analysis
 
-ANALYZE the current state:
-- Check `experiments/*/current` symlinks to see latest runs
-- Review recent `runs/*/config-snapshot.yml` files to understand dependency usage patterns
-- Examine `runs/*/dependencies/` to see resolved shared components
-- Compare iteration results across different dependency configurations
+UNDERSTAND the agnostic architecture:
+- Auto-discovery of experiment types via directory structure
+- Dependency resolution system via shared components
+- Run-based execution with complete historical preservation
+- Symlink-based current run access for easy navigation
 
 ## Archive Context
 

@@ -19,33 +19,13 @@ claude
 Then use the `/infinite` slash command with simplified syntax and auto-discovery:
 
 ```bash
-# UI Components (themed hybrid components)
-/infinite ui-components 1          # Single themed component
-/infinite ui-components 5          # Small batch (5 parallel agents)
-/infinite ui-components 20         # Large batch (batched parallel execution)
-/infinite ui-components infinite   # Continuous generation with progressive sophistication
+# Basic syntax pattern:
+/infinite [experiment-type] [count]          # Small batch
+/infinite [experiment-type] infinite         # Continuous generation
 
-# Functional UX Patterns (workflow optimization through pattern innovation)
-/infinite functional-ux-patterns 1 # Single UX pattern exploration
-/infinite functional-ux-patterns 5 # Small batch (5 parallel pattern agents)
-/infinite functional-ux-patterns 10 # Large batch of pattern variations
-
-# Multi-Card Banking (banking interface patterns)
-/infinite multi-card-banking 1     # Single banking interface pattern
-/infinite multi-card-banking 5     # Small batch of banking UX patterns
-
-# Bank Relationship Intelligence (financial relationship management)
-/infinite bank-relationship-intelligence 3  # Relationship intelligence patterns
-
-# Website Homepages (complete page iterations)
-/infinite website-homepages/perantara-reps 3      # NZ DMC homepage variations
-/infinite website-homepages/portfolio-site 5     # Portfolio homepage iterations
-
-# Interactions (micro-interactions and animations)
-/infinite interactions 10          # When interaction specs are added
-
-# UI Innovations (novel interaction paradigms)  
-/infinite ui-innovations 5         # When innovation specs are added
+# Examples (see experiments/ directory for all available types):
+/infinite ui-components 5                    # Themed hybrid components
+/infinite website-homepages/project-name 3  # Homepage iterations
 ```
 
 ### Auto-Discovery System
@@ -83,41 +63,13 @@ The project uses Claude Code's custom commands feature with enhanced auto-discov
 4. Provide complete context to AI agents for enhanced generation quality with aesthetic guidance
 
 ### Experiment Types with Enhanced Run Management
-- **`experiments/ui-components/`** - Themed hybrid UI components (original focus)
-  - **Run pattern**: `runs/YYYY-MM-DD-HHMMSS/single-file/ui_hybrid_X.html` OR `runs/YYYY-MM-DD-HHMMSS/multi-file/ui_hybrid_X/`
-  - **Dependencies**: Optional design systems, performance standards
-  - **Spec**: Ultra-detailed specification for themed hybrid components
-  - **Current access**: Via `current/` symlink to most recent run
+The system supports unlimited experiment types. Each experiment type follows the same pattern:
+- **`experiments/[type]/spec.md`** - Detailed specification for the experiment
+- **`experiments/[type]/spec-config.yml`** - Dependency configuration
+- **`experiments/[type]/runs/YYYY-MM-DD-HHMMSS/`** - Timestamped execution history
+- **`experiments/[type]/current`** - Symlink to most recent run
 
-- **`experiments/functional-ux-patterns/`** - Workflow optimization through pattern innovation
-  - **Run pattern**: `runs/YYYY-MM-DD-HHMMSS/iterations/ux_pattern_X.html`
-  - **Dependencies**: Geist design system + banking data + realistic data requirements
-  - **Focus**: Function-first exploration with design system constraints
-  - **Patterns**: Information architecture, interaction models, cognitive load optimization
-
-- **`experiments/multi-card-banking/`** - Banking interface patterns and workflows
-  - **Run pattern**: `runs/YYYY-MM-DD-HHMMSS/iterations/ux_pattern_X.html`
-  - **Dependencies**: Banking data + Geist design system + accessibility standards
-  - **Focus**: Multi-account banking interfaces and financial workflows
-
-- **`experiments/bank-relationship-intelligence/`** - Financial relationship management UX
-  - **Run pattern**: `runs/YYYY-MM-DD-HHMMSS/iterations/ux_pattern_X.html`
-  - **Dependencies**: Banking data + relationship intelligence patterns
-  - **Focus**: Customer financial relationship insights and management interfaces
-
-- **`experiments/website-homepages/`** - Complete homepage iterations
-  - **Project-specific**: `perantara-reps/`, `portfolio-site/`
-  - **Run pattern**: `runs/YYYY-MM-DD-HHMMSS/iterations/[project_name]_homepage_X.html`
-  - **Dependencies**: Accessibility + performance standards per project
-  - **Focus**: Brand consistency with design approach variations
-
-- **`experiments/interactions/`** - Micro-interactions and animations
-  - **Dependencies**: Accessibility + performance standards (essential for 60fps)
-  - **Run pattern**: `runs/YYYY-MM-DD-HHMMSS/iterations/interaction_X.html`
-
-- **`experiments/ui-innovations/`** - Novel UI paradigms
-  - **Dependencies**: Accessibility + performance (innovations must remain inclusive)
-  - **Run pattern**: `runs/YYYY-MM-DD-HHMMSS/iterations/ui_innovation_X.html`
+See `experiments/README.md` for current available experiment types and their purposes.
 
 ### Multi-Agent Orchestration Pattern
 The infinite command implements sophisticated parallel agent coordination:
@@ -184,47 +136,9 @@ runs/YYYY-MM-DD-HHMMSS/
 
 ## Experiment Selection Guidance
 
-### When to Use Each Experiment Type
+The system supports unlimited experiment types. To understand available experiment types and their purposes, see `experiments/README.md` which provides an overview of current experiment types and guidance on when to use each one.
 
-**UI Components** (`/infinite ui-components X`):
-- Creating themed hybrid components that combine multiple UI functions
-- Exploring design languages (Organic Nature, Digital Minimalism, Cyberpunk, etc.)
-- Developing reusable interface patterns with distinctive personalities
-- Examples: Search Hub, Input Intelligence, Action Controller, File Manager
-
-**Functional UX Patterns** (`/infinite functional-ux-patterns X`):
-- Optimizing user workflows through innovative interaction and information architecture patterns
-- Working within design system constraints to focus on functional excellence over visual variation
-- Reducing cognitive load and improving task completion efficiency
-- Examples: Modal vs inline patterns, progressive disclosure systems, contextual actions, error prevention flows
-
-**Multi-Card Banking** (`/infinite multi-card-banking X`):
-- Banking interface patterns for multiple account management
-- Financial dashboard layouts and multi-account workflows
-- Card-based banking interfaces with transaction management
-- Examples: Account overview patterns, transaction categorization, multi-card payment flows
-
-**Bank Relationship Intelligence** (`/infinite bank-relationship-intelligence X`):
-- Financial relationship management and customer intelligence interfaces
-- Banking advisor tools and relationship insights
-- Customer financial health and advisory workflows
-- Examples: Relationship dashboards, financial health indicators, advisory recommendation interfaces
-
-**Website Homepages** (`/infinite website-homepages/project-name X`):
-- Generating complete homepage variations for specific projects
-- Exploring different design approaches while maintaining brand consistency
-- Testing cultural authenticity, premium positioning, trust-building themes
-- Current projects: Perantara Reps (NZ DMC), Portfolio Site
-
-**Interactions** (`/infinite interactions X`):
-- Micro-interactions and animation patterns (when specs are added)
-- Performance-optimized 60fps animations with accessibility considerations
-- Touch-optimized interactions for mobile-first design
-
-**UI Innovations** (`/infinite ui-innovations X`):
-- Completely novel UI paradigms that replace existing interaction patterns
-- Revolutionary approaches to common interface elements
-- Experimental interaction models while maintaining usability
+To create new experiment types, copy an existing `spec.md` and `spec-config.yml` from any experiment directory, customize for your needs, and run `/infinite [your-experiment-type] [count]`.
 
 ## Iterative Spec Development Workflow
 
