@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perantara Reps - Your Reliable NZ Partner</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --electric-indigo: #6366f1;
+            --vibrant-pink: #ec4899;
+            --tech-green: #10b981;
+            --dark-slate: #0f172a;
+            --light-slate: #64748b;
+            --white: #ffffff;
+            --gray-50: #f8fafc;
+            --gray-100: #f1f5f9;
+            --gray-800: #1e293b;
+            --gradient-primary: linear-gradient(135deg, #6366f1 0%, #ec4899 100%);
+            --gradient-secondary: linear-gradient(135deg, #10b981 0%, #6366f1 100%);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--dark-slate);
+            background-color: var(--white);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .header.scrolled {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--electric-indigo);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo::before {
+            content: '';
+            width: 32px;
+            height: 32px;
+            background: var(--gradient-primary);
+            border-radius: 8px;
+            transform: rotate(45deg);
+        }
+
+        .tagline {
+            font-size: 0.75rem;
+            color: var(--light-slate);
+            margin-left: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--dark-slate);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--electric-indigo);
+        }
+
+        .cta-button {
+            background: var(--gradient-primary);
+            color: var(--white);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 8rem 0 4rem;
+            background: linear-gradient(135deg, var(--gray-50) 0%, var(--white) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100%;
+            background: var(--gradient-secondary);
+            opacity: 0.05;
+            transform: skewX(-15deg);
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-text h2 {
+            font-size: 1.25rem;
+            color: var(--light-slate);
+            margin-bottom: 2rem;
+            font-weight: 400;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .hero-actions .secondary-button {
+            background: transparent;
+            color: var(--electric-indigo);
+            border: 2px solid var(--electric-indigo);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .hero-actions .secondary-button:hover {
+            background: var(--electric-indigo);
+            color: var(--white);
+            transform: translateY(-2px);
+        }
+
+        .hero-visual {
+            position: relative;
+            height: 400px;
+            background: var(--gradient-primary);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .hero-visual::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Sections */
+        .section {
+            padding: 4rem 0;
+        }
+
+        .section-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--dark-slate);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.1rem;
+            color: var(--light-slate);
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* What Makes Us Different */
+        .difference-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .difference-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border: 1px solid var(--gray-100);
+        }
+
+        .difference-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .difference-card h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--electric-indigo);
+            margin-bottom: 1rem;
+        }
+
+        .difference-card .icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            color: var(--white);
+            font-size: 1.5rem;
+        }
+
+        /* Why Choose Us */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: var(--gray-50);
+            border-radius: 16px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--gradient-primary);
+        }
+
+        .feature-card h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--dark-slate);
+            margin-bottom: 1rem;
+        }
+
+        /* How We Work */
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .process-step {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .process-step .step-number {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 auto 1.5rem;
+        }
+
+        .process-step h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--dark-slate);
+            margin-bottom: 1rem;
+        }
+
+        /* FAQ */
+        .faq-grid {
+            display: grid;
+            gap: 1rem;
+            margin-top: 3rem;
+        }
+
+        .faq-item {
+            background: var(--white);
+            border-radius: 12px;
+            border: 1px solid var(--gray-100);
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            color: var(--dark-slate);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: var(--gray-50);
+        }
+
+        .faq-answer {
+            padding: 0 1.5rem 1.5rem;
+            color: var(--light-slate);
+            display: none;
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+
+        /* Contact Section */
+        .contact {
+            background: var(--gray-50);
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        .contact-form {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--dark-slate);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--gray-100);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--electric-indigo);
+        }
+
+        .whatsapp-option {
+            background: var(--tech-green);
+            color: var(--white);
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .whatsapp-option h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark-slate);
+            color: var(--white);
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section a {
+            color: var(--light-slate);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--electric-indigo);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--gray-800);
+            padding-top: 1rem;
+            text-align: center;
+            color: var(--light-slate);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .contact-content {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-in {
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        /* Focus styles for accessibility */
+        button:focus,
+        input:focus,
+        textarea:focus,
+        a:focus {
+            outline: 2px solid var(--electric-indigo);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <nav class="nav container">
+            <a href="#" class="logo">
+                Perantara
+                <span class="tagline">Your reliable NZ partner</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#why-partner">Why Partner</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <a href="#contact" class="cta-button">Request Itinerary</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>NZ DMC that Indonesian agents trust</h1>
+                    <h2>We handle halal, family needs, and cultural details - so you look good to your clients</h2>
+                    <div class="hero-actions">
+                        <a href="#contact" class="cta-button">Get Custom Itinerary</a>
+                        <a href="#difference" class="secondary-button">See Our Difference</a>
+                    </div>
+                </div>
+                <div class="hero-visual" aria-hidden="true"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- What Makes Us Different -->
+    <section class="section" id="difference">
+        <div class="container">
+            <h2 class="section-title">Your Reliable NZ Partner</h2>
+            <p class="section-subtitle">We speak both languages, literally and culturally. We prevent awkward moments before they happen.</p>
+            <div class="difference-grid">
+                <div class="difference-card">
+                    <div class="icon" aria-hidden="true">🕌</div>
+                    <h3>Cultural Expertise</h3>
+                    <p>Deep understanding of Indonesian cultural needs, from halal requirements to family dynamics. We know what matters to your clients.</p>
+                </div>
+                <div class="difference-card">
+                    <div class="icon" aria-hidden="true">⚡</div>
+                    <h3>48-Hour Response</h3>
+                    <p>Your clients don't wait, your reputation stays intact. Fast, reliable responses that keep your business moving forward.</p>
+                </div>
+                <div class="difference-card">
+                    <div class="icon" aria-hidden="true">🤝</div>
+                    <h3>Local Connections</h3>
+                    <p>Insider access to experiences and venues that tourist boards don't have. Connections that make the difference.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="section" id="why-partner">
+        <div class="container">
+            <h2 class="section-title">Why Travel Agents Choose Us</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>Indonesian Client Expertise</h3>
+                    <p>Halal food, prayer times, family dynamics - we get it. Our team understands the cultural nuances that make trips memorable for the right reasons.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>48-Hour Response Guarantee</h3>
+                    <p>Your clients don't wait, your reputation stays intact. Usually within 24 hours, but guaranteed within 48. No exceptions.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Cultural Intelligence</h3>
+                    <p>No awkward moments, no cultural mistakes. We anticipate needs and handle details that other DMCs miss entirely.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Local Insider Access</h3>
+                    <p>Connections tourist boards don't have. Authentic experiences that create stories your clients will tell for years.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How We Work -->
+    <section class="section" id="how-it-works">
+        <div class="container">
+            <h2 class="section-title">How We Work Together</h2>
+            <div class="process-steps">
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <h3>You Brief Us, We Listen</h3>
+                    <p>Tell us about your clients' needs, preferences, and expectations. We listen properly - not just to what you say, but what you don't say.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <h3>Custom Proposal That Makes You Look Good</h3>
+                    <p>Detailed itinerary that addresses every cultural need and preference. Your clients will be impressed by your attention to detail.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <h3>We Execute, Your Clients Rave</h3>
+                    <p>Flawless execution with constant communication. Your clients have an amazing time, and you get all the credit.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Do you handle halal requirements?</span>
+                        <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, we have certified halal restaurant partnerships across New Zealand. We understand the importance of halal food and ensure all meals meet strict halal standards.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>How fast do you respond?</span>
+                        <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>48 hours guaranteed, usually within 24. We understand that timing is crucial in the travel industry and your clients' expectations can't wait.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>What about prayer times?</span>
+                        <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We build schedules around the 5 daily prayers, ensuring your clients never feel rushed or compromised in their religious observances.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Family-friendly activities?</span>
+                        <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>All our tours work for multi-generational groups. We understand Indonesian family dynamics and plan activities that engage everyone from grandparents to grandchildren.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Language barriers?</span>
+                        <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Our Indonesian-speaking team handles everything. Your clients communicate in their preferred language, and cultural nuances are never lost in translation.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section contact" id="contact">
+        <div class="container">
+            <h2 class="section-title">Let's Create Something Memorable</h2>
+            <div class="contact-content">
+                <div class="contact-form">
+                    <h3>Tell Us About Your Clients</h3>
+                    <form>
+                        <div class="form-group">
+                            <label for="group-size">Group Size</label>
+                            <input type="number" id="group-size" name="group-size" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="interests">Interests</label>
+                            <textarea id="interests" name="interests" rows="3" placeholder="Cultural experiences, adventure, family activities, etc."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="budget">Budget Range</label>
+                            <input type="text" id="budget" name="budget" placeholder="Per person, NZD">
+                        </div>
+                        <div class="form-group">
+                            <label for="special-needs">Special Needs</label>
+                            <textarea id="special-needs" name="special-needs" rows="3" placeholder="Dietary requirements, accessibility needs, etc."></textarea>
+                        </div>
+                        <button type="submit" class="cta-button">Send Request</button>
+                    </form>
+                    <div class="whatsapp-option">
+                        <h3>Prefer WhatsApp?</h3>
+                        <p>Message us directly: <strong>+64 XXX XXX XXX</strong></p>
+                    </div>
+                </div>
+                <div class="contact-info">
+                    <h3>Next Steps</h3>
+                    <p>We'll send you a custom proposal within 48 hours that includes:</p>
+                    <ul>
+                        <li>Detailed itinerary with cultural considerations</li>
+                        <li>Halal restaurant recommendations</li>
+                        <li>Prayer time accommodations</li>
+                        <li>Family-friendly activity options</li>
+                        <li>Local insider experiences</li>
+                        <li>Transparent pricing breakdown</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Perantara Reps</h3>
+                    <p>Your reliable New Zealand partner for Indonesian travel agents. We handle the cultural details, so you look good.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <p>Email: info@perantarareps.co.nz</p>
+                    <p>Phone: +64 XXX XXX XXX</p>
+                    <p>WhatsApp: +64 XXX XXX XXX</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Services</h3>
+                    <p><a href="#">Custom Itineraries</a></p>
+                    <p><a href="#">Cultural Consultation</a></p>
+                    <p><a href="#">Halal Food Sourcing</a></p>
+                    <p><a href="#">Local Experiences</a></p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Perantara Reps. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+                <p>We acknowledge the cultural significance of New Zealand and respect the traditions of all who visit.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // FAQ toggle
+        function toggleFAQ(element) {
+            const faqItem = element.parentElement;
+            const answer = faqItem.querySelector('.faq-answer');
+            const icon = element.querySelector('span:last-child');
+            
+            if (faqItem.classList.contains('active')) {
+                faqItem.classList.remove('active');
+                icon.textContent = '+';
+            } else {
+                // Close all other FAQs
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    item.classList.remove('active');
+                    item.querySelector('.faq-question span:last-child').textContent = '+';
+                });
+                
+                faqItem.classList.add('active');
+                icon.textContent = '−';
+            }
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Form submission
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your inquiry! We\'ll respond within 48 hours with a custom proposal.');
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections
+        document.querySelectorAll('.section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
