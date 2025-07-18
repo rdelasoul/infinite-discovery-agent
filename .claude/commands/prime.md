@@ -14,21 +14,7 @@ READ:
     CLAUDE.md
     experiments/README.md
 
-## Shared Dependencies Understanding
 
-READ:
-    experiments/shared/README.md
-    experiments/shared/design-systems/README.md
-    experiments/shared/spec-modules/README.md
-    experiments/shared/moodboards/README.md
-    experiments/shared/data/README.md
-
-## Current System Analysis
-
-RUN:
-    ls -la experiments/*/current
-
-Analyze current symlinks to understand recent experiment activity.
 
 ## Enhanced System Architecture Context
 
