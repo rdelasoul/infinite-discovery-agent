@@ -16,7 +16,7 @@ dependencies:
 # Run experiment with aesthetic guidance
 /infinite ui-components 5
 
-# Create new moodboard (future feature)
+# Create new moodboard
 /moodboard create client-project
 ```
 
@@ -190,7 +190,7 @@ dependencies:
 3. **Structure findings**: Follow the required section format
 4. **Test integration**: Add to spec-config.yml and run experiment
 
-### **Future `/moodboard` Command** (In Development)
+### **Available `/moodboard` Command**
 ```bash
 # Interactive curation with AI assistance
 /moodboard create [name]
@@ -202,7 +202,7 @@ dependencies:
 /moodboard update [name] https://additional-site.com
 ```
 
-The command will:
+The command:
 - **Fetch and analyze** provided website references
 - **Extract visual elements** (colors, typography, layout patterns)
 - **Structure analysis** into the standard moodboard format
@@ -291,10 +291,10 @@ dependencies:
 ## Future Enhancements
 
 ### **Planned Features**
-- **AI-Assisted Curation**: `/moodboard` command for automated inspiration analysis
 - **Visual Preview**: Generated thumbnails showing moodboard aesthetic
 - **Industry Templates**: Pre-built moodboards for common business types
 - **Collaborative Curation**: Multi-user moodboard development
+- **Enhanced AI Analysis**: Deeper aesthetic pattern recognition
 
 ### **Advanced Integration**
 - **Dynamic Aesthetic**: Moodboards that adapt based on user behavior

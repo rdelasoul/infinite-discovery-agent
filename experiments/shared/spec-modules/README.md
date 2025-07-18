@@ -21,7 +21,7 @@ Reusable specification components that can be included in experiment specs to en
 
 ### realistic-data-requirements.md
 **When to Include**: For experiments that need authentic dummy data
-- Business domain data patterns (financial, e-commerce, healthcare)
+- Business domain data patterns (financial, e-commerce)
 - Data state variations (loading, error, empty states)
 - Cultural and geographic authenticity guidelines
 - Quality assurance standards for data consistency

@@ -30,6 +30,13 @@ Then use the `/infinite` slash command with simplified syntax and auto-discovery
 /infinite functional-ux-patterns 5 # Small batch (5 parallel pattern agents)
 /infinite functional-ux-patterns 10 # Large batch of pattern variations
 
+# Multi-Card Banking (banking interface patterns)
+/infinite multi-card-banking 1     # Single banking interface pattern
+/infinite multi-card-banking 5     # Small batch of banking UX patterns
+
+# Bank Relationship Intelligence (financial relationship management)
+/infinite bank-relationship-intelligence 3  # Relationship intelligence patterns
+
 # Website Homepages (complete page iterations)
 /infinite website-homepages/perantara-reps 3      # NZ DMC homepage variations
 /infinite website-homepages/portfolio-site 5     # Portfolio homepage iterations
@@ -52,21 +59,22 @@ Then use the `/infinite` slash command with simplified syntax and auto-discovery
 The project uses Claude Code's custom commands feature with enhanced auto-discovery:
 - `.claude/commands/infinite.md` - Enhanced infinite loop orchestrator with auto-discovery
 - `.claude/commands/prime.md` - Context priming command for repository familiarization
+- `.claude/commands/moodboard.md` - Visual inspiration and aesthetic direction management
 - `.claude/settings.json` - Permissions configuration allowing Write, MultiEdit, Edit, and Bash
 
 ### Enhanced Specification & Dependency System
 - **Experiment-specific specs**: Each experiment type has its own `experiments/{type}/spec.md`
 - **Dependency configuration**: `experiments/{type}/spec-config.yml` controls shared component inclusion
 - **Shared dependencies**: `experiments/shared/` provides reusable components across all experiment types
-- **Template library**: `templates/` directory provides specification templates for new experiment types
+- **Reusable patterns**: Existing experiment specs can be copied and adapted for new experiment types
 - **Quality standards**: Ultra-detailed specifications with modular quality requirements
 - **Evolution strategies**: How iterations should build upon each other with progressive sophistication
 
 #### **Shared Dependencies Structure**
-- **`experiments/shared/design-systems/`** - Reusable design frameworks (Geist system with 9+ files)
+- **`experiments/shared/design-systems/`** - Reusable design frameworks (Geist system with 10 comprehensive files)
 - **`experiments/shared/spec-modules/`** - Modular quality standards (accessibility, performance, realistic data)
 - **`experiments/shared/moodboards/`** - Visual inspiration and aesthetic direction for brand personality
-- **`experiments/shared/data/`** - Realistic business context (banking, e-commerce, healthcare scenarios)
+- **`experiments/shared/data/`** - Realistic business context (banking, e-commerce scenarios)
 
 #### **Dependency Resolution Process**
 1. Read experiment's `spec-config.yml` for dependency requirements
@@ -76,16 +84,26 @@ The project uses Claude Code's custom commands feature with enhanced auto-discov
 
 ### Experiment Types with Enhanced Run Management
 - **`experiments/ui-components/`** - Themed hybrid UI components (original focus)
-  - **Run pattern**: `runs/YYYY-MM-DD-HHMMSS/iterations/ui_hybrid_X.html`
+  - **Run pattern**: `runs/YYYY-MM-DD-HHMMSS/single-file/ui_hybrid_X.html` OR `runs/YYYY-MM-DD-HHMMSS/multi-file/ui_hybrid_X/`
   - **Dependencies**: Optional design systems, performance standards
   - **Spec**: Ultra-detailed specification for themed hybrid components
-  - **Current access**: Via `current/iterations/` symlink
+  - **Current access**: Via `current/` symlink to most recent run
 
 - **`experiments/functional-ux-patterns/`** - Workflow optimization through pattern innovation
   - **Run pattern**: `runs/YYYY-MM-DD-HHMMSS/iterations/ux_pattern_X.html`
   - **Dependencies**: Geist design system + banking data + realistic data requirements
   - **Focus**: Function-first exploration with design system constraints
   - **Patterns**: Information architecture, interaction models, cognitive load optimization
+
+- **`experiments/multi-card-banking/`** - Banking interface patterns and workflows
+  - **Run pattern**: `runs/YYYY-MM-DD-HHMMSS/iterations/ux_pattern_X.html`
+  - **Dependencies**: Banking data + Geist design system + accessibility standards
+  - **Focus**: Multi-account banking interfaces and financial workflows
+
+- **`experiments/bank-relationship-intelligence/`** - Financial relationship management UX
+  - **Run pattern**: `runs/YYYY-MM-DD-HHMMSS/iterations/ux_pattern_X.html`
+  - **Dependencies**: Banking data + relationship intelligence patterns
+  - **Focus**: Customer financial relationship insights and management interfaces
 
 - **`experiments/website-homepages/`** - Complete homepage iterations
   - **Project-specific**: `perantara-reps/`, `portfolio-site/`
@@ -111,7 +129,7 @@ The infinite command implements sophisticated parallel agent coordination:
 
 ### Enhanced Content Organization with Run Management
 - **`experiments/shared/`** - Reusable components across all experiment types
-  - `design-systems/` - 9+ comprehensive Geist design system files
+  - `design-systems/` - 10 comprehensive Geist design system files (including archived original)
   - `spec-modules/` - Accessibility, performance, and data quality standards
   - `moodboards/` - Visual inspiration and aesthetic direction (modern-minimalist, organic-nature, tech-startup)
   - `data/` - Realistic business context (banking, e-commerce scenarios)
@@ -124,7 +142,7 @@ The infinite command implements sophisticated parallel agent coordination:
 - **`experiments/interactions/runs/`** - Animation and micro-interaction execution history
 - **`experiments/ui-innovations/runs/`** - Novel paradigm execution history
 - **`archive/`** - All original experiments preserved with full attribution and date stamps
-- **`templates/`** - Specification templates for creating new experiment types
+- **Example specs** - Existing experiment specifications can be copied and adapted for new types
 
 #### **Run Directory Structure**
 Each timestamped run contains:
@@ -179,6 +197,18 @@ runs/YYYY-MM-DD-HHMMSS/
 - Working within design system constraints to focus on functional excellence over visual variation
 - Reducing cognitive load and improving task completion efficiency
 - Examples: Modal vs inline patterns, progressive disclosure systems, contextual actions, error prevention flows
+
+**Multi-Card Banking** (`/infinite multi-card-banking X`):
+- Banking interface patterns for multiple account management
+- Financial dashboard layouts and multi-account workflows
+- Card-based banking interfaces with transaction management
+- Examples: Account overview patterns, transaction categorization, multi-card payment flows
+
+**Bank Relationship Intelligence** (`/infinite bank-relationship-intelligence X`):
+- Financial relationship management and customer intelligence interfaces
+- Banking advisor tools and relationship insights
+- Customer financial health and advisory workflows
+- Examples: Relationship dashboards, financial health indicators, advisory recommendation interfaces
 
 **Website Homepages** (`/infinite website-homepages/project-name X`):
 - Generating complete homepage variations for specific projects

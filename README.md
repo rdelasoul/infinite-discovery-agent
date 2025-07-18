@@ -35,7 +35,7 @@ claude
 ## ✨ What Makes This Special
 
 ### **Enhanced Architecture**
-- 🏗️ **Clean Organization**: Experiments organized by type (ui-components, website-homepages, interactions)
+- 🏗️ **Clean Organization**: Experiments organized by type (ui-components, functional-ux-patterns, multi-card-banking, bank-relationship-intelligence, website-homepages, interactions, ui-innovations)
 - ⚡ **Simplified Commands**: Auto-discovery of specs and output directories
 - 📊 **Scalable Structure**: Easy to add unlimited new experiment types
 
@@ -60,6 +60,21 @@ Create **themed hybrid components** that combine multiple UI functions with dist
 **Examples**: Search Hub (search + autocomplete + filters + recent items), Input Intelligence (text field + validation + help + formatting), Action Controller (button + loading + confirmation + feedback)
 
 **Themes**: Organic Nature, Digital Minimalism, Cyberpunk, Glass Morphism, Industrial Design, and more...
+
+### 🎯 **Functional UX Patterns** (`functional-ux-patterns/`)
+Optimize user workflows through innovative UX patterns while working within design system constraints.
+
+**Focus**: Function-first exploration, workflow optimization, cognitive load reduction, information architecture patterns
+
+### 🏦 **Multi-Card Banking** (`multi-card-banking/`)
+Banking interface patterns for multiple account management and financial workflows.
+
+**Focus**: Multi-account banking interfaces, transaction management, financial dashboard layouts
+
+### 💼 **Bank Relationship Intelligence** (`bank-relationship-intelligence/`)
+Financial relationship management and customer intelligence interfaces for banking advisors.
+
+**Focus**: Relationship dashboards, financial health indicators, advisory recommendation interfaces
 
 ### 🌐 **Website Homepages** (`website-homepages/`)
 Generate complete homepage iterations exploring different design approaches while maintaining brand consistency.
@@ -86,7 +101,7 @@ experiments/
 │   ├── design-systems/           # Geist & other design system files
 │   │   ├── geist-core.md         # Colors, typography, spacing
 │   │   ├── geist-components.md   # Component patterns
-│   │   └── [9 comprehensive files]
+│   │   └── [10 comprehensive files]
 │   ├── spec-modules/             # Reusable specification components
 │   │   ├── accessibility-standards.md
 │   │   ├── performance-requirements.md
@@ -115,6 +130,16 @@ experiments/
 │   ├── spec.md                   # Function-first exploration
 │   ├── spec-config.yml           # Geist + banking data dependencies
 │   ├── runs/                     # Execution history
+│   └── current -> runs/[latest]
+├── multi-card-banking/            # Banking interface patterns
+│   ├── spec.md                   # Multi-account banking workflows
+│   ├── spec-config.yml           # Banking + Geist dependencies
+│   ├── runs/                     # Banking UX execution history
+│   └── current -> runs/[latest]
+├── bank-relationship-intelligence/ # Financial relationship management
+│   ├── spec.md                   # Relationship intelligence patterns
+│   ├── spec-config.yml           # Banking data + intelligence dependencies
+│   ├── runs/                     # Relationship UX execution history
 │   └── current -> runs/[latest]
 ├── website-homepages/
 │   ├── perantara-reps/           # NZ DMC project
@@ -162,11 +187,18 @@ experiments/
 /infinite ui-components 5          # Small batch (5 parallel agents)
 /infinite ui-components infinite   # Continuous generation
 
+# Functional UX Pattern Experiments
+/infinite functional-ux-patterns 5     # 5 workflow optimization patterns
+
+# Banking Interface Experiments
+/infinite multi-card-banking 3         # 3 multi-account banking patterns
+/infinite bank-relationship-intelligence 5  # 5 relationship management patterns
+
 # Website Homepage Experiments  
 /infinite website-homepages/perantara-reps 3      # 3 homepage variations
 /infinite website-homepages/portfolio-site 5     # 5 portfolio iterations
 
-# Interaction Experiments (when specs are added)
+# Interaction Experiments
 /infinite interactions 10          # 10 micro-interaction patterns
 /infinite ui-innovations 5         # 5 novel UI paradigms
 ```

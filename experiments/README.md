@@ -14,6 +14,12 @@ claude
 # Generate functional UX patterns
 /infinite functional-ux-patterns 3
 
+# Generate banking interface patterns
+/infinite multi-card-banking 3
+
+# Generate banking relationship intelligence
+/infinite bank-relationship-intelligence 3
+
 # Generate website homepage iterations
 /infinite website-homepages/perantara-reps 3
 
@@ -117,6 +123,28 @@ dependencies:
 
 ---
 
+### 🏦 Multi-Card Banking (`multi-card-banking/`)
+**Purpose**: Create banking interface patterns for multiple account management and financial workflows.
+
+**Command**: `/infinite multi-card-banking [count]`
+
+**Focus**: Multi-account banking interfaces, transaction management, financial dashboard layouts, and card-based banking workflows.
+
+**Examples**: Account overview patterns, transaction categorization, multi-card payment flows, balance management interfaces
+
+---
+
+### 💼 Bank Relationship Intelligence (`bank-relationship-intelligence/`)
+**Purpose**: Develop financial relationship management and customer intelligence interfaces for banking advisors.
+
+**Command**: `/infinite bank-relationship-intelligence [count]`
+
+**Focus**: Relationship dashboards, financial health indicators, advisory recommendation interfaces, and customer intelligence tools.
+
+**Examples**: Relationship scoring interfaces, financial wellness dashboards, advisory workflow tools, customer insight panels
+
+---
+
 ### ⚡ Interactions (`interactions/`)
 **Purpose**: Explore micro-interactions, animations, and novel interaction patterns.
 
@@ -146,8 +174,8 @@ dependencies:
 
 2. **Create specification**:
    ```bash
-   cp templates/[appropriate-template].md experiments/[experiment-name]/spec.md
-   # Edit spec.md with specific requirements
+   cp experiments/ui-components/spec.md experiments/[experiment-name]/spec.md
+   # Edit spec.md with specific requirements for your experiment type
    ```
 
 3. **Create dependency configuration**:
@@ -191,10 +219,10 @@ dependencies:
 
 Original experimental outputs are preserved in `../archive/` with date stamps for reference while maintaining the clean new structure.
 
-## Templates
+## Specification Examples
 
-Specification templates for new experiment types are available in `../templates/`:
-- `ui-component-spec-template.md`
-- `website-spec-template.md`
-- `interaction-spec-template.md`
-- `functional-ux-pattern-spec-template.md`
+Existing experiment specifications can be used as templates for new experiment types:
+- `ui-components/spec.md` - Themed hybrid component specification
+- `functional-ux-patterns/spec.md` - Workflow optimization pattern specification  
+- `website-homepages/*/spec.md` - Homepage iteration specifications
+- `interactions/spec.md` - Micro-interaction pattern specification
