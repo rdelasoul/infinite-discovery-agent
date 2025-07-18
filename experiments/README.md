@@ -215,9 +215,6 @@ dependencies:
 - **Thematic consistency**: Strong design personality throughout
 - **Technical excellence**: Accessible, performant, responsive design
 
-## Archive
-
-Original experimental outputs are preserved in `../archive/` with date stamps for reference while maintaining the clean new structure.
 
 ## Specification Examples
 

@@ -32,7 +32,7 @@ Same visual system + Different UX patterns = Workflow innovation
 - Comprehensive component library
 - Swiss design movement inspiration
 
-**Sharded Structure** (74% token reduction):
+**Modular Structure**:
 - `geist-core.md` - Essential foundations (colors, typography, spacing, grid)
 - `geist-components.md` - Component overview and usage guidance
 - Detailed component files available on-demand for specific needs

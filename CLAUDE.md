@@ -93,7 +93,6 @@ The infinite command implements sophisticated parallel agent coordination:
 - **`experiments/website-homepages/*/runs/`** - Project-specific homepage execution history
 - **`experiments/interactions/runs/`** - Animation and micro-interaction execution history
 - **`experiments/ui-innovations/runs/`** - Novel paradigm execution history
-- **`archive/`** - All original experiments preserved with full attribution and date stamps
 - **Example specs** - Existing experiment specifications can be copied and adapted for new types
 
 #### **Run Directory Structure**

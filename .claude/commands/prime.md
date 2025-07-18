@@ -92,16 +92,6 @@ UNDERSTAND the agnostic architecture:
 - Run-based execution with complete historical preservation
 - Symlink-based current run access for easy navigation
 
-## Archive Context
-
-READ:
-    archive/README.md
-
-All original experimental work is preserved in `archive/` with full attribution. The current enhanced structure represents a revolutionary advancement enabling:
-- Effortless spec iteration without folder proliferation
-- Flexible dependency management across all experiment types  
-- Complete historical preservation with reproducible contexts
-- Scalable architecture for unlimited experiment expansion
 
 ## Prime Complete
 
