@@ -23,13 +23,6 @@ READ:
     experiments/shared/moodboards/README.md
     experiments/shared/data/README.md
 
-## Discover Available Experiment Types
-
-RUN:
-    find experiments -maxdepth 2 -name "README.md" | grep -v experiments/README.md | head -10
-
-READ the discovered experiment type README files to understand the current available experiment types and their purposes.
-
 ## Current System Analysis
 
 RUN:

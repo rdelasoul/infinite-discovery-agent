@@ -36,12 +36,37 @@ Read config_file for essential dependencies only:
 - Skip extensive dependency copying and snapshots
 
 **1.3 Spec Preparation:**
-Create lightweight consolidated spec:
-- Base spec from spec_file
-- Essential dependency content only
-- **Strip ultra-thinking directives** - Remove sections containing "Ultra-Thinking Directive", "Before creating", "deeply consider", and extensive thinking prompts
-- Keep core requirements: file naming, structure, quality standards, technical specs
-- Skip redundant documentation sections and token-heavy analysis prompts
+Create lightweight consolidated spec by actively removing ultra-thinking content:
+
+**Step 1: Load and Parse Spec Content**
+- Read base spec from spec_file
+- Include essential dependency content only
+
+**Step 2: Remove Ultra-Thinking Sections**
+Remove entire sections that match these patterns:
+- Any section titled "## Ultra-Thinking Directive" (remove section header and all content until next ## header)
+- Any section titled "## Ultra-thinking Directive" (case variations)
+- Any section containing "Before creating each" followed by thinking prompts
+- Any section containing "deeply consider:" followed by bullet points
+- Any section with "Generate components that are:" followed by detailed thinking criteria
+
+**Step 3: Remove Thinking Prompts**
+Remove paragraphs that contain:
+- "Think deeply about"
+- "Consider carefully"
+- "Analyze thoroughly"
+- "Before beginning"
+- "Extended thinking"
+- Long bullet lists with thinking questions (5+ thinking bullets)
+
+**Step 4: Keep Core Requirements**
+Preserve only:
+- File naming and structure requirements
+- Technical specifications and output format
+- Quality standards (accessibility, performance)
+- Essential design requirements
+- Section requirements (what sections to include)
+- Basic brand guidelines
 
 **PHASE 2: FAST GENERATION**
 
@@ -63,19 +88,20 @@ For "infinite": Launch waves of 3-5 agents until context limits
 TASK: Generate iteration [NUMBER] for [EXPERIMENT_PATH]
 
 CONTEXT:
-- Spec: [streamlined consolidated specification - ultra-thinking directives removed]
+- Spec: [STREAMLINED SPECIFICATION - All ultra-thinking sections removed, core requirements only]
 - Output: experiments/{experiment_path}/runs/{run_timestamp}/iterations/
 - Iteration: [NUMBER]
 - Dependencies: [essential deps only]
 
 REQUIREMENTS:
-1. Follow spec format exactly
+1. Follow spec format exactly (no deep thinking required - requirements are direct)
 2. Ensure uniqueness from existing iterations
 3. Use dependencies appropriately
 4. Create functional, accessible output
 5. File: experiments/{experiment_path}/runs/{run_timestamp}/iterations/[filename]
-6. Focus on efficient implementation without extensive analysis
+6. Focus on efficient implementation - NO extensive analysis or ultra-thinking
 
+APPROACH: Direct implementation based on streamlined requirements
 DELIVERABLE: Single functional file as specified
 ```
 
@@ -114,17 +140,21 @@ WHILE context allows:
 - Dependency integration
 
 **Token Efficiency:**
-- 70-80% fewer tokens than /infinite (achieved by removing ultra-thinking directives)
-- Faster execution times
-- Essential features only
-- Direct output generation
-- Streamlined specification content
+- 70-80% fewer tokens than /infinite (achieved by actively removing ultra-thinking directives)
+- Faster execution times through streamlined specs
+- Essential features only - no thinking prompts
+- Direct output generation without analysis overhead
+- Streamlined specification content with ultra-thinking sections removed
 
 Begin execution by:
 1. Creating timestamped run directory with snapshots
 2. Quickly analyzing the experiment spec and resolving essential dependencies
-3. **Stripping ultra-thinking directives** from spec content to create streamlined specification
-4. Launching parallel Sub Agents for direct generation with minimal coordination overhead
+3. **ACTIVELY REMOVING ultra-thinking sections** from spec content following the 4-step process:
+   - Remove "## Ultra-Thinking Directive" sections entirely
+   - Remove "Before creating each" thinking prompts
+   - Remove "Think deeply about" paragraphs
+   - Keep only core requirements and specifications
+4. Launching parallel Sub Agents with streamlined spec (no thinking prompts)
 5. Updating `current` symlink to point to new run upon completion
 
 This maintains the proper run-based architecture while achieving true token efficiency through streamlined spec preparation and fast execution approach.

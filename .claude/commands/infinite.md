@@ -54,26 +54,25 @@ Create a new timestamped run to track this generation session:
 experiments/{experiment_path}/runs/{timestamp}/
 ├── spec-snapshot.md          # Complete resolved specification
 ├── config-snapshot.yml       # Configuration used for this run
-├── dependencies/             # Resolved dependency content
-│   ├── design-systems/      # Copied design system files
-│   ├── spec-modules/        # Copied spec module files
-│   ├── moodboards/          # Copied moodboard files for aesthetic guidance
-│   └── data/                # Copied data files
 └── iterations/              # Generated iterations output
 ```
+
+**Note**: Dependencies are referenced directly from `experiments/shared/` rather than copied to save storage and maintain consistency.
 
 **2.2 Snapshot Creation:**
 - Copy current `spec.md` as `spec-snapshot.md`
 - Copy current `spec-config.yml` as `config-snapshot.yml`
-- Copy all resolved dependencies to `dependencies/` subdirectories
 - Create empty `iterations/` directory for outputs
+- Dependencies remain in `experiments/shared/` and are referenced directly
 
-**2.3 Current Symlink Update:**
-Update the `current` symlink to point to this new run:
+**2.3 Current Symlink Update (Post-Completion):**
+Update the `current` symlink to point to this new run AFTER all agents complete:
 ```bash
 cd experiments/{experiment_path}
 ln -sf runs/{timestamp} current
 ```
+
+**Note**: This step is performed at the end of the process to ensure symlink points to completed run.
 
 **PHASE 3: SPECIFICATION ANALYSIS**
 Analyze the consolidated specification to understand:
@@ -135,14 +134,15 @@ CONTEXT:
 - Assigned creative direction: [Specific innovation dimension to explore]
 
 DEPENDENCIES AVAILABLE:
-- Design Systems: [List of resolved design system files]
-- Spec Modules: [List of resolved specification modules]
-- Data Sets: [List of resolved data sets]
+- Design Systems: [List of resolved design system files from experiments/shared/design-systems/]
+- Spec Modules: [List of resolved specification modules from experiments/shared/spec-modules/]
+- Moodboards: [List of aesthetic guidance files from experiments/shared/moodboards/]
+- Data Sets: [List of resolved data sets from experiments/shared/data/]
 
 REQUIREMENTS:
 1. Read and understand the consolidated specification completely
 2. Analyze previous runs to ensure your output is globally unique
-3. Utilize provided dependencies appropriately (design systems, data, etc.)
+3. Utilize provided dependencies appropriately (reference files directly from experiments/shared/)
 4. Generate content following the resolved spec format exactly
 5. Focus on [assigned innovation dimension] while maintaining spec compliance
 6. Create file in: experiments/{experiment_path}/runs/{timestamp}/iterations/
@@ -153,12 +153,12 @@ DELIVERABLE: Single file as specified, with unique innovative content utilizing 
 
 **Parallel Execution Management:**
 - Launch all assigned Sub Agents simultaneously using Task tool
-- Provide each agent with complete dependency resolution context
+- Provide each agent with complete dependency resolution context (referencing experiments/shared/ directly)
 - Monitor agent progress and completion
 - Handle any agent failures by reassigning iteration numbers
 - Ensure no duplicate iteration numbers are generated
 - Collect and validate all completed iterations
-- Verify proper dependency utilization
+- Verify proper dependency utilization (ensure agents can access experiments/shared/ files)
 
 **PHASE 7: INFINITE MODE ORCHESTRATION**
 For infinite generation mode, orchestrate continuous parallel waves with dependency awareness:

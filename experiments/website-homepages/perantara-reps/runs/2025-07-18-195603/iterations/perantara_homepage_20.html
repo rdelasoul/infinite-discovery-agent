@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perantara Reps - Your Reliable NZ Partner</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #2563eb;
+            --success-green: #10b981;
+            --white: #ffffff;
+            --charcoal: #1f2937;
+            --light-gray: #f3f4f6;
+            --border-light: #e5e7eb;
+            --text-muted: #6b7280;
+            --shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.1);
+            --shadow-medium: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-large: 0 10px 25px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--charcoal);
+            background: var(--white);
+            overflow-x: hidden;
+        }
+
+        /* Skip Link for Accessibility */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 6px;
+            background: var(--primary-blue);
+            color: white;
+            padding: 8px;
+            text-decoration: none;
+            z-index: 9999;
+            border-radius: 4px;
+        }
+
+        .skip-link:focus {
+            top: 6px;
+        }
+
+        /* Asymmetrical Header Design */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-light);
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            align-items: center;
+            height: 4rem;
+            gap: 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .logo:hover, .logo:focus {
+            transform: scale(1.05);
+            outline: 2px solid var(--primary-blue);
+            outline-offset: 4px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+        }
+
+        .nav-links a {
+            color: var(--charcoal);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-blue);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after, .nav-links a:focus::after {
+            width: 100%;
+        }
+
+        .nav-links a:focus {
+            outline: 2px solid var(--primary-blue);
+            outline-offset: 4px;
+        }
+
+        .nav-cta {
+            justify-self: end;
+        }
+
+        .btn-primary {
+            background: var(--primary-blue);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: var(--transition);
+            cursor: pointer;
+            min-height: 44px;
+            min-width: 44px;
+        }
+
+        .btn-primary:hover, .btn-primary:focus {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-large);
+            outline: 2px solid var(--primary-blue);
+            outline-offset: 2px;
+        }
+
+        /* Mobile Navigation */
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--charcoal);
+            padding: 0.5rem;
+            min-height: 44px;
+            min-width: 44px;
+        }
+
+        /* Asymmetrical Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--white) 0%, var(--light-gray) 100%);
+            padding: 8rem 0 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 40%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--success-green) 100%);
+            opacity: 0.05;
+            clip-path: polygon(20% 0%, 100% 0%, 100% 100%, 0% 100%);
+        }
+
+        .hero-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+        }
+
+        .hero-content {
+            z-index: 2;
+        }
+
+        .hero-tagline {
+            color: var(--success-green);
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--charcoal);
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            max-width: 600px;
+        }
+
+        .hero-ctas {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary-blue);
+            border: 2px solid var(--primary-blue);
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: var(--transition);
+            min-height: 44px;
+            min-width: 44px;
+        }
+
+        .btn-secondary:hover, .btn-secondary:focus {
+            background: var(--primary-blue);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+            outline: 2px solid var(--primary-blue);
+            outline-offset: 2px;
+        }
+
+        .hero-visual {
+            position: relative;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cultural-bridge {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: var(--shadow-large);
+            overflow: hidden;
+        }
+
+        .cultural-bridge::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, 
+                var(--primary-blue) 0%, 
+                var(--success-green) 50%, 
+                var(--primary-blue) 100%);
+            opacity: 0.1;
+        }
+
+        .bridge-content {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .bridge-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--charcoal);
+            margin-bottom: 1rem;
+        }
+
+        .bridge-flags {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .flag {
+            width: 40px;
+            height: 30px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: white;
+            box-shadow: var(--shadow-subtle);
+        }
+
+        .flag.ph { background: linear-gradient(180deg, #0038a8 50%, #ce1126 50%); }
+        .flag.id { background: linear-gradient(180deg, #ce1126 50%, #ffffff 50%); }
+        .flag.th { background: linear-gradient(180deg, #ed1c24 20%, #ffffff 20% 40%, #241d4f 40% 60%, #ffffff 60% 80%, #ed1c24 80%); }
+        .flag.nz { background: linear-gradient(135deg, #012169 0%, #012169 100%); }
+
+        .bridge-arrow {
+            font-size: 2rem;
+            color: var(--success-green);
+            margin: 1rem 0;
+        }
+
+        /* Asymmetrical Sections */
+        .section {
+            padding: 4rem 0;
+            position: relative;
+        }
+
+        .section:nth-child(even) {
+            background: var(--light-gray);
+        }
+
+        .section-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--charcoal);
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+        }
+
+        /* Asymmetrical Advantages Grid */
+        .advantages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .advantage-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow-subtle);
+            transition: var(--transition);
+            border: 1px solid var(--border-light);
+        }
+
+        .advantage-card:hover, .advantage-card:focus-within {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-large);
+        }
+
+        .advantage-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--primary-blue);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .advantage-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--charcoal);
+            margin-bottom: 1rem;
+        }
+
+        .advantage-description {
+            color: var(--text-muted);
+        }
+
+        /* How We Work Section */
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .process-step {
+            text-align: center;
+            position: relative;
+        }
+
+        .process-step::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: -1.5rem;
+            width: 2rem;
+            height: 2px;
+            background: var(--success-green);
+            transform: translateY(-50%);
+        }
+
+        .process-step:last-child::after {
+            display: none;
+        }
+
+        .process-number {
+            width: 60px;
+            height: 60px;
+            background: var(--primary-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 auto 1.5rem;
+        }
+
+        .process-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--charcoal);
+            margin-bottom: 1rem;
+        }
+
+        .process-description {
+            color: var(--text-muted);
+        }
+
+        /* FAQ Section */
+        .faq-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .faq-item {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow-subtle);
+            border: 1px solid var(--border-light);
+        }
+
+        .faq-question {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--charcoal);
+            margin-bottom: 1rem;
+        }
+
+        .faq-answer {
+            color: var(--text-muted);
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background: var(--charcoal);
+            color: white;
+        }
+
+        .contact-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .contact-info h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-info p {
+            font-size: 1.125rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .contact-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow-large);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: var(--charcoal);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-input,
+        .form-textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--border-light);
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .whatsapp-option {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: var(--success-green);
+            color: white;
+            border-radius: 8px;
+            text-align: center;
+            text-decoration: none;
+            display: block;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .whatsapp-option:hover, .whatsapp-option:focus {
+            background: #059669;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+            outline: 2px solid var(--success-green);
+            outline-offset: 2px;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--charcoal);
+            color: white;
+            padding: 2rem 0;
+            border-top: 1px solid #374151;
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: #d1d5db;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-section a:hover, .footer-section a:focus {
+            color: white;
+            outline: 2px solid white;
+            outline-offset: 2px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #374151;
+            color: #9ca3af;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .nav-container {
+                grid-template-columns: 1fr auto;
+            }
+
+            .nav-cta {
+                justify-self: auto;
+            }
+
+            .hero-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 2rem;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-ctas {
+                justify-content: center;
+            }
+
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+
+            .process-step::after {
+                display: none;
+            }
+        }
+
+        /* Animation for enhanced user experience */
+        .animate-fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Focus styles for better accessibility */
+        .advantage-card:focus-within,
+        .faq-item:focus-within {
+            outline: 2px solid var(--primary-blue);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Skip Link -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Header -->
+    <header class="header" role="banner">
+        <div class="nav-container">
+            <a href="#" class="logo" aria-label="Perantara Reps - Home">Perantara Reps</a>
+            <nav class="nav-links" role="navigation" aria-label="Main navigation">
+                <a href="#about">About</a>
+                <a href="#why-partner">Why Partner</a>
+                <a href="#how-it-works">How It Works</a>
+                <a href="#contact">Contact</a>
+            </nav>
+            <button class="mobile-menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false">
+                ☰
+            </button>
+            <div class="nav-cta">
+                <a href="#contact" class="btn-primary">Request Itinerary</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content" role="main">
+        <!-- Hero Section -->
+        <section class="hero" aria-labelledby="hero-title">
+            <div class="hero-container">
+                <div class="hero-content">
+                    <div class="hero-tagline">Your Reliable NZ Partner</div>
+                    <h1 id="hero-title" class="hero-title">NZ DMC that Southeast Asian agents trust</h1>
+                    <p class="hero-subtitle">We handle cultural nuances, family needs, and group dynamics - so you look exceptional to your clients</p>
+                    <div class="hero-ctas">
+                        <a href="#contact" class="btn-primary">Get Custom Itinerary</a>
+                        <a href="#why-partner" class="btn-secondary">See Our Difference</a>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="cultural-bridge">
+                        <div class="bridge-content">
+                            <h2 class="bridge-title">Cultural Bridge</h2>
+                            <div class="bridge-flags">
+                                <div class="flag ph" aria-label="Philippines"></div>
+                                <div class="flag id" aria-label="Indonesia"></div>
+                                <div class="flag th" aria-label="Thailand"></div>
+                            </div>
+                            <div class="bridge-arrow">→</div>
+                            <div class="bridge-flags">
+                                <div class="flag nz" aria-label="New Zealand">🇳🇿</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- What Makes Us Different -->
+        <section id="about" class="section" aria-labelledby="different-title">
+            <div class="section-container">
+                <div class="section-header">
+                    <h2 id="different-title" class="section-title">What Makes Us Different</h2>
+                    <p class="section-subtitle">Your reliable NZ partner - We speak your clients' languages, literally and culturally</p>
+                </div>
+                <div class="advantages-grid">
+                    <div class="advantage-card">
+                        <div class="advantage-icon">🌏</div>
+                        <h3 class="advantage-title">Multi-Market Expertise</h3>
+                        <p class="advantage-description">Deep understanding of Philippines, Indonesia, and Thailand travel preferences. We know family dynamics, cultural sensitivities, and value expectations.</p>
+                    </div>
+                    <div class="advantage-card">
+                        <div class="advantage-icon">⚡</div>
+                        <h3 class="advantage-title">48-Hour Response</h3>
+                        <p class="advantage-description">Your clients don't wait, your reputation stays intact. Guaranteed response within 48 hours, usually within 24.</p>
+                    </div>
+                    <div class="advantage-card">
+                        <div class="advantage-icon">🤝</div>
+                        <h3 class="advantage-title">Local Insider Access</h3>
+                        <p class="advantage-description">Connections that tourist boards don't have. Authentic experiences that create lifelong memories and referrals.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Travel Agents Choose Us -->
+        <section id="why-partner" class="section" aria-labelledby="why-title">
+            <div class="section-container">
+                <div class="section-header">
+                    <h2 id="why-title" class="section-title">Why Travel Agents Choose Us</h2>
+                    <p class="section-subtitle">We make you look good while delivering exceptional value</p>
+                </div>
+                <div class="advantages-grid">
+                    <div class="advantage-card">
+                        <div class="advantage-icon">👨‍👩‍👧‍👦</div>
+                        <h3 class="advantage-title">Southeast Asian Client Expertise</h3>
+                        <p class="advantage-description">Family dynamics, cultural sensitivity, value for money. We understand multi-generational travel needs.</p>
+                    </div>
+                    <div class="advantage-card">
+                        <div class="advantage-icon">🗣️</div>
+                        <h3 class="advantage-title">Language Support</h3>
+                        <p class="advantage-description">English, Bahasa Indonesia, and Thai-speaking team members ensure clear communication.</p>
+                    </div>
+                    <div class="advantage-card">
+                        <div class="advantage-icon">🎯</div>
+                        <h3 class="advantage-title">Cultural Intelligence</h3>
+                        <p class="advantage-description">No awkward moments, no cultural mistakes. We prevent issues before they happen.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How We Work Together -->
+        <section id="how-it-works" class="section" aria-labelledby="process-title">
+            <div class="section-container">
+                <div class="section-header">
+                    <h2 id="process-title" class="section-title">How We Work Together</h2>
+                    <p class="section-subtitle">Simple 3-step process that makes you look exceptional</p>
+                </div>
+                <div class="process-grid">
+                    <div class="process-step">
+                        <div class="process-number">1</div>
+                        <h3 class="process-title">You Brief Us, We Listen</h3>
+                        <p class="process-description">Tell us about your clients' needs, preferences, and expectations. We ask the right questions.</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="process-number">2</div>
+                        <h3 class="process-title">Custom Proposal</h3>
+                        <p class="process-description">Within 48 hours, receive a detailed proposal that makes you look good to your clients.</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="process-number">3</div>
+                        <h3 class="process-title">Flawless Execution</h3>
+                        <p class="process-description">We handle everything. Your clients have amazing experiences and give you glowing reviews.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="section" aria-labelledby="faq-title">
+            <div class="section-container">
+                <div class="section-header">
+                    <h2 id="faq-title" class="section-title">Frequently Asked Questions</h2>
+                    <p class="section-subtitle">Everything you need to know about partnering with us</p>
+                </div>
+                <div class="faq-grid">
+                    <div class="faq-item">
+                        <h3 class="faq-question">Do you handle large group bookings?</h3>
+                        <p class="faq-answer">Yes, we specialize in group travel from 10-50+ people. We understand group dynamics and logistics.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h3 class="faq-question">How fast do you respond?</h3>
+                        <p class="faq-answer">48 hours guaranteed, usually within 24. Your clients don't wait, your reputation stays intact.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h3 class="faq-question">What about dietary requirements?</h3>
+                        <p class="faq-answer">We accommodate all dietary needs and cultural preferences. Halal, vegetarian, allergies - we've got it covered.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h3 class="faq-question">Family-friendly activities?</h3>
+                        <p class="faq-answer">All our tours work for multi-generational groups. From toddlers to grandparents, everyone has a great time.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h3 class="faq-question">Value for money?</h3>
+                        <p class="faq-answer">We focus on authentic experiences that deliver exceptional value. Your clients get more than they expected.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h3 class="faq-question">Language support during tours?</h3>
+                        <p class="faq-answer">Our guides speak English, Bahasa Indonesia, and Thai. Clear communication throughout the entire journey.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="contact-section" aria-labelledby="contact-title">
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h2 id="contact-title">Let's Create Something Memorable</h2>
+                    <p>Tell us about your clients and we'll create a custom proposal that makes you look exceptional.</p>
+                </div>
+                <form class="contact-form" aria-label="Contact form">
+                    <div class="form-group">
+                        <label for="group-size" class="form-label">Group Size</label>
+                        <input type="number" id="group-size" name="group-size" class="form-input" min="1" placeholder="e.g., 15" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="interests" class="form-label">Client Interests</label>
+                        <input type="text" id="interests" name="interests" class="form-input" placeholder="e.g., cultural experiences, family activities" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="budget" class="form-label">Budget Range (per person)</label>
+                        <input type="text" id="budget" name="budget" class="form-input" placeholder="e.g., $1500-2000 NZD" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="special-needs" class="form-label">Special Requirements</label>
+                        <textarea id="special-needs" name="special-needs" class="form-textarea" placeholder="Dietary restrictions, accessibility needs, cultural preferences..."></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary" style="width: 100%;">Send Request</button>
+                    <a href="https://wa.me/+64XXXXXXXXX" class="whatsapp-option" target="_blank" rel="noopener noreferrer" aria-label="Contact us on WhatsApp">
+                        📱 WhatsApp: +64 XXX XXX XXX
+                    </a>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Perantara Reps</h3>
+                <p>Your reliable New Zealand partner for Southeast Asian travel agents.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Info</h3>
+                <p>Email: info@perantarareps.nz</p>
+                <p>Phone: +64 XXX XXX XXX</p>
+                <p>WhatsApp: +64 XXX XXX XXX</p>
+            </div>
+            <div class="footer-section">
+                <h3>Services</h3>
+                <p>Group Travel Planning</p>
+                <p>Cultural Experience Tours</p>
+                <p>Family-Friendly Activities</p>
+            </div>
+            <div class="footer-section">
+                <h3>Languages</h3>
+                <p>English • Bahasa Indonesia • Thai</p>
+                <p>Serving Philippines, Indonesia, Thailand</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Perantara Reps. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+            <p>We acknowledge and respect the traditional custodians of Aotearoa New Zealand.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Progressive enhancement for mobile menu
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileToggle = document.querySelector('.mobile-menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+            
+            if (mobileToggle && navLinks) {
+                mobileToggle.addEventListener('click', function() {
+                    navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+                    this.setAttribute('aria-expanded', navLinks.style.display === 'flex');
+                });
+            }
+
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+
+            // Form submission handling
+            const contactForm = document.querySelector('.contact-form');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    alert('Thank you for your inquiry! We\'ll send you a custom proposal within 48 hours.');
+                });
+            }
+
+            // Add animation classes on scroll
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-fade-in');
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.advantage-card, .process-step, .faq-item').forEach(el => {
+                observer.observe(el);
+            });
+
+            // Header scroll effect
+            let lastScrollTop = 0;
+            const header = document.querySelector('.header');
+            
+            window.addEventListener('scroll', function() {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                
+                if (scrollTop > lastScrollTop && scrollTop > 100) {
+                    header.style.transform = 'translateY(-100%)';
+                } else {
+                    header.style.transform = 'translateY(0)';
+                }
+                
+                lastScrollTop = scrollTop;
+            });
+        });
+    </script>
+</body>
+</html>

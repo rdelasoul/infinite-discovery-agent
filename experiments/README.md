@@ -76,94 +76,32 @@ dependencies:
     - ecommerce-data      # Product/shopping context
 ```
 
-## Experiment Types
+## Discovering Experiment Types
 
-### 🎨 UI Components (`ui-components/`)
-**Purpose**: Create themed hybrid UI components that combine multiple UI functions with distinctive design personalities.
+**Explore available experiments:**
+```bash
+# List all experiment types
+ls experiments/*/README.md
 
-**Command**: `/infinite ui-components [count]`
+# See specific experiment details
+cat experiments/ui-components/README.md
+cat experiments/website-homepages/README.md
+```
 
-**Concept**: "Two birds with one stone" efficiency by combining functions like Search + Autocomplete + Filters + Recent Items into single components with themes like Organic Nature, Digital Minimalism, Cyberpunk, etc.
+**Basic usage pattern:**
+```bash
+# All experiments follow the same pattern
+/infinite [experiment-type] [count]
+/quick [experiment-type] [count]      # Fast iteration mode
+```
 
-**Outputs**: Results appear in `runs/[timestamp]/iterations/`
-- Themed hybrid components with distinctive design personalities
-- Multiple UI functions combined into elegant solutions
+**Examples with current experiments:**
+- UI component themes: `/infinite ui-components 5`
+- Website iterations: `/infinite website-homepages/perantara-reps 3`
+- UX workflow patterns: `/infinite functional-ux-patterns 3`
+- Banking interfaces: `/infinite multi-card-banking 3`
 
----
-
-### 🌐 Website Homepages (`website-homepages/`)
-**Purpose**: Generate complete homepage iterations for specific website projects.
-
-**Commands**: 
-- `/infinite website-homepages/perantara-reps [count]`
-- `/infinite website-homepages/portfolio-site [count]`
-
-**Focus**: Different design approaches while maintaining brand consistency and UX goals.
-
-**Active Projects**:
-- **Perantara Reps**: NZ DMC targeting Indonesian travel agents
-- **Portfolio Site**: Personal portfolio showcasing capabilities
-
----
-
-### 🎯 Functional UX Patterns (`functional-ux-patterns/`)
-**Purpose**: Optimize user workflows through innovative UX patterns while working within design system constraints.
-
-**Command**: `/infinite functional-ux-patterns [count]`
-
-**Concept**: Function-first exploration focusing on task completion efficiency, cognitive load reduction, and workflow optimization rather than visual variation. Design system elements provide consistent visual framework while patterns explore information architecture, interaction models, and user journey optimization.
-
-**Focus**: Information architecture patterns, interaction model innovation, workflow optimization, and cognitive load reduction.
-
-**Pattern Categories**:
-- **Information Architecture**: Contextual clustering, progressive disclosure, adaptive hierarchy
-- **Interaction Models**: Modal vs inline, drawer vs page, progressive forms, contextual actions
-- **Workflow Optimization**: Task continuation, error prevention, intelligent defaults, recovery assistance
-- **Cognitive Load**: Attention management, memory assistance, decision support, complexity abstraction
-
----
-
-### 🏦 Multi-Card Banking (`multi-card-banking/`)
-**Purpose**: Create banking interface patterns for multiple account management and financial workflows.
-
-**Command**: `/infinite multi-card-banking [count]`
-
-**Focus**: Multi-account banking interfaces, transaction management, financial dashboard layouts, and card-based banking workflows.
-
-**Examples**: Account overview patterns, transaction categorization, multi-card payment flows, balance management interfaces
-
----
-
-### 💼 Bank Relationship Intelligence (`bank-relationship-intelligence/`)
-**Purpose**: Develop financial relationship management and customer intelligence interfaces for banking advisors.
-
-**Command**: `/infinite bank-relationship-intelligence [count]`
-
-**Focus**: Relationship dashboards, financial health indicators, advisory recommendation interfaces, and customer intelligence tools.
-
-**Examples**: Relationship scoring interfaces, financial wellness dashboards, advisory workflow tools, customer insight panels
-
----
-
-### ⚡ Interactions (`interactions/`)
-**Purpose**: Explore micro-interactions, animations, and novel interaction patterns.
-
-**Command**: `/infinite interactions [count]`
-
-**Focus**: Performance-optimized animations, accessibility-conscious design, and innovative interaction paradigms.
-
-*Note: This experiment type is ready for specifications and iterations.*
-
----
-
-### 🧪 UI Innovations (`ui-innovations/`)
-**Purpose**: Completely novel UI paradigms that replace existing interaction patterns.
-
-**Command**: `/infinite ui-innovations [count]`
-
-**Focus**: Revolutionary approaches to common UI elements with entirely new interaction models.
-
-*Note: This experiment type is ready for specifications and iterations.*
+Each experiment type has its own README with detailed purpose, examples, and usage guidance.
 
 ## Adding New Experiment Types
 
