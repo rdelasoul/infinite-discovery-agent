@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Observatory - Digital Home</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #0f1419 0%, #1a2332 100%);
+            color: #ffffff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .observatory {
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: #ffffff;
+            border-radius: 50%;
+            animation: twinkle 4s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .constellation {
+            position: absolute;
+            top: 10%;
+            right: 10%;
+            width: 200px;
+            height: 200px;
+            opacity: 0.6;
+        }
+
+        .constellation-line {
+            position: absolute;
+            background: #2563eb;
+            height: 1px;
+            transform-origin: left center;
+        }
+
+        .navigation {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            z-index: 100;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .nav-button {
+            background: rgba(37, 99, 235, 0.1);
+            border: 1px solid rgba(37, 99, 235, 0.3);
+            color: #ffffff;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-button:hover {
+            background: rgba(37, 99, 235, 0.2);
+            border-color: #2563eb;
+            transform: translateY(-1px);
+        }
+
+        .telescope {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120px;
+            height: 300px;
+            background: linear-gradient(45deg, #374151, #4b5563);
+            border-radius: 10px;
+            border: 2px solid #6b7280;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .telescope:hover {
+            transform: translate(-50%, -50%) scale(1.05);
+            box-shadow: 0 0 30px rgba(37, 99, 235, 0.5);
+        }
+
+        .telescope::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 40px;
+            background: #1f2937;
+            border-radius: 50%;
+            border: 2px solid #6b7280;
+        }
+
+        .telescope::after {
+            content: 'Click to explore';
+            position: absolute;
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #9ca3af;
+            font-size: 0.8rem;
+            white-space: nowrap;
+        }
+
+        .section {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(15, 20, 25, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 50;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s ease;
+        }
+
+        .section.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .section-content {
+            max-width: 800px;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .section h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #2563eb, #60a5fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: #e5e7eb;
+        }
+
+        .section p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: #d1d5db;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .close-button {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            background: none;
+            border: none;
+            color: #9ca3af;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .close-button:hover {
+            color: #ffffff;
+            transform: rotate(90deg);
+        }
+
+        .observatory-status {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            background: rgba(37, 99, 235, 0.1);
+            border: 1px solid rgba(37, 99, 235, 0.3);
+            padding: 1rem;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            z-index: 20;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #10b981;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .current-observation {
+            font-size: 0.9rem;
+            color: #d1d5db;
+        }
+
+        .project-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .project-card {
+            background: rgba(55, 65, 81, 0.3);
+            border: 1px solid rgba(107, 114, 128, 0.3);
+            border-radius: 10px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(37, 99, 235, 0.2);
+            border-color: #2563eb;
+        }
+
+        .project-card h3 {
+            color: #2563eb;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-card p {
+            color: #9ca3af;
+            font-size: 0.9rem;
+            margin-bottom: 0;
+        }
+
+        .contact-methods {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .contact-method {
+            background: rgba(37, 99, 235, 0.1);
+            border: 1px solid rgba(37, 99, 235, 0.3);
+            color: #ffffff;
+            padding: 0.75rem 1.5rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .contact-method:hover {
+            background: rgba(37, 99, 235, 0.2);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .navigation {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .nav-button {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.8rem;
+            }
+
+            .telescope {
+                width: 80px;
+                height: 200px;
+            }
+
+            .section h1 {
+                font-size: 2rem;
+            }
+
+            .section h2 {
+                font-size: 1.5rem;
+            }
+
+            .section p {
+                font-size: 1rem;
+            }
+
+            .contact-methods {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .project-gallery {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="observatory">
+        <div class="stars" id="stars"></div>
+        
+        <div class="constellation">
+            <div class="constellation-line" style="top: 20px; left: 30px; width: 40px; transform: rotate(45deg);"></div>
+            <div class="constellation-line" style="top: 40px; left: 60px; width: 30px; transform: rotate(-30deg);"></div>
+            <div class="constellation-line" style="top: 60px; left: 20px; width: 50px; transform: rotate(60deg);"></div>
+            <div class="constellation-line" style="top: 80px; left: 80px; width: 35px; transform: rotate(-45deg);"></div>
+        </div>
+
+        <nav class="navigation">
+            <button class="nav-button" onclick="showSection('about')" aria-label="About section">About</button>
+            <button class="nav-button" onclick="showSection('work')" aria-label="Work section">Work</button>
+            <button class="nav-button" onclick="showSection('observations')" aria-label="Observations section">Observations</button>
+            <button class="nav-button" onclick="showSection('contact')" aria-label="Contact section">Contact</button>
+        </nav>
+
+        <div class="telescope" onclick="showSection('about')" role="button" tabindex="0" aria-label="Main telescope - click to explore"></div>
+
+        <div class="observatory-status">
+            <div class="status-indicator">
+                <div class="status-dot"></div>
+                <span>Observatory Online</span>
+            </div>
+            <div class="current-observation">Currently observing: Creative constellations</div>
+        </div>
+
+        <!-- About Section -->
+        <div id="about" class="section">
+            <button class="close-button" onclick="hideSection()" aria-label="Close section">&times;</button>
+            <div class="section-content">
+                <h1>Digital Explorer</h1>
+                <p>Welcome to my personal observatory, a space where creativity meets curiosity. I'm a designer and developer who believes the best work happens when we explore uncharted territories of digital experience.</p>
+                <p>Like an astronomer studying distant galaxies, I investigate the intersection of human behavior and digital interfaces, discovering patterns that illuminate new possibilities for connection and communication.</p>
+                <p>This observatory serves as both my workshop and my window to the world—a place where ideas take shape under the vast expanse of digital possibility.</p>
+            </div>
+        </div>
+
+        <!-- Work Section -->
+        <div id="work" class="section">
+            <button class="close-button" onclick="hideSection()" aria-label="Close section">&times;</button>
+            <div class="section-content">
+                <h2>Project Constellations</h2>
+                <p>Each project is a constellation of decisions, discoveries, and digital craftsmanship. Here are some of my recent explorations:</p>
+                <div class="project-gallery">
+                    <div class="project-card">
+                        <h3>Nebula Design System</h3>
+                        <p>A comprehensive design system that grows and evolves like cosmic formations, providing structure while maintaining flexibility.</p>
+                    </div>
+                    <div class="project-card">
+                        <h3>Quantum Interface</h3>
+                        <p>An experimental approach to navigation that adapts to user behavior, creating personalized pathways through complex information.</p>
+                    </div>
+                    <div class="project-card">
+                        <h3>Stellar Analytics</h3>
+                        <p>A data visualization platform that transforms numbers into narratives, making complex patterns accessible and actionable.</p>
+                    </div>
+                    <div class="project-card">
+                        <h3>Cosmic Collaboration</h3>
+                        <p>A remote team platform that bridges distances through thoughtful interaction design and ambient awareness features.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Observations Section -->
+        <div id="observations" class="section">
+            <button class="close-button" onclick="hideSection()" aria-label="Close section">&times;</button>
+            <div class="section-content">
+                <h2>Current Observations</h2>
+                <p>Like any good observatory, this space is constantly recording and reflecting on the patterns I observe in the digital universe:</p>
+                <div class="project-gallery">
+                    <div class="project-card">
+                        <h3>The Emergence of Calm Technology</h3>
+                        <p>Studying how interfaces can recede into the background, becoming invisible assistants rather than attention-demanding screens.</p>
+                    </div>
+                    <div class="project-card">
+                        <h3>Micro-Interactions as Language</h3>
+                        <p>Exploring how small animations and transitions create emotional connections and communicate system states without words.</p>
+                    </div>
+                    <div class="project-card">
+                        <h3>The Future of Digital Empathy</h3>
+                        <p>Investigating how technology can better understand and respond to human emotional states and social contexts.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Section -->
+        <div id="contact" class="section">
+            <button class="close-button" onclick="hideSection()" aria-label="Close section">&times;</button>
+            <div class="section-content">
+                <h2>Open Channel</h2>
+                <p>The observatory is always open to new signals and connections. Whether you're interested in collaboration, consultation, or just want to share your own observations about the digital frontier, I'd love to hear from you.</p>
+                <div class="contact-methods">
+                    <a href="mailto:hello@observatory.com" class="contact-method">Send Signal</a>
+                    <a href="https://linkedin.com/in/explorer" class="contact-method">Professional Network</a>
+                    <a href="https://github.com/explorer" class="contact-method">Code Repository</a>
+                </div>
+                <p style="margin-top: 2rem; font-size: 0.9rem; color: #9ca3af;">Response time: Usually within one orbit (24 hours)</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Generate random stars
+        function generateStars() {
+            const starsContainer = document.getElementById('stars');
+            const numStars = window.innerWidth < 768 ? 50 : 100;
+            
+            for (let i = 0; i < numStars; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 4 + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // Section management
+        function showSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.classList.add('active');
+                // Add escape key listener
+                document.addEventListener('keydown', handleEscapeKey);
+            }
+        }
+
+        function hideSection() {
+            const activeSections = document.querySelectorAll('.section.active');
+            activeSections.forEach(section => {
+                section.classList.remove('active');
+            });
+            // Remove escape key listener
+            document.removeEventListener('keydown', handleEscapeKey);
+        }
+
+        function handleEscapeKey(event) {
+            if (event.key === 'Escape') {
+                hideSection();
+            }
+        }
+
+        // Keyboard navigation for telescope
+        document.querySelector('.telescope').addEventListener('keydown', function(event) {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                showSection('about');
+            }
+        });
+
+        // Initialize
+        generateStars();
+
+        // Regenerate stars on window resize
+        let resizeTimer;
+        window.addEventListener('resize', function() {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(function() {
+                document.getElementById('stars').innerHTML = '';
+                generateStars();
+            }, 250);
+        });
+
+        // Focus management for accessibility
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Tab') {
+                const focusableElements = document.querySelectorAll('button, [href], [tabindex]:not([tabindex="-1"])');
+                const firstElement = focusableElements[0];
+                const lastElement = focusableElements[focusableElements.length - 1];
+
+                if (event.shiftKey) {
+                    if (document.activeElement === firstElement) {
+                        lastElement.focus();
+                        event.preventDefault();
+                    }
+                } else {
+                    if (document.activeElement === lastElement) {
+                        firstElement.focus();
+                        event.preventDefault();
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
