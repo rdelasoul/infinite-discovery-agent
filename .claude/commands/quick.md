@@ -33,7 +33,20 @@ Read config_file for essential dependencies only:
 - Include critical spec-modules (accessibility, performance)
 - Include moodboards for aesthetic direction
 - Include data sets if needed
+- **Enhancement strategies**: Include content from `shared/enhancement-strategies/` if specified
+- **References**: Generate quick summary of referenced work (max 30 lines for speed)
 - Skip extensive dependency copying and snapshots
+
+**1.2.1 Quick Reference Summary (Enhancement Mode):**
+If `references` array exists in config:
+1. **Path Resolution**: Resolve `current/` symlinks to actual timestamp paths
+2. **Quick Analysis**: Extract key patterns using streamlined approach:
+   - Component type and main purpose
+   - Top 5 key features only
+   - Primary interaction points
+   - Enhancement focus based on selected strategies
+3. **Concise Summary**: Generate 30-line maximum summary (streamlined for /quick speed)
+4. **Fast Integration**: Include in streamlined spec as brief "REFERENCE_CONTEXT" section
 
 **1.3 Spec Preparation:**
 Create lightweight consolidated spec by actively removing ultra-thinking content:
@@ -92,14 +105,17 @@ CONTEXT:
 - Output: experiments/{experiment_path}/runs/{run_timestamp}/iterations/
 - Iteration: [NUMBER]
 - Dependencies: [essential deps only]
+- Enhancement Strategy: [Strategy type if enhancement mode]
+- Reference Context: [30-line quick summary if enhancement mode]
 
 REQUIREMENTS:
 1. Follow spec format exactly (no deep thinking required - requirements are direct)
 2. Ensure uniqueness from existing iterations
 3. Use dependencies appropriately
 4. Create functional, accessible output
-5. File: experiments/{experiment_path}/runs/{run_timestamp}/iterations/[filename]
-6. Focus on efficient implementation - NO extensive analysis or ultra-thinking
+5. **Quick Enhancement** (if applicable): Apply enhancement strategy efficiently using reference context
+6. File: experiments/{experiment_path}/runs/{run_timestamp}/iterations/[filename]
+7. Focus on efficient implementation - NO extensive analysis or ultra-thinking
 
 APPROACH: Direct implementation based on streamlined requirements
 DELIVERABLE: Single functional file as specified

@@ -2,6 +2,12 @@
 
 # Shared dependencies to include when running /infinite multi-card-banking
 dependencies:
+  # Enhancement capabilities (NEW: Reference and enhance existing work)
+  references:
+    - multi-card-banking/current/iterations/ux_pattern_14.html  # Reference existing banking interface
+  enhancement-strategies:
+    - interactions       # Apply interaction design enhancements
+  
   # Design system dependencies (recommended for banking applications)
   design-systems:
     - geist-core         # Professional banking interface foundation
@@ -23,8 +29,9 @@ dependencies:
 experiment:
   type: "functional-ux-patterns"
   domain: "multi-card-banking"
+  enhancement_mode: true              # NEW: Enhancement of existing work
   output_format: "single-file"
-  naming_pattern: "ux_pattern_{iteration}.html"
+  naming_pattern: "enhanced_ux_{iteration}.html"  # Enhanced naming pattern
 
 # Domain context:
 # - Multiple credit/debit card management

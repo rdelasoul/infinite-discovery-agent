@@ -29,6 +29,8 @@ Read `config_file` to understand:
 - spec-modules dependencies (from `shared/spec-modules/`)
 - moodboards dependencies (from `shared/moodboards/`)
 - data dependencies (from `shared/data/`)
+- **enhancement-strategies dependencies** (from `shared/enhancement-strategies/`)
+- **references dependencies** (existing work to enhance)
 - experiment configuration settings
 
 **1.2 Dependency Resolution:**
@@ -37,6 +39,20 @@ For each dependency category:
 - **Spec Modules**: Include content from `shared/spec-modules/{module}.md`  
 - **Moodboards**: Include content from `shared/moodboards/{moodboard}.md` for aesthetic guidance
 - **Data Sets**: Include content from `shared/data/{dataset}.md`
+- **Enhancement Strategies**: Include content from `shared/enhancement-strategies/{strategy}.md` for systematic improvement approaches
+- **References**: Generate intelligent summary of referenced work (max 50 lines) for enhancement context
+
+**1.2.1 Reference Summary Generation (Enhancement Mode):**
+If `references` array exists in config:
+1. **Path Resolution**: Resolve `current/` symlinks to actual timestamp paths
+2. **File Analysis**: Read referenced file and extract:
+   - Component type and primary purpose
+   - Key features and interaction points
+   - Current strengths and design patterns
+   - Enhancement opportunities based on selected strategies
+   - Technical context and structure
+3. **Summary Creation**: Generate 50-line maximum summary focusing on enhancement context
+4. **Integration**: Include summary in consolidated specification as "REFERENCE_SUMMARY" section
 
 **1.3 Consolidated Specification Creation:**
 Create a comprehensive specification that includes:
@@ -45,6 +61,8 @@ Create a comprehensive specification that includes:
 - Integrated requirements and constraints
 - Aesthetic guidance from moodboards for brand personality
 - Complete data context for realistic implementation
+- **Enhancement strategies** (if specified): Systematic improvement approaches and methodologies
+- **Reference summary** (if references exist): Intelligent summary of work to enhance
 
 **PHASE 2: RUN INITIALIZATION**
 Create a new timestamped run to track this generation session:
@@ -138,6 +156,12 @@ DEPENDENCIES AVAILABLE:
 - Spec Modules: [List of resolved specification modules from experiments/shared/spec-modules/]
 - Moodboards: [List of aesthetic guidance files from experiments/shared/moodboards/]
 - Data Sets: [List of resolved data sets from experiments/shared/data/]
+- Enhancement Strategies: [List of enhancement approaches from experiments/shared/enhancement-strategies/]
+
+ENHANCEMENT CONTEXT (if enhancement mode):
+- Reference Summary: [50-line intelligent summary of work to enhance]
+- Enhancement Approach: [Systematic improvement methodology from selected strategies]
+- Enhancement Focus: [Specific aspects to enhance based on strategy and reference analysis]
 
 REQUIREMENTS:
 1. Read and understand the consolidated specification completely
@@ -145,8 +169,10 @@ REQUIREMENTS:
 3. Utilize provided dependencies appropriately (reference files directly from experiments/shared/)
 4. Generate content following the resolved spec format exactly
 5. Focus on [assigned innovation dimension] while maintaining spec compliance
-6. Create file in: experiments/{experiment_path}/runs/{timestamp}/iterations/
-7. Ensure your iteration adds genuine value and novelty across all historical context
+6. **Enhancement Mode** (if applicable): Apply enhancement strategies to reference work while maintaining core functionality
+7. **Reference Integration** (if applicable): Use reference summary to understand what to enhance and how
+8. Create file in: experiments/{experiment_path}/runs/{timestamp}/iterations/
+9. Ensure your iteration adds genuine value and novelty across all historical context
 
 DELIVERABLE: Single file as specified, with unique innovative content utilizing dependencies
 ```

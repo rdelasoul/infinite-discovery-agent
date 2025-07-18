@@ -6,8 +6,8 @@ Enhanced infinite agentic loop system for UI/UX experimentation through parallel
 
 | Command | Purpose |
 |---------|---------|
-| `/infinite ui-components 5` | Generate 5 themed UI components (full analysis) |
-| `/quick ui-components 5` | Generate 5 themed UI components (fast iteration) |
+| `/infinite multi-card-banking 5` | Generate 5 banking interface patterns (full analysis) |
+| `/quick multi-card-banking 5` | Generate 5 banking interface patterns (fast iteration) |
 | `/infinite website-homepages/project 3` | Generate 3 homepage variations (complete workflow) |
 | `/quick website-homepages/project 3` | Generate 3 homepage variations (rapid prototyping) |
 | `/infinite [type] infinite` | Continuous generation mode |
@@ -30,16 +30,15 @@ experiments/
 │   ├── design-systems/     # Geist design system files
 │   ├── spec-modules/       # Reusable quality standards
 │   ├── moodboards/         # Visual aesthetic direction
-│   └── data/              # Realistic business contexts
-├── ui-components/
+│   ├── data/              # Realistic business contexts
+│   └── enhancement-strategies/  # Systematic improvement methodologies
+├── multi-card-banking/
 │   ├── spec.md            # Generation specification
 │   ├── spec-config.yml    # Dependency configuration
 │   ├── runs/              # Timestamped execution history
 │   └── current/           # Symlink to latest run
-├── functional-ux-patterns/
-├── website-homepages/
-├── interactions/
-└── ui-innovations/
+├── bank-relationship-intelligence/
+└── website-homepages/
 ```
 
 ## Getting Started
@@ -48,14 +47,14 @@ experiments/
 # Start Claude Code
 claude
 
-# Generate your first component (full analysis)
-/infinite ui-components 1
+# Generate your first banking interface (full analysis)
+/infinite multi-card-banking 1
 
 # Or use fast iteration mode
-/quick ui-components 1
+/quick multi-card-banking 1
 
 # View result
-open experiments/ui-components/current/iterations/
+open experiments/multi-card-banking/current/iterations/
 ```
 
 ## Command Syntax
@@ -66,22 +65,20 @@ open experiments/ui-components/current/iterations/
 /quick [experiment-type] [count]             # Fast iteration mode (70-80% fewer tokens)
 
 # Examples
-/infinite ui-components 5                    # 5 themed components (full analysis)
-/quick ui-components 5                       # 5 themed components (fast iteration)
+/infinite multi-card-banking 5              # 5 banking interfaces (full analysis)
+/quick multi-card-banking 5                 # 5 banking interfaces (fast iteration)
 /infinite website-homepages/project-name 3  # 3 homepage variations (complete workflow)
 /quick website-homepages/project-name 3     # 3 homepage variations (rapid prototyping)
-/infinite interactions infinite              # Continuous mode
+/infinite multi-card-banking infinite       # Continuous mode
 ```
 
 ## Available Experiment Types
 
 | Type | Purpose | Dependencies |
 |------|---------|--------------|
-| `ui-components` | Themed hybrid UI components | Optional design systems |
-| `functional-ux-patterns` | Workflow optimization patterns | Geist + banking data |
+| `multi-card-banking` | Multi-card banking interface patterns | Geist + banking data |
+| `bank-relationship-intelligence` | Banking relationship management UX | Geist + banking data |
 | `website-homepages/[project]` | Project-specific homepages | Custom per project |
-| `interactions` | Micro-interactions & animations | Performance modules |
-| `ui-innovations` | Novel UI paradigms | Accessibility standards |
 
 See `experiments/README.md` for complete list and details.
 
@@ -100,6 +97,12 @@ dependencies:
     - modern-minimalist   # Aesthetic direction
   data:
     - banking-data        # Business context
+  
+  # Enhancement capabilities (NEW)
+  references:
+    - multi-card-banking/current/iterations/ux_pattern_14.html  # Reference existing work
+  enhancement-strategies:
+    - interactions         # Apply systematic improvement methodologies
 ```
 
 ## Run Management
@@ -115,10 +118,10 @@ The `current/` symlink always points to the latest run.
 
 ## Workflow: Iterative Spec Development
 
-1. **Initial run**: `/infinite ui-components 5` (or `/quick ui-components 5` for rapid prototyping)
+1. **Initial run**: `/infinite multi-card-banking 5` (or `/quick multi-card-banking 5` for rapid prototyping)
 2. **Analyze results**: Check `current/iterations/`
 3. **Refine spec**: Edit `spec.md` and `spec-config.yml`
-4. **New run**: `/infinite ui-components 3` (or `/quick` for fast iteration)
+4. **New run**: `/infinite multi-card-banking 3` (or `/quick` for fast iteration)
 5. **Compare**: Previous runs preserved in `runs/` directory
 
 Benefits:
@@ -126,6 +129,7 @@ Benefits:
 - Mix dependencies between runs
 - Easy rollback to previous approaches
 - No manual folder management
+- Systematic enhancement of existing work through references and enhancement strategies
 
 ## Moodboard Workflow
 
@@ -144,8 +148,8 @@ Bridge client aesthetic preferences to AI creative direction:
 
 ## Creating New Experiment Types
 
-1. Copy existing spec: `cp experiments/ui-components/spec.md experiments/my-type/spec.md`
-2. Create config: `cp experiments/ui-components/spec-config.yml experiments/my-type/spec-config.yml`
+1. Copy existing spec: `cp experiments/multi-card-banking/spec.md experiments/my-type/spec.md`
+2. Create config: `cp experiments/multi-card-banking/spec-config.yml experiments/my-type/spec-config.yml`
 3. Customize both files for your needs
 4. Run: `/infinite my-type 5`
 
@@ -156,6 +160,7 @@ Bridge client aesthetic preferences to AI creative direction:
 - **Context Optimization**: Smart AI context management across agents
 - **Quality Standards**: WCAG compliance, performance requirements
 - **Theme-First Development**: Distinctive design personalities
+- **Enhancement Framework**: Systematic improvement of existing work through reference summaries and enhancement strategies
 
 ## Technical Requirements
 

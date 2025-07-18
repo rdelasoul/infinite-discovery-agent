@@ -10,6 +10,23 @@ Each experiment type follows the pattern:
 - `runs/` - Timestamped execution history
 - `current/` - Symlink to latest run
 
+## Available Experiments
+
+### Banking & Financial Interfaces
+- **`multi-card-banking/`** - Multi-card banking interface patterns and workflows
+- **`bank-relationship-intelligence/`** - Banking relationship management UX components
+
+### Web Development
+- **`website-homepages/`** - Project-specific homepage variations (perantara-reps, portfolio-site)
+
+### Shared Resources
+- **`shared/`** - Reusable components across all experiments
+  - `design-systems/` - Geist design system files
+  - `spec-modules/` - Quality standards (accessibility, performance)
+  - `moodboards/` - Visual aesthetic direction
+  - `data/` - Realistic business contexts
+  - `enhancement-strategies/` - Systematic improvement methodologies
+
 ## Usage
 
 The system auto-discovers experiment types. Use `/infinite [experiment-type] [count]` or `/quick [experiment-type] [count]`.

@@ -59,12 +59,14 @@ The project uses Claude Code's custom commands feature with enhanced auto-discov
 - **`experiments/shared/spec-modules/`** - Modular quality standards (accessibility, performance, realistic data)
 - **`experiments/shared/moodboards/`** - Visual inspiration and aesthetic direction for brand personality
 - **`experiments/shared/data/`** - Realistic business context (banking, e-commerce scenarios)
+- **`experiments/shared/enhancement-strategies/`** - Systematic improvement methodologies (interactions, innovations, patterns)
 
 #### **Dependency Resolution Process**
 1. Read experiment's `spec-config.yml` for dependency requirements
-2. Resolve and include content from `shared/design-systems/`, `shared/spec-modules/`, `shared/moodboards/`, and `shared/data/`
-3. Create consolidated specification with all dependencies integrated
-4. Provide complete context to AI agents for enhanced generation quality with aesthetic guidance
+2. Resolve and include content from `shared/design-systems/`, `shared/spec-modules/`, `shared/moodboards/`, `shared/data/`, and `shared/enhancement-strategies/`
+3. **Enhancement Mode**: If `references` specified, generate intelligent summaries (50 lines /infinite, 30 lines /quick) for token efficiency
+4. Create consolidated specification with all dependencies integrated
+5. Provide complete context to AI agents for enhanced generation quality with aesthetic guidance and systematic improvement methodologies
 
 ### Experiment Types with Enhanced Run Management
 The system supports unlimited experiment types. Each experiment type follows the same pattern:
@@ -89,6 +91,7 @@ The infinite command implements sophisticated parallel agent coordination:
   - `spec-modules/` - Accessibility, performance, and data quality standards
   - `moodboards/` - Visual inspiration and aesthetic direction (modern-minimalist, organic-nature, tech-startup)
   - `data/` - Realistic business context (banking, e-commerce scenarios)
+  - `enhancement-strategies/` - Systematic improvement methodologies (interactions, innovations, patterns)
 - **`experiments/ui-components/runs/`** - Timestamped execution history
   - `2025-01-16-legacy-migration/` - 35+ themed hybrid components (legacy)
   - `[current-timestamp]/iterations/` - Latest generated components
@@ -224,6 +227,22 @@ dependencies:
     - banking-data  # Rich business context
 ```
 
+#### **Enhancement with References**
+```yaml
+# experiments/multi-card-banking/spec-config.yml
+dependencies:
+  references:
+    - multi-card-banking/current/iterations/ux_pattern_14.html  # Reference existing work
+  enhancement-strategies:
+    - interactions       # Apply interaction design enhancement
+  design-systems:
+    - geist-core
+  spec-modules:
+    - accessibility-standards
+  data:
+    - banking-data
+```
+
 #### **Innovation with Constraints**
 ```yaml
 # experiments/ui-innovations/spec-config.yml  
@@ -245,6 +264,8 @@ dependencies:
 - ✅ **Easy comparison**: Clear evolution tracking across spec versions
 - ✅ **No context loss**: Return to any previous approach with complete reproducibility
 - ✅ **Scalable exploration**: Add new dependencies or experiment types seamlessly
+- ✅ **Systematic enhancement**: Build upon proven work through reference summaries and enhancement strategies
+- ✅ **Token efficiency**: Reference summaries prevent token explosion while maintaining context
 
 ## Enhanced Aesthetic Guidance Workflow
 
