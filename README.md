@@ -9,7 +9,6 @@
 
 Create themed hybrid components, website variations, and interactions with progressive sophistication. Built on the brilliant foundation of [disler/infinite-agentic-loop](https://github.com/disler/infinite-agentic-loop) with enhanced organization and simplified commands.
 
-<img src="images/infinite-claude-img.png" alt="Infinite Discovery Agent" style="max-width: 800px; width: 100%;">
 
 ## 🚀 Quick Start
 
@@ -39,7 +38,6 @@ claude
 - 🏗️ **Clean Organization**: Experiments organized by type (ui-components, website-homepages, interactions)
 - ⚡ **Simplified Commands**: Auto-discovery of specs and output directories
 - 📊 **Scalable Structure**: Easy to add unlimited new experiment types
-- 📚 **Comprehensive Templates**: Best practice specifications for any experiment type
 
 ### **Parallel AI Coordination**
 - 🤖 **Multiple Sub-Agents**: Generate iterations simultaneously for maximum efficiency
@@ -128,14 +126,6 @@ experiments/
 ├── interactions/                  # Micro-interactions & animations
 ├── ui-innovations/               # Novel UI paradigms
 └── README.md
-
-templates/                        # Specification templates
-├── ui-component-spec-template.md
-├── website-spec-template.md
-└── interaction-spec-template.md
-
-archive/                          # All original work preserved
-└── [dated directories with full attribution]
 ```
 
 ## ⚡ Enhanced Command System
@@ -258,9 +248,10 @@ The new structure makes it easy to refine specifications based on results:
 - ✅ Easy rollback to previous approaches
 
 ### **Create New Experiment Types**
-1. **Use a template**:
+1. **Copy an existing spec**:
    ```bash
-   cp templates/ui-component-spec-template.md experiments/my-experiment/spec.md
+   cp experiments/ui-components/spec.md experiments/my-experiment/spec.md
+   # Edit to customize for your experiment type
    ```
 
 2. **Create dependency configuration**:
@@ -370,8 +361,8 @@ Create detailed specs following the 236-line `ui-components/spec.md` pattern:
 ## 🤝 Contributing
 
 ### **Adding New Experiment Types**
-1. Create directory structure: `experiments/[name]/iterations/`
-2. Write comprehensive specification using templates
+1. Create directory structure: `experiments/[name]/runs/`
+2. Copy and customize existing specification from `experiments/ui-components/spec.md`
 3. Document in `experiments/README.md`
 4. Test with `/infinite [name] 3`
 
