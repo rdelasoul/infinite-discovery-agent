@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alex Chen - Building in Public</title>
+    <meta name="description" content="Tech creator actively building, experimenting, and sharing ideas. Currently exploring AI/ML applications and developer tooling.">
+    
+    <style>
+        :root {
+            --primary-blue: #2563eb;
+            --success-green: #10b981;
+            --dark-gray: #111827;
+            --medium-gray: #6b7280;
+            --light-gray: #f3f4f6;
+            --white: #ffffff;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+            --transition-fast: 150ms ease;
+            --transition-base: 250ms ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'SF Pro Text', sans-serif;
+            line-height: 1.6;
+            color: var(--dark-gray);
+            background-color: var(--white);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        /* Header & Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            transition: all var(--transition-base);
+        }
+        
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--dark-gray);
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            color: var(--medium-gray);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: color var(--transition-fast);
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            color: var(--dark-gray);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-blue);
+            transition: width var(--transition-base);
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0.75rem;
+            background: var(--light-gray);
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            background: var(--success-green);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.1); }
+        }
+        
+        /* Main Content */
+        main {
+            margin-top: 80px;
+            min-height: calc(100vh - 80px);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 4rem 0;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+        
+        .hero .subtitle {
+            font-size: 1.25rem;
+            color: var(--medium-gray);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all var(--transition-base);
+            cursor: pointer;
+            border: none;
+            font-size: 0.875rem;
+        }
+        
+        .btn-primary {
+            background: var(--primary-blue);
+            color: var(--white);
+        }
+        
+        .btn-primary:hover {
+            background: #1d4ed8;
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .btn-secondary {
+            background: var(--light-gray);
+            color: var(--dark-gray);
+        }
+        
+        .btn-secondary:hover {
+            background: #e5e7eb;
+            transform: translateY(-1px);
+        }
+        
+        /* Project Grid */
+        .section {
+            padding: 4rem 0;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .view-all {
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            transition: gap var(--transition-fast);
+        }
+        
+        .view-all:hover {
+            gap: 0.5rem;
+        }
+        
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .project-card {
+            background: var(--white);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            transition: all var(--transition-base);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+            border-color: rgba(0, 0, 0, 0.12);
+        }
+        
+        .project-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            margin-bottom: 0.75rem;
+            color: var(--success-green);
+        }
+        
+        .project-status::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: currentColor;
+            border-radius: 50%;
+        }
+        
+        .project-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--dark-gray);
+        }
+        
+        .project-description {
+            color: var(--medium-gray);
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+        
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .tech-tag {
+            display: inline-block;
+            padding: 0.25rem 0.625rem;
+            background: var(--light-gray);
+            border-radius: 0.375rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--dark-gray);
+        }
+        
+        .project-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: auto;
+        }
+        
+        .project-link {
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            transition: gap var(--transition-fast);
+        }
+        
+        .project-link:hover {
+            gap: 0.5rem;
+        }
+        
+        /* Writing Section */
+        .writing-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .writing-item {
+            padding: 1.5rem;
+            background: var(--white);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-radius: 0.75rem;
+            transition: all var(--transition-base);
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        
+        .writing-item:hover {
+            transform: translateX(4px);
+            border-color: var(--primary-blue);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .writing-date {
+            font-size: 0.75rem;
+            color: var(--medium-gray);
+            margin-bottom: 0.25rem;
+        }
+        
+        .writing-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--dark-gray);
+        }
+        
+        .writing-excerpt {
+            color: var(--medium-gray);
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+        
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+        
+        .about-text h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .about-text p {
+            color: var(--medium-gray);
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+        
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .skill-category h3 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--dark-gray);
+        }
+        
+        .skill-list {
+            list-style: none;
+        }
+        
+        .skill-list li {
+            font-size: 0.875rem;
+            color: var(--medium-gray);
+            padding: 0.25rem 0;
+        }
+        
+        /* Contact Section */
+        .contact-content {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .contact-content p {
+            color: var(--medium-gray);
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        
+        .contact-methods {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        /* Footer */
+        footer {
+            padding: 3rem 0;
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+            text-align: center;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+        
+        .social-links a {
+            color: var(--medium-gray);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color var(--transition-fast);
+        }
+        
+        .social-links a:hover {
+            color: var(--primary-blue);
+        }
+        
+        .copyright {
+            color: var(--medium-gray);
+            font-size: 0.875rem;
+        }
+        
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem;
+            }
+            
+            .nav-links {
+                gap: 1rem;
+            }
+            
+            .nav-links a:not(.status-badge) {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero .subtitle {
+                font-size: 1rem;
+            }
+            
+            .project-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Accessibility */
+        :focus {
+            outline: 2px solid var(--primary-blue);
+            outline-offset: 2px;
+        }
+        
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+        
+        /* Loading Animation */
+        .skeleton {
+            background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+        
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="#" class="logo">Alex Chen</a>
+            <div class="nav-links">
+                <a href="#projects">Projects</a>
+                <a href="#writing">Writing</a>
+                <a href="#about">About</a>
+                <a href="#contact">Contact</a>
+                <div class="status-badge">
+                    <span class="status-indicator"></span>
+                    <span>Available for projects</span>
+                </div>
+            </div>
+        </nav>
+    </header>
+    
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>Building in Public</h1>
+                <p class="subtitle">
+                    Full-stack developer exploring AI/ML applications, developer tooling, 
+                    and open source. Currently building experimental interfaces and sharing what I learn.
+                </p>
+                <div class="hero-cta">
+                    <a href="#projects" class="btn btn-primary">
+                        View Current Projects
+                        <span aria-hidden="true">↓</span>
+                    </a>
+                    <a href="#contact" class="btn btn-secondary">
+                        Let's Collaborate
+                        <span aria-hidden="true">→</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+        
+        <section id="projects" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Active Projects & Experiments</h2>
+                    <a href="#" class="view-all">View all projects <span aria-hidden="true">→</span></a>
+                </div>
+                
+                <div class="project-grid">
+                    <article class="project-card">
+                        <div class="project-status">In Development</div>
+                        <h3 class="project-title">DevFlow - AI-Powered Code Review</h3>
+                        <p class="project-description">
+                            Building an intelligent code review assistant that learns from your team's patterns 
+                            and provides contextual suggestions. Currently testing with 5 beta teams.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">TypeScript</span>
+                            <span class="tech-tag">OpenAI API</span>
+                            <span class="tech-tag">Next.js</span>
+                            <span class="tech-tag">PostgreSQL</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link">GitHub <span aria-hidden="true">→</span></a>
+                            <a href="#" class="project-link">Live Demo <span aria-hidden="true">→</span></a>
+                        </div>
+                    </article>
+                    
+                    <article class="project-card">
+                        <div class="project-status">Experimenting</div>
+                        <h3 class="project-title">React Gesture Kit</h3>
+                        <p class="project-description">
+                            Open source library for fluid gesture interactions in React. Exploring natural 
+                            touch and mouse interactions with physics-based animations.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">TypeScript</span>
+                            <span class="tech-tag">Framer Motion</span>
+                            <span class="tech-tag">WebGL</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link">GitHub <span aria-hidden="true">→</span></a>
+                            <a href="#" class="project-link">Documentation <span aria-hidden="true">→</span></a>
+                        </div>
+                    </article>
+                    
+                    <article class="project-card">
+                        <div class="project-status">Weekend Build</div>
+                        <h3 class="project-title">Terminal Portfolio</h3>
+                        <p class="project-description">
+                            Interactive terminal-style portfolio that runs in the browser. Navigate projects 
+                            and content using familiar command-line interface. Just for fun!
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Vanilla JS</span>
+                            <span class="tech-tag">CSS</span>
+                            <span class="tech-tag">Web Components</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link">Try it <span aria-hidden="true">→</span></a>
+                            <a href="#" class="project-link">Source <span aria-hidden="true">→</span></a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+        
+        <section id="writing" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Recent Writing & Ideas</h2>
+                    <a href="#" class="view-all">View all posts <span aria-hidden="true">→</span></a>
+                </div>
+                
+                <div class="writing-list">
+                    <a href="#" class="writing-item">
+                        <time class="writing-date">January 15, 2025</time>
+                        <h3 class="writing-title">Building a Type-Safe API Client with TypeScript and Zod</h3>
+                        <p class="writing-excerpt">
+                            How I built a fully type-safe API client that validates responses at runtime 
+                            and provides perfect TypeScript inference. Includes practical examples from DevFlow.
+                        </p>
+                    </a>
+                    
+                    <a href="#" class="writing-item">
+                        <time class="writing-date">January 8, 2025</time>
+                        <h3 class="writing-title">The Joy of Building Useless Things</h3>
+                        <p class="writing-excerpt">
+                            Why weekend projects and experiments are crucial for growth. Lessons learned 
+                            from building 20+ small projects last year and how they influenced my main work.
+                        </p>
+                    </a>
+                    
+                    <a href="#" class="writing-item">
+                        <time class="writing-date">December 28, 2024</time>
+                        <h3 class="writing-title">Gesture Design Patterns for Touch Interfaces</h3>
+                        <p class="writing-excerpt">
+                            Deep dive into creating intuitive gesture interactions. Covers physics simulation, 
+                            user expectations, and accessibility considerations from React Gesture Kit development.
+                        </p>
+                    </a>
+                </div>
+            </div>
+        </section>
+        
+        <section id="about" class="section">
+            <div class="container">
+                <div class="about-content">
+                    <div class="about-text">
+                        <h2>About Me</h2>
+                        <p>
+                            I'm a full-stack developer who loves building tools that make developers' lives easier. 
+                            Currently working as a Senior Engineer at TechCorp, where I lead our developer experience initiatives.
+                        </p>
+                        <p>
+                            My work focuses on the intersection of AI and developer tools. I believe the best way 
+                            to learn is by building and sharing, which is why I maintain several open source projects 
+                            and write about my experiences.
+                        </p>
+                        <p>
+                            When I'm not coding, you'll find me exploring new frameworks, contributing to open source, 
+                            or mentoring junior developers. I'm always excited to collaborate on interesting projects 
+                            that push the boundaries of what's possible.
+                        </p>
+                    </div>
+                    
+                    <div class="skills-grid">
+                        <div class="skill-category">
+                            <h3>Currently Exploring</h3>
+                            <ul class="skill-list">
+                                <li>AI/ML Integration Patterns</li>
+                                <li>WebAssembly for Performance</li>
+                                <li>Edge Computing Architecture</li>
+                                <li>Real-time Collaboration</li>
+                            </ul>
+                        </div>
+                        <div class="skill-category">
+                            <h3>Core Technologies</h3>
+                            <ul class="skill-list">
+                                <li>TypeScript & JavaScript</li>
+                                <li>React, Next.js, Node.js</li>
+                                <li>PostgreSQL, Redis</li>
+                                <li>AWS, Docker, K8s</li>
+                            </ul>
+                        </div>
+                        <div class="skill-category">
+                            <h3>Open Source</h3>
+                            <ul class="skill-list">
+                                <li>React Gesture Kit (Creator)</li>
+                                <li>Next.js (Contributor)</li>
+                                <li>Prisma (Contributor)</li>
+                                <li>15+ npm packages</li>
+                            </ul>
+                        </div>
+                        <div class="skill-category">
+                            <h3>Community</h3>
+                            <ul class="skill-list">
+                                <li>Technical Writing</li>
+                                <li>Conference Speaking</li>
+                                <li>Code Review Mentorship</li>
+                                <li>Open Source Advocacy</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="contact" class="section">
+            <div class="container">
+                <div class="contact-content">
+                    <h2>Let's Build Something Together</h2>
+                    <p>
+                        I'm always interested in collaborating on innovative projects, especially those involving 
+                        developer tools, AI/ML applications, or creative technical experiments. Whether you have 
+                        a project idea, need technical expertise, or just want to chat about the latest in tech, 
+                        I'd love to hear from you.
+                    </p>
+                    <div class="contact-methods">
+                        <a href="mailto:alex@example.com" class="btn btn-primary">
+                            Send me an email
+                            <span aria-hidden="true">→</span>
+                        </a>
+                        <a href="https://twitter.com/alexchen" class="btn btn-secondary">
+                            DM on Twitter
+                            <span aria-hidden="true">→</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="social-links">
+                <a href="https://github.com/alexchen" rel="noopener noreferrer" target="_blank">GitHub</a>
+                <a href="https://twitter.com/alexchen" rel="noopener noreferrer" target="_blank">Twitter</a>
+                <a href="https://linkedin.com/in/alexchen" rel="noopener noreferrer" target="_blank">LinkedIn</a>
+                <a href="https://dev.to/alexchen" rel="noopener noreferrer" target="_blank">Dev.to</a>
+                <a href="/rss.xml">RSS Feed</a>
+            </div>
+            <p class="copyright">© 2025 Alex Chen. Built with curiosity and caffeine.</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // Header scroll effect
+        let lastScroll = 0;
+        const header = document.querySelector('header');
+        
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > 100) {
+                header.style.boxShadow = '0 1px 3px rgba(0, 0, 0, 0.1)';
+            } else {
+                header.style.boxShadow = 'none';
+            }
+            
+            lastScroll = currentScroll;
+        });
+        
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        
+        // Apply observer to elements
+        document.querySelectorAll('.project-card, .writing-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            observer.observe(el);
+        });
+        
+        // Project card click handlers
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.addEventListener('click', (e) => {
+                // Don't navigate if clicking on a link
+                if (e.target.closest('.project-link')) return;
+                
+                // Find the first project link and navigate to it
+                const firstLink = card.querySelector('.project-link');
+                if (firstLink) {
+                    window.open(firstLink.href, '_blank');
+                }
+            });
+        });
+        
+        // Add keyboard navigation
+        document.querySelectorAll('.project-card, .writing-item').forEach(item => {
+            item.setAttribute('tabindex', '0');
+            item.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    item.click();
+                }
+            });
+        });
+        
+        // Status badge animation on hover
+        const statusBadge = document.querySelector('.status-badge');
+        statusBadge.addEventListener('mouseenter', () => {
+            const indicator = statusBadge.querySelector('.status-indicator');
+            indicator.style.animationDuration = '0.5s';
+        });
+        
+        statusBadge.addEventListener('mouseleave', () => {
+            const indicator = statusBadge.querySelector('.status-indicator');
+            indicator.style.animationDuration = '2s';
+        });
+        
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', () => {
+            // Remove any skeleton loaders
+            document.querySelectorAll('.skeleton').forEach(el => {
+                el.classList.remove('skeleton');
+            });
+            
+            // Set focus management
+            const skipLink = document.createElement('a');
+            skipLink.href = '#main';
+            skipLink.className = 'sr-only';
+            skipLink.textContent = 'Skip to main content';
+            skipLink.style.position = 'absolute';
+            skipLink.style.top = '-100px';
+            skipLink.style.left = '0';
+            skipLink.style.zIndex = '1001';
+            
+            skipLink.addEventListener('focus', () => {
+                skipLink.style.top = '0';
+            });
+            
+            skipLink.addEventListener('blur', () => {
+                skipLink.style.top = '-100px';
+            });
+            
+            document.body.insertBefore(skipLink, document.body.firstChild);
+        });
+    </script>
+</body>
+</html>

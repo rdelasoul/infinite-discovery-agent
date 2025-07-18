@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alex Chen - Creator & Experimenter</title>
+    <meta name="description" content="Building at the intersection of AI and human creativity. Currently exploring generative systems, creative tools, and the future of human-AI collaboration.">
+    
+    <style>
+        :root {
+            --primary-blue: #2563eb;
+            --success-green: #10b981;
+            --dark-gray: #111827;
+            --medium-gray: #6b7280;
+            --light-gray: #f3f4f6;
+            --white: #ffffff;
+            --max-width: 1200px;
+            --spacing-unit: 8px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', sans-serif;
+            color: var(--dark-gray);
+            background: var(--white);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Typography */
+        h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+        }
+
+        h2 {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            font-weight: 600;
+            line-height: 1.3;
+            margin-bottom: calc(var(--spacing-unit) * 3);
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: calc(var(--spacing-unit) * 2);
+        }
+
+        p {
+            color: var(--medium-gray);
+            margin-bottom: calc(var(--spacing-unit) * 2);
+        }
+
+        a {
+            color: var(--primary-blue);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        a:hover {
+            opacity: 0.8;
+        }
+
+        /* Layout */
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 calc(var(--spacing-unit) * 3);
+        }
+
+        header {
+            padding: calc(var(--spacing-unit) * 8) 0;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            padding: calc(var(--spacing-unit) * 2) 0;
+            transform: translateY(-100%);
+            transition: var(--transition);
+        }
+
+        nav.visible {
+            transform: translateY(0);
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: calc(var(--spacing-unit) * 4);
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--dark-gray);
+            font-weight: 500;
+            font-size: 0.875rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: calc(var(--spacing-unit) * 6);
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            margin-bottom: calc(var(--spacing-unit) * 3);
+        }
+
+        .hero-tagline {
+            font-size: 1.25rem;
+            color: var(--medium-gray);
+            margin-bottom: calc(var(--spacing-unit) * 4);
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: calc(var(--spacing-unit) * 1);
+            background: var(--light-gray);
+            padding: calc(var(--spacing-unit) * 1) calc(var(--spacing-unit) * 2);
+            border-radius: 100px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            background: var(--success-green);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Section Styles */
+        section {
+            padding: calc(var(--spacing-unit) * 10) 0;
+        }
+
+        .section-header {
+            margin-bottom: calc(var(--spacing-unit) * 6);
+        }
+
+        /* Project Cards */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: calc(var(--spacing-unit) * 4);
+        }
+
+        .project-card {
+            background: var(--white);
+            border: 1px solid var(--light-gray);
+            border-radius: 12px;
+            padding: calc(var(--spacing-unit) * 4);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .project-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .project-type {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--primary-blue);
+            font-weight: 600;
+            margin-bottom: calc(var(--spacing-unit) * 1);
+        }
+
+        .project-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.75rem;
+            color: var(--success-green);
+            margin-top: calc(var(--spacing-unit) * 2);
+        }
+
+        .project-status::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: currentColor;
+            border-radius: 50%;
+        }
+
+        /* Writing Section */
+        .writing-list {
+            display: flex;
+            flex-direction: column;
+            gap: calc(var(--spacing-unit) * 4);
+        }
+
+        .writing-item {
+            padding: calc(var(--spacing-unit) * 3) 0;
+            border-bottom: 1px solid var(--light-gray);
+            transition: var(--transition);
+        }
+
+        .writing-item:hover {
+            padding-left: calc(var(--spacing-unit) * 2);
+        }
+
+        .writing-date {
+            font-size: 0.875rem;
+            color: var(--medium-gray);
+            margin-bottom: calc(var(--spacing-unit) * 1);
+        }
+
+        .writing-excerpt {
+            color: var(--medium-gray);
+            margin-top: calc(var(--spacing-unit) * 1);
+        }
+
+        /* Activity Feed */
+        .activity-feed {
+            background: var(--light-gray);
+            border-radius: 12px;
+            padding: calc(var(--spacing-unit) * 4);
+        }
+
+        .activity-item {
+            display: flex;
+            gap: calc(var(--spacing-unit) * 2);
+            padding: calc(var(--spacing-unit) * 2) 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--white);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-title {
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .activity-meta {
+            font-size: 0.875rem;
+            color: var(--medium-gray);
+        }
+
+        /* Contact Section */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: calc(var(--spacing-unit) * 6);
+        }
+
+        .contact-method {
+            text-align: center;
+            padding: calc(var(--spacing-unit) * 4);
+            border: 1px solid var(--light-gray);
+            border-radius: 12px;
+            transition: var(--transition);
+        }
+
+        .contact-method:hover {
+            border-color: var(--primary-blue);
+            transform: translateY(-2px);
+        }
+
+        .contact-icon {
+            font-size: 2rem;
+            margin-bottom: calc(var(--spacing-unit) * 2);
+        }
+
+        /* CTA Buttons */
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: calc(var(--spacing-unit) * 1);
+            background: var(--primary-blue);
+            color: var(--white);
+            padding: calc(var(--spacing-unit) * 2) calc(var(--spacing-unit) * 4);
+            border-radius: 8px;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .cta-button:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--light-gray);
+            padding: calc(var(--spacing-unit) * 6) 0;
+            text-align: center;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: calc(var(--spacing-unit) * 3);
+            margin-bottom: calc(var(--spacing-unit) * 3);
+        }
+
+        .social-links a {
+            color: var(--medium-gray);
+            font-size: 1.25rem;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            color: var(--primary-blue);
+            transform: translateY(-2px);
+        }
+
+        /* Responsive */
+        @media (min-width: 768px) {
+            .hero {
+                grid-template-columns: 2fr 1fr;
+            }
+
+            .nav-links {
+                gap: calc(var(--spacing-unit) * 6);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 calc(var(--spacing-unit) * 2);
+            }
+
+            section {
+                padding: calc(var(--spacing-unit) * 6) 0;
+            }
+
+            .nav-links {
+                gap: calc(var(--spacing-unit) * 2);
+                font-size: 0.875rem;
+            }
+        }
+
+        /* Skip to content link */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--primary-blue);
+            color: var(--white);
+            padding: 8px;
+            text-decoration: none;
+            z-index: 200;
+        }
+
+        .skip-link:focus {
+            top: 0;
+        }
+
+        /* Focus styles */
+        *:focus {
+            outline: 2px solid var(--primary-blue);
+            outline-offset: 2px;
+        }
+
+        /* Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="#main" class="skip-link">Skip to main content</a>
+
+    <nav id="navbar" role="navigation" aria-label="Main navigation">
+        <div class="container">
+            <div class="nav-content">
+                <a href="#" aria-label="Alex Chen - Home">AC</a>
+                <ul class="nav-links">
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#writing">Writing</a></li>
+                    <li><a href="#connect">Connect</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header>
+        <div class="container">
+            <div class="hero">
+                <div class="hero-content">
+                    <h1>Building tools for creative exploration</h1>
+                    <p class="hero-tagline">
+                        I'm Alex Chen, a product engineer exploring the intersection of AI and human creativity. 
+                        Currently building generative systems and creative tools at Anthropic.
+                    </p>
+                    <div class="status-badge">
+                        <span class="status-indicator"></span>
+                        <span>Available for collaboration</span>
+                    </div>
+                </div>
+                <div class="activity-feed">
+                    <h3>Recent Activity</h3>
+                    <div class="activity-item">
+                        <div class="activity-icon">🚀</div>
+                        <div class="activity-content">
+                            <div class="activity-title">Launched Creative Code Studio</div>
+                            <div class="activity-meta">2 days ago</div>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon">✍️</div>
+                        <div class="activity-content">
+                            <div class="activity-title">Published "Emergent Creativity in AI Systems"</div>
+                            <div class="activity-meta">1 week ago</div>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon">🔬</div>
+                        <div class="activity-content">
+                            <div class="activity-title">Started experiment: Infinite Canvas</div>
+                            <div class="activity-meta">2 weeks ago</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main id="main">
+        <section id="projects" aria-labelledby="projects-heading">
+            <div class="container">
+                <div class="section-header">
+                    <h2 id="projects-heading">Current Projects & Experiments</h2>
+                    <p>Actively building and exploring new possibilities in creative technology.</p>
+                </div>
+                
+                <div class="projects-grid">
+                    <article class="project-card" tabindex="0" role="article">
+                        <div class="project-type">Open Source Tool</div>
+                        <h3>Creative Code Studio</h3>
+                        <p>A visual programming environment for generative art and creative coding. 
+                           Built with WebGL and TypeScript, featuring real-time collaboration.</p>
+                        <div class="project-status">Actively developing</div>
+                    </article>
+
+                    <article class="project-card" tabindex="0" role="article">
+                        <div class="project-type">Research Project</div>
+                        <h3>Semantic Design Systems</h3>
+                        <p>Exploring how AI can understand and generate design systems from natural language 
+                           descriptions. Currently training custom models on design tokens.</p>
+                        <div class="project-status">In experimentation</div>
+                    </article>
+
+                    <article class="project-card" tabindex="0" role="article">
+                        <div class="project-type">Weekend Build</div>
+                        <h3>Infinite Canvas</h3>
+                        <p>An experimental spatial interface for organizing thoughts and ideas. 
+                           Combines infinite zoom with AI-powered content suggestions.</p>
+                        <div class="project-status">MVP complete</div>
+                    </article>
+
+                    <article class="project-card" tabindex="0" role="article">
+                        <div class="project-type">Contributing To</div>
+                        <h3>React Flow</h3>
+                        <p>Contributing performance improvements and new features to the popular 
+                           node-based UI library. Focus on accessibility and mobile support.</p>
+                        <div class="project-status">5 PRs merged</div>
+                    </article>
+
+                    <article class="project-card" tabindex="0" role="article">
+                        <div class="project-type">Learning Sprint</div>
+                        <h3>Rust + WebAssembly</h3>
+                        <p>Building high-performance creative tools by combining Rust's speed with 
+                           web platform capabilities. Currently porting image filters to WASM.</p>
+                        <div class="project-status">Week 3 of 8</div>
+                    </article>
+
+                    <article class="project-card" tabindex="0" role="article">
+                        <div class="project-type">Community Project</div>
+                        <h3>Creative Coding Workshop Series</h3>
+                        <p>Running monthly workshops teaching creative coding to designers and artists. 
+                           Focus on p5.js, generative algorithms, and interactive experiences.</p>
+                        <div class="project-status">Next: Feb 15</div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="writing" aria-labelledby="writing-heading">
+            <div class="container">
+                <div class="section-header">
+                    <h2 id="writing-heading">Writing & Ideas</h2>
+                    <p>Thoughts on creativity, technology, and building tools for human expression.</p>
+                </div>
+                
+                <div class="writing-list">
+                    <article class="writing-item">
+                        <div class="writing-date">January 15, 2025</div>
+                        <h3><a href="#">Emergent Creativity in AI Systems</a></h3>
+                        <p class="writing-excerpt">
+                            Exploring how unexpected creative behaviors emerge from large language models, 
+                            and what this means for the future of human-AI collaboration in creative fields.
+                        </p>
+                    </article>
+
+                    <article class="writing-item">
+                        <div class="writing-date">December 28, 2024</div>
+                        <h3><a href="#">The Design Space of Generative Interfaces</a></h3>
+                        <p class="writing-excerpt">
+                            A framework for thinking about interfaces that generate content dynamically. 
+                            Includes case studies from my work on Creative Code Studio.
+                        </p>
+                    </article>
+
+                    <article class="writing-item">
+                        <div class="writing-date">December 10, 2024</div>
+                        <h3><a href="#">Building a Personal Learning Operating System</a></h3>
+                        <p class="writing-excerpt">
+                            How I structure my learning experiments and track progress across multiple 
+                            technical domains. Includes my Notion template and weekly review process.
+                        </p>
+                    </article>
+
+                    <article class="writing-item">
+                        <div class="writing-date">November 22, 2024</div>
+                        <h3><a href="#">WebAssembly for Creative Tools: A Performance Deep Dive</a></h3>
+                        <p class="writing-excerpt">
+                            Benchmarking WASM vs JavaScript for real-time creative applications. 
+                            Surprising results and practical guidelines for when to use each.
+                        </p>
+                    </article>
+                </div>
+
+                <div style="margin-top: calc(var(--spacing-unit) * 6);">
+                    <a href="#" class="cta-button">
+                        View all writing →
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="connect" aria-labelledby="connect-heading">
+            <div class="container">
+                <div class="section-header">
+                    <h2 id="connect-heading">Let's Connect</h2>
+                    <p>Always interested in creative collaborations, technical discussions, and new perspectives.</p>
+                </div>
+                
+                <div class="contact-grid">
+                    <div class="contact-method">
+                        <div class="contact-icon">💬</div>
+                        <h3>Quick Chat</h3>
+                        <p>DM me on Twitter for quick questions or interesting links</p>
+                        <a href="#">@alexchen_dev</a>
+                    </div>
+
+                    <div class="contact-method">
+                        <div class="contact-icon">📧</div>
+                        <h3>Collaboration</h3>
+                        <p>For project ideas, speaking, or longer conversations</p>
+                        <a href="mailto:hello@alexchen.dev">hello@alexchen.dev</a>
+                    </div>
+
+                    <div class="contact-method">
+                        <div class="contact-icon">🗓️</div>
+                        <h3>Coffee Chat</h3>
+                        <p>Book a 30-min call to discuss creative technology</p>
+                        <a href="#">Schedule time</a>
+                    </div>
+                </div>
+
+                <div style="margin-top: calc(var(--spacing-unit) * 8); text-align: center;">
+                    <h3>Currently exploring</h3>
+                    <p style="max-width: 600px; margin: 0 auto;">
+                        Generative UI systems • Creative coding education • 
+                        Real-time collaboration tools • Spatial interfaces • 
+                        AI-assisted creativity • WebAssembly for the web
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="social-links">
+                <a href="#" aria-label="GitHub">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                </a>
+                <a href="#" aria-label="Twitter">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/>
+                    </svg>
+                </a>
+                <a href="#" aria-label="LinkedIn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/>
+                        <circle cx="4" cy="4" r="2"/>
+                    </svg>
+                </a>
+            </div>
+            <p>&copy; 2025 Alex Chen. Built with curiosity and clean code.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Navigation scroll behavior
+        let lastScroll = 0;
+        const navbar = document.getElementById('navbar');
+        
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > 100) {
+                if (currentScroll > lastScroll) {
+                    navbar.classList.remove('visible');
+                } else {
+                    navbar.classList.add('visible');
+                }
+            } else {
+                navbar.classList.remove('visible');
+            }
+            
+            lastScroll = currentScroll;
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add keyboard navigation to project cards
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    // Simulate click behavior
+                    console.log('Project selected:', card.querySelector('h3').textContent);
+                }
+            });
+        });
+
+        // Activity feed real-time updates simulation
+        function addActivity(icon, title, time) {
+            const feed = document.querySelector('.activity-feed');
+            const newItem = document.createElement('div');
+            newItem.className = 'activity-item';
+            newItem.innerHTML = `
+                <div class="activity-icon">${icon}</div>
+                <div class="activity-content">
+                    <div class="activity-title">${title}</div>
+                    <div class="activity-meta">${time}</div>
+                </div>
+            `;
+            
+            const existingItems = feed.querySelectorAll('.activity-item');
+            if (existingItems.length > 2) {
+                existingItems[existingItems.length - 1].remove();
+            }
+            
+            feed.insertBefore(newItem, existingItems[0]);
+        }
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections
+        document.querySelectorAll('section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(20px)';
+            section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(section);
+        });
+
+        // Keyboard navigation enhancement
+        let focusableElements = document.querySelectorAll(
+            'a, button, input, textarea, select, [tabindex]:not([tabindex="-1"])'
+        );
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Tab') {
+                // Tab navigation is handled by browser
+                return;
+            }
+            
+            if (e.key === 'Escape') {
+                // Clear any active focus
+                document.activeElement.blur();
+            }
+        });
+
+        // Performance optimization - lazy load images if any are added
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src;
+                        img.classList.add('loaded');
+                        observer.unobserve(img);
+                    }
+                });
+            });
+
+            document.querySelectorAll('img[data-src]').forEach(img => {
+                imageObserver.observe(img);
+            });
+        }
+    </script>
+</body>
+</html>

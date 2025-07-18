@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alex Chen - Building & Exploring</title>
+    <meta name="description" content="Tech creator actively building, experimenting, and sharing ideas. Currently exploring AI/ML, distributed systems, and developer tools.">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #2563eb;
+            --success-green: #10b981;
+            --gray-900: #111827;
+            --gray-800: #1f2937;
+            --gray-700: #374151;
+            --gray-600: #4b5563;
+            --gray-500: #6b7280;
+            --gray-400: #9ca3af;
+            --gray-300: #d1d5db;
+            --gray-200: #e5e7eb;
+            --gray-100: #f3f4f6;
+            --gray-50: #f9fafb;
+            --white: #ffffff;
+            --max-width: 1200px;
+            --header-height: 80px;
+            --animation-fast: 200ms;
+            --animation-normal: 300ms;
+            --animation-slow: 500ms;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', 'Segoe UI', Roboto, sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--gray-900);
+            background-color: var(--white);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Typography */
+        h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+        }
+
+        h2 {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            font-weight: 600;
+            line-height: 1.3;
+            letter-spacing: -0.01em;
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        p {
+            color: var(--gray-700);
+        }
+
+        a {
+            color: var(--primary-blue);
+            text-decoration: none;
+            transition: color var(--animation-fast) ease;
+        }
+
+        a:hover {
+            color: var(--gray-900);
+        }
+
+        a:focus-visible {
+            outline: 2px solid var(--primary-blue);
+            outline-offset: 4px;
+            border-radius: 2px;
+        }
+
+        /* Layout */
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--header-height);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--gray-200);
+            z-index: 100;
+            transition: transform var(--animation-normal) ease;
+        }
+
+        .header-content {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        nav ul {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        nav a {
+            color: var(--gray-600);
+            font-weight: 500;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-blue);
+            transition: width var(--animation-fast) ease;
+        }
+
+        nav a:hover::after,
+        nav a.active::after {
+            width: 100%;
+        }
+
+        /* Mobile menu */
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        .mobile-menu-toggle span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--gray-900);
+            margin: 5px 0;
+            transition: transform var(--animation-fast) ease;
+        }
+
+        /* Main content */
+        main {
+            margin-top: var(--header-height);
+            min-height: calc(100vh - var(--header-height));
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 80px 0 120px;
+            background: linear-gradient(180deg, var(--gray-50) 0%, transparent 100%);
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            margin-bottom: 24px;
+        }
+
+        .hero-text p {
+            font-size: 1.25rem;
+            margin-bottom: 32px;
+            color: var(--gray-700);
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: var(--gray-100);
+            border-radius: 100px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--gray-700);
+            margin-bottom: 40px;
+        }
+
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            background: var(--success-green);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .hero-links {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .hero-links a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            font-weight: 500;
+            border-radius: 8px;
+            transition: all var(--animation-fast) ease;
+        }
+
+        .hero-links a.primary {
+            background: var(--primary-blue);
+            color: var(--white);
+        }
+
+        .hero-links a.primary:hover {
+            background: var(--gray-900);
+            transform: translateY(-2px);
+        }
+
+        .hero-links a.secondary {
+            background: var(--gray-100);
+            color: var(--gray-900);
+        }
+
+        .hero-links a.secondary:hover {
+            background: var(--gray-200);
+        }
+
+        /* Activity Feed */
+        .activity-feed {
+            background: var(--gray-50);
+            border-radius: 16px;
+            padding: 32px;
+            height: 400px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .activity-feed h3 {
+            margin-bottom: 24px;
+            color: var(--gray-600);
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .activity-items {
+            animation: scroll 20s linear infinite;
+        }
+
+        @keyframes scroll {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-50%); }
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding: 16px;
+            background: var(--white);
+            border-radius: 12px;
+            border: 1px solid var(--gray-200);
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-weight: 600;
+        }
+
+        .activity-icon.project { background: #e0f2fe; color: #0369a1; }
+        .activity-icon.writing { background: #f3e8ff; color: #7c3aed; }
+        .activity-icon.experiment { background: #d1fae5; color: #059669; }
+
+        .activity-content h4 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: 4px;
+        }
+
+        .activity-content p {
+            font-size: 0.813rem;
+            color: var(--gray-600);
+        }
+
+        .activity-time {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+            margin-top: 4px;
+        }
+
+        /* Current Work Section */
+        .current-work {
+            padding: 80px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+
+        .section-header h2 {
+            margin-bottom: 16px;
+        }
+
+        .section-header p {
+            font-size: 1.125rem;
+            color: var(--gray-600);
+        }
+
+        .work-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 32px;
+        }
+
+        .work-card {
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: 16px;
+            padding: 32px;
+            transition: all var(--animation-normal) ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .work-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-blue) 0%, var(--success-green) 100%);
+            transform: translateX(-100%);
+            transition: transform var(--animation-slow) ease;
+        }
+
+        .work-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        .work-card:hover::before {
+            transform: translateX(0);
+        }
+
+        .work-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .work-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: 8px;
+        }
+
+        .work-type {
+            display: inline-block;
+            padding: 4px 12px;
+            background: var(--gray-100);
+            color: var(--gray-700);
+            font-size: 0.75rem;
+            font-weight: 500;
+            border-radius: 100px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .work-description {
+            color: var(--gray-600);
+            margin-bottom: 16px;
+        }
+
+        .work-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .work-tag {
+            padding: 4px 10px;
+            background: var(--gray-50);
+            color: var(--gray-700);
+            font-size: 0.813rem;
+            border-radius: 6px;
+            border: 1px solid var(--gray-200);
+        }
+
+        .work-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 500;
+            font-size: 0.875rem;
+        }
+
+        .work-link::after {
+            content: '→';
+            transition: transform var(--animation-fast) ease;
+        }
+
+        .work-link:hover::after {
+            transform: translateX(4px);
+        }
+
+        /* Writing Section */
+        .writing {
+            padding: 80px 0;
+            background: var(--gray-50);
+        }
+
+        .writing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .writing-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 24px;
+            border: 1px solid var(--gray-200);
+            transition: all var(--animation-fast) ease;
+        }
+
+        .writing-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .writing-date {
+            font-size: 0.813rem;
+            color: var(--gray-500);
+            margin-bottom: 8px;
+        }
+
+        .writing-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .writing-excerpt {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            margin-bottom: 16px;
+        }
+
+        .writing-meta {
+            display: flex;
+            gap: 16px;
+            font-size: 0.813rem;
+            color: var(--gray-500);
+        }
+
+        /* Connect Section */
+        .connect {
+            padding: 80px 0;
+        }
+
+        .connect-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .connect-content h2 {
+            margin-bottom: 24px;
+        }
+
+        .connect-content p {
+            font-size: 1.125rem;
+            margin-bottom: 40px;
+        }
+
+        .connect-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+
+        .connect-option {
+            background: var(--gray-50);
+            border-radius: 12px;
+            padding: 24px;
+            text-align: left;
+        }
+
+        .connect-option h3 {
+            font-size: 1rem;
+            margin-bottom: 8px;
+        }
+
+        .connect-option p {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            background: var(--gray-100);
+            border-radius: 8px;
+            color: var(--gray-700);
+            font-weight: 500;
+            transition: all var(--animation-fast) ease;
+        }
+
+        .social-links a:hover {
+            background: var(--primary-blue);
+            color: var(--white);
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        footer {
+            padding: 40px 0;
+            border-top: 1px solid var(--gray-200);
+            text-align: center;
+            color: var(--gray-600);
+            font-size: 0.875rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 16px;
+            }
+
+            nav ul {
+                display: none;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 48px;
+            }
+
+            .activity-feed {
+                height: 300px;
+            }
+
+            .work-grid,
+            .writing-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .social-links {
+                flex-wrap: wrap;
+            }
+        }
+
+        /* Accessibility */
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* Skip to content */
+        .skip-to-content {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--primary-blue);
+            color: var(--white);
+            padding: 8px 16px;
+            text-decoration: none;
+            border-radius: 0 0 8px 0;
+            z-index: 200;
+        }
+
+        .skip-to-content:focus {
+            top: 0;
+        }
+
+        /* Loading animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn var(--animation-slow) ease forwards;
+        }
+    </style>
+</head>
+<body>
+    <a href="#main" class="skip-to-content">Skip to content</a>
+
+    <header id="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">Alex Chen</div>
+                <nav role="navigation" aria-label="Main navigation">
+                    <ul>
+                        <li><a href="#current" class="active">Current Work</a></li>
+                        <li><a href="#writing">Writing</a></li>
+                        <li><a href="#connect">Connect</a></li>
+                    </ul>
+                </nav>
+                <button class="mobile-menu-toggle" aria-label="Toggle mobile menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main id="main">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-text fade-in">
+                        <div class="status-badge">
+                            <span class="status-indicator"></span>
+                            <span>Available for collaboration</span>
+                        </div>
+                        <h1>Building tools that make developers more productive</h1>
+                        <p>I'm a software engineer exploring AI/ML, distributed systems, and developer experience. Currently building open-source tools and sharing what I learn along the way.</p>
+                        <div class="hero-links">
+                            <a href="#current" class="primary">See what I'm building</a>
+                            <a href="https://github.com/alexchen" class="secondary">GitHub</a>
+                        </div>
+                    </div>
+                    <div class="activity-feed fade-in">
+                        <h3>Recent Activity</h3>
+                        <div class="activity-items">
+                            <div class="activity-item">
+                                <div class="activity-icon project">P</div>
+                                <div class="activity-content">
+                                    <h4>Launched DevFlow CLI</h4>
+                                    <p>AI-powered workflow automation for developers</p>
+                                    <div class="activity-time">2 hours ago</div>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon writing">W</div>
+                                <div class="activity-content">
+                                    <h4>Published: "Rethinking State Management"</h4>
+                                    <p>Exploring event-driven architectures</p>
+                                    <div class="activity-time">1 day ago</div>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon experiment">E</div>
+                                <div class="activity-content">
+                                    <h4>Experiment: WebAssembly Runtime</h4>
+                                    <p>Building a lightweight WASM interpreter</p>
+                                    <div class="activity-time">3 days ago</div>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon project">P</div>
+                                <div class="activity-content">
+                                    <h4>Updated QueryBuilder v2.0</h4>
+                                    <p>Added support for complex joins and CTEs</p>
+                                    <div class="activity-time">5 days ago</div>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon writing">W</div>
+                                <div class="activity-content">
+                                    <h4>Tutorial: "Building Your First LSP"</h4>
+                                    <p>Step-by-step guide to language servers</p>
+                                    <div class="activity-time">1 week ago</div>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon experiment">E</div>
+                                <div class="activity-content">
+                                    <h4>Weekend Build: MiniKafka</h4>
+                                    <p>Simplified message queue in 500 lines</p>
+                                    <div class="activity-time">2 weeks ago</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Current Work Section -->
+        <section id="current" class="current-work">
+            <div class="container">
+                <div class="section-header fade-in">
+                    <h2>What I'm Building</h2>
+                    <p>Active projects and experiments I'm working on right now</p>
+                </div>
+                <div class="work-grid">
+                    <article class="work-card fade-in">
+                        <div class="work-header">
+                            <div>
+                                <h3 class="work-title">DevFlow CLI</h3>
+                                <span class="work-type">Active Project</span>
+                            </div>
+                        </div>
+                        <p class="work-description">An AI-powered command-line tool that automates repetitive development workflows. Uses LLMs to understand natural language commands and execute complex tasks.</p>
+                        <div class="work-tags">
+                            <span class="work-tag">TypeScript</span>
+                            <span class="work-tag">AI/ML</span>
+                            <span class="work-tag">CLI</span>
+                        </div>
+                        <a href="https://github.com/alexchen/devflow" class="work-link">View on GitHub</a>
+                    </article>
+
+                    <article class="work-card fade-in">
+                        <div class="work-header">
+                            <div>
+                                <h3 class="work-title">QueryBuilder</h3>
+                                <span class="work-type">Open Source</span>
+                            </div>
+                        </div>
+                        <p class="work-description">A type-safe SQL query builder for Node.js with support for complex joins, CTEs, and migrations. Used by 500+ developers in production.</p>
+                        <div class="work-tags">
+                            <span class="work-tag">JavaScript</span>
+                            <span class="work-tag">SQL</span>
+                            <span class="work-tag">Database</span>
+                        </div>
+                        <a href="https://querybuilder.dev" class="work-link">Documentation</a>
+                    </article>
+
+                    <article class="work-card fade-in">
+                        <div class="work-header">
+                            <div>
+                                <h3 class="work-title">WASM Runtime Experiment</h3>
+                                <span class="work-type">Experiment</span>
+                            </div>
+                        </div>
+                        <p class="work-description">Building a minimal WebAssembly runtime from scratch to understand low-level execution and memory management. Currently supports basic WASM modules.</p>
+                        <div class="work-tags">
+                            <span class="work-tag">Rust</span>
+                            <span class="work-tag">WebAssembly</span>
+                            <span class="work-tag">Systems</span>
+                        </div>
+                        <a href="https://alexchen.dev/wasm-runtime" class="work-link">Read writeup</a>
+                    </article>
+
+                    <article class="work-card fade-in">
+                        <div class="work-header">
+                            <div>
+                                <h3 class="work-title">MicroContainer</h3>
+                                <span class="work-type">Weekend Build</span>
+                            </div>
+                        </div>
+                        <p class="work-description">A lightweight container runtime in Go, implementing core features like namespaces and cgroups. Great for understanding container internals.</p>
+                        <div class="work-tags">
+                            <span class="work-tag">Go</span>
+                            <span class="work-tag">Containers</span>
+                            <span class="work-tag">Linux</span>
+                        </div>
+                        <a href="https://github.com/alexchen/microcontainer" class="work-link">Source code</a>
+                    </article>
+
+                    <article class="work-card fade-in">
+                        <div class="work-header">
+                            <div>
+                                <h3 class="work-title">Neural Network Visualizer</h3>
+                                <span class="work-type">Learning Project</span>
+                            </div>
+                        </div>
+                        <p class="work-description">Interactive web app for visualizing how neural networks learn. Built to understand backpropagation and gradient descent intuitively.</p>
+                        <div class="work-tags">
+                            <span class="work-tag">Python</span>
+                            <span class="work-tag">TensorFlow</span>
+                            <span class="work-tag">D3.js</span>
+                        </div>
+                        <a href="https://nn-viz.alexchen.dev" class="work-link">Try it live</a>
+                    </article>
+
+                    <article class="work-card fade-in">
+                        <div class="work-header">
+                            <div>
+                                <h3 class="work-title">Code Review Bot</h3>
+                                <span class="work-type">Team Tool</span>
+                            </div>
+                        </div>
+                        <p class="work-description">GitHub bot that provides intelligent code review suggestions using static analysis and ML. Helps maintain code quality across our team's repos.</p>
+                        <div class="work-tags">
+                            <span class="work-tag">Python</span>
+                            <span class="work-tag">GitHub API</span>
+                            <span class="work-tag">ML</span>
+                        </div>
+                        <a href="https://github.com/alexchen/review-bot" class="work-link">Installation guide</a>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Writing Section -->
+        <section id="writing" class="writing">
+            <div class="container">
+                <div class="section-header fade-in">
+                    <h2>Writing & Ideas</h2>
+                    <p>Thoughts on software engineering, system design, and building better tools</p>
+                </div>
+                <div class="writing-grid">
+                    <article class="writing-card fade-in">
+                        <div class="writing-date">January 15, 2025</div>
+                        <h3 class="writing-title">Rethinking State Management in Distributed Systems</h3>
+                        <p class="writing-excerpt">Exploring event-driven architectures and how they can simplify complex state synchronization problems...</p>
+                        <div class="writing-meta">
+                            <span>12 min read</span>
+                            <span>1.2k views</span>
+                        </div>
+                    </article>
+
+                    <article class="writing-card fade-in">
+                        <div class="writing-date">January 8, 2025</div>
+                        <h3 class="writing-title">Building Your First Language Server Protocol Implementation</h3>
+                        <p class="writing-excerpt">A practical guide to creating IDE features for your custom language or DSL using LSP...</p>
+                        <div class="writing-meta">
+                            <span>20 min read</span>
+                            <span>3.5k views</span>
+                        </div>
+                    </article>
+
+                    <article class="writing-card fade-in">
+                        <div class="writing-date">December 28, 2024</div>
+                        <h3 class="writing-title">What I Learned Building a WebAssembly Runtime</h3>
+                        <p class="writing-excerpt">Deep dive into WASM internals, memory management, and the challenges of building an interpreter...</p>
+                        <div class="writing-meta">
+                            <span>15 min read</span>
+                            <span>890 views</span>
+                        </div>
+                    </article>
+
+                    <article class="writing-card fade-in">
+                        <div class="writing-date">December 15, 2024</div>
+                        <h3 class="writing-title">The Hidden Complexity of Database Indexes</h3>
+                        <p class="writing-excerpt">Why your perfectly crafted indexes might be slowing down your queries, and how to fix it...</p>
+                        <div class="writing-meta">
+                            <span>8 min read</span>
+                            <span>2.1k views</span>
+                        </div>
+                    </article>
+
+                    <article class="writing-card fade-in">
+                        <div class="writing-date">November 30, 2024</div>
+                        <h3 class="writing-title">Microservices: When Not to Use Them</h3>
+                        <p class="writing-excerpt">Lessons learned from prematurely adopting microservices and how to know when you're ready...</p>
+                        <div class="writing-meta">
+                            <span>10 min read</span>
+                            <span>4.2k views</span>
+                        </div>
+                    </article>
+
+                    <article class="writing-card fade-in">
+                        <div class="writing-date">November 12, 2024</div>
+                        <h3 class="writing-title">Optimizing Developer Experience: Small Changes, Big Impact</h3>
+                        <p class="writing-excerpt">How investing in tooling and automation can 10x your team's productivity...</p>
+                        <div class="writing-meta">
+                            <span>7 min read</span>
+                            <span>1.8k views</span>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Connect Section -->
+        <section id="connect" class="connect">
+            <div class="container">
+                <div class="connect-content fade-in">
+                    <h2>Let's Build Something Together</h2>
+                    <p>I'm always interested in collaborating on interesting projects, discussing technical challenges, or helping other developers level up.</p>
+                    
+                    <div class="connect-grid">
+                        <div class="connect-option">
+                            <h3>Open Source Collaboration</h3>
+                            <p>Looking for contributors to my projects or happy to contribute to yours</p>
+                        </div>
+                        <div class="connect-option">
+                            <h3>Technical Discussion</h3>
+                            <p>Love diving deep into system design, algorithms, and engineering challenges</p>
+                        </div>
+                        <div class="connect-option">
+                            <h3>Mentorship & Learning</h3>
+                            <p>Happy to share knowledge or learn from your expertise</p>
+                        </div>
+                    </div>
+
+                    <div class="social-links">
+                        <a href="https://github.com/alexchen">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                            </svg>
+                            GitHub
+                        </a>
+                        <a href="https://twitter.com/alexchen_dev">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                            </svg>
+                            Twitter
+                        </a>
+                        <a href="https://linkedin.com/in/alexchen">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                            </svg>
+                            LinkedIn
+                        </a>
+                        <a href="mailto:alex@alexchen.dev">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="2" y="4" width="20" height="16" rx="2"/>
+                                <path d="m22 7-10 5L2 7"/>
+                            </svg>
+                            Email
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Alex Chen. Built with curiosity and caffeine.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Header hide/show on scroll
+        let lastScroll = 0;
+        const header = document.getElementById('header');
+        
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll <= 0) {
+                header.style.transform = 'translateY(0)';
+                return;
+            }
+            
+            if (currentScroll > lastScroll && currentScroll > 80) {
+                header.style.transform = 'translateY(-100%)';
+            } else {
+                header.style.transform = 'translateY(0)';
+            }
+            
+            lastScroll = currentScroll;
+        });
+
+        // Active nav highlighting
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('nav a');
+        
+        window.addEventListener('scroll', () => {
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').substring(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.fade-in').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            observer.observe(el);
+        });
+
+        // Mobile menu toggle
+        const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+        const nav = document.querySelector('nav ul');
+        
+        mobileMenuToggle.addEventListener('click', () => {
+            nav.classList.toggle('active');
+            mobileMenuToggle.classList.toggle('active');
+        });
+
+        // Performance monitoring
+        if ('performance' in window) {
+            window.addEventListener('load', () => {
+                const perfData = window.performance.timing;
+                const pageLoadTime = perfData.loadEventEnd - perfData.navigationStart;
+                console.log(`Page load time: ${pageLoadTime}ms`);
+            });
+        }
+    </script>
+</body>
+</html>

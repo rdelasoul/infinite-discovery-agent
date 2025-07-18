@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alex Chen - Building, Learning, Experimenting</title>
+    <meta name="description" content="Tech creator actively building tools, exploring ideas, and contributing to open source. Currently focused on developer experience and AI-assisted workflows.">
+    
+    <style>
+        :root {
+            --primary-blue: #2563eb;
+            --success-green: #10b981;
+            --gray-900: #111827;
+            --gray-800: #1f2937;
+            --gray-700: #374151;
+            --gray-600: #4b5563;
+            --gray-500: #6b7280;
+            --gray-400: #9ca3af;
+            --gray-300: #d1d5db;
+            --gray-200: #e5e7eb;
+            --gray-100: #f3f4f6;
+            --gray-50: #f9fafb;
+            --white: #ffffff;
+            
+            --font-sans: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', system-ui, sans-serif;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: var(--font-sans);
+            font-size: 16px;
+            line-height: 1.5;
+            color: var(--gray-900);
+            background-color: var(--white);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            margin: 0;
+            font-weight: 600;
+            line-height: 1.25;
+        }
+
+        h1 { font-size: 2.5rem; }
+        h2 { font-size: 2rem; }
+        h3 { font-size: 1.5rem; }
+        h4 { font-size: 1.25rem; }
+        h5 { font-size: 1.125rem; }
+
+        p {
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        a {
+            color: var(--primary-blue);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        a:hover {
+            color: #1d4ed8;
+        }
+
+        a:focus {
+            outline: 2px solid var(--primary-blue);
+            outline-offset: 2px;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Header */
+        header {
+            background: var(--white);
+            border-bottom: 1px solid var(--gray-200);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            backdrop-filter: blur(8px);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        nav {
+            padding: 1rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links a {
+            color: var(--gray-600);
+            font-weight: 500;
+            font-size: 0.875rem;
+            padding: 0.5rem 0;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--gray-900);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 5rem 0;
+            background: linear-gradient(to bottom, var(--gray-50), var(--white));
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--gray-900) 0%, var(--primary-blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--gray-600);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.375rem 1rem;
+            background: var(--success-green);
+            color: var(--white);
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 2rem;
+        }
+
+        .status-badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--white);
+            border-radius: 50%;
+            animation: pulse 2s ease infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Section Layout */
+        section {
+            padding: 4rem 0;
+        }
+
+        .section-header {
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 1.875rem;
+            margin-bottom: 0.75rem;
+            color: var(--gray-900);
+        }
+
+        .section-subtitle {
+            color: var(--gray-600);
+            font-size: 1.125rem;
+        }
+
+        /* Project Cards */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .project-card {
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card:hover {
+            border-color: var(--primary-blue);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+
+        .project-type {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--primary-blue);
+            margin-bottom: 0.75rem;
+        }
+
+        .project-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--gray-900);
+        }
+
+        .project-description {
+            color: var(--gray-600);
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tech-tag {
+            padding: 0.25rem 0.75rem;
+            background: var(--gray-100);
+            color: var(--gray-700);
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+        }
+
+        .project-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: var(--gray-500);
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--success-green);
+        }
+
+        /* Writing Section */
+        .writing-grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .writing-item {
+            display: flex;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            background: var(--gray-50);
+            border-radius: 0.75rem;
+            transition: all 0.2s ease;
+        }
+
+        .writing-item:hover {
+            background: var(--gray-100);
+        }
+
+        .writing-date {
+            flex-shrink: 0;
+            width: 100px;
+            color: var(--gray-500);
+            font-size: 0.875rem;
+        }
+
+        .writing-content {
+            flex: 1;
+        }
+
+        .writing-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--gray-900);
+        }
+
+        .writing-excerpt {
+            color: var(--gray-600);
+            line-height: 1.6;
+        }
+
+        /* About Section */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        .about-content {
+            color: var(--gray-600);
+            line-height: 1.8;
+        }
+
+        .about-content p + p {
+            margin-top: 1rem;
+        }
+
+        .looking-for {
+            background: var(--gray-50);
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            border: 1px solid var(--gray-200);
+        }
+
+        .looking-for h4 {
+            margin-bottom: 1rem;
+        }
+
+        .looking-for ul {
+            margin: 0;
+            padding-left: 1.25rem;
+            color: var(--gray-600);
+        }
+
+        .looking-for li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Contact Section */
+        .contact {
+            background: var(--gray-50);
+            text-align: center;
+            padding: 5rem 0;
+        }
+
+        .contact-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: 0.5rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .contact-link:hover {
+            border-color: var(--primary-blue);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Footer */
+        footer {
+            padding: 2rem 0;
+            text-align: center;
+            color: var(--gray-500);
+            font-size: 0.875rem;
+        }
+
+        /* Responsive */
+        @media (min-width: 768px) {
+            h1 { font-size: 3rem; }
+            h2 { font-size: 2.25rem; }
+            
+            .hero-content {
+                grid-template-columns: 2fr 1fr;
+            }
+            
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .writing-item {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .hero {
+                padding: 3rem 0;
+            }
+            
+            section {
+                padding: 3rem 0;
+            }
+        }
+
+        /* Accessibility */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        /* Focus styles */
+        *:focus {
+            outline: 2px solid var(--primary-blue);
+            outline-offset: 2px;
+        }
+
+        /* Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">Alex Chen</div>
+            <ul class="nav-links">
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#writing">Writing</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <div class="status-badge">Currently building</div>
+                        <h1>Building tools that make developers' lives easier</h1>
+                        <p class="hero-subtitle">
+                            I'm a full-stack engineer passionate about developer experience, open source, and exploring how AI can augment human creativity. Currently leading DX at Acme Corp.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Active Projects & Experiments</h2>
+                    <p class="section-subtitle">What I'm building and exploring right now</p>
+                </div>
+                
+                <div class="projects-grid">
+                    <article class="project-card" tabindex="0">
+                        <div class="project-type">Open Source Tool</div>
+                        <h3 class="project-title">DevFlow CLI</h3>
+                        <p class="project-description">
+                            A modern CLI tool that streamlines development workflows with AI-assisted code generation and smart project scaffolding. Built to reduce boilerplate and accelerate prototyping.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Rust</span>
+                            <span class="tech-tag">TypeScript</span>
+                            <span class="tech-tag">OpenAI</span>
+                        </div>
+                        <div class="project-status">
+                            <span class="status-dot"></span>
+                            <span>v0.3.0 in beta</span>
+                        </div>
+                    </article>
+
+                    <article class="project-card" tabindex="0">
+                        <div class="project-type">Weekend Experiment</div>
+                        <h3 class="project-title">Semantic Code Search</h3>
+                        <p class="project-description">
+                            Exploring vector embeddings for searching codebases by meaning rather than keywords. Currently testing with large open source projects to improve accuracy.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Embeddings</span>
+                            <span class="tech-tag">Qdrant</span>
+                        </div>
+                        <div class="project-status">
+                            <span class="status-dot"></span>
+                            <span>Active development</span>
+                        </div>
+                    </article>
+
+                    <article class="project-card" tabindex="0">
+                        <div class="project-type">Learning Project</div>
+                        <h3 class="project-title">WebAssembly Runtime</h3>
+                        <p class="project-description">
+                            Building a minimal WASM runtime from scratch to deeply understand how WebAssembly works under the hood. Documenting the journey as I go.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Rust</span>
+                            <span class="tech-tag">WASM</span>
+                            <span class="tech-tag">Low-level</span>
+                        </div>
+                        <div class="project-status">
+                            <span class="status-dot"></span>
+                            <span>Week 3 of 12</span>
+                        </div>
+                    </article>
+
+                    <article class="project-card" tabindex="0">
+                        <div class="project-type">Community Project</div>
+                        <h3 class="project-title">React Patterns Library</h3>
+                        <p class="project-description">
+                            Curating and documenting advanced React patterns with interactive examples. Contributing to help developers write more maintainable component architectures.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">TypeScript</span>
+                            <span class="tech-tag">MDX</span>
+                        </div>
+                        <div class="project-status">
+                            <span class="status-dot"></span>
+                            <span>15 patterns documented</span>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="writing">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Writing & Ideas</h2>
+                    <p class="section-subtitle">Recent thoughts on technology and software development</p>
+                </div>
+                
+                <div class="writing-grid">
+                    <article class="writing-item">
+                        <time class="writing-date">Jan 15, 2025</time>
+                        <div class="writing-content">
+                            <h3 class="writing-title">The Hidden Cost of Developer Context Switching</h3>
+                            <p class="writing-excerpt">
+                                Measuring the real impact of interruptions on developer productivity and exploring strategies to create better focus time. Based on data from 200+ engineers at scale-ups.
+                            </p>
+                        </div>
+                    </article>
+
+                    <article class="writing-item">
+                        <time class="writing-date">Dec 28, 2024</time>
+                        <div class="writing-content">
+                            <h3 class="writing-title">Building AI-First Developer Tools: Lessons Learned</h3>
+                            <p class="writing-excerpt">
+                                Six months into building AI-powered dev tools, here's what actually works and what's just hype. Practical insights from real-world usage data.
+                            </p>
+                        </div>
+                    </article>
+
+                    <article class="writing-item">
+                        <time class="writing-date">Dec 10, 2024</time>
+                        <div class="writing-content">
+                            <h3 class="writing-title">Why Rust is Perfect for CLI Tools</h3>
+                            <p class="writing-excerpt">
+                                After rewriting our Node.js CLI in Rust, startup time improved by 10x and distribution became trivial. Here's the complete migration story and key learnings.
+                            </p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="about">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">About & Context</h2>
+                </div>
+                
+                <div class="about-grid">
+                    <div class="about-content">
+                        <p>
+                            I'm currently leading Developer Experience at Acme Corp, where I'm focused on building tools and systems that help our 500+ engineers ship faster and with more confidence. Before this, I spent four years at a YC startup building real-time collaboration infrastructure.
+                        </p>
+                        <p>
+                            My weekends are usually spent on open source projects, learning new programming languages, or exploring the intersection of AI and developer tools. I believe the best software comes from deeply understanding the problems we're solving and the people who will use what we build.
+                        </p>
+                        <p>
+                            I write about software architecture, developer productivity, and the evolving landscape of AI-assisted development. Always happy to chat about Rust, system design, or the future of programming.
+                        </p>
+                    </div>
+                    
+                    <aside class="looking-for">
+                        <h4>Currently interested in:</h4>
+                        <ul>
+                            <li>Collaborating on developer tools</li>
+                            <li>Speaking about DX and productivity</li>
+                            <li>Beta testing AI coding assistants</li>
+                            <li>Connecting with other builders</li>
+                        </ul>
+                    </aside>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact">
+            <div class="container">
+                <div class="contact-content">
+                    <h2 class="section-title">Let's Build Something Together</h2>
+                    <p class="section-subtitle">
+                        I'm always excited to connect with fellow builders, discuss ideas, or explore collaboration opportunities.
+                    </p>
+                    
+                    <div class="contact-links">
+                        <a href="https://github.com/alexchen" class="contact-link">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
+                            </svg>
+                            GitHub
+                        </a>
+                        <a href="https://twitter.com/alexchen_dev" class="contact-link">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                            </svg>
+                            Twitter
+                        </a>
+                        <a href="mailto:alex@example.com" class="contact-link">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                <polyline points="22,6 12,13 2,6"/>
+                            </svg>
+                            Email
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Alex Chen. Built with curiosity and caffeine.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add keyboard navigation for project cards
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    this.click();
+                }
+            });
+        });
+
+        // Add loading animation for images
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '50px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections for fade-in effect
+        document.querySelectorAll('section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(20px)';
+            section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(section);
+        });
+
+        // Update active nav link based on scroll position
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-links a');
+
+        function updateActiveLink() {
+            const scrollY = window.scrollY;
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                const sectionHeight = section.offsetHeight;
+                const sectionId = section.getAttribute('id');
+                
+                if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+                    navLinks.forEach(link => {
+                        link.style.color = link.getAttribute('href') === `#${sectionId}` 
+                            ? 'var(--gray-900)' 
+                            : 'var(--gray-600)';
+                    });
+                }
+            });
+        }
+
+        window.addEventListener('scroll', updateActiveLink);
+        updateActiveLink();
+    </script>
+</body>
+</html>

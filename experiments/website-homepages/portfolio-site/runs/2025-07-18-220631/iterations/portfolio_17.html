@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alex Chen - Building & Experimenting</title>
+    <meta name="description" content="Tech creator actively building tools, exploring ideas, and sharing insights. Currently working on developer productivity and open source contributions.">
+    
+    <style>
+        /* Reset and Base Styles */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary-blue: #2563eb;
+            --success-green: #10b981;
+            --dark-gray: #1f2937;
+            --medium-gray: #6b7280;
+            --light-gray: #f3f4f6;
+            --white: #ffffff;
+            --max-width: 1200px;
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 1.5rem;
+            --spacing-lg: 2rem;
+            --spacing-xl: 3rem;
+            --spacing-2xl: 4rem;
+            --radius-sm: 0.375rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+            --transition: all 0.2s ease;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--dark-gray);
+            background-color: var(--white);
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        /* Typography */
+        h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+        }
+        
+        h2 {
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            font-weight: 600;
+            line-height: 1.3;
+            letter-spacing: -0.01em;
+        }
+        
+        h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+        
+        p {
+            color: var(--medium-gray);
+            line-height: 1.7;
+        }
+        
+        a {
+            color: var(--primary-blue);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        a:hover {
+            opacity: 0.8;
+        }
+        
+        /* Layout Components */
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+        }
+        
+        .section {
+            padding: var(--spacing-2xl) 0;
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+            z-index: 1000;
+            transition: var(--transition);
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--spacing-sm) 0;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: var(--spacing-lg);
+            list-style: none;
+        }
+        
+        .nav-links a {
+            color: var(--dark-gray);
+            font-weight: 500;
+            font-size: 0.875rem;
+            position: relative;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-blue);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding-top: calc(var(--spacing-2xl) + 60px);
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+        }
+        
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--spacing-xl);
+            align-items: center;
+        }
+        
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            padding: var(--spacing-xs) var(--spacing-sm);
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success-green);
+            border-radius: var(--radius-lg);
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .status-badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--success-green);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--medium-gray);
+            margin: var(--spacing-md) 0;
+        }
+        
+        /* Current Work Grid */
+        .current-work {
+            background: var(--light-gray);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            margin-top: var(--spacing-xl);
+        }
+        
+        .work-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-md);
+        }
+        
+        .work-item {
+            background: var(--white);
+            padding: var(--spacing-md);
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            transition: var(--transition);
+        }
+        
+        .work-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        
+        .work-label {
+            font-size: 0.75rem;
+            color: var(--medium-gray);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .work-title {
+            font-weight: 600;
+            color: var(--dark-gray);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .work-description {
+            font-size: 0.875rem;
+            color: var(--medium-gray);
+        }
+        
+        /* Project Cards */
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-xl);
+        }
+        
+        .project-card {
+            background: var(--white);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+        
+        .project-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+        
+        .project-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, var(--light-gray), #e5e7eb);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .project-content {
+            padding: var(--spacing-lg);
+        }
+        
+        .project-meta {
+            display: flex;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .project-tag {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.75rem;
+            background: var(--light-gray);
+            color: var(--dark-gray);
+            border-radius: var(--radius-sm);
+            font-weight: 500;
+        }
+        
+        .project-tag.active {
+            background: rgba(37, 99, 235, 0.1);
+            color: var(--primary-blue);
+        }
+        
+        /* Writing Section */
+        .writing-list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-xl);
+        }
+        
+        .writing-item {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: var(--spacing-md);
+            align-items: start;
+            padding: var(--spacing-lg);
+            background: var(--white);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-radius: var(--radius-md);
+            transition: var(--transition);
+        }
+        
+        .writing-item:hover {
+            border-color: var(--primary-blue);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.08);
+        }
+        
+        .writing-date {
+            font-size: 0.875rem;
+            color: var(--medium-gray);
+            white-space: nowrap;
+        }
+        
+        .writing-content h3 {
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .writing-excerpt {
+            font-size: 0.875rem;
+            color: var(--medium-gray);
+        }
+        
+        .writing-link {
+            color: var(--primary-blue);
+            font-size: 1.25rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        /* Contact Section */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-xl);
+            margin-top: var(--spacing-xl);
+        }
+        
+        .contact-card {
+            background: var(--light-gray);
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-lg);
+        }
+        
+        .contact-card h3 {
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .contact-links {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-md);
+        }
+        
+        .contact-link {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            color: var(--dark-gray);
+            font-weight: 500;
+        }
+        
+        /* Footer */
+        footer {
+            padding: var(--spacing-xl) 0;
+            text-align: center;
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+        }
+        
+        .footer-text {
+            color: var(--medium-gray);
+            font-size: 0.875rem;
+        }
+        
+        /* Mobile Navigation */
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: var(--spacing-xs);
+        }
+        
+        .mobile-menu-toggle span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--dark-gray);
+            margin: 4px 0;
+            transition: var(--transition);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--white);
+                flex-direction: column;
+                padding: var(--spacing-md);
+                border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .mobile-menu-toggle {
+                display: block;
+            }
+            
+            .writing-item {
+                grid-template-columns: 1fr;
+                gap: var(--spacing-sm);
+            }
+            
+            .writing-link {
+                display: none;
+            }
+            
+            .hero {
+                min-height: auto;
+                padding-top: calc(var(--spacing-xl) + 60px);
+            }
+        }
+        
+        /* Accessibility */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+        
+        :focus-visible {
+            outline: 2px solid var(--primary-blue);
+            outline-offset: 2px;
+        }
+        
+        /* Skip to content link */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--primary-blue);
+            color: var(--white);
+            padding: var(--spacing-sm);
+            border-radius: var(--radius-md);
+            z-index: 1001;
+        }
+        
+        .skip-link:focus {
+            top: var(--spacing-sm);
+        }
+    </style>
+</head>
+<body>
+    <a href="#main" class="skip-link">Skip to main content</a>
+    
+    <nav role="navigation" aria-label="Main navigation">
+        <div class="container nav-container">
+            <a href="#" aria-label="Alex Chen - Home">Alex Chen</a>
+            <button class="mobile-menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links">
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#writing">Writing</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <main id="main">
+        <section class="hero section">
+            <div class="container">
+                <div class="hero-content">
+                    <div>
+                        <div class="status-badge">Currently building</div>
+                        <h1>I'm Alex Chen, a software engineer exploring developer productivity and open source</h1>
+                        <p class="hero-subtitle">
+                            I build tools that make developers more productive, contribute to open source projects, 
+                            and share what I learn along the way. Currently focused on CLI tools and workflow automation.
+                        </p>
+                        
+                        <div class="current-work">
+                            <h2>What I'm working on now</h2>
+                            <div class="work-grid">
+                                <div class="work-item">
+                                    <p class="work-label">Active Project</p>
+                                    <p class="work-title">DevFlow CLI</p>
+                                    <p class="work-description">A command-line tool for managing development workflows across multiple repositories</p>
+                                </div>
+                                <div class="work-item">
+                                    <p class="work-label">Experimenting</p>
+                                    <p class="work-title">Rust + WebAssembly</p>
+                                    <p class="work-description">Building performant web tools with Rust compiled to WASM</p>
+                                </div>
+                                <div class="work-item">
+                                    <p class="work-label">Contributing</p>
+                                    <p class="work-title">Deno Standard Library</p>
+                                    <p class="work-description">Adding TypeScript utilities and improving documentation</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="projects" class="section">
+            <div class="container">
+                <h2>Recent Projects & Experiments</h2>
+                <p class="section-subtitle">A mix of weekend builds, open source contributions, and technical explorations</p>
+                
+                <div class="project-grid">
+                    <article class="project-card">
+                        <div class="project-image"></div>
+                        <div class="project-content">
+                            <div class="project-meta">
+                                <span class="project-tag active">In Progress</span>
+                                <span class="project-tag">CLI Tool</span>
+                            </div>
+                            <h3>DevFlow CLI</h3>
+                            <p>A developer productivity tool that streamlines git workflows across multiple repositories. Features include batch operations, smart branching strategies, and integration with popular issue trackers.</p>
+                            <a href="#" aria-label="View DevFlow CLI project">View project →</a>
+                        </div>
+                    </article>
+                    
+                    <article class="project-card">
+                        <div class="project-image"></div>
+                        <div class="project-content">
+                            <div class="project-meta">
+                                <span class="project-tag">Weekend Build</span>
+                                <span class="project-tag">WebAssembly</span>
+                            </div>
+                            <h3>Markdown Preview WASM</h3>
+                            <p>A blazing-fast markdown preview tool built with Rust and compiled to WebAssembly. Renders markdown in real-time with syntax highlighting and custom themes.</p>
+                            <a href="#" aria-label="View Markdown Preview WASM project">View project →</a>
+                        </div>
+                    </article>
+                    
+                    <article class="project-card">
+                        <div class="project-image"></div>
+                        <div class="project-content">
+                            <div class="project-meta">
+                                <span class="project-tag">Open Source</span>
+                                <span class="project-tag">TypeScript</span>
+                            </div>
+                            <h3>Deno Contributions</h3>
+                            <p>Regular contributions to the Deno standard library, focusing on adding utility functions and improving TypeScript type definitions. Also maintaining documentation for new features.</p>
+                            <a href="#" aria-label="View Deno contributions">View contributions →</a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+        
+        <section id="writing" class="section">
+            <div class="container">
+                <h2>Writing & Ideas</h2>
+                <p class="section-subtitle">Thoughts on software development, productivity, and the tools we build</p>
+                
+                <div class="writing-list">
+                    <article class="writing-item">
+                        <time class="writing-date">Jan 15, 2025</time>
+                        <div class="writing-content">
+                            <h3>Why Every Developer Should Try Building a CLI Tool</h3>
+                            <p class="writing-excerpt">Building command-line tools taught me more about software design than years of web development. Here's what I learned about user experience, error handling, and the beauty of constrained interfaces.</p>
+                        </div>
+                        <a href="#" class="writing-link" aria-label="Read article">→</a>
+                    </article>
+                    
+                    <article class="writing-item">
+                        <time class="writing-date">Jan 8, 2025</time>
+                        <div class="writing-content">
+                            <h3>WebAssembly Is Not Just for Games</h3>
+                            <p class="writing-excerpt">Exploring practical use cases for WebAssembly in everyday web development. From markdown parsers to image processors, WASM is revolutionizing performance-critical browser applications.</p>
+                        </div>
+                        <a href="#" class="writing-link" aria-label="Read article">→</a>
+                    </article>
+                    
+                    <article class="writing-item">
+                        <time class="writing-date">Dec 22, 2024</time>
+                        <div class="writing-content">
+                            <h3>The Case for Monorepo Tooling</h3>
+                            <p class="writing-excerpt">After maintaining multiple repositories for years, I finally understood why companies invest in monorepo tooling. It's not about the code organization—it's about reducing context switching.</p>
+                        </div>
+                        <a href="#" class="writing-link" aria-label="Read article">→</a>
+                    </article>
+                </div>
+            </div>
+        </section>
+        
+        <section id="about" class="section">
+            <div class="container">
+                <h2>About My Work</h2>
+                <div class="about-content">
+                    <p>
+                        I'm a software engineer with a passion for developer tools and open source. Currently, I work 
+                        at a fintech startup where I lead the developer experience team, focusing on internal tooling 
+                        and workflow automation.
+                    </p>
+                    <p>
+                        My approach to software is simple: build tools that solve real problems, share what you learn, 
+                        and contribute back to the community. I believe the best software comes from developers who 
+                        actively use what they build.
+                    </p>
+                    <p>
+                        When I'm not coding, I'm usually experimenting with new technologies, contributing to open 
+                        source projects, or writing about software development. I'm particularly interested in Rust, 
+                        WebAssembly, and anything that makes developers more productive.
+                    </p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="contact" class="section">
+            <div class="container">
+                <h2>Let's Connect</h2>
+                <p class="section-subtitle">I'm always interested in collaborating on developer tools or discussing software ideas</p>
+                
+                <div class="contact-grid">
+                    <div class="contact-card">
+                        <h3>Looking for</h3>
+                        <p>
+                            Open source collaborators for developer tools, interesting technical problems to solve, 
+                            and conversations about the future of software development. If you're building something 
+                            that makes developers' lives easier, I'd love to hear about it.
+                        </p>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <h3>Get in touch</h3>
+                        <p>The best way to reach me is through GitHub or Twitter. I'm most responsive to messages about technical topics or project collaborations.</p>
+                        <div class="contact-links">
+                            <a href="#" class="contact-link">
+                                <span>→</span> GitHub: @alexchen
+                            </a>
+                            <a href="#" class="contact-link">
+                                <span>→</span> Twitter: @alexchen_dev
+                            </a>
+                            <a href="#" class="contact-link">
+                                <span>→</span> Email: hello@alexchen.dev
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p class="footer-text">© 2025 Alex Chen. Built with vanilla HTML, CSS, and a lot of coffee.</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Mobile menu toggle
+        const menuToggle = document.querySelector('.mobile-menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        
+        menuToggle.addEventListener('click', () => {
+            const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+            menuToggle.setAttribute('aria-expanded', !isExpanded);
+            navLinks.classList.toggle('active');
+        });
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    // Close mobile menu if open
+                    navLinks.classList.remove('active');
+                    menuToggle.setAttribute('aria-expanded', 'false');
+                }
+            });
+        });
+        
+        // Add scroll effect to navigation
+        let lastScroll = 0;
+        const nav = document.querySelector('nav');
+        
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > lastScroll && currentScroll > 100) {
+                nav.style.transform = 'translateY(-100%)';
+            } else {
+                nav.style.transform = 'translateY(0)';
+            }
+            
+            lastScroll = currentScroll;
+        });
+        
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all project cards and writing items
+        document.querySelectorAll('.project-card, .writing-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

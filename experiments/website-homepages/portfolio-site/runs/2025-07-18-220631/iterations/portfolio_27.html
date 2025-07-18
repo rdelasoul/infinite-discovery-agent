@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alex Chen - Building & Experimenting</title>
+    <meta name="description" content="Tech creator actively building, experimenting, and sharing ideas. Currently exploring AI interfaces, developer tools, and open source contributions.">
+    <style>
+        :root {
+            --primary-blue: #2563eb;
+            --success-green: #10b981;
+            --text-primary: #111827;
+            --text-secondary: #6b7280;
+            --bg-white: #ffffff;
+            --bg-gray: #f9fafb;
+            --border-gray: #e5e7eb;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', sans-serif;
+            color: var(--text-primary);
+            background: var(--bg-white);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-gray);
+            z-index: 1000;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a:focus {
+            color: var(--primary-blue);
+            outline: none;
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 5rem;
+            padding: 4rem 2rem 2rem;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .hero-main h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-main p {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            max-width: 600px;
+        }
+
+        .hero-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: var(--success-green);
+            font-weight: 500;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--success-green);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Activity Feed */
+        .activity-sidebar {
+            background: var(--bg-gray);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .activity-header {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .activity-item {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border-gray);
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-time {
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        /* Current Projects Grid */
+        .section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .section-badge {
+            background: var(--primary-blue);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .project-card {
+            background: var(--bg-white);
+            border: 1px solid var(--border-gray);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .project-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary-blue);
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1rem;
+        }
+
+        .project-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .project-type {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .project-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0.25rem 0.75rem;
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success-green);
+            font-size: 0.75rem;
+            font-weight: 500;
+            border-radius: 9999px;
+        }
+
+        .project-description {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .project-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .project-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        /* Writing & Ideas Section */
+        .writing-grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .writing-card {
+            background: var(--bg-white);
+            border: 1px solid var(--border-gray);
+            border-radius: 12px;
+            padding: 1.5rem;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .writing-card:hover {
+            transform: translateX(4px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .writing-content h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .writing-excerpt {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .writing-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            padding: 0.25rem 0.75rem;
+            background: var(--bg-gray);
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            border-radius: 9999px;
+        }
+
+        .writing-date {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            white-space: nowrap;
+        }
+
+        /* Professional Context */
+        .context-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .context-card {
+            background: var(--bg-gray);
+            border-radius: 12px;
+            padding: 2rem;
+        }
+
+        .context-card h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .context-card p {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            line-height: 1.6;
+        }
+
+        .skill-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .skill {
+            padding: 0.375rem 1rem;
+            background: var(--bg-white);
+            border: 1px solid var(--border-gray);
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            color: var(--text-primary);
+        }
+
+        /* Connect Section */
+        .connect-section {
+            background: var(--bg-gray);
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .connect-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .connect-content h2 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .connect-content p {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-size: 1rem;
+        }
+
+        .connect-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .connect-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--bg-white);
+            border: 1px solid var(--border-gray);
+            border-radius: 8px;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .connect-link:hover {
+            background: var(--primary-blue);
+            color: white;
+            border-color: var(--primary-blue);
+            transform: translateY(-2px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .hero-main h1 {
+                font-size: 2rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .context-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .writing-card {
+                grid-template-columns: 1fr;
+            }
+
+            .section {
+                padding: 3rem 1rem;
+            }
+        }
+
+        /* Accessibility */
+        *:focus-visible {
+            outline: 2px solid var(--primary-blue);
+            outline-offset: 2px;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-content">
+            <div class="nav-logo">Alex Chen</div>
+            <ul class="nav-links">
+                <li><a href="#projects">Current Work</a></li>
+                <li><a href="#writing">Writing</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#connect">Connect</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-main">
+                <h1>Building tools that make developers more productive</h1>
+                <p>I'm a software engineer who loves experimenting with AI interfaces, developer experience, and open source. Currently exploring how AI can augment human creativity.</p>
+                <div class="hero-status">
+                    <span class="status-dot"></span>
+                    <span>Available for interesting projects</span>
+                </div>
+            </div>
+            <aside class="activity-sidebar">
+                <div class="activity-header">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"></path>
+                    </svg>
+                    Recent Activity
+                </div>
+                <div class="activity-item">
+                    <div class="activity-time">2 hours ago</div>
+                    <div>Pushed update to AI Code Assistant</div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-time">Yesterday</div>
+                    <div>Published "Rethinking Developer Tools"</div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-time">3 days ago</div>
+                    <div>Released v2.0 of React Component Library</div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-time">Last week</div>
+                    <div>Started experimenting with WebGPU</div>
+                </div>
+            </aside>
+        </div>
+    </section>
+
+    <!-- Current Projects -->
+    <section id="projects" class="section">
+        <div class="section-header">
+            <h2 class="section-title">Current Projects & Experiments</h2>
+            <span class="section-badge">4 Active</span>
+        </div>
+        <div class="projects-grid">
+            <article class="project-card">
+                <div class="project-header">
+                    <div>
+                        <h3 class="project-title">AI Code Assistant</h3>
+                        <p class="project-type">Open Source Tool</p>
+                    </div>
+                    <span class="project-status">
+                        <span class="status-dot"></span>
+                        In Progress
+                    </span>
+                </div>
+                <p class="project-description">Building an AI-powered VS Code extension that understands context and suggests improvements. Currently implementing semantic code analysis.</p>
+                <div class="project-meta">
+                    <span class="project-meta-item">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path>
+                            <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 1 1 0 000 2H6a2 2 0 00-2 2v6a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-1a1 1 0 100-2h1a4 4 0 014 4v6a4 4 0 01-4 4H6a4 4 0 01-4-4V7a4 4 0 014-4z" clip-rule="evenodd"></path>
+                        </svg>
+                        TypeScript, Node.js
+                    </span>
+                    <span class="project-meta-item">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"></path>
+                        </svg>
+                        245 contributors
+                    </span>
+                </div>
+            </article>
+
+            <article class="project-card">
+                <div class="project-header">
+                    <div>
+                        <h3 class="project-title">Component Library v2</h3>
+                        <p class="project-type">Weekend Build</p>
+                    </div>
+                    <span class="project-status">
+                        <span class="status-dot"></span>
+                        Active
+                    </span>
+                </div>
+                <p class="project-description">Redesigning my React component library with better accessibility and performance. Implementing compound components pattern.</p>
+                <div class="project-meta">
+                    <span class="project-meta-item">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path>
+                            <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 1 1 0 000 2H6a2 2 0 00-2 2v6a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-1a1 1 0 100-2h1a4 4 0 014 4v6a4 4 0 01-4 4H6a4 4 0 01-4-4V7a4 4 0 014-4z" clip-rule="evenodd"></path>
+                        </svg>
+                        React, CSS-in-JS
+                    </span>
+                    <span class="project-meta-item">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
+                        </svg>
+                        Updated daily
+                    </span>
+                </div>
+            </article>
+
+            <article class="project-card">
+                <div class="project-header">
+                    <div>
+                        <h3 class="project-title">WebGPU Experiments</h3>
+                        <p class="project-type">Technical Exploration</p>
+                    </div>
+                    <span class="project-status">
+                        <span class="status-dot"></span>
+                        Exploring
+                    </span>
+                </div>
+                <p class="project-description">Learning WebGPU by building interactive visualizations. Currently working on a particle system with 1M+ particles.</p>
+                <div class="project-meta">
+                    <span class="project-meta-item">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path>
+                            <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 1 1 0 000 2H6a2 2 0 00-2 2v6a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-1a1 1 0 100-2h1a4 4 0 014 4v6a4 4 0 01-4 4H6a4 4 0 01-4-4V7a4 4 0 014-4z" clip-rule="evenodd"></path>
+                        </svg>
+                        WGSL, TypeScript
+                    </span>
+                    <span class="project-meta-item">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z"></path>
+                        </svg>
+                        Learning in public
+                    </span>
+                </div>
+            </article>
+
+            <article class="project-card">
+                <div class="project-header">
+                    <div>
+                        <h3 class="project-title">Developer Productivity CLI</h3>
+                        <p class="project-type">Open Source Contribution</p>
+                    </div>
+                    <span class="project-status">
+                        <span class="status-dot"></span>
+                        Shipping Soon
+                    </span>
+                </div>
+                <p class="project-description">Contributing to a popular CLI tool. Adding intelligent task automation features based on project context.</p>
+                <div class="project-meta">
+                    <span class="project-meta-item">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path>
+                            <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 1 1 0 000 2H6a2 2 0 00-2 2v6a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-1a1 1 0 100-2h1a4 4 0 014 4v6a4 4 0 01-4 4H6a4 4 0 01-4-4V7a4 4 0 014-4z" clip-rule="evenodd"></path>
+                        </svg>
+                        Rust, Shell
+                    </span>
+                    <span class="project-meta-item">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                        </svg>
+                        PR #1247
+                    </span>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- Writing & Ideas -->
+    <section id="writing" class="section">
+        <div class="section-header">
+            <h2 class="section-title">Writing & Ideas</h2>
+        </div>
+        <div class="writing-grid">
+            <article class="writing-card">
+                <div class="writing-content">
+                    <h3>Rethinking Developer Tools in the Age of AI</h3>
+                    <p class="writing-excerpt">How AI assistants are changing the way we think about developer productivity. Exploring the balance between automation and understanding...</p>
+                    <div class="writing-tags">
+                        <span class="tag">AI</span>
+                        <span class="tag">Developer Tools</span>
+                        <span class="tag">Future of Code</span>
+                    </div>
+                </div>
+                <time class="writing-date">Dec 15, 2024</time>
+            </article>
+
+            <article class="writing-card">
+                <div class="writing-content">
+                    <h3>Building Accessible Components: Lessons Learned</h3>
+                    <p class="writing-excerpt">A deep dive into making React components truly accessible. Practical tips from rebuilding our component library with a11y first...</p>
+                    <div class="writing-tags">
+                        <span class="tag">Accessibility</span>
+                        <span class="tag">React</span>
+                        <span class="tag">Best Practices</span>
+                    </div>
+                </div>
+                <time class="writing-date">Dec 8, 2024</time>
+            </article>
+
+            <article class="writing-card">
+                <div class="writing-content">
+                    <h3>WebGPU: First Impressions from a Web Developer</h3>
+                    <p class="writing-excerpt">My journey learning WebGPU as someone coming from a web development background. What's exciting, what's challenging...</p>
+                    <div class="writing-tags">
+                        <span class="tag">WebGPU</span>
+                        <span class="tag">Graphics</span>
+                        <span class="tag">Learning</span>
+                    </div>
+                </div>
+                <time class="writing-date">Nov 22, 2024</time>
+            </article>
+        </div>
+    </section>
+
+    <!-- Professional Context -->
+    <section id="about" class="section">
+        <div class="section-header">
+            <h2 class="section-title">Professional Context</h2>
+        </div>
+        <div class="context-grid">
+            <div class="context-card">
+                <h3>Current Role & Focus</h3>
+                <p>Senior Software Engineer at TechCorp, leading the developer experience team. We're building internal tools that help our 500+ engineers ship faster and with more confidence. My focus is on AI-augmented development workflows and improving our build systems.</p>
+                <div class="skill-list">
+                    <span class="skill">TypeScript</span>
+                    <span class="skill">React</span>
+                    <span class="skill">Node.js</span>
+                    <span class="skill">Rust</span>
+                    <span class="skill">AI/ML</span>
+                </div>
+            </div>
+            <div class="context-card">
+                <h3>How I Work</h3>
+                <p>I believe in building in public, sharing knowledge, and learning from the community. I approach problems with curiosity and love exploring new technologies through hands-on experimentation. Always happy to collaborate on interesting projects or discuss technical challenges.</p>
+                <div class="skill-list">
+                    <span class="skill">Open Source</span>
+                    <span class="skill">Documentation</span>
+                    <span class="skill">Mentoring</span>
+                    <span class="skill">Speaking</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Connect Section -->
+    <section id="connect" class="connect-section">
+        <div class="connect-content">
+            <h2>Let's Build Something Together</h2>
+            <p>I'm always interested in collaborating on developer tools, AI experiments, or anything that makes developers' lives better. Feel free to reach out!</p>
+            <div class="connect-links">
+                <a href="mailto:alex@example.com" class="connect-link">
+                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
+                        <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
+                    </svg>
+                    Email Me
+                </a>
+                <a href="https://github.com/alexchen" class="connect-link">
+                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 0C4.477 0 0 4.477 0 10c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.607.069-.607 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.268 2.75 1.026A9.578 9.578 0 0110 4.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.026 2.747-1.026.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C17.137 18.167 20 14.418 20 10c0-5.523-4.477-10-10-10z" clip-rule="evenodd"></path>
+                    </svg>
+                    GitHub
+                </a>
+                <a href="https://twitter.com/alexchen_dev" class="connect-link">
+                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M6.29 18.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0020 3.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.073 4.073 0 01.8 7.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 010 16.407a11.616 11.616 0 006.29 1.84"></path>
+                    </svg>
+                    Twitter
+                </a>
+                <a href="https://linkedin.com/in/alexchen" class="connect-link">
+                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M16.338 16.338H13.67V12.16c0-.995-.017-2.277-1.387-2.277-1.39 0-1.601 1.086-1.601 2.207v4.248H8.014v-8.59h2.559v1.174h.037c.356-.675 1.227-1.387 2.526-1.387 2.703 0 3.203 1.778 3.203 4.092v4.711zM5.005 6.575a1.548 1.548 0 11-.003-3.096 1.548 1.548 0 01.003 3.096zm-1.337 9.763H6.34v-8.59H3.667v8.59zM17.668 1H2.328C1.595 1 1 1.581 1 2.298v15.403C1 18.418 1.595 19 2.328 19h15.34c.734 0 1.332-.582 1.332-1.299V2.298C19 1.581 18.402 1 17.668 1z"></path>
+                    </svg>
+                    LinkedIn
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add intersection observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all cards
+        document.querySelectorAll('.project-card, .writing-card, .context-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+
+        // Add hover effect for project cards
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // In a real implementation, this would link to project details
+                console.log('Project clicked:', this.querySelector('.project-title').textContent);
+            });
+        });
+
+        // Update activity timestamp
+        function updateActivityTime() {
+            const now = new Date();
+            const activityItems = document.querySelectorAll('.activity-time');
+            // This would normally calculate real time differences
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                // Close any open modals or reset focus
+                document.activeElement.blur();
+            }
+        });
+    </script>
+</body>
+</html>

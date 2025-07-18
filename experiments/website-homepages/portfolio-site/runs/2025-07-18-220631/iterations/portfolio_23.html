@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alex Chen - Creator & Experimenter</title>
+    <meta name="description" content="Building at the intersection of AI and human creativity. Currently exploring autonomous systems, creative tools, and open source innovation.">
+    
+    <style>
+        :root {
+            --primary-blue: #2563eb;
+            --success-green: #10b981;
+            --dark-gray: #111827;
+            --medium-gray: #6b7280;
+            --light-gray: #f3f4f6;
+            --white: #ffffff;
+            --max-width: 1200px;
+            --spacing-unit: 1rem;
+            --border-radius: 0.5rem;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', sans-serif;
+            color: var(--dark-gray);
+            background-color: var(--white);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        /* Typography */
+        h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+        }
+        
+        h2 {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            font-weight: 600;
+            line-height: 1.3;
+            margin-bottom: var(--spacing-unit);
+        }
+        
+        h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: 0.5rem;
+        }
+        
+        p {
+            font-size: 1rem;
+            line-height: 1.75;
+            color: var(--medium-gray);
+        }
+        
+        /* Container */
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 var(--spacing-unit);
+        }
+        
+        /* Header */
+        header {
+            padding: calc(var(--spacing-unit) * 2) 0;
+            border-bottom: 1px solid var(--light-gray);
+            position: sticky;
+            top: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            transition: var(--transition);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: var(--spacing-unit);
+        }
+        
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--dark-gray);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .logo:hover {
+            color: var(--primary-blue);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: calc(var(--spacing-unit) * 2);
+            align-items: center;
+        }
+        
+        nav a {
+            color: var(--medium-gray);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        nav a:hover {
+            color: var(--dark-gray);
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-blue);
+            transition: width 0.3s ease;
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: calc(var(--spacing-unit) * 6) 0;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            margin-bottom: calc(var(--spacing-unit) * 1.5);
+        }
+        
+        .hero .subtitle {
+            font-size: 1.25rem;
+            color: var(--medium-gray);
+            max-width: 600px;
+            margin: 0 auto calc(var(--spacing-unit) * 2);
+        }
+        
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--light-gray);
+            border-radius: 2rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            background: var(--success-green);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        /* Experiment Dashboard */
+        .dashboard {
+            padding: calc(var(--spacing-unit) * 4) 0;
+            background: var(--light-gray);
+        }
+        
+        .experiments-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: calc(var(--spacing-unit) * 2);
+            margin-top: calc(var(--spacing-unit) * 2);
+        }
+        
+        .experiment-card {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            padding: calc(var(--spacing-unit) * 2);
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .experiment-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--primary-blue);
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .experiment-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .experiment-card:hover::before {
+            transform: translateX(0);
+        }
+        
+        .experiment-type {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--primary-blue);
+            margin-bottom: 0.5rem;
+        }
+        
+        .experiment-progress {
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: var(--medium-gray);
+        }
+        
+        .progress-bar {
+            flex: 1;
+            height: 4px;
+            background: var(--light-gray);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: var(--success-green);
+            transition: width 0.5s ease;
+        }
+        
+        /* Writing Feed */
+        .writing-section {
+            padding: calc(var(--spacing-unit) * 4) 0;
+        }
+        
+        .writing-feed {
+            display: flex;
+            flex-direction: column;
+            gap: calc(var(--spacing-unit) * 2);
+            margin-top: calc(var(--spacing-unit) * 2);
+        }
+        
+        .article-card {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: calc(var(--spacing-unit) * 2);
+            padding: calc(var(--spacing-unit) * 2);
+            background: var(--white);
+            border: 1px solid var(--light-gray);
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .article-card:hover {
+            border-color: var(--primary-blue);
+            transform: translateX(4px);
+        }
+        
+        .article-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.875rem;
+            color: var(--medium-gray);
+            margin-top: 0.5rem;
+        }
+        
+        .article-date {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        
+        /* Professional Work */
+        .work-section {
+            padding: calc(var(--spacing-unit) * 4) 0;
+            background: var(--light-gray);
+        }
+        
+        .work-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: calc(var(--spacing-unit) * 3);
+            margin-top: calc(var(--spacing-unit) * 2);
+        }
+        
+        .work-card {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+        
+        .work-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .work-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--success-green));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: var(--white);
+        }
+        
+        .work-content {
+            padding: calc(var(--spacing-unit) * 2);
+        }
+        
+        .work-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .tag {
+            padding: 0.25rem 0.75rem;
+            background: var(--light-gray);
+            border-radius: 1rem;
+            font-size: 0.875rem;
+            color: var(--dark-gray);
+        }
+        
+        /* Connect Section */
+        .connect-section {
+            padding: calc(var(--spacing-unit) * 6) 0;
+            text-align: center;
+        }
+        
+        .connect-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: calc(var(--spacing-unit) * 3);
+            margin-top: calc(var(--spacing-unit) * 3);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .connect-item {
+            text-align: left;
+        }
+        
+        .connect-item h3 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary-blue);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: calc(var(--spacing-unit) * 3);
+        }
+        
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            background: var(--light-gray);
+            border-radius: 50%;
+            color: var(--dark-gray);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .social-link:hover {
+            background: var(--primary-blue);
+            color: var(--white);
+            transform: translateY(-4px);
+        }
+        
+        /* Footer */
+        footer {
+            padding: calc(var(--spacing-unit) * 3) 0;
+            border-top: 1px solid var(--light-gray);
+            text-align: center;
+            color: var(--medium-gray);
+            font-size: 0.875rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: var(--spacing-unit);
+            }
+            
+            .hero {
+                padding: calc(var(--spacing-unit) * 3) 0;
+            }
+            
+            .article-card {
+                grid-template-columns: 1fr;
+            }
+            
+            .connect-grid {
+                text-align: center;
+            }
+            
+            .connect-item {
+                text-align: center;
+            }
+        }
+        
+        /* Focus styles */
+        a:focus,
+        button:focus {
+            outline: 2px solid var(--primary-blue);
+            outline-offset: 2px;
+        }
+        
+        /* Skip to content */
+        .skip-to-content {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--primary-blue);
+            color: var(--white);
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            border-radius: 0 0 var(--border-radius) 0;
+            transition: top 0.3s;
+        }
+        
+        .skip-to-content:focus {
+            top: 0;
+        }
+    </style>
+</head>
+<body>
+    <a href="#main" class="skip-to-content">Skip to content</a>
+    
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">Alex Chen</a>
+                <nav role="navigation" aria-label="Main navigation">
+                    <ul>
+                        <li><a href="#experiments">Experiments</a></li>
+                        <li><a href="#writing">Writing</a></li>
+                        <li><a href="#work">Work</a></li>
+                        <li><a href="#connect">Connect</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    
+    <main id="main">
+        <section class="hero">
+            <div class="container">
+                <h1>Building at the intersection of AI and human creativity</h1>
+                <p class="subtitle">
+                    Currently exploring autonomous systems, creative tools, and the future of human-AI collaboration through open source experiments and technical writing.
+                </p>
+                <div class="status-badge">
+                    <span class="status-indicator"></span>
+                    <span>Available for collaboration</span>
+                </div>
+            </div>
+        </section>
+        
+        <section id="experiments" class="dashboard">
+            <div class="container">
+                <h2>Active Experiments</h2>
+                <div class="experiments-grid">
+                    <div class="experiment-card" onclick="window.open('https://github.com/alexchen/neural-canvas', '_blank')">
+                        <span class="experiment-type">Open Source</span>
+                        <h3>Neural Canvas</h3>
+                        <p>Real-time collaborative drawing powered by diffusion models. Exploring how AI can augment creative expression rather than replace it.</p>
+                        <div class="experiment-progress">
+                            <span>75% complete</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 75%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="experiment-card" onclick="window.open('https://github.com/alexchen/context-aware-cli', '_blank')">
+                        <span class="experiment-type">Developer Tools</span>
+                        <h3>Context-Aware CLI</h3>
+                        <p>Building a command-line interface that understands project context and suggests relevant commands using local LLMs.</p>
+                        <div class="experiment-progress">
+                            <span>40% complete</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 40%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="experiment-card" onclick="window.open('https://alexchen.dev/experiments/voice-ui', '_blank')">
+                        <span class="experiment-type">Weekend Build</span>
+                        <h3>Conversational UI Kit</h3>
+                        <p>Experimenting with voice-first interfaces and natural language interactions for everyday applications.</p>
+                        <div class="experiment-progress">
+                            <span>In early exploration</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 20%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="writing" class="writing-section">
+            <div class="container">
+                <h2>Recent Writing & Ideas</h2>
+                <div class="writing-feed">
+                    <a href="https://alexchen.dev/blog/ai-augmentation-not-automation" class="article-card">
+                        <div>
+                            <h3>AI Augmentation, Not Automation: A Developer's Perspective</h3>
+                            <p>Why I believe the future of AI lies in enhancing human capabilities rather than replacing them, with practical examples from my recent projects.</p>
+                            <div class="article-meta">
+                                <span class="article-date">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                                    </svg>
+                                    3 days ago
+                                </span>
+                                <span>12 min read</span>
+                            </div>
+                        </div>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </a>
+                    
+                    <a href="https://alexchen.dev/blog/building-in-public-lessons" class="article-card">
+                        <div>
+                            <h3>Building in Public: Lessons from 6 Months of Open Source</h3>
+                            <p>What I've learned about community, collaboration, and sustainable open source development while building Neural Canvas.</p>
+                            <div class="article-meta">
+                                <span class="article-date">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                                    </svg>
+                                    1 week ago
+                                </span>
+                                <span>8 min read</span>
+                            </div>
+                        </div>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </a>
+                    
+                    <a href="https://dev.to/alexchen/local-first-llms-tutorial" class="article-card">
+                        <div>
+                            <h3>Tutorial: Running LLMs Locally for Privacy-First Applications</h3>
+                            <p>A comprehensive guide to setting up and optimizing local language models for production applications, with performance benchmarks and code examples.</p>
+                            <div class="article-meta">
+                                <span class="article-date">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                                    </svg>
+                                    2 weeks ago
+                                </span>
+                                <span>15 min read</span>
+                            </div>
+                        </div>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+        
+        <section id="work" class="work-section">
+            <div class="container">
+                <h2>Selected Professional Work</h2>
+                <div class="work-grid">
+                    <div class="work-card">
+                        <div class="work-image">
+                            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z"></path>
+                            </svg>
+                        </div>
+                        <div class="work-content">
+                            <h3>AI Safety Platform</h3>
+                            <p>Led development of real-time model monitoring system processing 10M+ daily predictions. Implemented adversarial testing framework that reduced model failures by 60%.</p>
+                            <div class="work-tags">
+                                <span class="tag">Python</span>
+                                <span class="tag">TensorFlow</span>
+                                <span class="tag">Kubernetes</span>
+                                <span class="tag">React</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="work-card">
+                        <div class="work-image">
+                            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                                <line x1="8" y1="21" x2="16" y2="21"></line>
+                                <line x1="12" y1="17" x2="12" y2="21"></line>
+                            </svg>
+                        </div>
+                        <div class="work-content">
+                            <h3>Developer Experience Platform</h3>
+                            <p>Built internal tools platform serving 200+ engineers. Reduced deployment time from hours to minutes through automated workflows and intelligent caching.</p>
+                            <div class="work-tags">
+                                <span class="tag">Go</span>
+                                <span class="tag">GraphQL</span>
+                                <span class="tag">Docker</span>
+                                <span class="tag">TypeScript</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="connect" class="connect-section">
+            <div class="container">
+                <h2>Let's Build Something Together</h2>
+                <p style="max-width: 600px; margin: 0 auto; margin-bottom: 2rem;">
+                    I'm always excited to collaborate on projects that push the boundaries of what's possible with technology and creativity.
+                </p>
+                
+                <div class="connect-grid">
+                    <div class="connect-item">
+                        <h3>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                <polyline points="22,6 12,13 2,6"></polyline>
+                            </svg>
+                            Collaboration
+                        </h3>
+                        <p>Open to working on AI/ML projects, creative tools, and developer experience improvements.</p>
+                    </div>
+                    
+                    <div class="connect-item">
+                        <h3>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                            </svg>
+                            Best Time to Reach
+                        </h3>
+                        <p>Most responsive on weekday mornings (PST). Happy to schedule calls for interesting projects.</p>
+                    </div>
+                    
+                    <div class="connect-item">
+                        <h3>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                            Current Focus
+                        </h3>
+                        <p>Exploring local-first AI applications and building tools that enhance human creativity.</p>
+                    </div>
+                </div>
+                
+                <div class="social-links">
+                    <a href="https://github.com/alexchen" class="social-link" aria-label="GitHub">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                    </a>
+                    <a href="https://twitter.com/alexchen_dev" class="social-link" aria-label="Twitter">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+                        </svg>
+                    </a>
+                    <a href="https://linkedin.com/in/alexchen" class="social-link" aria-label="LinkedIn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                            <rect x="2" y="9" width="4" height="12"></rect>
+                            <circle cx="4" cy="4" r="2"></circle>
+                        </svg>
+                    </a>
+                    <a href="mailto:hello@alexchen.dev" class="social-link" aria-label="Email">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                            <polyline points="22,6 12,13 2,6"></polyline>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Alex Chen. Built with curiosity and caffeine.</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // Intersection Observer for header
+        const header = document.querySelector('header');
+        const hero = document.querySelector('.hero');
+        
+        const headerObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) {
+                    header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
+                } else {
+                    header.style.boxShadow = 'none';
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        headerObserver.observe(hero);
+        
+        // Animate experiment cards on scroll
+        const animateOnScroll = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        document.querySelectorAll('.experiment-card, .article-card, .work-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            animateOnScroll.observe(card);
+        });
+        
+        // Progress bar animation
+        const progressBars = document.querySelectorAll('.progress-fill');
+        const progressObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const width = entry.target.style.width;
+                    entry.target.style.width = '0';
+                    setTimeout(() => {
+                        entry.target.style.width = width;
+                    }, 100);
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        progressBars.forEach(bar => progressObserver.observe(bar));
+    </script>
+</body>
+</html>

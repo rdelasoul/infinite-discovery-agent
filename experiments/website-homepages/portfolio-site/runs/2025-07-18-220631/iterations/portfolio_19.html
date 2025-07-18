@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alex Chen - Building, Learning, Sharing</title>
+    <meta name="description" content="Tech creator actively building AI tools, exploring distributed systems, and sharing insights about modern software development.">
+    
+    <style>
+        :root {
+            --primary-blue: #2563eb;
+            --success-green: #10b981;
+            --text-primary: #111827;
+            --text-secondary: #6b7280;
+            --bg-white: #ffffff;
+            --bg-gray: #f9fafb;
+            --border-gray: #e5e7eb;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-white);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-gray);
+            z-index: 100;
+            transition: transform 0.3s ease;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-weight: 600;
+            font-size: 1.125rem;
+            color: var(--text-primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.2s;
+            position: relative;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--primary-blue);
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -0.5rem;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--primary-blue);
+            border-radius: 1px;
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1200px;
+            margin: 5rem auto 0;
+            padding: 2rem 1.5rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 4rem 0;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--primary-blue) 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--bg-gray);
+            border-radius: 2rem;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            background: var(--success-green);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        /* Section Styles */
+        section {
+            margin-bottom: 6rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.875rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .section-subtitle {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        /* Project Grid */
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .project-card {
+            background: var(--bg-white);
+            border: 1px solid var(--border-gray);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card:hover {
+            border-color: var(--primary-blue);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+
+        .project-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.75rem;
+            color: var(--success-green);
+            margin-bottom: 0.75rem;
+        }
+
+        .project-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .project-description {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tag {
+            padding: 0.25rem 0.75rem;
+            background: var(--bg-gray);
+            border-radius: 0.375rem;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        /* Writing Section */
+        .writing-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .writing-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            background: var(--bg-white);
+            border: 1px solid var(--border-gray);
+            border-radius: 0.75rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .writing-item:hover {
+            border-color: var(--primary-blue);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .writing-content {
+            flex: 1;
+        }
+
+        .writing-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .writing-excerpt {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+
+        .writing-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+        }
+
+        /* Professional Work */
+        .work-timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .work-timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border-gray);
+        }
+
+        .work-item {
+            position: relative;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: var(--bg-gray);
+            border-radius: 0.75rem;
+        }
+
+        .work-item::before {
+            content: '';
+            position: absolute;
+            left: -2rem;
+            top: 1.5rem;
+            width: 12px;
+            height: 12px;
+            background: var(--primary-blue);
+            border-radius: 50%;
+            border: 3px solid var(--bg-white);
+        }
+
+        .work-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 0.5rem;
+        }
+
+        .work-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .work-date {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background: var(--bg-gray);
+            border-radius: 1rem;
+            padding: 3rem;
+            text-align: center;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .contact-method {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .contact-icon {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-white);
+            border-radius: 0.75rem;
+            color: var(--primary-blue);
+            font-size: 1.5rem;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: var(--primary-blue);
+            color: white;
+            text-decoration: none;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            margin-top: 1rem;
+        }
+
+        .button:hover {
+            background: #1d4ed8;
+            transform: translateY(-1px);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .mobile-menu-toggle span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--text-primary);
+            margin: 5px 0;
+            transition: all 0.3s;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .project-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .contact-section {
+                padding: 2rem 1.5rem;
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            opacity: 0;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Skip Link */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--primary-blue);
+            color: white;
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            border-radius: 0 0 0.5rem 0;
+        }
+
+        .skip-link:focus {
+            top: 0;
+        }
+    </style>
+</head>
+<body>
+    <a href="#main" class="skip-link">Skip to content</a>
+    
+    <header>
+        <nav>
+            <div class="logo">Alex Chen</div>
+            <ul class="nav-links">
+                <li><a href="#projects" class="active">Projects</a></li>
+                <li><a href="#writing">Writing</a></li>
+                <li><a href="#work">Work</a></li>
+                <li><a href="#contact">Connect</a></li>
+            </ul>
+            <button class="mobile-menu-toggle" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <main id="main">
+        <section class="hero loading">
+            <h1>Building, Learning, Sharing</h1>
+            <p>I'm a software engineer exploring AI, distributed systems, and developer tools. Currently building open-source projects and sharing what I learn along the way.</p>
+            <div class="status-badge">
+                <span class="status-indicator"></span>
+                <span>Available for collaboration</span>
+            </div>
+        </section>
+
+        <section id="projects" class="loading" style="animation-delay: 0.1s">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Current Projects & Experiments</h2>
+                    <p class="section-subtitle">What I'm actively building and exploring</p>
+                </div>
+            </div>
+
+            <div class="project-grid">
+                <article class="project-card" tabindex="0" role="article">
+                    <div class="project-status">
+                        <span class="status-indicator"></span>
+                        <span>In Development</span>
+                    </div>
+                    <h3 class="project-title">VectorFlow</h3>
+                    <p class="project-description">
+                        Open-source vector database abstraction layer that simplifies working with embeddings across different providers. Currently implementing unified query interfaces and automatic index optimization.
+                    </p>
+                    <div class="project-tags">
+                        <span class="tag">Python</span>
+                        <span class="tag">AI/ML</span>
+                        <span class="tag">Databases</span>
+                    </div>
+                </article>
+
+                <article class="project-card" tabindex="0" role="article">
+                    <div class="project-status">
+                        <span class="status-indicator"></span>
+                        <span>Experimenting</span>
+                    </div>
+                    <h3 class="project-title">Distributed Task Queue</h3>
+                    <p class="project-description">
+                        Building a lightweight task queue system using Go and Redis. Exploring patterns for fault tolerance, retries, and distributed tracing in microservice architectures.
+                    </p>
+                    <div class="project-tags">
+                        <span class="tag">Go</span>
+                        <span class="tag">Redis</span>
+                        <span class="tag">Distributed Systems</span>
+                    </div>
+                </article>
+
+                <article class="project-card" tabindex="0" role="article">
+                    <div class="project-status">
+                        <span class="status-indicator"></span>
+                        <span>Weekend Build</span>
+                    </div>
+                    <h3 class="project-title">CodeSnap CLI</h3>
+                    <p class="project-description">
+                        Command-line tool for creating beautiful code screenshots with syntax highlighting and custom themes. Built with Rust for speed and cross-platform compatibility.
+                    </p>
+                    <div class="project-tags">
+                        <span class="tag">Rust</span>
+                        <span class="tag">CLI</span>
+                        <span class="tag">Developer Tools</span>
+                    </div>
+                </article>
+
+                <article class="project-card" tabindex="0" role="article">
+                    <div class="project-status">
+                        <span class="status-indicator"></span>
+                        <span>Contributing</span>
+                    </div>
+                    <h3 class="project-title">LangChain Contributions</h3>
+                    <p class="project-description">
+                        Regular contributor to LangChain, focusing on improving documentation and adding support for new LLM providers. Recently implemented streaming support for Claude API.
+                    </p>
+                    <div class="project-tags">
+                        <span class="tag">Python</span>
+                        <span class="tag">LLMs</span>
+                        <span class="tag">Open Source</span>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section id="writing" class="loading" style="animation-delay: 0.2s">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Writing & Ideas</h2>
+                    <p class="section-subtitle">Recent thoughts on tech, development, and building</p>
+                </div>
+            </div>
+
+            <div class="writing-list">
+                <a href="#" class="writing-item">
+                    <div class="writing-content">
+                        <h3 class="writing-title">Why I'm Building My Own Vector Database Abstraction</h3>
+                        <p class="writing-excerpt">The ecosystem of vector databases is exploding, but switching between them is painful. Here's how I'm solving this with VectorFlow and what I've learned about embedding management...</p>
+                    </div>
+                    <div class="writing-meta">
+                        <span>5 min read</span>
+                        <span>2 days ago</span>
+                    </div>
+                </a>
+
+                <a href="#" class="writing-item">
+                    <div class="writing-content">
+                        <h3 class="writing-title">Lessons from Building a Distributed Task Queue in Go</h3>
+                        <p class="writing-excerpt">Three months into building a task queue system, here are the hard-earned lessons about distributed systems, Redis patterns, and why simple solutions often win...</p>
+                    </div>
+                    <div class="writing-meta">
+                        <span>8 min read</span>
+                        <span>1 week ago</span>
+                    </div>
+                </a>
+
+                <a href="#" class="writing-item">
+                    <div class="writing-content">
+                        <h3 class="writing-title">The Developer Tool I Wish Existed (So I Built It)</h3>
+                        <p class="writing-excerpt">Every developer has that one workflow annoyance. Mine was creating code screenshots for documentation. Here's how a weekend project turned into a useful CLI tool...</p>
+                    </div>
+                    <div class="writing-meta">
+                        <span>4 min read</span>
+                        <span>2 weeks ago</span>
+                    </div>
+                </a>
+
+                <a href="#" class="writing-item">
+                    <div class="writing-content">
+                        <h3 class="writing-title">Contributing to Open Source: A Practical Guide</h3>
+                        <p class="writing-excerpt">After 50+ contributions to various projects, here's my practical guide to getting started with open source, finding good first issues, and making meaningful contributions...</p>
+                    </div>
+                    <div class="writing-meta">
+                        <span>10 min read</span>
+                        <span>3 weeks ago</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <section id="work" class="loading" style="animation-delay: 0.3s">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Professional Context</h2>
+                    <p class="section-subtitle">Selected work that provides background</p>
+                </div>
+            </div>
+
+            <div class="work-timeline">
+                <div class="work-item">
+                    <div class="work-header">
+                        <h3 class="work-title">Senior Software Engineer - TechCorp</h3>
+                        <span class="work-date">2022 - Present</span>
+                    </div>
+                    <p class="project-description">
+                        Leading the platform team building internal developer tools and infrastructure. Architected a self-service deployment platform that reduced deployment time by 80% and increased developer productivity across 200+ engineers.
+                    </p>
+                </div>
+
+                <div class="work-item">
+                    <div class="work-header">
+                        <h3 class="work-title">ML Infrastructure - DataStart</h3>
+                        <span class="work-date">2020 - 2022</span>
+                    </div>
+                    <p class="project-description">
+                        Built and scaled ML infrastructure supporting real-time inference for 10M+ daily predictions. Implemented distributed training pipelines and model versioning system that became the foundation for the company's AI products.
+                    </p>
+                </div>
+
+                <div class="work-item">
+                    <div class="work-header">
+                        <h3 class="work-title">Full Stack Developer - StartupXYZ</h3>
+                        <span class="work-date">2018 - 2020</span>
+                    </div>
+                    <p class="project-description">
+                        Early engineer at a fintech startup. Built core payment processing systems and fraud detection algorithms. Contributed to growing the platform from 1K to 100K active users.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="loading" style="animation-delay: 0.4s">
+            <div class="contact-section">
+                <h2 class="section-title">Let's Build Something Together</h2>
+                <p class="section-subtitle">I'm always interested in collaborating on interesting projects, discussing technical challenges, or just connecting with fellow builders.</p>
+                
+                <div class="contact-grid">
+                    <div class="contact-method">
+                        <div class="contact-icon">📧</div>
+                        <h3>Email</h3>
+                        <p class="section-subtitle">Best for project inquiries</p>
+                    </div>
+                    <div class="contact-method">
+                        <div class="contact-icon">🐦</div>
+                        <h3>Twitter</h3>
+                        <p class="section-subtitle">Quick questions & updates</p>
+                    </div>
+                    <div class="contact-method">
+                        <div class="contact-icon">💻</div>
+                        <h3>GitHub</h3>
+                        <p class="section-subtitle">Code & contributions</p>
+                    </div>
+                    <div class="contact-method">
+                        <div class="contact-icon">💼</div>
+                        <h3>LinkedIn</h3>
+                        <p class="section-subtitle">Professional connections</p>
+                    </div>
+                </div>
+                
+                <a href="mailto:alex@example.com" class="button">Send me an email</a>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Active nav highlighting
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-links a');
+
+        function highlightNav() {
+            const scrollY = window.pageYOffset;
+            
+            sections.forEach(section => {
+                const sectionHeight = section.offsetHeight;
+                const sectionTop = section.offsetTop - 100;
+                const sectionId = section.getAttribute('id');
+                
+                if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === '#' + sectionId) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            });
+        }
+
+        window.addEventListener('scroll', highlightNav);
+
+        // Hide header on scroll down, show on scroll up
+        let lastScroll = 0;
+        const header = document.querySelector('header');
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > lastScroll && currentScroll > 100) {
+                header.style.transform = 'translateY(-100%)';
+            } else {
+                header.style.transform = 'translateY(0)';
+            }
+            
+            lastScroll = currentScroll;
+        });
+
+        // Mobile menu toggle
+        const mobileToggle = document.querySelector('.mobile-menu-toggle');
+        const navLinksContainer = document.querySelector('.nav-links');
+
+        mobileToggle.addEventListener('click', () => {
+            navLinksContainer.classList.toggle('mobile-active');
+        });
+
+        // Project card keyboard navigation
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    card.click();
+                }
+            });
+        });
+
+        // Add project card click handlers
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.addEventListener('click', () => {
+                // In a real implementation, this would navigate to project details
+                console.log('Navigate to project:', card.querySelector('.project-title').textContent);
+            });
+        });
+
+        // Writing item hover effects
+        document.querySelectorAll('.writing-item').forEach(item => {
+            item.addEventListener('mouseenter', () => {
+                item.style.transform = 'translateX(4px)';
+            });
+            
+            item.addEventListener('mouseleave', () => {
+                item.style.transform = 'translateX(0)';
+            });
+        });
+
+        // Performance monitoring
+        if ('PerformanceObserver' in window) {
+            const observer = new PerformanceObserver((list) => {
+                for (const entry of list.getEntries()) {
+                    console.log('LCP:', entry.startTime);
+                }
+            });
+            observer.observe({ entryTypes: ['largest-contentful-paint'] });
+        }
+
+        // Lazy loading for images (if added later)
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src;
+                        imageObserver.unobserve(img);
+                    }
+                });
+            });
+            
+            document.querySelectorAll('img[data-src]').forEach(img => {
+                imageObserver.observe(img);
+            });
+        }
+    </script>
+</body>
+</html>

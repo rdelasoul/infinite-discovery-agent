@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alex Chen - Building & Experimenting</title>
+    <meta name="description" content="Tech creator actively building tools, exploring ideas, and contributing to open source. Currently working on developer productivity and AI interfaces.">
+    
+    <style>
+        :root {
+            --primary-blue: #2563eb;
+            --success-green: #10b981;
+            --dark-gray: #1f2937;
+            --medium-gray: #6b7280;
+            --light-gray: #f3f4f6;
+            --white: #ffffff;
+            --max-width: 1200px;
+            --spacing-unit: 8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', system-ui, sans-serif;
+            line-height: 1.6;
+            color: var(--dark-gray);
+            background: var(--white);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Skip to content link */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--primary-blue);
+            color: var(--white);
+            padding: 8px 16px;
+            text-decoration: none;
+            border-radius: 0 0 4px 0;
+            z-index: 100;
+        }
+
+        .skip-link:focus {
+            top: 0;
+        }
+
+        /* Container */
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        header {
+            padding: 48px 0;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--dark-gray);
+            text-decoration: none;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 32px;
+        }
+
+        nav a {
+            color: var(--medium-gray);
+            text-decoration: none;
+            transition: color 0.2s;
+            font-weight: 500;
+        }
+
+        nav a:hover,
+        nav a:focus {
+            color: var(--primary-blue);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 96px 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: clamp(36px, 5vw, 56px);
+            font-weight: 700;
+            margin-bottom: 24px;
+            letter-spacing: -0.02em;
+        }
+
+        .hero .tagline {
+            font-size: 20px;
+            color: var(--medium-gray);
+            max-width: 600px;
+            margin: 0 auto 48px;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--light-gray);
+            padding: 8px 16px;
+            border-radius: 24px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            background: var(--success-green);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        /* Section Base */
+        .section {
+            padding: 80px 0;
+        }
+
+        .section-header {
+            margin-bottom: 48px;
+        }
+
+        .section h2 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .section-description {
+            color: var(--medium-gray);
+            font-size: 18px;
+        }
+
+        /* Project Grid */
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 32px;
+        }
+
+        .project-card {
+            background: var(--white);
+            border: 1px solid var(--light-gray);
+            border-radius: 12px;
+            padding: 32px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .project-card:hover {
+            border-color: var(--primary-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .project-type {
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--primary-blue);
+            margin-bottom: 12px;
+        }
+
+        .project-card h3 {
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+
+        .project-description {
+            color: var(--medium-gray);
+            margin-bottom: 16px;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tech-tag {
+            background: var(--light-gray);
+            padding: 4px 12px;
+            border-radius: 16px;
+            font-size: 14px;
+            color: var(--dark-gray);
+        }
+
+        /* Writing Section */
+        .writing-list {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .writing-item {
+            padding: 24px;
+            border-left: 3px solid var(--light-gray);
+            transition: all 0.3s;
+        }
+
+        .writing-item:hover {
+            border-left-color: var(--primary-blue);
+            background: var(--light-gray);
+        }
+
+        .writing-date {
+            font-size: 14px;
+            color: var(--medium-gray);
+            margin-bottom: 8px;
+        }
+
+        .writing-item h3 {
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+
+        .writing-excerpt {
+            color: var(--medium-gray);
+        }
+
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+            align-items: start;
+        }
+
+        .about-text h3 {
+            font-size: 24px;
+            margin-bottom: 16px;
+        }
+
+        .about-text p {
+            color: var(--medium-gray);
+            margin-bottom: 16px;
+        }
+
+        .collaboration-box {
+            background: var(--light-gray);
+            padding: 32px;
+            border-radius: 12px;
+        }
+
+        .collaboration-box h4 {
+            font-size: 20px;
+            margin-bottom: 16px;
+        }
+
+        .collaboration-list {
+            list-style: none;
+        }
+
+        .collaboration-list li {
+            padding: 8px 0;
+            padding-left: 24px;
+            position: relative;
+        }
+
+        .collaboration-list li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--primary-blue);
+        }
+
+        /* Contact Section */
+        .contact {
+            background: var(--light-gray);
+            text-align: center;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            margin-top: 32px;
+        }
+
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--dark-gray);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .contact-link:hover {
+            color: var(--primary-blue);
+        }
+
+        /* Footer */
+        footer {
+            padding: 48px 0;
+            text-align: center;
+            color: var(--medium-gray);
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 16px;
+            }
+
+            .hero {
+                padding: 64px 0;
+            }
+
+            .section {
+                padding: 64px 0;
+            }
+
+            .project-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+
+            .contact-links {
+                flex-direction: column;
+                gap: 16px;
+            }
+        }
+
+        /* Focus styles */
+        a:focus,
+        button:focus {
+            outline: 2px solid var(--primary-blue);
+            outline-offset: 2px;
+        }
+
+        /* Smooth scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+            
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="#main" class="skip-link">Skip to main content</a>
+
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo" aria-label="Alex Chen Home">Alex Chen</a>
+                <nav aria-label="Main navigation">
+                    <ul>
+                        <li><a href="#projects">Projects</a></li>
+                        <li><a href="#writing">Writing</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main id="main">
+        <section class="hero">
+            <div class="container">
+                <h1>Building tools for developers</h1>
+                <p class="tagline">I'm exploring the intersection of developer productivity and AI interfaces through experiments and open source contributions.</p>
+                <div class="status-badge">
+                    <span class="status-indicator" aria-hidden="true"></span>
+                    <span>Currently building CodeFlow CLI</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Current Projects & Experiments</h2>
+                    <p class="section-description">What I'm actively working on and exploring</p>
+                </div>
+                
+                <div class="project-grid">
+                    <article class="project-card" tabindex="0" role="article">
+                        <span class="project-type">Active Project</span>
+                        <h3>CodeFlow CLI</h3>
+                        <p class="project-description">A command-line tool that uses AI to help developers navigate and understand large codebases through natural language queries.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Rust</span>
+                            <span class="tech-tag">Tree-sitter</span>
+                            <span class="tech-tag">GPT-4</span>
+                        </div>
+                    </article>
+
+                    <article class="project-card" tabindex="0" role="article">
+                        <span class="project-type">Experiment</span>
+                        <h3>Visual Git History</h3>
+                        <p class="project-description">Exploring new ways to visualize git history and code evolution using interactive 3D graphs and timeline views.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Three.js</span>
+                            <span class="tech-tag">WebGL</span>
+                            <span class="tech-tag">D3.js</span>
+                        </div>
+                    </article>
+
+                    <article class="project-card" tabindex="0" role="article">
+                        <span class="project-type">Open Source</span>
+                        <h3>React Query Extensions</h3>
+                        <p class="project-description">Contributing optimistic update patterns and TypeScript improvements to the React Query ecosystem.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">TypeScript</span>
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">Testing</span>
+                        </div>
+                    </article>
+
+                    <article class="project-card" tabindex="0" role="article">
+                        <span class="project-type">Weekend Build</span>
+                        <h3>Terminal Pomodoro</h3>
+                        <p class="project-description">A beautiful terminal-based Pomodoro timer with Spotify integration and productivity analytics.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Go</span>
+                            <span class="tech-tag">Bubble Tea</span>
+                            <span class="tech-tag">SQLite</span>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="writing" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Writing & Ideas</h2>
+                    <p class="section-description">Recent thoughts on development, tools, and technology</p>
+                </div>
+
+                <div class="writing-list">
+                    <article class="writing-item" tabindex="0">
+                        <time class="writing-date">January 15, 2025</time>
+                        <h3>Why AI Code Navigation Needs to Understand Intent, Not Just Syntax</h3>
+                        <p class="writing-excerpt">Traditional code search tools match patterns. But developers don't think in regex—they think in concepts, relationships, and intent. Here's how we're building better tools.</p>
+                    </article>
+
+                    <article class="writing-item" tabindex="0">
+                        <time class="writing-date">December 28, 2024</time>
+                        <h3>The Case for Optimistic UI Patterns in Developer Tools</h3>
+                        <p class="writing-excerpt">Developer tools often feel sluggish because they wait for confirmation. What if we applied the same optimistic patterns we use in consumer apps?</p>
+                    </article>
+
+                    <article class="writing-item" tabindex="0">
+                        <time class="writing-date">December 10, 2024</time>
+                        <h3>Building a Personal Knowledge Graph from Git History</h3>
+                        <p class="writing-excerpt">Your git history contains a wealth of information about how you think and work. I built a tool to extract insights from 5 years of commits.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>About & Collaboration</h2>
+                </div>
+
+                <div class="about-content">
+                    <div class="about-text">
+                        <h3>Professional Context</h3>
+                        <p>I'm a Senior Software Engineer at Vercel, where I work on developer experience and build tools that help teams ship faster.</p>
+                        <p>Previously, I led frontend architecture at a fintech startup and contributed to React Native core at Meta.</p>
+                        <p>I believe the best developer tools feel invisible—they amplify your abilities without getting in the way. That philosophy drives everything I build.</p>
+                    </div>
+
+                    <div class="collaboration-box">
+                        <h4>Open to collaborate on:</h4>
+                        <ul class="collaboration-list">
+                            <li>Developer tools and productivity experiments</li>
+                            <li>Open source projects that need TypeScript expertise</li>
+                            <li>Writing and speaking about modern development</li>
+                            <li>Mentoring early-career developers</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="section contact">
+            <div class="container">
+                <h2>Let's Connect</h2>
+                <p class="section-description">I'm always interested in discussing developer tools, sharing ideas, or collaborating on interesting projects.</p>
+                
+                <div class="contact-links">
+                    <a href="https://github.com/alexchen" class="contact-link" aria-label="GitHub Profile">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58v-2.16c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.09 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49.99.11-.77.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.11-3.18 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.4s2.04.13 3 .4c2.29-1.55 3.3-1.23 3.3-1.23.65 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.62-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.82.58A12 12 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                        </svg>
+                        GitHub
+                    </a>
+                    <a href="https://twitter.com/alexchen_dev" class="contact-link" aria-label="Twitter Profile">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M23.64 4.64c-.88.39-1.82.65-2.82.77a4.92 4.92 0 002.15-2.71 9.84 9.84 0 01-3.13 1.2 4.92 4.92 0 00-8.38 4.48A13.94 13.94 0 011.32 3.2a4.92 4.92 0 001.52 6.57 4.9 4.9 0 01-2.23-.62v.06a4.92 4.92 0 003.95 4.83 4.9 4.9 0 01-2.22.08 4.93 4.93 0 004.6 3.42A9.87 9.87 0 010 19.54a13.94 13.94 0 007.55 2.21c9.06 0 14.01-7.5 14.01-14 0-.21 0-.43-.01-.64A10 10 0 0024 4.59l-.36.05z"/>
+                        </svg>
+                        Twitter
+                    </a>
+                    <a href="mailto:alex@example.com" class="contact-link" aria-label="Email">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <rect x="2" y="4" width="20" height="16" rx="2"/>
+                            <path d="m22 7-10 5L2 7"/>
+                        </svg>
+                        Email
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Alex Chen. Built with curiosity and caffeine.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add keyboard navigation for project cards
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    // In a real implementation, this would navigate to project details
+                    console.log('Navigate to project:', card.querySelector('h3').textContent);
+                }
+            });
+        });
+
+        // Add smooth scroll behavior for navigation links
+        document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Add intersection observer for subtle animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections
+        document.querySelectorAll('.section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(20px)';
+            section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>

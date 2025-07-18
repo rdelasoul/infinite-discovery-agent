@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alex Chen - Building Tomorrow's Web</title>
+    <meta name="description" content="Full-stack developer and open source contributor exploring AI, web performance, and developer experience through active experiments and projects.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #2563eb;
+            --success-green: #10b981;
+            --dark-gray: #111827;
+            --medium-gray: #4b5563;
+            --light-gray: #9ca3af;
+            --background: #ffffff;
+            --surface: #f9fafb;
+            --border: #e5e7eb;
+            --max-width: 1200px;
+            --radius: 8px;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --background: #111827;
+                --surface: #1f2937;
+                --border: #374151;
+                --dark-gray: #f9fafb;
+                --medium-gray: #e5e7eb;
+                --light-gray: #9ca3af;
+            }
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', sans-serif;
+            background: var(--background);
+            color: var(--dark-gray);
+            line-height: 1.6;
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Typography */
+        h1, h2, h3 {
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            margin-bottom: 1.5rem;
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+        }
+
+        p {
+            color: var(--medium-gray);
+            margin-bottom: 1rem;
+        }
+
+        a {
+            color: var(--primary-blue);
+            text-decoration: none;
+            transition: opacity 0.2s ease;
+        }
+
+        a:hover {
+            opacity: 0.8;
+        }
+
+        /* Layout */
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        section {
+            padding: 4rem 0;
+        }
+
+        /* Header */
+        header {
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            background: var(--background);
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--medium-gray);
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--dark-gray);
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: var(--success-green);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--success-green);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 6rem 0;
+            text-align: center;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.875rem;
+            color: var(--medium-gray);
+            margin-bottom: 2rem;
+        }
+
+        .hero h1 {
+            margin-bottom: 1.5rem;
+        }
+
+        .hero .intro {
+            font-size: 1.25rem;
+            max-width: 600px;
+            margin: 0 auto 3rem;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius);
+            font-weight: 500;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .button-primary {
+            background: var(--primary-blue);
+            color: white;
+        }
+
+        .button-primary:hover {
+            background: #1d4ed8;
+            transform: translateY(-1px);
+        }
+
+        .button-secondary {
+            background: var(--surface);
+            color: var(--dark-gray);
+            border: 1px solid var(--border);
+        }
+
+        .button-secondary:hover {
+            background: var(--border);
+        }
+
+        /* Current Work Dashboard */
+        .work-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .work-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            transition: all 0.2s ease;
+        }
+
+        .work-card:hover {
+            border-color: var(--primary-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .work-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--success-green);
+            margin-bottom: 0.75rem;
+        }
+
+        .work-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .tech-tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: var(--background);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            color: var(--medium-gray);
+        }
+
+        /* Experiments Timeline */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 60px;
+            margin-bottom: 3rem;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 11px;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            background: var(--background);
+            border: 2px solid var(--primary-blue);
+            border-radius: 50%;
+        }
+
+        .timeline-date {
+            font-size: 0.875rem;
+            color: var(--light-gray);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Writing Section */
+        .writing-grid {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .writing-item {
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 2rem;
+        }
+
+        .writing-item:last-child {
+            border-bottom: none;
+        }
+
+        .writing-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.875rem;
+            color: var(--light-gray);
+            margin-bottom: 0.5rem;
+        }
+
+        .reading-time {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        /* Contact Section */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            background: var(--surface);
+            border-radius: var(--radius);
+            padding: 2rem;
+        }
+
+        .contact-method {
+            text-align: center;
+        }
+
+        .contact-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--background);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.5rem;
+        }
+
+        /* Footer */
+        footer {
+            padding: 3rem 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--light-gray);
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-in {
+            animation: slideIn 0.6s ease-out forwards;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                padding: 3rem 0;
+            }
+
+            section {
+                padding: 3rem 0;
+            }
+
+            .work-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline::before {
+                left: 10px;
+            }
+
+            .timeline-item {
+                padding-left: 40px;
+            }
+
+            .timeline-dot {
+                left: 1px;
+            }
+        }
+
+        /* Focus styles */
+        a:focus-visible,
+        button:focus-visible {
+            outline: 2px solid var(--primary-blue);
+            outline-offset: 2px;
+        }
+
+        /* Skip to content */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--primary-blue);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius);
+            z-index: 1000;
+        }
+
+        .skip-link:focus {
+            top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <a href="#main" class="skip-link">Skip to content</a>
+
+    <header>
+        <nav class="container">
+            <div class="status-indicator">
+                <span class="status-dot"></span>
+                <span>Available for collaboration</span>
+            </div>
+            <div class="nav-links">
+                <a href="#projects">Projects</a>
+                <a href="#experiments">Experiments</a>
+                <a href="#writing">Writing</a>
+                <a href="#connect">Connect</a>
+            </div>
+        </nav>
+    </header>
+
+    <main id="main">
+        <section class="hero">
+            <div class="container">
+                <div class="hero-badge">
+                    <span>🚀</span>
+                    <span>Currently building AI-powered developer tools</span>
+                </div>
+                <h1>Building Tomorrow's Web</h1>
+                <p class="intro">I'm Alex Chen, a full-stack developer exploring the intersection of AI, web performance, and developer experience through open source projects and experiments.</p>
+                <div class="hero-cta">
+                    <button class="button button-primary" onclick="document.getElementById('projects').scrollIntoView({behavior: 'smooth'})">
+                        View Current Work
+                        <span>↓</span>
+                    </button>
+                    <a href="https://github.com/alexchen" class="button button-secondary">
+                        GitHub Profile
+                        <span>→</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects">
+            <div class="container">
+                <h2>Active Projects & Experiments</h2>
+                <div class="work-grid">
+                    <div class="work-card animate-in">
+                        <div class="work-status">
+                            <span class="status-dot"></span>
+                            <span>In Development</span>
+                        </div>
+                        <h3>DevFlow AI</h3>
+                        <p>An intelligent code review assistant that learns from your team's patterns to provide contextual suggestions and automate routine checks.</p>
+                        <div class="work-tech">
+                            <span class="tech-tag">TypeScript</span>
+                            <span class="tech-tag">GPT-4</span>
+                            <span class="tech-tag">Node.js</span>
+                        </div>
+                    </div>
+
+                    <div class="work-card animate-in" style="animation-delay: 0.1s">
+                        <div class="work-status">
+                            <span class="status-dot"></span>
+                            <span>Beta Testing</span>
+                        </div>
+                        <h3>Performance Monitor</h3>
+                        <p>Real-time web performance monitoring with AI-powered optimization suggestions. Currently testing with 50+ beta users.</p>
+                        <div class="work-tech">
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">WebAssembly</span>
+                            <span class="tech-tag">Rust</span>
+                        </div>
+                    </div>
+
+                    <div class="work-card animate-in" style="animation-delay: 0.2s">
+                        <div class="work-status">
+                            <span class="status-dot"></span>
+                            <span>Open Source</span>
+                        </div>
+                        <h3>React Query Builder</h3>
+                        <p>A type-safe, composable query builder for React applications. 2.5k stars on GitHub and growing community.</p>
+                        <div class="work-tech">
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">TypeScript</span>
+                            <span class="tech-tag">GraphQL</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="experiments">
+            <div class="container">
+                <h2>Learning & Experiments</h2>
+                <div class="timeline">
+                    <div class="timeline-item animate-in">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">This Week</div>
+                        <h3>WebGPU Ray Tracing</h3>
+                        <p>Exploring real-time ray tracing in the browser using WebGPU. Built a basic renderer that achieves 60fps on modern hardware.</p>
+                    </div>
+
+                    <div class="timeline-item animate-in" style="animation-delay: 0.1s">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">Last Month</div>
+                        <h3>Rust WASM Compiler</h3>
+                        <p>Created a mini JavaScript-to-WASM compiler in Rust to understand compilation pipelines and WebAssembly internals.</p>
+                    </div>
+
+                    <div class="timeline-item animate-in" style="animation-delay: 0.2s">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">Q3 2024</div>
+                        <h3>Neural Network from Scratch</h3>
+                        <p>Implemented a neural network in pure JavaScript to deeply understand backpropagation and gradient descent.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="writing">
+            <div class="container">
+                <h2>Writing & Ideas</h2>
+                <div class="writing-grid">
+                    <article class="writing-item animate-in">
+                        <div class="writing-meta">
+                            <span>Published 3 days ago</span>
+                            <span class="reading-time">
+                                <span>📖</span>
+                                <span>8 min read</span>
+                            </span>
+                        </div>
+                        <h3><a href="#">The Hidden Cost of Micro-Optimizations in React</a></h3>
+                        <p>Why premature optimization in React can lead to worse performance and how to identify what actually needs optimizing.</p>
+                    </article>
+
+                    <article class="writing-item animate-in" style="animation-delay: 0.1s">
+                        <div class="writing-meta">
+                            <span>Published 2 weeks ago</span>
+                            <span class="reading-time">
+                                <span>📖</span>
+                                <span>12 min read</span>
+                            </span>
+                        </div>
+                        <h3><a href="#">Building a Type-Safe API Client with TypeScript and Zod</a></h3>
+                        <p>A deep dive into creating end-to-end type safety from your backend to your frontend using modern TypeScript patterns.</p>
+                    </article>
+
+                    <article class="writing-item animate-in" style="animation-delay: 0.2s">
+                        <div class="writing-meta">
+                            <span>Published last month</span>
+                            <span class="reading-time">
+                                <span>📖</span>
+                                <span>6 min read</span>
+                            </span>
+                        </div>
+                        <h3><a href="#">WebAssembly: When JavaScript Isn't Fast Enough</a></h3>
+                        <p>Real-world scenarios where WebAssembly shines and a practical guide to getting started with Rust and WASM.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="connect">
+            <div class="container">
+                <h2>Let's Build Something Together</h2>
+                <p style="max-width: 600px; margin: 0 auto 3rem; text-align: center;">I'm always excited to collaborate on interesting projects, especially those involving AI, performance optimization, or developer tools.</p>
+                
+                <div class="contact-grid">
+                    <div class="contact-method">
+                        <div class="contact-icon">💬</div>
+                        <h3>Quick Chat</h3>
+                        <p>DM me on Twitter for quick questions or discussions</p>
+                        <a href="https://twitter.com/alexchen_dev">@alexchen_dev</a>
+                    </div>
+
+                    <div class="contact-method">
+                        <div class="contact-icon">📧</div>
+                        <h3>Deep Dive</h3>
+                        <p>Email for project collaborations or technical discussions</p>
+                        <a href="mailto:hello@alexchen.dev">hello@alexchen.dev</a>
+                    </div>
+
+                    <div class="contact-method">
+                        <div class="contact-icon">🤝</div>
+                        <h3>Open Source</h3>
+                        <p>Contribute or suggest features on my projects</p>
+                        <a href="https://github.com/alexchen">github.com/alexchen</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>Built with curiosity and shipped with care • © 2025 Alex Chen</p>
+        </div>
+    </footer>
+
+    <script>
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all animated elements
+        document.querySelectorAll('.animate-in').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+            observer.observe(el);
+        });
+
+        // Smooth scroll behavior for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Dynamic status updates
+        const updateStatus = () => {
+            const hour = new Date().getHours();
+            const statusText = document.querySelector('.status-indicator span:last-child');
+            
+            if (hour >= 9 && hour < 18) {
+                statusText.textContent = 'Available for collaboration';
+            } else if (hour >= 18 && hour < 22) {
+                statusText.textContent = 'Working on side projects';
+            } else {
+                statusText.textContent = 'Async communication preferred';
+            }
+        };
+
+        updateStatus();
+        setInterval(updateStatus, 60000); // Update every minute
+
+        // Keyboard navigation
+        let currentFocus = -1;
+        const focusableElements = document.querySelectorAll('a, button, [tabindex="0"]');
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Tab') {
+                return; // Let default tab behavior work
+            }
+            
+            if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+                e.preventDefault();
+                
+                if (e.key === 'ArrowDown') {
+                    currentFocus++;
+                    if (currentFocus >= focusableElements.length) currentFocus = 0;
+                } else {
+                    currentFocus--;
+                    if (currentFocus < 0) currentFocus = focusableElements.length - 1;
+                }
+                
+                focusableElements[currentFocus].focus();
+            }
+        });
+
+        // Performance monitoring
+        if ('PerformanceObserver' in window) {
+            const perfObserver = new PerformanceObserver((list) => {
+                for (const entry of list.getEntries()) {
+                    console.log(`${entry.name}: ${entry.duration}ms`);
+                }
+            });
+            
+            perfObserver.observe({ entryTypes: ['measure', 'navigation'] });
+        }
+
+        // Lazy load images if any are added
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src;
+                        img.classList.remove('lazy');
+                        imageObserver.unobserve(img);
+                    }
+                });
+            });
+
+            document.querySelectorAll('img[data-src]').forEach(img => {
+                imageObserver.observe(img);
+            });
+        }
+    </script>
+</body>
+</html>

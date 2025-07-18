@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alex Chen - Building & Experimenting</title>
+    <meta name="description" content="Tech creator actively building tools, exploring ideas, and contributing to open source. Currently working on developer productivity and AI integration.">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #2563eb;
+            --success-green: #10b981;
+            --dark-text: #111827;
+            --medium-gray: #6b7280;
+            --light-gray: #f3f4f6;
+            --white: #ffffff;
+            --max-width: 1200px;
+            --spacing-unit: 1rem;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'SF Pro Display', sans-serif;
+            line-height: 1.6;
+            color: var(--dark-text);
+            background-color: var(--white);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Container and Layout */
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 var(--spacing-unit);
+        }
+
+        /* Header */
+        header {
+            padding: calc(var(--spacing-unit) * 2) 0;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: var(--spacing-unit);
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--dark-text);
+            text-decoration: none;
+        }
+
+        nav {
+            display: flex;
+            gap: calc(var(--spacing-unit) * 2);
+        }
+
+        nav a {
+            color: var(--medium-gray);
+            text-decoration: none;
+            font-size: 1rem;
+            transition: color 0.2s ease;
+        }
+
+        nav a:hover {
+            color: var(--dark-text);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: calc(var(--spacing-unit) * 6) 0;
+            text-align: center;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 1rem;
+            background-color: rgba(16, 185, 129, 0.1);
+            color: var(--success-green);
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: calc(var(--spacing-unit) * 2);
+        }
+
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            background-color: var(--success-green);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: calc(var(--spacing-unit) * 1.5);
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: var(--medium-gray);
+            max-width: 600px;
+            margin: 0 auto calc(var(--spacing-unit) * 3);
+        }
+
+        .hero-links {
+            display: flex;
+            gap: var(--spacing-unit);
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .button-primary {
+            background-color: var(--primary-blue);
+            color: var(--white);
+        }
+
+        .button-primary:hover {
+            background-color: #1d4ed8;
+            transform: translateY(-1px);
+        }
+
+        .button-secondary {
+            background-color: var(--light-gray);
+            color: var(--dark-text);
+        }
+
+        .button-secondary:hover {
+            background-color: #e5e7eb;
+        }
+
+        /* Current Work Section */
+        .current-work {
+            padding: calc(var(--spacing-unit) * 4) 0;
+            background-color: var(--light-gray);
+        }
+
+        .section-header {
+            margin-bottom: calc(var(--spacing-unit) * 3);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-description {
+            color: var(--medium-gray);
+        }
+
+        .work-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: calc(var(--spacing-unit) * 2);
+        }
+
+        .work-card {
+            background-color: var(--white);
+            border-radius: 0.75rem;
+            padding: calc(var(--spacing-unit) * 2);
+            border: 1px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .work-card:hover {
+            border-color: var(--primary-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .work-type {
+            font-size: 0.875rem;
+            color: var(--primary-blue);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .work-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .work-description {
+            color: var(--medium-gray);
+            margin-bottom: var(--spacing-unit);
+        }
+
+        .work-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tech-tag {
+            padding: 0.25rem 0.75rem;
+            background-color: var(--light-gray);
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            color: var(--dark-text);
+        }
+
+        /* Ideas Section */
+        .ideas {
+            padding: calc(var(--spacing-unit) * 4) 0;
+        }
+
+        .ideas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: calc(var(--spacing-unit) * 2);
+        }
+
+        .idea-card {
+            border-radius: 0.75rem;
+            padding: calc(var(--spacing-unit) * 2);
+            background-color: var(--white);
+            border: 1px solid var(--light-gray);
+            transition: all 0.2s ease;
+        }
+
+        .idea-card:hover {
+            border-color: var(--primary-blue);
+        }
+
+        .idea-date {
+            font-size: 0.875rem;
+            color: var(--medium-gray);
+            margin-bottom: 0.5rem;
+        }
+
+        .idea-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--dark-text);
+            text-decoration: none;
+            display: block;
+        }
+
+        .idea-title:hover {
+            color: var(--primary-blue);
+        }
+
+        .idea-excerpt {
+            color: var(--medium-gray);
+            line-height: 1.6;
+        }
+
+        /* About Section */
+        .about {
+            padding: calc(var(--spacing-unit) * 4) 0;
+            background-color: var(--light-gray);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: calc(var(--spacing-unit) * 4);
+            align-items: start;
+        }
+
+        .about-text h3 {
+            font-size: 1.5rem;
+            margin-bottom: var(--spacing-unit);
+        }
+
+        .about-text p {
+            color: var(--medium-gray);
+            margin-bottom: var(--spacing-unit);
+        }
+
+        .collaboration-box {
+            background-color: var(--white);
+            border-radius: 0.75rem;
+            padding: calc(var(--spacing-unit) * 2);
+            border: 1px solid transparent;
+        }
+
+        .collaboration-box h4 {
+            font-size: 1.125rem;
+            margin-bottom: var(--spacing-unit);
+        }
+
+        .collaboration-list {
+            list-style: none;
+            color: var(--medium-gray);
+        }
+
+        .collaboration-list li {
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .collaboration-list li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--primary-blue);
+        }
+
+        /* Footer */
+        footer {
+            padding: calc(var(--spacing-unit) * 3) 0;
+            text-align: center;
+            border-top: 1px solid var(--light-gray);
+        }
+
+        .social-links {
+            display: flex;
+            gap: calc(var(--spacing-unit) * 2);
+            justify-content: center;
+            margin-bottom: var(--spacing-unit);
+        }
+
+        .social-links a {
+            color: var(--medium-gray);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--primary-blue);
+        }
+
+        .copyright {
+            color: var(--medium-gray);
+            font-size: 0.875rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1.125rem;
+            }
+            
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .work-grid,
+            .ideas-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            nav {
+                gap: var(--spacing-unit);
+                font-size: 0.875rem;
+            }
+        }
+
+        /* Focus Styles */
+        a:focus,
+        button:focus {
+            outline: 2px solid var(--primary-blue);
+            outline-offset: 2px;
+        }
+
+        /* Skip to content link */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--primary-blue);
+            color: var(--white);
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            border-radius: 0 0 0.5rem 0;
+        }
+
+        .skip-link:focus {
+            top: 0;
+        }
+    </style>
+</head>
+<body>
+    <a href="#main" class="skip-link">Skip to content</a>
+    
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">Alex Chen</a>
+                <nav role="navigation" aria-label="Main navigation">
+                    <a href="#projects">Projects</a>
+                    <a href="#writing">Writing</a>
+                    <a href="#about">About</a>
+                    <a href="#contact">Contact</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main id="main">
+        <section class="hero">
+            <div class="container">
+                <div class="status-badge">
+                    <span class="status-indicator"></span>
+                    <span>Currently building</span>
+                </div>
+                <h1>Building tools that make developers faster</h1>
+                <p class="subtitle">
+                    I'm a software engineer experimenting with developer productivity, 
+                    AI integration, and open source tools. Currently exploring how to 
+                    make complex workflows feel effortless.
+                </p>
+                <div class="hero-links">
+                    <a href="#projects" class="button button-primary">View Current Projects</a>
+                    <a href="https://github.com/alexchen" class="button button-secondary">GitHub Profile</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="current-work" id="projects">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Current Projects & Experiments</h2>
+                    <p class="section-description">What I'm actively building and exploring right now</p>
+                </div>
+                
+                <div class="work-grid">
+                    <article class="work-card">
+                        <div class="work-type">Active Project</div>
+                        <h3 class="work-title">DevFlow CLI</h3>
+                        <p class="work-description">
+                            A command-line tool that automates repetitive development workflows. 
+                            Currently adding AI-powered code review suggestions and smart git operations.
+                        </p>
+                        <div class="work-tech">
+                            <span class="tech-tag">Rust</span>
+                            <span class="tech-tag">OpenAI API</span>
+                            <span class="tech-tag">Git2</span>
+                        </div>
+                    </article>
+
+                    <article class="work-card">
+                        <div class="work-type">Weekend Build</div>
+                        <h3 class="work-title">Code Snippet Manager</h3>
+                        <p class="work-description">
+                            A VS Code extension that intelligently organizes and suggests code 
+                            snippets based on your current context. Features semantic search and team sharing.
+                        </p>
+                        <div class="work-tech">
+                            <span class="tech-tag">TypeScript</span>
+                            <span class="tech-tag">VS Code API</span>
+                            <span class="tech-tag">Vector DB</span>
+                        </div>
+                    </article>
+
+                    <article class="work-card">
+                        <div class="work-type">Open Source Contribution</div>
+                        <h3 class="work-title">React Testing Utils</h3>
+                        <p class="work-description">
+                            Contributing to a popular testing library by adding async component 
+                            testing utilities and improving TypeScript definitions.
+                        </p>
+                        <div class="work-tech">
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">Jest</span>
+                            <span class="tech-tag">TypeScript</span>
+                        </div>
+                    </article>
+
+                    <article class="work-card">
+                        <div class="work-type">Learning Experiment</div>
+                        <h3 class="work-title">Distributed Task Queue</h3>
+                        <p class="work-description">
+                            Building a lightweight task queue system to understand distributed 
+                            systems concepts. Implementing with Redis and exploring fault tolerance.
+                        </p>
+                        <div class="work-tech">
+                            <span class="tech-tag">Go</span>
+                            <span class="tech-tag">Redis</span>
+                            <span class="tech-tag">Docker</span>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="ideas" id="writing">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Writing & Ideas</h2>
+                    <p class="section-description">Recent thoughts on technology, development, and building better tools</p>
+                </div>
+                
+                <div class="ideas-grid">
+                    <article class="idea-card">
+                        <time class="idea-date">December 15, 2024</time>
+                        <a href="/blog/ai-code-review" class="idea-title">
+                            AI Code Reviews: Finding the Right Balance
+                        </a>
+                        <p class="idea-excerpt">
+                            Exploring how to integrate AI into code reviews without losing the human 
+                            element. What works, what doesn't, and surprising insights from 6 months 
+                            of experimentation.
+                        </p>
+                    </article>
+
+                    <article class="idea-card">
+                        <time class="idea-date">November 28, 2024</time>
+                        <a href="/blog/cli-design" class="idea-title">
+                            Designing CLIs That Developers Actually Want to Use
+                        </a>
+                        <p class="idea-excerpt">
+                            Lessons learned from building developer tools: why great functionality 
+                            isn't enough and how thoughtful UX makes the difference between a tool 
+                            that's used and one that's loved.
+                        </p>
+                    </article>
+
+                    <article class="idea-card">
+                        <time class="idea-date">November 10, 2024</time>
+                        <a href="/blog/testing-patterns" class="idea-title">
+                            Testing Patterns That Scale With Your Team
+                        </a>
+                        <p class="idea-excerpt">
+                            A practical guide to testing strategies that grow with your codebase. 
+                            Including real examples from migrating a 100k LOC project to better 
+                            testing practices.
+                        </p>
+                    </article>
+
+                    <article class="idea-card">
+                        <time class="idea-date">October 22, 2024</time>
+                        <a href="/blog/open-source-journey" class="idea-title">
+                            My First Major Open Source Contribution
+                        </a>
+                        <p class="idea-excerpt">
+                            The story of contributing to a project with 50k+ stars: overcoming 
+                            imposter syndrome, understanding large codebases, and what I learned 
+                            about collaborative development.
+                        </p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="about" id="about">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">About & Collaboration</h2>
+                </div>
+                
+                <div class="about-content">
+                    <div class="about-text">
+                        <h3>Currently Senior Engineer at TechCorp</h3>
+                        <p>
+                            I spend my days building internal developer tools and infrastructure 
+                            that help our team ship faster. My focus is on removing friction from 
+                            the development process and making complex systems more approachable.
+                        </p>
+                        <p>
+                            Outside of work, I'm passionate about open source, developer experience, 
+                            and exploring how AI can augment (not replace) human creativity in 
+                            software development.
+                        </p>
+                        <p>
+                            I believe the best tools are built by developers who deeply understand 
+                            the problems they're solving. That's why I spend weekends building and 
+                            experimenting—each project teaches me something new about what makes 
+                            great developer tools.
+                        </p>
+                    </div>
+                    
+                    <div class="collaboration-box">
+                        <h4>Open to Collaborate On</h4>
+                        <ul class="collaboration-list">
+                            <li>Developer tools and productivity projects</li>
+                            <li>Open source contributions and maintenance</li>
+                            <li>Technical writing and documentation</li>
+                            <li>Speaking at meetups about developer experience</li>
+                            <li>Mentoring early-career developers</li>
+                        </ul>
+                        
+                        <h4 style="margin-top: 2rem;">Best Way to Connect</h4>
+                        <p style="color: var(--medium-gray);">
+                            Drop me a message on Twitter about what you're building, or open 
+                            an issue on one of my GitHub projects. I love hearing about interesting 
+                            technical challenges and new approaches to developer tools.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="social-links">
+                <a href="https://github.com/alexchen" aria-label="GitHub">GitHub</a>
+                <a href="https://twitter.com/alexchen_dev" aria-label="Twitter">Twitter</a>
+                <a href="https://linkedin.com/in/alexchen" aria-label="LinkedIn">LinkedIn</a>
+                <a href="mailto:alex@example.com" aria-label="Email">Email</a>
+            </div>
+            <p class="copyright">© 2024 Alex Chen. Built with curiosity and caffeine.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Add intersection observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all cards
+        document.querySelectorAll('.work-card, .idea-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+
+        // Update status indicator
+        function updateStatus() {
+            const now = new Date();
+            const hour = now.getHours();
+            const statusBadge = document.querySelector('.status-badge span:last-child');
+            
+            if (hour >= 9 && hour < 17) {
+                statusBadge.textContent = 'Currently working';
+            } else if (hour >= 17 && hour < 22) {
+                statusBadge.textContent = 'Currently experimenting';
+            } else {
+                statusBadge.textContent = 'Currently building';
+            }
+        }
+        
+        updateStatus();
+        setInterval(updateStatus, 60000); // Update every minute
+    </script>
+</body>
+</html>

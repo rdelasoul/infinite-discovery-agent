@@ -1,0 +1,36 @@
+# Portfolio Site Homepage Specification Configuration
+
+# Shared dependencies to include when running /infinite website-homepages/portfolio-site
+dependencies:
+  # Design system dependencies (useful for consistent portfolio presentation)
+  design-systems: []
+    # - geist-core         # Include for clean, professional typography and spacing
+    # - geist-components   # Include for polished component-based sections
+  
+  # Specification modules (recommended for professional portfolio)
+  spec-modules:
+    - accessibility-standards      # Essential for professional accessibility compliance
+    - performance-requirements     # Critical for fast loading and smooth interactions
+    # - realistic-data-requirements # Include if portfolio needs project data context
+  
+  # Moodboards (aesthetic guidance for portfolio design)
+  moodboards:
+    - modern-minimalist  # Clean, professional portfolio presentation
+    # - tech-startup       # Bold, innovative developer aesthetic
+
+  # Data sets (optional for portfolio context)  
+  data: []
+    # - ecommerce-data    # Include if showcasing e-commerce project work
+
+# Experiment configuration
+experiment:
+  type: "website-homepages"
+  project: "portfolio-site"
+  output_format: "single-file"
+  naming_pattern: "portfolio_variant_{iteration}.html"
+
+# Project context:
+# - Personal portfolio showcasing design and development capabilities
+# - Clean, professional presentation of work and skills
+# - Different layout approaches and content organization strategies
+# - Modern, sophisticated design approach
