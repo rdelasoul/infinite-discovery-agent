@@ -27,6 +27,7 @@ Read and resolve all dependencies to create a consolidated specification:
 Read `config_file` to understand:
 - design-systems dependencies (from `shared/design-systems/`)
 - spec-modules dependencies (from `shared/spec-modules/`)
+- moodboards dependencies (from `shared/moodboards/`)
 - data dependencies (from `shared/data/`)
 - experiment configuration settings
 
@@ -34,6 +35,7 @@ Read `config_file` to understand:
 For each dependency category:
 - **Design Systems**: Include content from `shared/design-systems/{module}.md`
 - **Spec Modules**: Include content from `shared/spec-modules/{module}.md`  
+- **Moodboards**: Include content from `shared/moodboards/{moodboard}.md` for aesthetic guidance
 - **Data Sets**: Include content from `shared/data/{dataset}.md`
 
 **1.3 Consolidated Specification Creation:**
@@ -41,6 +43,7 @@ Create a comprehensive specification that includes:
 - Base spec from `spec_file`
 - All resolved dependency content
 - Integrated requirements and constraints
+- Aesthetic guidance from moodboards for brand personality
 - Complete data context for realistic implementation
 
 **PHASE 2: RUN INITIALIZATION**
@@ -54,6 +57,7 @@ experiments/{experiment_path}/runs/{timestamp}/
 ├── dependencies/             # Resolved dependency content
 │   ├── design-systems/      # Copied design system files
 │   ├── spec-modules/        # Copied spec module files
+│   ├── moodboards/          # Copied moodboard files for aesthetic guidance
 │   └── data/                # Copied data files
 └── iterations/              # Generated iterations output
 ```

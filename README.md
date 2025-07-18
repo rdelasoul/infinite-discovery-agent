@@ -20,7 +20,10 @@ claude
 # Generate 5 themed UI components
 /infinite ui-components 5
 
-# Create website homepage variations
+# Create moodboard for client aesthetic direction
+/moodboard create client-aesthetic
+
+# Generate homepage with aesthetic guidance
 /infinite website-homepages/perantara-reps 3
 
 # Explore micro-interactions
@@ -46,6 +49,7 @@ claude
 
 ### **Quality-First Approach**
 - 🎨 **Theme-First Development**: Distinctive design personalities across all iterations
+- 🖼️ **Moodboard-Driven Aesthetics**: Bridge client inspiration to AI creative direction
 - 🔧 **Functional Innovation**: Combine multiple UI functions into elegant solutions
 - ♿ **Accessibility Standards**: WCAG compliance and inclusive design
 - 📱 **Responsive Excellence**: Mobile-first with progressive enhancement
@@ -89,6 +93,11 @@ experiments/
 │   │   ├── accessibility-standards.md
 │   │   ├── performance-requirements.md
 │   │   └── realistic-data-requirements.md
+│   ├── moodboards/               # 🆕 Visual inspiration & aesthetic direction
+│   │   ├── modern-minimalist.md  # Clean, professional aesthetic
+│   │   ├── organic-nature.md     # Natural, earth-inspired colors
+│   │   ├── tech-startup.md       # Bold, energetic innovation
+│   │   └── _template.md          # Template for custom moodboards
 │   └── data/                     # Realistic business data sets
 │       ├── banking-data.md       # Financial services context
 │       └── ecommerce-data.md     # Retail & shopping context
@@ -148,7 +157,8 @@ archive/                          # All original work preserved
 ### **Enhanced Auto-Discovery & Dependency Resolution**
 - 🔍 **Automatic spec detection**: Finds `experiments/{experiment-path}/spec.md`
 - ⚙️ **Dependency resolution**: Reads `spec-config.yml` and resolves shared components
-- 📦 **Smart component inclusion**: Auto-includes design systems, modules, and data sets
+- 📦 **Smart component inclusion**: Auto-includes design systems, modules, moodboards, and data sets
+- 🎨 **Aesthetic guidance**: Visual inspiration and brand personality direction for AI agents
 - 📁 **Timestamped runs**: Creates `runs/YYYY-MM-DD-HHMMSS/` for each execution
 - 📸 **Complete snapshots**: Preserves spec, config, and dependencies for reproducibility
 - 🔗 **Current symlink**: Always points to latest run for easy access
@@ -229,7 +239,7 @@ The new structure makes it easy to refine specifications based on results:
 3. **Refine the specification**:
    - Edit `experiments/ui-components/spec.md` to narrow scope
    - Update `experiments/ui-components/spec-config.yml` to change dependencies
-   - Add/remove design systems, modules, or data sets as needed
+   - Add/remove design systems, modules, moodboards, or data sets as needed
 
 4. **Run refined experiments**:
    ```bash
@@ -244,7 +254,7 @@ The new structure makes it easy to refine specifications based on results:
 **Benefits**:
 - ✅ No manual folder creation required
 - ✅ Complete history of spec evolution and results
-- ✅ Mix and match dependencies between runs
+- ✅ Mix and match dependencies between runs (including aesthetic guidance)
 - ✅ Easy rollback to previous approaches
 
 ### **Create New Experiment Types**
@@ -263,6 +273,52 @@ The new structure makes it easy to refine specifications based on results:
    ```bash
    /infinite my-experiment 5
    ```
+
+### **Moodboard-Driven Workflow**
+
+Bridge client aesthetic preferences to systematic AI creative direction:
+
+#### **1. Curate Aesthetic Inspiration**
+```bash
+# Interactive creation from client inspiration
+/moodboard create client-wellness
+
+# Analyze websites for aesthetic extraction
+/moodboard analyze startup-energy https://vercel.com https://linear.app
+```
+
+#### **2. Configure Aesthetic Dependencies**
+```bash
+# Edit experiments/[type]/spec-config.yml
+dependencies:
+  moodboards:
+    - client-wellness    # Custom aesthetic direction
+  design-systems:
+    - geist-core        # Technical framework
+  spec-modules:
+    - accessibility-standards
+```
+
+#### **3. Generate with Aesthetic Guidance**
+```bash
+# Agents receive structured aesthetic direction
+/infinite website-homepages/client-project 5
+```
+
+#### **4. Iterate and Refine**
+```bash
+# Update moodboard based on results
+/moodboard update client-wellness https://additional-inspiration.com
+
+# Generate refined variations
+/infinite website-homepages/client-project 3
+```
+
+**Benefits**:
+- 🎯 Transforms "I like this site" into actionable creative direction
+- 🎨 Consistent brand personality across all AI-generated variations
+- 🔄 Iterative refinement of aesthetic guidance
+- 📊 Systematic approach to visual identity development
 
 ## 🎨 Featured Examples
 

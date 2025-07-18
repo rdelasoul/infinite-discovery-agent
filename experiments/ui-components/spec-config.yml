@@ -13,6 +13,13 @@ dependencies:
     # - performance-requirements     # Include for 60fps animation standards
     # - realistic-data-requirements  # Include for authentic dummy data guidelines
   
+  # Visual inspiration and aesthetic direction (optional)
+  moodboards: []
+    # - modern-minimalist    # Clean geometry, professional aesthetic
+    # - organic-nature       # Natural forms, earth-inspired colors
+    # - tech-startup         # Bold, energetic, innovation-focused
+    # - [custom-moodboard]   # Created via /moodboard create [name]
+  
   # Data sets (optional)
   data: []
     # - ecommerce-data    # Include for product/shopping scenarios

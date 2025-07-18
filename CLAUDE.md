@@ -65,13 +65,14 @@ The project uses Claude Code's custom commands feature with enhanced auto-discov
 #### **Shared Dependencies Structure**
 - **`experiments/shared/design-systems/`** - Reusable design frameworks (Geist system with 9+ files)
 - **`experiments/shared/spec-modules/`** - Modular quality standards (accessibility, performance, realistic data)
+- **`experiments/shared/moodboards/`** - Visual inspiration and aesthetic direction for brand personality
 - **`experiments/shared/data/`** - Realistic business context (banking, e-commerce, healthcare scenarios)
 
 #### **Dependency Resolution Process**
 1. Read experiment's `spec-config.yml` for dependency requirements
-2. Resolve and include content from `shared/design-systems/`, `shared/spec-modules/`, and `shared/data/`
+2. Resolve and include content from `shared/design-systems/`, `shared/spec-modules/`, `shared/moodboards/`, and `shared/data/`
 3. Create consolidated specification with all dependencies integrated
-4. Provide complete context to AI agents for enhanced generation quality
+4. Provide complete context to AI agents for enhanced generation quality with aesthetic guidance
 
 ### Experiment Types with Enhanced Run Management
 - **`experiments/ui-components/`** - Themed hybrid UI components (original focus)
@@ -112,6 +113,7 @@ The infinite command implements sophisticated parallel agent coordination:
 - **`experiments/shared/`** - Reusable components across all experiment types
   - `design-systems/` - 9+ comprehensive Geist design system files
   - `spec-modules/` - Accessibility, performance, and data quality standards
+  - `moodboards/` - Visual inspiration and aesthetic direction (modern-minimalist, organic-nature, tech-startup)
   - `data/` - Realistic business context (banking, e-commerce scenarios)
 - **`experiments/ui-components/runs/`** - Timestamped execution history
   - `2025-01-16-legacy-migration/` - 35+ themed hybrid components (legacy)
@@ -133,6 +135,7 @@ runs/YYYY-MM-DD-HHMMSS/
 ├── dependencies/             # Resolved shared components
 │   ├── design-systems/      # Design system files used
 │   ├── spec-modules/        # Quality modules used
+│   ├── moodboards/          # Aesthetic direction used
 │   └── data/                # Data sets used
 └── iterations/              # Generated results
 ```
@@ -150,9 +153,9 @@ runs/YYYY-MM-DD-HHMMSS/
 
 #### **Dependency Resolution Workflow**
 1. **Configuration Analysis**: Read `spec-config.yml` for dependency requirements
-2. **Component Resolution**: Include content from `shared/design-systems/`, `shared/spec-modules/`, and `shared/data/`
+2. **Component Resolution**: Include content from `shared/design-systems/`, `shared/spec-modules/`, `shared/moodboards/`, and `shared/data/`
 3. **Snapshot Creation**: Create timestamped run with spec, config, and resolved dependencies
-4. **Agent Context**: Provide sub-agents with complete consolidated specification and dependency context
+4. **Agent Context**: Provide sub-agents with complete consolidated specification, aesthetic guidance, and dependency context
 5. **Historical Awareness**: Ensure uniqueness across all previous runs and dependency configurations
 
 ### Theme-First Development Approach
@@ -215,6 +218,7 @@ The new architecture enables effortless iteration on specifications based on res
 ```
 - **Spec Evolution**: Modify `spec.md` based on what worked/didn't work
 - **Dependency Adjustment**: Add design systems for consistency, remove for creative freedom
+- **Aesthetic Guidance**: Include moodboards for consistent brand personality and visual direction
 - **Data Context**: Include realistic data for business contexts, exclude for pure visual exploration
 
 #### **3. Refined Execution**
@@ -252,6 +256,8 @@ dependencies:
   design-systems: []  # No constraints for creative freedom
   spec-modules: 
     - performance-requirements  # Essential for animations
+  moodboards:
+    - organic-nature  # Natural, flowing aesthetic direction
   data: []  # Pure visual exploration
 ```
 
@@ -265,6 +271,8 @@ dependencies:
   spec-modules:
     - accessibility-standards   # Professional compliance
     - realistic-data-requirements
+  moodboards:
+    - modern-minimalist  # Professional, trustworthy aesthetic
   data:
     - banking-data  # Rich business context
 ```
@@ -278,6 +286,8 @@ dependencies:
   spec-modules:
     - accessibility-standards  # Non-negotiable inclusivity
     - performance-requirements # Revolutionary but performant
+  moodboards:
+    - tech-startup  # Bold, future-focused innovation personality
   data: []  # Focus on interaction paradigms
 ```
 
@@ -288,6 +298,58 @@ dependencies:
 - ✅ **Easy comparison**: Clear evolution tracking across spec versions
 - ✅ **No context loss**: Return to any previous approach with complete reproducibility
 - ✅ **Scalable exploration**: Add new dependencies or experiment types seamlessly
+
+## Enhanced Aesthetic Guidance Workflow
+
+### **Moodboard-Driven Design Process**
+Bridge client aesthetic preferences to actionable AI creative direction:
+
+#### **1. Curate Visual Inspiration**
+```bash
+# Create moodboard from client-provided inspiration
+/moodboard create client-aesthetic
+
+# Or analyze specific websites for aesthetic extraction
+/moodboard analyze modern-healthcare https://stripe.com https://linear.app
+```
+
+#### **2. Configure Aesthetic Dependencies**
+```yaml
+# Add moodboard to experiment configuration
+dependencies:
+  moodboards:
+    - client-aesthetic  # Custom aesthetic direction
+  design-systems:
+    - geist-core       # Technical framework
+  spec-modules:
+    - accessibility-standards
+```
+
+#### **3. Generate with Aesthetic Guidance**
+```bash
+# Agents receive structured aesthetic direction
+/infinite website-homepages/client-project 5
+```
+
+#### **4. Iterate and Refine**
+```bash
+# Update moodboard based on results
+/moodboard update client-aesthetic https://additional-inspiration.com
+
+# Generate new variations with refined aesthetic
+/infinite website-homepages/client-project 3
+```
+
+### **Available Moodboards**
+- **🔹 modern-minimalist**: Clean geometry, professional aesthetic, geometric precision
+- **🌿 organic-nature**: Natural forms, earth-inspired colors, flowing layouts
+- **⚡ tech-startup**: Bold, energetic, innovation-focused, vibrant gradients
+
+### **Moodboard Integration Benefits**
+- ✅ **Bridge client preferences** to systematic creative direction
+- ✅ **Consistent brand personality** across all generated variations
+- ✅ **Structured aesthetic guidance** for AI agents
+- ✅ **Effortless workflow** from inspiration to implementation
 
 ## Quality Standards for All Experiments
 

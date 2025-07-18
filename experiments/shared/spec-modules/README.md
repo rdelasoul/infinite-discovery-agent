@@ -39,6 +39,8 @@ dependencies:
     - accessibility-standards
     - performance-requirements
     - realistic-data-requirements
+  moodboards:
+    - modern-minimalist    # Aesthetic direction for visual consistency
 ```
 
 ### Method 2: Direct inclusion in spec.md
@@ -107,13 +109,24 @@ Include only Core Web Vitals and loading performance from performance-requiremen
 
 The enhanced `/infinite` command should:
 1. Read experiment `spec-config.yml` for dependencies
-2. Resolve and include referenced modules
+2. Resolve and include referenced modules, design systems, data sets, and moodboards
 3. Create consolidated spec for each run
 4. Save dependency snapshots with iterations
 
 This modular approach enables:
 - ✅ Consistent quality standards across experiments
-- ✅ Easy addition/removal of requirements
+- ✅ Easy addition/removal of requirements and aesthetic guidance
 - ✅ Reduced duplication and maintenance
-- ✅ Flexible mix-and-match dependency management
+- ✅ Flexible mix-and-match dependency management (technical + aesthetic)
 - ✅ Version control of requirement evolution
+
+## Related Shared Dependencies
+
+### **Design Systems** (`../design-systems/`)
+Technical visual frameworks like Geist that provide component patterns and design constraints.
+
+### **Moodboards** (`../moodboards/`)
+Visual inspiration and aesthetic direction that guide the personality and emotional character of generated designs.
+
+### **Data Sets** (`../data/`)
+Realistic business context data for authentic scenarios (banking, e-commerce, etc.).

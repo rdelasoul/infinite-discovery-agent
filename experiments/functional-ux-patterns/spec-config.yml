@@ -19,6 +19,12 @@ dependencies:
     # - accessibility-standards     # Include for accessibility-focused patterns
     # - performance-requirements    # Include for performance-critical patterns
   
+  # Visual inspiration for personality/emotion (works within design system constraints)
+  moodboards: []
+    # - modern-minimalist    # Professional, trustworthy workflow personality
+    # - tech-startup         # Energetic, innovative workflow personality
+    # - [custom-workflow]    # Specific personality for workflow context
+  
   # Data sets (choose based on UX pattern focus)
   data:
     - banking-data       # Financial workflow patterns

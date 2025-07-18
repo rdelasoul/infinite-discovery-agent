@@ -27,6 +27,7 @@ claude
 All experiments can now leverage shared components from `shared/`:
 - **Design Systems** (`shared/design-systems/`): Geist and other design frameworks
 - **Spec Modules** (`shared/spec-modules/`): Reusable requirements (accessibility, performance, data)
+- **Moodboards** (`shared/moodboards/`): Visual inspiration and aesthetic direction
 - **Data Sets** (`shared/data/`): Realistic business context (banking, e-commerce)
 
 ### **Run-Based Organization**
@@ -63,6 +64,8 @@ dependencies:
   spec-modules:
     - accessibility-standards    # WCAG compliance
     - performance-requirements   # 60fps animations
+  moodboards:
+    - modern-minimalist   # Clean, professional aesthetic direction
   data:
     - ecommerce-data      # Product/shopping context
 ```

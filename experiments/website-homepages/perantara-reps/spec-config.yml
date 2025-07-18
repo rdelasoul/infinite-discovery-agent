@@ -13,6 +13,12 @@ dependencies:
     - performance-requirements     # Critical for good user experience and SEO
     # - realistic-data-requirements # Include if homepage needs business data context
   
+  # Visual inspiration and aesthetic direction (recommended for brand consistency)
+  moodboards: []
+    # - modern-minimalist    # Clean, professional, trustworthy aesthetic
+    # - organic-nature       # Natural NZ landscapes, cultural authenticity
+    # - [perantara-specific] # Custom moodboard for cultural bridge aesthetic
+  
   # Data sets (optional for homepage context)
   data: []
     # - ecommerce-data    # Include if homepage features product/service showcases
