@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alex Chen - Creator & Experimenter</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            color: #1f2937;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .portfolio-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            z-index: 2;
+            max-width: 600px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: rgba(37, 99, 235, 0.1);
+            border: 1px solid rgba(37, 99, 235, 0.2);
+            border-radius: 24px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #2563eb;
+            margin-bottom: 24px;
+        }
+
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background: #10b981;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, #1f2937 0%, #2563eb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: #6b7280;
+            margin-bottom: 32px;
+        }
+
+        /* Floating Elements */
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .floating-card {
+            position: absolute;
+            width: 200px;
+            height: 120px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(37, 99, 235, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            backdrop-filter: blur(8px);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-card:nth-child(1) {
+            top: 20%;
+            right: 10%;
+            animation-delay: 0s;
+        }
+
+        .floating-card:nth-child(2) {
+            top: 60%;
+            right: 20%;
+            animation-delay: 2s;
+        }
+
+        .floating-card:nth-child(3) {
+            top: 40%;
+            right: 5%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .floating-card h4 {
+            font-size: 12px;
+            font-weight: 600;
+            color: #2563eb;
+            margin-bottom: 8px;
+        }
+
+        .floating-card p {
+            font-size: 11px;
+            color: #6b7280;
+            line-height: 1.3;
+        }
+
+        /* Current Projects Timeline */
+        .projects-section {
+            padding: 80px 0;
+            background: #ffffff;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1.1;
+            color: #1f2937;
+            margin-bottom: 16px;
+        }
+
+        .section-header p {
+            font-size: 1.125rem;
+            color: #6b7280;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, #2563eb, #10b981);
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 48px;
+            width: 50%;
+            padding: 0 32px;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+            text-align: right;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background: #2563eb;
+            border: 3px solid #ffffff;
+            border-radius: 50%;
+            top: 24px;
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.2);
+        }
+
+        .timeline-item:nth-child(even) .timeline-dot {
+            left: -8px;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-dot {
+            right: -8px;
+        }
+
+        .timeline-content {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .timeline-content:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .timeline-content h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 8px;
+        }
+
+        .timeline-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 16px;
+            font-size: 12px;
+            font-weight: 500;
+            color: #10b981;
+            margin-bottom: 12px;
+        }
+
+        .timeline-content p {
+            color: #6b7280;
+            margin-bottom: 16px;
+        }
+
+        .timeline-tech {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-tech {
+            justify-content: flex-end;
+        }
+
+        .tech-tag {
+            padding: 4px 8px;
+            background: rgba(37, 99, 235, 0.1);
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            color: #2563eb;
+        }
+
+        /* Writing Section */
+        .writing-section {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+        }
+
+        .writing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 32px;
+            margin-top: 48px;
+        }
+
+        .writing-card {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .writing-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .writing-category {
+            display: inline-block;
+            padding: 6px 12px;
+            background: rgba(37, 99, 235, 0.1);
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            color: #2563eb;
+            margin-bottom: 16px;
+        }
+
+        .writing-card h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 8px;
+        }
+
+        .writing-card p {
+            color: #6b7280;
+            font-size: 0.875rem;
+            margin-bottom: 16px;
+        }
+
+        .writing-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.75rem;
+            color: #9ca3af;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            padding: 80px 0;
+            background: #1f2937;
+            color: #ffffff;
+        }
+
+        .contact-content {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact-section h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 24px;
+        }
+
+        .contact-section p {
+            font-size: 1.125rem;
+            color: #d1d5db;
+            margin-bottom: 32px;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .contact-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: rgba(37, 99, 235, 0.1);
+            border: 1px solid rgba(37, 99, 235, 0.3);
+            border-radius: 8px;
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .contact-link:hover {
+            background: #2563eb;
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 80px 0;
+            }
+
+            .floating-elements {
+                display: none;
+            }
+
+            .timeline::before {
+                left: 24px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                left: 0 !important;
+                text-align: left !important;
+                padding-left: 56px;
+                padding-right: 0;
+            }
+
+            .timeline-dot {
+                left: 16px !important;
+                right: auto !important;
+            }
+
+            .timeline-tech {
+                justify-content: flex-start !important;
+            }
+
+            .writing-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-links {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .contact-link {
+                width: 100%;
+                max-width: 280px;
+                justify-content: center;
+            }
+        }
+
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Focus states */
+        .contact-link:focus,
+        .timeline-content:focus {
+            outline: 2px solid #2563eb;
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <div class="portfolio-container">
+            <!-- Hero Section -->
+            <section class="hero">
+                <div class="hero-content">
+                    <div class="hero-badge">
+                        <div class="pulse-dot"></div>
+                        Currently Building
+                    </div>
+                    <h1>Alex Chen</h1>
+                    <p>Creator & Experimenter building at the intersection of AI, design, and human experience</p>
+                </div>
+                
+                <div class="floating-elements">
+                    <div class="floating-card">
+                        <h4>AI Design Tools</h4>
+                        <p>Building intelligent design systems that adapt to user behavior</p>
+                    </div>
+                    <div class="floating-card">
+                        <h4>Open Source</h4>
+                        <p>Contributing to React ecosystem with performance-focused components</p>
+                    </div>
+                    <div class="floating-card">
+                        <h4>Research</h4>
+                        <p>Exploring multimodal interfaces for creative workflows</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Current Projects Timeline -->
+            <section class="projects-section">
+                <div class="section-header">
+                    <h2>Current Projects</h2>
+                    <p>Active experiments and builds that are shaping the future of creative technology</p>
+                </div>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-status">
+                                <div class="pulse-dot"></div>
+                                Active Development
+                            </div>
+                            <h3>Adaptive Design System</h3>
+                            <p>AI-powered component library that learns from user interactions and automatically optimizes layouts for accessibility and performance.</p>
+                            <div class="timeline-tech">
+                                <span class="tech-tag">React</span>
+                                <span class="tech-tag">TypeScript</span>
+                                <span class="tech-tag">Machine Learning</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-status">
+                                <div class="pulse-dot"></div>
+                                Beta Testing
+                            </div>
+                            <h3>Collaborative Canvas</h3>
+                            <p>Real-time multiplayer design tool for distributed teams, focusing on async collaboration and version control for creative assets.</p>
+                            <div class="timeline-tech">
+                                <span class="tech-tag">WebRTC</span>
+                                <span class="tech-tag">Canvas API</span>
+                                <span class="tech-tag">Node.js</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-status">
+                                <div class="pulse-dot"></div>
+                                Open Source
+                            </div>
+                            <h3>Performance Analyzer</h3>
+                            <p>Developer tool for identifying and fixing React performance bottlenecks with real-time profiling and automated optimization suggestions.</p>
+                            <div class="timeline-tech">
+                                <span class="tech-tag">React DevTools</span>
+                                <span class="tech-tag">Chrome Extension</span>
+                                <span class="tech-tag">Performance API</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-status">
+                                <div class="pulse-dot"></div>
+                                Research Phase
+                            </div>
+                            <h3>Multimodal Interface</h3>
+                            <p>Exploring voice, gesture, and touch interactions for creative software, aiming to reduce cognitive load in complex workflows.</p>
+                            <div class="timeline-tech">
+                                <span class="tech-tag">WebXR</span>
+                                <span class="tech-tag">Speech Recognition</span>
+                                <span class="tech-tag">Computer Vision</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Writing & Ideas -->
+            <section class="writing-section">
+                <div class="section-header">
+                    <h2>Writing & Ideas</h2>
+                    <p>Thoughts on technology, design, and the future of human-computer interaction</p>
+                </div>
+                
+                <div class="writing-grid">
+                    <article class="writing-card">
+                        <div class="writing-category">Technical</div>
+                        <h3>The Future of Component Libraries</h3>
+                        <p>How AI will transform the way we build and maintain design systems, moving from static components to adaptive, learning interfaces.</p>
+                        <div class="writing-meta">
+                            <span>12 min read</span>
+                            <span>2 days ago</span>
+                        </div>
+                    </article>
+                    
+                    <article class="writing-card">
+                        <div class="writing-category">Design</div>
+                        <h3>Designing for Accessibility by Default</h3>
+                        <p>Practical strategies for building inclusive interfaces that work for everyone, not as an afterthought but as a core design principle.</p>
+                        <div class="writing-meta">
+                            <span>8 min read</span>
+                            <span>1 week ago</span>
+                        </div>
+                    </article>
+                    
+                    <article class="writing-card">
+                        <div class="writing-category">Open Source</div>
+                        <h3>Contributing to React: A Beginner's Guide</h3>
+                        <p>Step-by-step guide to making your first contribution to the React ecosystem, from finding issues to submitting pull requests.</p>
+                        <div class="writing-meta">
+                            <span>15 min read</span>
+                            <span>2 weeks ago</span>
+                        </div>
+                    </article>
+                    
+                    <article class="writing-card">
+                        <div class="writing-category">Industry</div>
+                        <h3>The Ethics of AI in Design Tools</h3>
+                        <p>Examining the responsibility we have as creators of AI-powered design tools and the impact on creative professionals.</p>
+                        <div class="writing-meta">
+                            <span>10 min read</span>
+                            <span>3 weeks ago</span>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <!-- Contact & Collaboration -->
+            <section class="contact-section">
+                <div class="contact-content">
+                    <h2>Let's Create Together</h2>
+                    <p>I'm always interested in collaborating on projects that push the boundaries of what's possible with technology and design.</p>
+                    
+                    <div class="contact-links">
+                        <a href="#" class="contact-link">
+                            <span>📧</span>
+                            Email
+                        </a>
+                        <a href="#" class="contact-link">
+                            <span>🐦</span>
+                            Twitter
+                        </a>
+                        <a href="#" class="contact-link">
+                            <span>💼</span>
+                            LinkedIn
+                        </a>
+                        <a href="#" class="contact-link">
+                            <span>🔗</span>
+                            GitHub
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        // Smooth scrolling for better navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for timeline animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Apply animation to timeline items
+        document.querySelectorAll('.timeline-item').forEach((item, index) => {
+            item.style.opacity = '0';
+            item.style.transform = 'translateY(20px)';
+            item.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
+            observer.observe(item);
+        });
+
+        // Apply animation to writing cards
+        document.querySelectorAll('.writing-card').forEach((card, index) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
+            observer.observe(card);
+        });
+
+        // Keyboard navigation support
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Tab') {
+                document.body.classList.add('keyboard-navigation');
+            }
+        });
+
+        document.addEventListener('mousedown', () => {
+            document.body.classList.remove('keyboard-navigation');
+        });
+
+        // Performance monitoring
+        if ('performance' in window) {
+            window.addEventListener('load', () => {
+                const paintTiming = performance.getEntriesByType('paint');
+                const fcpEntry = paintTiming.find(entry => entry.name === 'first-contentful-paint');
+                if (fcpEntry) {
+                    console.log(`First Contentful Paint: ${fcpEntry.startTime}ms`);
+                }
+            });
+        }
+    </script>
+</body>
+</html>

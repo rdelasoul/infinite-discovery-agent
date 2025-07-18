@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jordan Chen - Creator & Experimenter</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'SF Pro Text', sans-serif;
+            background: #ffffff;
+            color: #1f2937;
+            line-height: 1.6;
+            font-size: 16px;
+        }
+
+        .portfolio-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Header with current focus */
+        .header {
+            padding: 4rem 0 2rem;
+            border-bottom: 1px solid #f3f4f6;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1f2937;
+            line-height: 1.1;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .header .title {
+            font-size: 1.25rem;
+            color: #2563eb;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .header .current-focus {
+            font-size: 1.125rem;
+            color: #6b7280;
+            max-width: 600px;
+            margin-bottom: 2rem;
+        }
+
+        .status-indicators {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: #f3f4f6;
+            border-radius: 2rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .status-indicator.active {
+            background: #dcfce7;
+            color: #16a34a;
+        }
+
+        .status-indicator.building {
+            background: #fef3c7;
+            color: #d97706;
+        }
+
+        .status-indicator.available {
+            background: #dbeafe;
+            color: #2563eb;
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: currentColor;
+        }
+
+        /* Main content grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 4rem;
+            margin-bottom: 4rem;
+        }
+
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+        }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        /* Section styling */
+        .section {
+            padding: 2rem 0;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+        }
+
+        .section-subtitle {
+            font-size: 0.875rem;
+            color: #6b7280;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+        }
+
+        /* Current projects */
+        .project-grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .project-card {
+            border: 1px solid #f3f4f6;
+            border-radius: 8px;
+            padding: 1.5rem;
+            background: #ffffff;
+            transition: all 0.2s ease-out;
+        }
+
+        .project-card:hover {
+            border-color: #e5e7eb;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .project-card h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-card .project-status {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #10b981;
+            color: white;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.75rem;
+        }
+
+        .project-card .project-status.experiment {
+            background: #f59e0b;
+        }
+
+        .project-card .project-status.shipped {
+            background: #6366f1;
+        }
+
+        .project-card p {
+            color: #6b7280;
+            margin-bottom: 1rem;
+        }
+
+        .project-card .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tech-tag {
+            padding: 0.25rem 0.5rem;
+            background: #f3f4f6;
+            color: #6b7280;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        /* Writing section */
+        .writing-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .writing-item {
+            padding: 1.5rem;
+            border: 1px solid #f3f4f6;
+            border-radius: 8px;
+            background: #ffffff;
+            transition: all 0.2s ease-out;
+        }
+
+        .writing-item:hover {
+            border-color: #e5e7eb;
+        }
+
+        .writing-item h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        .writing-item .date {
+            color: #6b7280;
+            font-size: 0.875rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .writing-item p {
+            color: #6b7280;
+            margin-bottom: 1rem;
+        }
+
+        .writing-item .read-more {
+            color: #2563eb;
+            font-weight: 500;
+            text-decoration: none;
+            font-size: 0.875rem;
+        }
+
+        .writing-item .read-more:hover {
+            text-decoration: underline;
+        }
+
+        /* Sidebar sections */
+        .sidebar-section {
+            background: #f9fafb;
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+
+        .sidebar-section h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 1rem;
+        }
+
+        .sidebar-section ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .sidebar-section li {
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+
+        .sidebar-section a {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .sidebar-section a:hover {
+            text-decoration: underline;
+        }
+
+        /* Contact section */
+        .contact-section {
+            background: #1f2937;
+            color: #ffffff;
+            padding: 3rem 0;
+            margin-top: 4rem;
+        }
+
+        .contact-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .contact-section h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #ffffff;
+        }
+
+        .contact-section p {
+            color: #d1d5db;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .contact-link {
+            padding: 0.75rem 1.5rem;
+            border: 1px solid #4b5563;
+            border-radius: 6px;
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s ease-out;
+        }
+
+        .contact-link:hover {
+            background: #374151;
+            border-color: #6b7280;
+        }
+
+        .contact-link.primary {
+            background: #2563eb;
+            border-color: #2563eb;
+        }
+
+        .contact-link.primary:hover {
+            background: #1d4ed8;
+            border-color: #1d4ed8;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .portfolio-container {
+                padding: 0 1rem;
+            }
+
+            .header {
+                padding: 2rem 0 1rem;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .status-indicators {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .contact-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                padding: 0 1rem;
+            }
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Focus states for accessibility */
+        .project-card:focus,
+        .writing-item:focus,
+        .contact-link:focus {
+            outline: 2px solid #2563eb;
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <div class="portfolio-container">
+            <!-- Header with current focus -->
+            <header class="header">
+                <h1>Jordan Chen</h1>
+                <div class="title">Creator & Experimenter</div>
+                <div class="current-focus">
+                    Building the future through code, writing, and experimentation. Currently focused on AI-powered developer tools and exploring the intersection of creativity and technology.
+                </div>
+                <div class="status-indicators">
+                    <div class="status-indicator active">
+                        <div class="status-dot"></div>
+                        Actively Building
+                    </div>
+                    <div class="status-indicator building">
+                        <div class="status-dot"></div>
+                        3 Experiments Running
+                    </div>
+                    <div class="status-indicator available">
+                        <div class="status-dot"></div>
+                        Open to Collaboration
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main content grid -->
+            <div class="content-grid">
+                <div class="main-content">
+                    <!-- Current Projects & Experiments -->
+                    <section class="section">
+                        <h2 class="section-title">Current Projects & Experiments</h2>
+                        <div class="project-grid">
+                            <div class="project-card">
+                                <div class="project-status">Active</div>
+                                <h3>AI Code Assistant</h3>
+                                <p>Building an intelligent coding companion that understands context and provides meaningful suggestions. Currently implementing semantic code analysis and natural language processing.</p>
+                                <div class="tech-stack">
+                                    <span class="tech-tag">TypeScript</span>
+                                    <span class="tech-tag">Node.js</span>
+                                    <span class="tech-tag">OpenAI API</span>
+                                    <span class="tech-tag">VS Code Extension</span>
+                                </div>
+                            </div>
+
+                            <div class="project-card">
+                                <div class="project-status experiment">Experiment</div>
+                                <h3>Generative UI Components</h3>
+                                <p>Exploring how AI can generate contextually appropriate UI components based on user intent and design constraints. Testing various approaches to component generation.</p>
+                                <div class="tech-stack">
+                                    <span class="tech-tag">React</span>
+                                    <span class="tech-tag">Claude API</span>
+                                    <span class="tech-tag">Tailwind CSS</span>
+                                    <span class="tech-tag">Storybook</span>
+                                </div>
+                            </div>
+
+                            <div class="project-card">
+                                <div class="project-status shipped">Shipped</div>
+                                <h3>DevFlow - Workflow Automation</h3>
+                                <p>Open-source tool for automating repetitive development tasks. Currently used by 500+ developers to streamline their daily workflows.</p>
+                                <div class="tech-stack">
+                                    <span class="tech-tag">Python</span>
+                                    <span class="tech-tag">CLI</span>
+                                    <span class="tech-tag">GitHub Actions</span>
+                                    <span class="tech-tag">Docker</span>
+                                </div>
+                            </div>
+
+                            <div class="project-card">
+                                <div class="project-status experiment">Weekend Build</div>
+                                <h3>Voice-Controlled IDE</h3>
+                                <p>Experimenting with voice commands for coding. Building a prototype that allows developers to write and navigate code using natural speech patterns.</p>
+                                <div class="tech-stack">
+                                    <span class="tech-tag">Web Speech API</span>
+                                    <span class="tech-tag">JavaScript</span>
+                                    <span class="tech-tag">Monaco Editor</span>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Writing & Ideas -->
+                    <section class="section">
+                        <h2 class="section-title">Recent Writing & Ideas</h2>
+                        <div class="writing-list">
+                            <article class="writing-item">
+                                <h3>The Future of AI-Assisted Development</h3>
+                                <div class="date">July 15, 2025</div>
+                                <p>Exploring how AI tools are reshaping the developer experience and what this means for the future of software engineering. A deep dive into current trends and emerging possibilities.</p>
+                                <a href="#" class="read-more">Read full article →</a>
+                            </article>
+
+                            <article class="writing-item">
+                                <h3>Building in Public: Lessons from 6 Months</h3>
+                                <div class="date">June 28, 2025</div>
+                                <p>What I've learned from sharing my development process openly, the unexpected benefits of transparency, and how community feedback shaped my projects.</p>
+                                <a href="#" class="read-more">Read full article →</a>
+                            </article>
+
+                            <article class="writing-item">
+                                <h3>Generative UI: Beyond Templates</h3>
+                                <div class="date">June 10, 2025</div>
+                                <p>Technical exploration of how AI can create truly contextual user interfaces that adapt to user needs and business requirements in real-time.</p>
+                                <a href="#" class="read-more">Read full article →</a>
+                            </article>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="sidebar">
+                    <div class="sidebar-section">
+                        <h3>Professional Context</h3>
+                        <ul>
+                            <li><strong>Senior Frontend Engineer</strong> at TechFlow</li>
+                            <li>5+ years building scalable web applications</li>
+                            <li>Specializing in developer experience and tooling</li>
+                            <li>Previously at Stripe, GitHub</li>
+                        </ul>
+                    </div>
+
+                    <div class="sidebar-section">
+                        <h3>Open Source</h3>
+                        <ul>
+                            <li><a href="#">DevFlow</a> - 2.3k stars</li>
+                            <li><a href="#">React Hooks Library</a> - 850 stars</li>
+                            <li><a href="#">CLI Toolkit</a> - 650 stars</li>
+                            <li><a href="#">Code Templates</a> - 400 stars</li>
+                        </ul>
+                    </div>
+
+                    <div class="sidebar-section">
+                        <h3>Community</h3>
+                        <ul>
+                            <li>Speaking at React Conf 2025</li>
+                            <li>Mentoring junior developers</li>
+                            <li>Contributing to developer education</li>
+                            <li>Building in public movement</li>
+                        </ul>
+                    </div>
+
+                    <div class="sidebar-section">
+                        <h3>Current Learning</h3>
+                        <ul>
+                            <li>Large Language Models</li>
+                            <li>Web Assembly</li>
+                            <li>Distributed Systems</li>
+                            <li>Design Systems</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact & Collaboration -->
+        <section class="contact-section">
+            <div class="contact-content">
+                <div>
+                    <h2>Let's Build Something Together</h2>
+                    <p>I'm always interested in collaborating on innovative projects, especially those involving AI, developer tools, or creative applications of technology. Whether you have an idea, need technical guidance, or want to explore new possibilities, I'd love to hear from you.</p>
+                    <div class="contact-links">
+                        <a href="mailto:jordan@example.com" class="contact-link primary">Send Email</a>
+                        <a href="#" class="contact-link">Schedule Call</a>
+                    </div>
+                </div>
+                <div>
+                    <h2>Find Me Online</h2>
+                    <p>Follow along with my experiments, read my thoughts on technology, and connect with me across the web.</p>
+                    <div class="contact-links">
+                        <a href="#" class="contact-link">Twitter</a>
+                        <a href="#" class="contact-link">GitHub</a>
+                        <a href="#" class="contact-link">LinkedIn</a>
+                        <a href="#" class="contact-link">Blog</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Smooth navigation and performance optimization
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add smooth focus transitions
+            const focusableElements = document.querySelectorAll('.project-card, .writing-item, .contact-link');
+            
+            focusableElements.forEach(element => {
+                element.addEventListener('focus', function() {
+                    this.style.transform = 'translateY(-2px)';
+                });
+                
+                element.addEventListener('blur', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+
+            // Intersection Observer for subtle animations
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+
+            // Observe project cards and writing items
+            document.querySelectorAll('.project-card, .writing-item').forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+                observer.observe(card);
+            });
+
+            // Add keyboard navigation support
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Tab') {
+                    document.body.classList.add('keyboard-navigation');
+                }
+            });
+
+            document.addEventListener('mousedown', function() {
+                document.body.classList.remove('keyboard-navigation');
+            });
+        });
+    </script>
+</body>
+</html>
