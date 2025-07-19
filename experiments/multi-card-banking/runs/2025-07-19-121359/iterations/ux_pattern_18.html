@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timeline Expense Reconciliation | Multi-Card Banking</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #2563eb;
+            --success-green: #10b981;
+            --pure-white: #ffffff;
+            --charcoal: #1f2937;
+            --light-gray: #f3f4f6;
+            --border-color: #e5e7eb;
+            --text-secondary: #6b7280;
+            --danger-red: #ef4444;
+            --warning-orange: #f59e0b;
+            --radius: 8px;
+            --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: var(--light-gray);
+            color: var(--charcoal);
+            line-height: 1.6;
+        }
+
+        .main-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 24px;
+            display: grid;
+            grid-template-columns: 320px 1fr 280px;
+            gap: 24px;
+            min-height: 100vh;
+        }
+
+        /* Left Panel - Review Control */
+        .control-panel {
+            background: var(--pure-white);
+            border-radius: var(--radius);
+            padding: 24px;
+            box-shadow: var(--shadow);
+            height: fit-content;
+            position: sticky;
+            top: 24px;
+        }
+
+        .review-header {
+            margin-bottom: 24px;
+        }
+
+        .review-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--charcoal);
+            margin-bottom: 8px;
+        }
+
+        .review-period {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .progress-section {
+            margin-bottom: 32px;
+        }
+
+        .progress-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--charcoal);
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--border-color);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--success-green);
+            transition: width 0.3s ease;
+        }
+
+        .progress-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 12px;
+            background: var(--light-gray);
+            border-radius: var(--radius);
+        }
+
+        .stat-number {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--charcoal);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        .filter-section {
+            margin-bottom: 24px;
+        }
+
+        .filter-title {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--charcoal);
+            margin-bottom: 12px;
+        }
+
+        .card-filters {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .card-filter {
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: var(--pure-white);
+        }
+
+        .card-filter.active {
+            border-color: var(--primary-blue);
+            background: #eff6ff;
+        }
+
+        .card-filter:hover {
+            border-color: var(--primary-blue);
+        }
+
+        .card-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 12px;
+        }
+
+        .card-indicator.business { background: var(--primary-blue); }
+        .card-indicator.travel { background: var(--success-green); }
+        .card-indicator.operations { background: var(--warning-orange); }
+        .card-indicator.petty { background: var(--danger-red); }
+
+        .card-name {
+            font-size: 13px;
+            font-weight: 500;
+            flex: 1;
+        }
+
+        .card-count {
+            font-size: 12px;
+            color: var(--text-secondary);
+            background: var(--light-gray);
+            padding: 2px 6px;
+            border-radius: 10px;
+        }
+
+        /* Center Panel - Timeline View */
+        .timeline-panel {
+            background: var(--pure-white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .timeline-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: between;
+            align-items: center;
+        }
+
+        .timeline-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--charcoal);
+        }
+
+        .view-controls {
+            display: flex;
+            gap: 8px;
+            margin-left: auto;
+        }
+
+        .view-btn {
+            padding: 6px 12px;
+            border: 1px solid var(--border-color);
+            background: var(--pure-white);
+            border-radius: var(--radius);
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .view-btn.active {
+            background: var(--primary-blue);
+            color: var(--pure-white);
+            border-color: var(--primary-blue);
+        }
+
+        .timeline-content {
+            padding: 24px;
+            max-height: calc(100vh - 200px);
+            overflow-y: auto;
+        }
+
+        .timeline-day {
+            margin-bottom: 32px;
+        }
+
+        .day-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .day-date {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--charcoal);
+            margin-right: 16px;
+        }
+
+        .day-total {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-left: auto;
+        }
+
+        .day-actions {
+            margin-left: 16px;
+        }
+
+        .bulk-categorize-btn {
+            padding: 4px 8px;
+            font-size: 12px;
+            background: var(--light-gray);
+            border: none;
+            border-radius: var(--radius);
+            cursor: pointer;
+            color: var(--primary-blue);
+            transition: background 0.2s ease;
+        }
+
+        .bulk-categorize-btn:hover {
+            background: var(--border-color);
+        }
+
+        .transaction-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .transaction-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            transition: all 0.2s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .transaction-item:hover {
+            border-color: var(--primary-blue);
+            box-shadow: var(--shadow);
+        }
+
+        .transaction-item.flagged {
+            border-color: var(--warning-orange);
+            background: #fffbeb;
+        }
+
+        .transaction-item.categorized {
+            border-color: var(--success-green);
+            background: #f0fdf4;
+        }
+
+        .transaction-checkbox {
+            margin-right: 12px;
+            accent-color: var(--primary-blue);
+        }
+
+        .transaction-card {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 12px;
+        }
+
+        .transaction-details {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr auto auto;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .transaction-merchant {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--charcoal);
+        }
+
+        .transaction-category {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        .transaction-amount {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--charcoal);
+            text-align: right;
+        }
+
+        .transaction-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-badge {
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .status-badge.pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-badge.categorized {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-badge.flagged {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .category-dropdown {
+            padding: 4px 8px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            font-size: 12px;
+            background: var(--pure-white);
+            cursor: pointer;
+        }
+
+        /* Right Panel - Category Assistant */
+        .category-panel {
+            background: var(--pure-white);
+            border-radius: var(--radius);
+            padding: 24px;
+            box-shadow: var(--shadow);
+            height: fit-content;
+            position: sticky;
+            top: 24px;
+        }
+
+        .category-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--charcoal);
+            margin-bottom: 16px;
+        }
+
+        .quick-categories {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+
+        .category-btn {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            background: var(--pure-white);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 13px;
+        }
+
+        .category-btn:hover {
+            border-color: var(--primary-blue);
+            background: #eff6ff;
+        }
+
+        .category-count {
+            background: var(--light-gray);
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .pattern-section {
+            margin-bottom: 24px;
+        }
+
+        .pattern-title {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--charcoal);
+            margin-bottom: 12px;
+        }
+
+        .pattern-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .pattern-item:last-child {
+            border-bottom: none;
+        }
+
+        .pattern-name {
+            font-size: 13px;
+            color: var(--charcoal);
+        }
+
+        .pattern-suggestion {
+            font-size: 11px;
+            color: var(--primary-blue);
+            cursor: pointer;
+        }
+
+        .pattern-suggestion:hover {
+            text-decoration: underline;
+        }
+
+        .anomaly-section {
+            padding: 16px;
+            background: #fef3c7;
+            border-radius: var(--radius);
+            border: 1px solid var(--warning-orange);
+        }
+
+        .anomaly-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #92400e;
+            margin-bottom: 8px;
+        }
+
+        .anomaly-list {
+            font-size: 13px;
+            color: #92400e;
+            line-height: 1.4;
+        }
+
+        /* Floating Action Button */
+        .fab {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: var(--primary-blue);
+            color: var(--pure-white);
+            border: none;
+            box-shadow: var(--shadow-lg);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .fab:hover {
+            transform: scale(1.1);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .main-container {
+                grid-template-columns: 280px 1fr;
+                gap: 16px;
+            }
+
+            .category-panel {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                grid-template-columns: 1fr;
+                gap: 16px;
+                padding: 16px;
+            }
+
+            .control-panel,
+            .category-panel {
+                position: static;
+            }
+
+            .timeline-content {
+                max-height: none;
+            }
+        }
+
+        /* Accessibility */
+        .transaction-item:focus {
+            outline: 2px solid var(--primary-blue);
+            outline-offset: 2px;
+        }
+
+        .category-btn:focus,
+        .view-btn:focus,
+        .bulk-categorize-btn:focus {
+            outline: 2px solid var(--primary-blue);
+            outline-offset: 2px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <!-- Left Panel - Review Control -->
+        <div class="control-panel">
+            <div class="review-header">
+                <h1 class="review-title">Monthly Review</h1>
+                <div class="review-period">November 2024</div>
+            </div>
+
+            <div class="progress-section">
+                <div class="progress-label">
+                    <span>Review Progress</span>
+                    <span>68%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 68%"></div>
+                </div>
+                <div class="progress-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">156</span>
+                        <div class="stat-label">Categorized</div>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">74</span>
+                        <div class="stat-label">Remaining</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="filter-section">
+                <div class="filter-title">Payment Methods</div>
+                <div class="card-filters">
+                    <label class="card-filter active">
+                        <div class="card-indicator business"></div>
+                        <span class="card-name">Business Platinum</span>
+                        <span class="card-count">89</span>
+                        <input type="checkbox" checked style="margin-left: auto;" aria-label="Filter Business Platinum transactions">
+                    </label>
+                    <label class="card-filter active">
+                        <div class="card-indicator travel"></div>
+                        <span class="card-name">Travel Rewards</span>
+                        <span class="card-count">67</span>
+                        <input type="checkbox" checked style="margin-left: auto;" aria-label="Filter Travel Rewards transactions">
+                    </label>
+                    <label class="card-filter active">
+                        <div class="card-indicator operations"></div>
+                        <span class="card-name">Operations Card</span>
+                        <span class="card-count">45</span>
+                        <input type="checkbox" checked style="margin-left: auto;" aria-label="Filter Operations Card transactions">
+                    </label>
+                    <label class="card-filter">
+                        <div class="card-indicator petty"></div>
+                        <span class="card-name">Petty Cash Card</span>
+                        <span class="card-count">29</span>
+                        <input type="checkbox" style="margin-left: auto;" aria-label="Filter Petty Cash Card transactions">
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Center Panel - Timeline View -->
+        <div class="timeline-panel">
+            <div class="timeline-header">
+                <h2 class="timeline-title">Transaction Timeline</h2>
+                <div class="view-controls">
+                    <button class="view-btn active" aria-pressed="true">Daily</button>
+                    <button class="view-btn" aria-pressed="false">Weekly</button>
+                    <button class="view-btn" aria-pressed="false">Category</button>
+                </div>
+            </div>
+
+            <div class="timeline-content">
+                <!-- November 28, 2024 -->
+                <div class="timeline-day">
+                    <div class="day-header">
+                        <div class="day-date">Thursday, Nov 28</div>
+                        <div class="day-total">8 transactions • $2,847.32</div>
+                        <div class="day-actions">
+                            <button class="bulk-categorize-btn">Bulk Categorize</button>
+                        </div>
+                    </div>
+                    <div class="transaction-list">
+                        <div class="transaction-item flagged" tabindex="0" role="button" aria-label="Amazon Web Services transaction, $289.00, flagged for review">
+                            <input type="checkbox" class="transaction-checkbox" aria-label="Select transaction">
+                            <div class="transaction-card business"></div>
+                            <div class="transaction-details">
+                                <div>
+                                    <div class="transaction-merchant">Amazon Web Services</div>
+                                    <div class="transaction-category">Technology/Infrastructure</div>
+                                </div>
+                                <div class="transaction-amount">$289.00</div>
+                                <div class="transaction-status">
+                                    <span class="status-badge flagged">Flagged</span>
+                                    <select class="category-dropdown" aria-label="Categorize transaction">
+                                        <option>Technology</option>
+                                        <option>Office Supplies</option>
+                                        <option>Travel</option>
+                                        <option>Meals & Entertainment</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="transaction-item categorized" tabindex="0" role="button" aria-label="Marriott Hotel transaction, $445.67, categorized as Travel & Lodging">
+                            <input type="checkbox" class="transaction-checkbox" aria-label="Select transaction">
+                            <div class="transaction-card travel"></div>
+                            <div class="transaction-details">
+                                <div>
+                                    <div class="transaction-merchant">Marriott Hotel - Downtown</div>
+                                    <div class="transaction-category">Travel & Lodging</div>
+                                </div>
+                                <div class="transaction-amount">$445.67</div>
+                                <div class="transaction-status">
+                                    <span class="status-badge categorized">Categorized</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="transaction-item" tabindex="0" role="button" aria-label="Office Depot transaction, $127.43, pending categorization">
+                            <input type="checkbox" class="transaction-checkbox" aria-label="Select transaction">
+                            <div class="transaction-card operations"></div>
+                            <div class="transaction-details">
+                                <div>
+                                    <div class="transaction-merchant">Office Depot</div>
+                                    <div class="transaction-category">Pending categorization</div>
+                                </div>
+                                <div class="transaction-amount">$127.43</div>
+                                <div class="transaction-status">
+                                    <span class="status-badge pending">Pending</span>
+                                    <select class="category-dropdown" aria-label="Categorize transaction">
+                                        <option>Office Supplies</option>
+                                        <option>Technology</option>
+                                        <option>Furniture & Equipment</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="transaction-item categorized" tabindex="0" role="button" aria-label="Starbucks transaction, $24.67, categorized as Meals & Entertainment">
+                            <input type="checkbox" class="transaction-checkbox" aria-label="Select transaction">
+                            <div class="transaction-card business"></div>
+                            <div class="transaction-details">
+                                <div>
+                                    <div class="transaction-merchant">Starbucks - Client Meeting</div>
+                                    <div class="transaction-category">Meals & Entertainment</div>
+                                </div>
+                                <div class="transaction-amount">$24.67</div>
+                                <div class="transaction-status">
+                                    <span class="status-badge categorized">Categorized</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- November 27, 2024 -->
+                <div class="timeline-day">
+                    <div class="day-header">
+                        <div class="day-date">Wednesday, Nov 27</div>
+                        <div class="day-total">12 transactions • $1,934.58</div>
+                        <div class="day-actions">
+                            <button class="bulk-categorize-btn">Bulk Categorize</button>
+                        </div>
+                    </div>
+                    <div class="transaction-list">
+                        <div class="transaction-item flagged" tabindex="0" role="button" aria-label="Delta Airlines transaction, $2,156.00, flagged for review">
+                            <input type="checkbox" class="transaction-checkbox" aria-label="Select transaction">
+                            <div class="transaction-card travel"></div>
+                            <div class="transaction-details">
+                                <div>
+                                    <div class="transaction-merchant">Delta Airlines - International</div>
+                                    <div class="transaction-category">Travel - Airfare (Unusual Amount)</div>
+                                </div>
+                                <div class="transaction-amount">$2,156.00</div>
+                                <div class="transaction-status">
+                                    <span class="status-badge flagged">Flagged</span>
+                                    <select class="category-dropdown" aria-label="Categorize transaction">
+                                        <option>Travel - Airfare</option>
+                                        <option>Business Development</option>
+                                        <option>Client Entertainment</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="transaction-item" tabindex="0" role="button" aria-label="Uber transaction, $67.84, pending categorization">
+                            <input type="checkbox" class="transaction-checkbox" aria-label="Select transaction">
+                            <div class="transaction-card business"></div>
+                            <div class="transaction-details">
+                                <div>
+                                    <div class="transaction-merchant">Uber - Airport</div>
+                                    <div class="transaction-category">Pending categorization</div>
+                                </div>
+                                <div class="transaction-amount">$67.84</div>
+                                <div class="transaction-status">
+                                    <span class="status-badge pending">Pending</span>
+                                    <select class="category-dropdown" aria-label="Categorize transaction">
+                                        <option>Travel - Transportation</option>
+                                        <option>Local Transportation</option>
+                                        <option>Client Services</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="transaction-item categorized" tabindex="0" role="button" aria-label="Slack Technologies transaction, $840.00, categorized as Software Subscriptions">
+                            <input type="checkbox" class="transaction-checkbox" aria-label="Select transaction">
+                            <div class="transaction-card business"></div>
+                            <div class="transaction-details">
+                                <div>
+                                    <div class="transaction-merchant">Slack Technologies</div>
+                                    <div class="transaction-category">Software Subscriptions</div>
+                                </div>
+                                <div class="transaction-amount">$840.00</div>
+                                <div class="transaction-status">
+                                    <span class="status-badge categorized">Categorized</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- November 26, 2024 -->
+                <div class="timeline-day">
+                    <div class="day-header">
+                        <div class="day-date">Tuesday, Nov 26</div>
+                        <div class="day-total">15 transactions • $3,567.12</div>
+                        <div class="day-actions">
+                            <button class="bulk-categorize-btn">Bulk Categorize</button>
+                        </div>
+                    </div>
+                    <div class="transaction-list">
+                        <div class="transaction-item" tabindex="0" role="button" aria-label="Best Buy transaction, $1,299.99, pending categorization">
+                            <input type="checkbox" class="transaction-checkbox" aria-label="Select transaction">
+                            <div class="transaction-card operations"></div>
+                            <div class="transaction-details">
+                                <div>
+                                    <div class="transaction-merchant">Best Buy - MacBook Pro</div>
+                                    <div class="transaction-category">Pending categorization</div>
+                                </div>
+                                <div class="transaction-amount">$1,299.99</div>
+                                <div class="transaction-status">
+                                    <span class="status-badge pending">Pending</span>
+                                    <select class="category-dropdown" aria-label="Categorize transaction">
+                                        <option>Technology - Hardware</option>
+                                        <option>Office Equipment</option>
+                                        <option>Employee Resources</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="transaction-item categorized" tabindex="0" role="button" aria-label="WeWork transaction, $450.00, categorized as Office & Workspace">
+                            <input type="checkbox" class="transaction-checkbox" aria-label="Select transaction">
+                            <div class="transaction-card business"></div>
+                            <div class="transaction-details">
+                                <div>
+                                    <div class="transaction-merchant">WeWork - Monthly</div>
+                                    <div class="transaction-category">Office & Workspace</div>
+                                </div>
+                                <div class="transaction-amount">$450.00</div>
+                                <div class="transaction-status">
+                                    <span class="status-badge categorized">Categorized</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Panel - Category Assistant -->
+        <div class="category-panel">
+            <h3 class="category-title">Smart Categories</h3>
+            
+            <div class="quick-categories">
+                <button class="category-btn" aria-label="Apply Technology category to selected transactions">
+                    <span>Technology</span>
+                    <span class="category-count">23</span>
+                </button>
+                <button class="category-btn" aria-label="Apply Travel category to selected transactions">
+                    <span>Travel & Lodging</span>
+                    <span class="category-count">18</span>
+                </button>
+                <button class="category-btn" aria-label="Apply Office Supplies category to selected transactions">
+                    <span>Office Supplies</span>
+                    <span class="category-count">12</span>
+                </button>
+                <button class="category-btn" aria-label="Apply Meals category to selected transactions">
+                    <span>Meals & Entertainment</span>
+                    <span class="category-count">15</span>
+                </button>
+                <button class="category-btn" aria-label="Apply Software category to selected transactions">
+                    <span>Software Subscriptions</span>
+                    <span class="category-count">8</span>
+                </button>
+            </div>
+
+            <div class="pattern-section">
+                <div class="pattern-title">Detected Patterns</div>
+                <div class="pattern-item">
+                    <span class="pattern-name">AWS charges</span>
+                    <span class="pattern-suggestion" tabindex="0" role="button">Auto-categorize</span>
+                </div>
+                <div class="pattern-item">
+                    <span class="pattern-name">Monthly subscriptions</span>
+                    <span class="pattern-suggestion" tabindex="0" role="button">Auto-categorize</span>
+                </div>
+                <div class="pattern-item">
+                    <span class="pattern-name">Client lunch expenses</span>
+                    <span class="pattern-suggestion" tabindex="0" role="button">Auto-categorize</span>
+                </div>
+            </div>
+
+            <div class="anomaly-section">
+                <div class="anomaly-title">Anomalies Detected</div>
+                <div class="anomaly-list">
+                    • Delta flight $2,156 (unusual amount)<br>
+                    • AWS $289 (higher than typical)<br>
+                    • 3 duplicate Starbucks charges
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Action Button -->
+    <button class="fab" aria-label="Complete review and export data" title="Complete Review">
+        ✓
+    </button>
+
+    <script>
+        // Transaction selection and bulk operations
+        const transactionItems = document.querySelectorAll('.transaction-item');
+        const checkboxes = document.querySelectorAll('.transaction-checkbox');
+        const bulkButtons = document.querySelectorAll('.bulk-categorize-btn');
+        const categoryButtons = document.querySelectorAll('.category-btn');
+
+        // Transaction interaction
+        transactionItems.forEach(item => {
+            item.addEventListener('click', function(e) {
+                if (e.target.type !== 'checkbox' && e.target.tagName !== 'SELECT') {
+                    const checkbox = this.querySelector('.transaction-checkbox');
+                    checkbox.checked = !checkbox.checked;
+                    updateSelection();
+                }
+            });
+
+            item.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    this.click();
+                }
+            });
+        });
+
+        // Checkbox change handler
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', updateSelection);
+        });
+
+        function updateSelection() {
+            const selectedCount = document.querySelectorAll('.transaction-checkbox:checked').length;
+            
+            bulkButtons.forEach(btn => {
+                btn.textContent = selectedCount > 0 
+                    ? `Categorize ${selectedCount} selected` 
+                    : 'Bulk Categorize';
+                btn.disabled = selectedCount === 0;
+            });
+
+            categoryButtons.forEach(btn => {
+                btn.style.opacity = selectedCount > 0 ? '1' : '0.6';
+            });
+        }
+
+        // Bulk categorization
+        bulkButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const selectedTransactions = document.querySelectorAll('.transaction-checkbox:checked');
+                if (selectedTransactions.length > 0) {
+                    // Simulate bulk categorization
+                    selectedTransactions.forEach(checkbox => {
+                        const item = checkbox.closest('.transaction-item');
+                        item.classList.add('categorized');
+                        item.classList.remove('flagged');
+                        
+                        const statusBadge = item.querySelector('.status-badge');
+                        statusBadge.textContent = 'Categorized';
+                        statusBadge.className = 'status-badge categorized';
+                        
+                        checkbox.checked = false;
+                    });
+                    
+                    updateProgress();
+                    updateSelection();
+                }
+            });
+        });
+
+        // Category button quick apply
+        categoryButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const selectedTransactions = document.querySelectorAll('.transaction-checkbox:checked');
+                const categoryName = this.textContent.split('\n')[0];
+                
+                if (selectedTransactions.length > 0) {
+                    selectedTransactions.forEach(checkbox => {
+                        const item = checkbox.closest('.transaction-item');
+                        const categoryDiv = item.querySelector('.transaction-category');
+                        categoryDiv.textContent = categoryName;
+                        
+                        item.classList.add('categorized');
+                        item.classList.remove('flagged');
+                        
+                        const statusBadge = item.querySelector('.status-badge');
+                        statusBadge.textContent = 'Categorized';
+                        statusBadge.className = 'status-badge categorized';
+                        
+                        checkbox.checked = false;
+                    });
+                    
+                    updateProgress();
+                    updateSelection();
+                }
+            });
+        });
+
+        // View controls
+        const viewButtons = document.querySelectorAll('.view-btn');
+        viewButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                viewButtons.forEach(b => {
+                    b.classList.remove('active');
+                    b.setAttribute('aria-pressed', 'false');
+                });
+                this.classList.add('active');
+                this.setAttribute('aria-pressed', 'true');
+            });
+        });
+
+        // Card filters
+        const cardFilters = document.querySelectorAll('.card-filter');
+        cardFilters.forEach(filter => {
+            filter.addEventListener('click', function() {
+                this.classList.toggle('active');
+                const checkbox = this.querySelector('input[type="checkbox"]');
+                checkbox.checked = this.classList.contains('active');
+            });
+        });
+
+        // Pattern auto-categorization
+        const patternSuggestions = document.querySelectorAll('.pattern-suggestion');
+        patternSuggestions.forEach(suggestion => {
+            suggestion.addEventListener('click', function() {
+                const patternName = this.previousElementSibling.textContent;
+                alert(`Auto-categorizing all "${patternName}" transactions...`);
+                // In a real app, this would categorize matching transactions
+            });
+
+            suggestion.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    this.click();
+                }
+            });
+        });
+
+        // Progress update
+        function updateProgress() {
+            const totalTransactions = transactionItems.length;
+            const categorizedTransactions = document.querySelectorAll('.transaction-item.categorized').length;
+            const progressPercent = Math.round((categorizedTransactions / totalTransactions) * 100);
+            
+            const progressFill = document.querySelector('.progress-fill');
+            const progressLabel = document.querySelector('.progress-label span:last-child');
+            const categorizedStat = document.querySelector('.stat-number');
+            const remainingStat = document.querySelectorAll('.stat-number')[1];
+            
+            progressFill.style.width = progressPercent + '%';
+            progressLabel.textContent = progressPercent + '%';
+            categorizedStat.textContent = categorizedTransactions;
+            remainingStat.textContent = totalTransactions - categorizedTransactions;
+        }
+
+        // Complete review action
+        const fab = document.querySelector('.fab');
+        fab.addEventListener('click', function() {
+            const uncategorized = document.querySelectorAll('.transaction-item:not(.categorized)').length;
+            if (uncategorized > 0) {
+                alert(`${uncategorized} transactions still need categorization. Complete review first.`);
+            } else {
+                alert('Review complete! Exporting data for bookkeeper handoff...');
+                // In a real app, this would export the categorized data
+            }
+        });
+
+        // Initialize progress
+        updateProgress();
+        updateSelection();
+    </script>
+</body>
+</html>

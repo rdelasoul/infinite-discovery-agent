@@ -6,7 +6,7 @@ dependencies:
   references:
     # - multi-card-banking/current/iterations/ux_pattern_14.html  # Reference existing banking interface
   enhancement-strategies:
-    # - interactions       # Apply interaction design enhancements
+    - interactions       # Apply interaction design enhancements
   
   # Aesthetic guidance (provides visual style and emotional direction)
   moodboards:

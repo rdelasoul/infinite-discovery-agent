@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Expense Review | Multi-Card Banking</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #2563eb;
+            --success-green: #10b981;
+            --pure-white: #ffffff;
+            --charcoal: #1f2937;
+            --light-gray: #f3f4f6;
+            --border-color: #e5e7eb;
+            --text-secondary: #6b7280;
+            --danger-red: #ef4444;
+            --warning-orange: #f59e0b;
+            --radius: 8px;
+            --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: var(--light-gray);
+            color: var(--charcoal);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 24px;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 24px;
+            min-height: 100vh;
+        }
+
+        /* Sidebar - Review Progress */
+        .sidebar {
+            background: var(--pure-white);
+            border-radius: var(--radius);
+            padding: 24px;
+            box-shadow: var(--shadow);
+            height: fit-content;
+            position: sticky;
+            top: 24px;
+        }
+
+        .review-header {
+            margin-bottom: 24px;
+        }
+
+        .review-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--charcoal);
+            margin-bottom: 4px;
+        }
+
+        .review-period {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .progress-section {
+            margin-bottom: 24px;
+        }
+
+        .progress-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--charcoal);
+            margin-bottom: 8px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--border-color);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--success-green);
+            transition: width 300ms ease;
+        }
+
+        .progress-text {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .cards-summary {
+            margin-bottom: 24px;
+        }
+
+        .card-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .card-item:last-child {
+            border-bottom: none;
+        }
+
+        .card-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--charcoal);
+        }
+
+        .card-status {
+            font-size: 12px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .status-complete {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .status-pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 12px 16px;
+            border: none;
+            border-radius: var(--radius);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 200ms ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--primary-blue);
+            color: var(--pure-white);
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+        }
+
+        .btn-secondary {
+            background: var(--pure-white);
+            color: var(--charcoal);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--light-gray);
+        }
+
+        /* Main Content Area */
+        .main-content {
+            background: var(--pure-white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        .content-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .content-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--charcoal);
+        }
+
+        .filter-controls {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .filter-select {
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            font-size: 14px;
+            background: var(--pure-white);
+            color: var(--charcoal);
+        }
+
+        .bulk-actions {
+            padding: 16px 24px;
+            background: var(--light-gray);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .bulk-select {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .checkbox {
+            width: 16px;
+            height: 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .checkbox.checked {
+            background: var(--primary-blue);
+            border-color: var(--primary-blue);
+        }
+
+        .bulk-operations {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 12px;
+        }
+
+        /* Transaction List */
+        .transaction-list {
+            padding: 0 24px 24px;
+        }
+
+        .transaction-group {
+            margin-bottom: 24px;
+        }
+
+        .group-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 2px solid var(--border-color);
+            margin-bottom: 16px;
+        }
+
+        .group-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--charcoal);
+        }
+
+        .group-total {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary-blue);
+        }
+
+        .transaction-item {
+            display: grid;
+            grid-template-columns: 40px 1fr 120px 100px 100px 80px;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--border-color);
+            gap: 16px;
+        }
+
+        .transaction-item:last-child {
+            border-bottom: none;
+        }
+
+        .transaction-item.flagged {
+            background: #fef2f2;
+            margin: 0 -16px;
+            padding: 16px;
+            border-radius: var(--radius);
+            border: 1px solid #fecaca;
+        }
+
+        .transaction-checkbox {
+            justify-self: center;
+        }
+
+        .transaction-details {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .merchant-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--charcoal);
+        }
+
+        .transaction-meta {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .card-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .card-badge {
+            padding: 2px 6px;
+            background: var(--light-gray);
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .amount {
+            font-size: 14px;
+            font-weight: 600;
+            text-align: right;
+        }
+
+        .amount.expense {
+            color: var(--charcoal);
+        }
+
+        .amount.flagged {
+            color: var(--danger-red);
+        }
+
+        .category-select {
+            position: relative;
+        }
+
+        .category-dropdown {
+            padding: 6px 8px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            font-size: 12px;
+            background: var(--pure-white);
+            color: var(--charcoal);
+            width: 100%;
+        }
+
+        .category-dropdown.uncategorized {
+            border-color: var(--warning-orange);
+            background: #fef3c7;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .status-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-flagged {
+            background: var(--danger-red);
+            color: var(--pure-white);
+        }
+
+        .status-reviewed {
+            background: var(--success-green);
+            color: var(--pure-white);
+        }
+
+        .status-pending {
+            background: var(--warning-orange);
+            color: var(--pure-white);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .sidebar {
+                position: static;
+            }
+
+            .transaction-item {
+                grid-template-columns: 40px 1fr 80px 60px;
+                gap: 12px;
+            }
+
+            .card-info,
+            .category-select {
+                display: none;
+            }
+        }
+
+        /* Accessibility */
+        .btn:focus,
+        .filter-select:focus,
+        .category-dropdown:focus {
+            outline: 2px solid var(--primary-blue);
+            outline-offset: 2px;
+        }
+
+        .checkbox:focus {
+            outline: 2px solid var(--primary-blue);
+            outline-offset: 1px;
+        }
+
+        /* Animation */
+        .transaction-item {
+            transition: background-color 200ms ease;
+        }
+
+        .transaction-item:hover {
+            background: #f9fafb;
+        }
+
+        .progress-fill {
+            animation: progressGrow 1s ease-out;
+        }
+
+        @keyframes progressGrow {
+            from { width: 0%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar - Review Progress -->
+        <aside class="sidebar" role="complementary" aria-label="Review Progress">
+            <div class="review-header">
+                <h1 class="review-title">Monthly Review</h1>
+                <p class="review-period">December 2024</p>
+            </div>
+
+            <div class="progress-section">
+                <div class="progress-label">Overall Progress</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 73%"></div>
+                </div>
+                <div class="progress-text">247 of 340 transactions reviewed</div>
+            </div>
+
+            <div class="cards-summary">
+                <h2 class="progress-label">Card Status</h2>
+                <div class="card-item">
+                    <span class="card-name">Business Amex</span>
+                    <span class="card-status status-complete">Complete</span>
+                </div>
+                <div class="card-item">
+                    <span class="card-name">Chase Ink</span>
+                    <span class="card-status status-complete">Complete</span>
+                </div>
+                <div class="card-item">
+                    <span class="card-name">Capital One</span>
+                    <span class="card-status status-pending">In Progress</span>
+                </div>
+                <div class="card-item">
+                    <span class="card-name">Company Debit</span>
+                    <span class="card-status status-pending">Pending</span>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn btn-primary">
+                    <span>💾</span>
+                    Save Progress
+                </button>
+                <button class="btn btn-secondary">
+                    <span>📊</span>
+                    Export for Bookkeeper
+                </button>
+                <button class="btn btn-secondary">
+                    <span>⚠️</span>
+                    Flag Review (3)
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content" role="main">
+            <header class="content-header">
+                <h2 class="content-title">Capital One - Uncategorized Transactions</h2>
+                <div class="filter-controls">
+                    <select class="filter-select" aria-label="Filter by amount">
+                        <option>All Amounts</option>
+                        <option>Over $500</option>
+                        <option>$100-$500</option>
+                        <option>Under $100</option>
+                    </select>
+                    <select class="filter-select" aria-label="Filter by merchant">
+                        <option>All Merchants</option>
+                        <option>New Merchants</option>
+                        <option>Recurring</option>
+                        <option>Flagged</option>
+                    </select>
+                </div>
+            </header>
+
+            <div class="bulk-actions">
+                <div class="bulk-select">
+                    <input type="checkbox" class="checkbox" id="select-all" aria-label="Select all transactions">
+                    <label for="select-all" style="font-size: 14px; color: var(--charcoal);">
+                        Select all visible (27 transactions)
+                    </label>
+                </div>
+                <div class="bulk-operations">
+                    <button class="btn btn-secondary btn-small">Categorize as Office Supplies</button>
+                    <button class="btn btn-secondary btn-small">Mark as Personal</button>
+                    <button class="btn btn-secondary btn-small">Flag for Review</button>
+                </div>
+            </div>
+
+            <div class="transaction-list">
+                <!-- Flagged Transactions Group -->
+                <div class="transaction-group">
+                    <div class="group-header">
+                        <h3 class="group-title">⚠️ Requires Attention (3)</h3>
+                        <span class="group-total">$2,847.23</span>
+                    </div>
+
+                    <div class="transaction-item flagged">
+                        <input type="checkbox" class="checkbox transaction-checkbox" aria-label="Select transaction">
+                        <div class="transaction-details">
+                            <div class="merchant-name">TECH SOLUTIONS LLC</div>
+                            <div class="transaction-meta">Dec 15 • Unusual merchant • First time</div>
+                        </div>
+                        <div class="card-info">
+                            <span class="card-badge">CAP1</span>
+                            <span>•••• 4891</span>
+                        </div>
+                        <div class="amount expense flagged">$1,299.00</div>
+                        <div class="category-select">
+                            <select class="category-dropdown uncategorized" aria-label="Categorize transaction">
+                                <option>Uncategorized</option>
+                                <option>Software/SaaS</option>
+                                <option>Equipment</option>
+                                <option>Consulting</option>
+                                <option>Flag as Personal</option>
+                            </select>
+                        </div>
+                        <div class="status-indicator">
+                            <div class="status-icon status-flagged">!</div>
+                        </div>
+                    </div>
+
+                    <div class="transaction-item flagged">
+                        <input type="checkbox" class="checkbox transaction-checkbox" aria-label="Select transaction">
+                        <div class="transaction-details">
+                            <div class="merchant-name">AMAZON WEB SERVICES</div>
+                            <div class="transaction-meta">Dec 28 • 340% above average • Spike</div>
+                        </div>
+                        <div class="card-info">
+                            <span class="card-badge">CAP1</span>
+                            <span>•••• 4891</span>
+                        </div>
+                        <div class="amount expense flagged">$1,247.83</div>
+                        <div class="category-select">
+                            <select class="category-dropdown uncategorized" aria-label="Categorize transaction">
+                                <option>Uncategorized</option>
+                                <option>Cloud Services</option>
+                                <option>Software/SaaS</option>
+                                <option>IT Infrastructure</option>
+                            </select>
+                        </div>
+                        <div class="status-indicator">
+                            <div class="status-icon status-flagged">!</div>
+                        </div>
+                    </div>
+
+                    <div class="transaction-item flagged">
+                        <input type="checkbox" class="checkbox transaction-checkbox" aria-label="Select transaction">
+                        <div class="transaction-details">
+                            <div class="merchant-name">RESTAURANT DEPOT</div>
+                            <div class="transaction-meta">Dec 22 • Weekend transaction • Out of pattern</div>
+                        </div>
+                        <div class="card-info">
+                            <span class="card-badge">CAP1</span>
+                            <span>•••• 4891</span>
+                        </div>
+                        <div class="amount expense flagged">$300.40</div>
+                        <div class="category-select">
+                            <select class="category-dropdown uncategorized" aria-label="Categorize transaction">
+                                <option>Uncategorized</option>
+                                <option>Meals & Entertainment</option>
+                                <option>Office Supplies</option>
+                                <option>Flag as Personal</option>
+                            </select>
+                        </div>
+                        <div class="status-indicator">
+                            <div class="status-icon status-flagged">!</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Regular Uncategorized Group -->
+                <div class="transaction-group">
+                    <div class="group-header">
+                        <h3 class="group-title">Office & Supplies (8)</h3>
+                        <span class="group-total">$1,456.78</span>
+                    </div>
+
+                    <div class="transaction-item">
+                        <input type="checkbox" class="checkbox transaction-checkbox" aria-label="Select transaction">
+                        <div class="transaction-details">
+                            <div class="merchant-name">STAPLES STORES</div>
+                            <div class="transaction-meta">Dec 12 • Recurring merchant</div>
+                        </div>
+                        <div class="card-info">
+                            <span class="card-badge">CAP1</span>
+                            <span>•••• 4891</span>
+                        </div>
+                        <div class="amount expense">$247.83</div>
+                        <div class="category-select">
+                            <select class="category-dropdown uncategorized" aria-label="Categorize transaction">
+                                <option>Uncategorized</option>
+                                <option>Office Supplies</option>
+                                <option>Equipment</option>
+                                <option>Printing</option>
+                            </select>
+                        </div>
+                        <div class="status-indicator">
+                            <div class="status-icon status-pending">⏳</div>
+                        </div>
+                    </div>
+
+                    <div class="transaction-item">
+                        <input type="checkbox" class="checkbox transaction-checkbox" aria-label="Select transaction">
+                        <div class="transaction-details">
+                            <div class="merchant-name">OFFICE DEPOT</div>
+                            <div class="transaction-meta">Dec 18 • Paper & supplies</div>
+                        </div>
+                        <div class="card-info">
+                            <span class="card-badge">CAP1</span>
+                            <span>•••• 4891</span>
+                        </div>
+                        <div class="amount expense">$156.24</div>
+                        <div class="category-select">
+                            <select class="category-dropdown uncategorized" aria-label="Categorize transaction">
+                                <option>Uncategorized</option>
+                                <option>Office Supplies</option>
+                                <option>Equipment</option>
+                                <option>Printing</option>
+                            </select>
+                        </div>
+                        <div class="status-indicator">
+                            <div class="status-icon status-pending">⏳</div>
+                        </div>
+                    </div>
+
+                    <div class="transaction-item">
+                        <input type="checkbox" class="checkbox transaction-checkbox" aria-label="Select transaction">
+                        <div class="transaction-details">
+                            <div class="merchant-name">AMAZON BUSINESS</div>
+                            <div class="transaction-meta">Dec 20 • Multiple items</div>
+                        </div>
+                        <div class="card-info">
+                            <span class="card-badge">CAP1</span>
+                            <span>•••• 4891</span>
+                        </div>
+                        <div class="amount expense">$89.45</div>
+                        <div class="category-select">
+                            <select class="category-dropdown uncategorized" aria-label="Categorize transaction">
+                                <option>Uncategorized</option>
+                                <option>Office Supplies</option>
+                                <option>Equipment</option>
+                                <option>Software/SaaS</option>
+                            </select>
+                        </div>
+                        <div class="status-indicator">
+                            <div class="status-icon status-pending">⏳</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Software & Services Group -->
+                <div class="transaction-group">
+                    <div class="group-header">
+                        <h3 class="group-title">Software & Services (6)</h3>
+                        <span class="group-total">$892.34</span>
+                    </div>
+
+                    <div class="transaction-item">
+                        <input type="checkbox" class="checkbox transaction-checkbox" aria-label="Select transaction">
+                        <div class="transaction-details">
+                            <div class="merchant-name">ADOBE SYSTEMS</div>
+                            <div class="transaction-meta">Dec 1 • Monthly subscription</div>
+                        </div>
+                        <div class="card-info">
+                            <span class="card-badge">CAP1</span>
+                            <span>•••• 4891</span>
+                        </div>
+                        <div class="amount expense">$79.99</div>
+                        <div class="category-select">
+                            <select class="category-dropdown uncategorized" aria-label="Categorize transaction">
+                                <option>Uncategorized</option>
+                                <option>Software/SaaS</option>
+                                <option>Marketing</option>
+                                <option>Design Tools</option>
+                            </select>
+                        </div>
+                        <div class="status-indicator">
+                            <div class="status-icon status-pending">⏳</div>
+                        </div>
+                    </div>
+
+                    <div class="transaction-item">
+                        <input type="checkbox" class="checkbox transaction-checkbox" aria-label="Select transaction">
+                        <div class="transaction-details">
+                            <div class="merchant-name">GOOGLE WORKSPACE</div>
+                            <div class="transaction-meta">Dec 5 • Team subscription</div>
+                        </div>
+                        <div class="card-info">
+                            <span class="card-badge">CAP1</span>
+                            <span>•••• 4891</span>
+                        </div>
+                        <div class="amount expense">$144.00</div>
+                        <div class="category-select">
+                            <select class="category-dropdown uncategorized" aria-label="Categorize transaction">
+                                <option>Uncategorized</option>
+                                <option>Software/SaaS</option>
+                                <option>Communication</option>
+                                <option>Cloud Services</option>
+                            </select>
+                        </div>
+                        <div class="status-indicator">
+                            <div class="status-icon status-pending">⏳</div>
+                        </div>
+                    </div>
+
+                    <div class="transaction-item">
+                        <input type="checkbox" class="checkbox transaction-checkbox" aria-label="Select transaction">
+                        <div class="transaction-details">
+                            <div class="merchant-name">ZOOM COMMUNICATIONS</div>
+                            <div class="transaction-meta">Dec 10 • Annual upgrade</div>
+                        </div>
+                        <div class="card-info">
+                            <span class="card-badge">CAP1</span>
+                            <span>•••• 4891</span>
+                        </div>
+                        <div class="amount expense">$199.90</div>
+                        <div class="category-select">
+                            <select class="category-dropdown uncategorized" aria-label="Categorize transaction">
+                                <option>Uncategorized</option>
+                                <option>Software/SaaS</option>
+                                <option>Communication</option>
+                                <option>Meetings</option>
+                            </select>
+                        </div>
+                        <div class="status-indicator">
+                            <div class="status-icon status-pending">⏳</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Travel & Meals Group -->
+                <div class="transaction-group">
+                    <div class="group-header">
+                        <h3 class="group-title">Travel & Meals (10)</h3>
+                        <span class="group-total">$2,145.67</span>
+                    </div>
+
+                    <div class="transaction-item">
+                        <input type="checkbox" class="checkbox transaction-checkbox" aria-label="Select transaction">
+                        <div class="transaction-details">
+                            <div class="merchant-name">UNITED AIRLINES</div>
+                            <div class="transaction-meta">Dec 3 • Business trip to Denver</div>
+                        </div>
+                        <div class="card-info">
+                            <span class="card-badge">CAP1</span>
+                            <span>•••• 4891</span>
+                        </div>
+                        <div class="amount expense">$487.20</div>
+                        <div class="category-select">
+                            <select class="category-dropdown uncategorized" aria-label="Categorize transaction">
+                                <option>Uncategorized</option>
+                                <option>Travel - Airfare</option>
+                                <option>Travel - Transportation</option>
+                                <option>Client Meeting</option>
+                            </select>
+                        </div>
+                        <div class="status-indicator">
+                            <div class="status-icon status-pending">⏳</div>
+                        </div>
+                    </div>
+
+                    <div class="transaction-item">
+                        <input type="checkbox" class="checkbox transaction-checkbox" aria-label="Select transaction">
+                        <div class="transaction-details">
+                            <div class="merchant-name">MARRIOTT HOTEL</div>
+                            <div class="transaction-meta">Dec 4-5 • Denver conference</div>
+                        </div>
+                        <div class="card-info">
+                            <span class="card-badge">CAP1</span>
+                            <span>•••• 4891</span>
+                        </div>
+                        <div class="amount expense">$324.86</div>
+                        <div class="category-select">
+                            <select class="category-dropdown uncategorized" aria-label="Categorize transaction">
+                                <option>Uncategorized</option>
+                                <option>Travel - Lodging</option>
+                                <option>Conference</option>
+                                <option>Client Meeting</option>
+                            </select>
+                        </div>
+                        <div class="status-indicator">
+                            <div class="status-icon status-pending">⏳</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Enhanced interaction handlers for systematic review
+        document.addEventListener('DOMContentLoaded', function() {
+            // Bulk selection functionality
+            const selectAllCheckbox = document.getElementById('select-all');
+            const transactionCheckboxes = document.querySelectorAll('.transaction-checkbox');
+            
+            selectAllCheckbox.addEventListener('change', function() {
+                transactionCheckboxes.forEach(checkbox => {
+                    checkbox.checked = this.checked;
+                    if (this.checked) {
+                        checkbox.classList.add('checked');
+                    } else {
+                        checkbox.classList.remove('checked');
+                    }
+                });
+            });
+
+            // Individual checkbox handling
+            transactionCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    if (this.checked) {
+                        this.classList.add('checked');
+                    } else {
+                        this.classList.remove('checked');
+                    }
+                    
+                    // Update select all state
+                    const allChecked = Array.from(transactionCheckboxes).every(cb => cb.checked);
+                    const someChecked = Array.from(transactionCheckboxes).some(cb => cb.checked);
+                    
+                    selectAllCheckbox.checked = allChecked;
+                    selectAllCheckbox.indeterminate = someChecked && !allChecked;
+                });
+            });
+
+            // Category dropdown handling with smart categorization
+            const categoryDropdowns = document.querySelectorAll('.category-dropdown');
+            
+            categoryDropdowns.forEach(dropdown => {
+                dropdown.addEventListener('change', function() {
+                    if (this.value !== 'Uncategorized') {
+                        this.classList.remove('uncategorized');
+                        
+                        // Update status indicator
+                        const statusIcon = this.closest('.transaction-item').querySelector('.status-icon');
+                        statusIcon.className = 'status-icon status-reviewed';
+                        statusIcon.textContent = '✓';
+                        
+                        // Update progress
+                        updateProgress();
+                    }
+                });
+            });
+
+            // Bulk operation buttons
+            const bulkButtons = document.querySelectorAll('.bulk-operations .btn');
+            
+            bulkButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const selectedTransactions = document.querySelectorAll('.transaction-checkbox:checked');
+                    
+                    if (selectedTransactions.length === 0) {
+                        alert('Please select transactions to categorize');
+                        return;
+                    }
+                    
+                    const action = this.textContent.trim();
+                    
+                    selectedTransactions.forEach(checkbox => {
+                        const transactionItem = checkbox.closest('.transaction-item');
+                        const dropdown = transactionItem.querySelector('.category-dropdown');
+                        const statusIcon = transactionItem.querySelector('.status-icon');
+                        
+                        if (action.includes('Office Supplies')) {
+                            dropdown.value = 'Office Supplies';
+                        } else if (action.includes('Personal')) {
+                            dropdown.value = 'Flag as Personal';
+                        } else if (action.includes('Flag')) {
+                            transactionItem.classList.add('flagged');
+                            statusIcon.className = 'status-icon status-flagged';
+                            statusIcon.textContent = '!';
+                            return;
+                        }
+                        
+                        dropdown.classList.remove('uncategorized');
+                        statusIcon.className = 'status-icon status-reviewed';
+                        statusIcon.textContent = '✓';
+                        checkbox.checked = false;
+                        checkbox.classList.remove('checked');
+                    });
+                    
+                    selectAllCheckbox.checked = false;
+                    updateProgress();
+                });
+            });
+
+            // Progress updating
+            function updateProgress() {
+                const totalTransactions = document.querySelectorAll('.transaction-item').length;
+                const reviewedTransactions = document.querySelectorAll('.status-reviewed').length;
+                const progressPercentage = Math.round((reviewedTransactions / totalTransactions) * 100);
+                
+                document.querySelector('.progress-fill').style.width = progressPercentage + '%';
+                document.querySelector('.progress-text').textContent = 
+                    `${reviewedTransactions} of ${totalTransactions} transactions reviewed`;
+            }
+
+            // Keyboard shortcuts for efficiency
+            document.addEventListener('keydown', function(e) {
+                // Ctrl/Cmd + A to select all visible
+                if ((e.ctrlKey || e.metaKey) && e.key === 'a') {
+                    e.preventDefault();
+                    selectAllCheckbox.click();
+                }
+                
+                // Escape to clear selection
+                if (e.key === 'Escape') {
+                    transactionCheckboxes.forEach(checkbox => {
+                        checkbox.checked = false;
+                        checkbox.classList.remove('checked');
+                    });
+                    selectAllCheckbox.checked = false;
+                }
+            });
+
+            // Auto-save functionality
+            const saveButton = document.querySelector('.btn-primary');
+            let autoSaveTimeout;
+            
+            function triggerAutoSave() {
+                clearTimeout(autoSaveTimeout);
+                autoSaveTimeout = setTimeout(() => {
+                    saveButton.style.background = '#10b981';
+                    saveButton.innerHTML = '<span>✓</span> Saved';
+                    setTimeout(() => {
+                        saveButton.style.background = '#2563eb';
+                        saveButton.innerHTML = '<span>💾</span> Save Progress';
+                    }, 2000);
+                }, 1000);
+            }
+            
+            // Trigger auto-save on categorization changes
+            categoryDropdowns.forEach(dropdown => {
+                dropdown.addEventListener('change', triggerAutoSave);
+            });
+
+            // Initialize progress on load
+            updateProgress();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Batch Reconciliation | Multi-Card Banking</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #2563eb;
+            --success-green: #10b981;
+            --pure-white: #ffffff;
+            --charcoal: #1f2937;
+            --light-gray: #f3f4f6;
+            --border-color: #e5e7eb;
+            --text-secondary: #6b7280;
+            --danger-red: #ef4444;
+            --warning-orange: #f59e0b;
+            --radius: 8px;
+            --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: var(--light-gray);
+            color: var(--charcoal);
+            line-height: 1.6;
+        }
+
+        .main-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 24px;
+            min-height: 100vh;
+        }
+
+        /* Header with Batch Overview */
+        .batch-header {
+            background: var(--pure-white);
+            border-radius: var(--radius);
+            padding: 32px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow);
+            display: grid;
+            grid-template-columns: 1fr auto auto;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .header-info h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .header-meta {
+            display: flex;
+            gap: 24px;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .review-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            text-align: center;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary-blue);
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .batch-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: var(--radius);
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 200ms ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--primary-blue);
+            color: var(--pure-white);
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: var(--pure-white);
+            color: var(--charcoal);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--light-gray);
+        }
+
+        /* Smart Batch Grid */
+        .batch-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .batch-group {
+            background: var(--pure-white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: all 300ms ease;
+        }
+
+        .batch-group:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+        }
+
+        .batch-group.completed {
+            border: 2px solid var(--success-green);
+        }
+
+        .batch-group.needs-attention {
+            border: 2px solid var(--warning-orange);
+        }
+
+        .batch-header-mini {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+        }
+
+        .batch-info h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .batch-meta {
+            font-size: 13px;
+            color: var(--text-secondary);
+            display: flex;
+            gap: 16px;
+        }
+
+        .batch-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .status-pending {
+            background: var(--warning-orange);
+        }
+
+        .status-completed {
+            background: var(--success-green);
+        }
+
+        .status-flagged {
+            background: var(--danger-red);
+        }
+
+        /* Transaction List in Batch */
+        .batch-transactions {
+            max-height: 320px;
+            overflow-y: auto;
+        }
+
+        .transaction-row {
+            padding: 16px 24px;
+            border-bottom: 1px solid #f9fafb;
+            display: grid;
+            grid-template-columns: auto 1fr auto auto;
+            gap: 16px;
+            align-items: center;
+            transition: background 200ms ease;
+        }
+
+        .transaction-row:hover {
+            background: #f8fafc;
+        }
+
+        .transaction-row.selected {
+            background: #eff6ff;
+            border-left: 3px solid var(--primary-blue);
+        }
+
+        .transaction-checkbox {
+            width: 16px;
+            height: 16px;
+            accent-color: var(--primary-blue);
+        }
+
+        .transaction-details {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .transaction-merchant {
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .transaction-meta {
+            font-size: 12px;
+            color: var(--text-secondary);
+            display: flex;
+            gap: 12px;
+        }
+
+        .card-indicator {
+            padding: 2px 6px;
+            background: #e0e7ff;
+            color: var(--primary-blue);
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .transaction-amount {
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .amount-debit {
+            color: var(--charcoal);
+        }
+
+        .amount-credit {
+            color: var(--success-green);
+        }
+
+        .category-selector {
+            position: relative;
+        }
+
+        .category-btn {
+            padding: 6px 12px;
+            background: var(--light-gray);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 200ms ease;
+        }
+
+        .category-btn:hover {
+            background: var(--pure-white);
+            border-color: var(--primary-blue);
+        }
+
+        .category-btn.assigned {
+            background: #dcfce7;
+            border-color: var(--success-green);
+            color: #166534;
+        }
+
+        /* Batch Actions Bar */
+        .batch-actions-bar {
+            padding: 16px 24px;
+            background: #f8fafc;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .bulk-controls {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .bulk-category-select {
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background: var(--pure-white);
+            font-size: 13px;
+        }
+
+        .apply-btn {
+            padding: 8px 16px;
+            background: var(--primary-blue);
+            color: var(--pure-white);
+            border: none;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 200ms ease;
+        }
+
+        .apply-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .apply-btn:disabled {
+            background: var(--text-secondary);
+            cursor: not-allowed;
+        }
+
+        .batch-progress {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        /* Quick Review Panel */
+        .quick-review {
+            background: var(--pure-white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 24px;
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .review-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .anomaly-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .anomaly-item {
+            padding: 16px;
+            background: #fef3c7;
+            border: 1px solid #fbbf24;
+            border-radius: var(--radius);
+            font-size: 14px;
+        }
+
+        .anomaly-item.critical {
+            background: #fee2e2;
+            border-color: var(--danger-red);
+        }
+
+        .anomaly-title {
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .anomaly-desc {
+            color: var(--text-secondary);
+            font-size: 13px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .batch-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .batch-header {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .review-stats {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 16px;
+            }
+
+            .batch-header {
+                padding: 20px;
+            }
+
+            .transaction-row {
+                grid-template-columns: auto 1fr auto;
+                gap: 12px;
+            }
+
+            .category-selector {
+                grid-column: 1 / -1;
+                margin-top: 8px;
+            }
+        }
+
+        /* Accessibility */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        .batch-group:focus-within {
+            outline: 2px solid var(--primary-blue);
+            outline-offset: 2px;
+        }
+
+        .transaction-row:focus-within {
+            background: #eff6ff;
+            outline: 1px solid var(--primary-blue);
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <!-- Batch Overview Header -->
+        <header class="batch-header">
+            <div class="header-info">
+                <h1>October 2024 Expense Reconciliation</h1>
+                <div class="header-meta">
+                    <span>247 transactions across 4 cards</span>
+                    <span>•</span>
+                    <span>12 smart batches identified</span>
+                    <span>•</span>
+                    <span>Last sync: 2 min ago</span>
+                </div>
+            </div>
+            
+            <div class="review-stats">
+                <div class="stat-item">
+                    <span class="stat-value">8</span>
+                    <span class="stat-label">Completed</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value">3</span>
+                    <span class="stat-label">Pending</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value">1</span>
+                    <span class="stat-label">Flagged</span>
+                </div>
+            </div>
+
+            <div class="batch-actions">
+                <button class="btn btn-secondary">
+                    <span>↻</span>
+                    Refresh Batches
+                </button>
+                <button class="btn btn-primary">
+                    <span>✓</span>
+                    Export for Bookkeeper
+                </button>
+            </div>
+        </header>
+
+        <!-- Smart Batch Grid -->
+        <main class="batch-grid">
+            <!-- Office Supplies Batch -->
+            <article class="batch-group completed">
+                <div class="batch-header-mini">
+                    <div class="batch-info">
+                        <h3>Office Supplies & Equipment</h3>
+                        <div class="batch-meta">
+                            <span>18 transactions</span>
+                            <span>$2,847.32</span>
+                            <span>3 vendors</span>
+                        </div>
+                    </div>
+                    <div class="batch-status">
+                        <span class="status-indicator status-completed"></span>
+                        Completed
+                    </div>
+                </div>
+                
+                <div class="batch-transactions">
+                    <div class="transaction-row selected">
+                        <input type="checkbox" class="transaction-checkbox" checked aria-label="Select Staples transaction">
+                        <div class="transaction-details">
+                            <div class="transaction-merchant">Staples Business Center</div>
+                            <div class="transaction-meta">
+                                <span class="card-indicator">Corp Amex</span>
+                                <span>Oct 15, 2024</span>
+                                <span>Office supplies</span>
+                            </div>
+                        </div>
+                        <div class="transaction-amount amount-debit">-$247.89</div>
+                        <div class="category-selector">
+                            <button class="category-btn assigned">Office Supplies</button>
+                        </div>
+                    </div>
+
+                    <div class="transaction-row selected">
+                        <input type="checkbox" class="transaction-checkbox" checked aria-label="Select Best Buy transaction">
+                        <div class="transaction-details">
+                            <div class="transaction-merchant">Best Buy Business</div>
+                            <div class="transaction-meta">
+                                <span class="card-indicator">Corp Visa</span>
+                                <span>Oct 12, 2024</span>
+                                <span>Monitor, keyboard</span>
+                            </div>
+                        </div>
+                        <div class="transaction-amount amount-debit">-$1,299.99</div>
+                        <div class="category-selector">
+                            <button class="category-btn assigned">Equipment</button>
+                        </div>
+                    </div>
+
+                    <div class="transaction-row selected">
+                        <input type="checkbox" class="transaction-checkbox" checked aria-label="Select Office Depot transaction">
+                        <div class="transaction-details">
+                            <div class="transaction-merchant">Office Depot</div>
+                            <div class="transaction-meta">
+                                <span class="card-indicator">Corp Amex</span>
+                                <span>Oct 8, 2024</span>
+                                <span>Printer paper, ink</span>
+                            </div>
+                        </div>
+                        <div class="transaction-amount amount-debit">-$156.43</div>
+                        <div class="category-selector">
+                            <button class="category-btn assigned">Office Supplies</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="batch-actions-bar">
+                    <div class="bulk-controls">
+                        <span>18 of 18 categorized</span>
+                    </div>
+                    <div class="batch-progress">
+                        ✓ Ready for export
+                    </div>
+                </div>
+            </article>
+
+            <!-- Travel & Entertainment Batch -->
+            <article class="batch-group needs-attention">
+                <div class="batch-header-mini">
+                    <div class="batch-info">
+                        <h3>Travel & Client Entertainment</h3>
+                        <div class="batch-meta">
+                            <span>24 transactions</span>
+                            <span>$4,156.78</span>
+                            <span>8 vendors</span>
+                        </div>
+                    </div>
+                    <div class="batch-status">
+                        <span class="status-indicator status-pending"></span>
+                        Needs Review
+                    </div>
+                </div>
+                
+                <div class="batch-transactions">
+                    <div class="transaction-row">
+                        <input type="checkbox" class="transaction-checkbox" aria-label="Select United Airlines transaction">
+                        <div class="transaction-details">
+                            <div class="transaction-merchant">United Airlines</div>
+                            <div class="transaction-meta">
+                                <span class="card-indicator">Business Amex</span>
+                                <span>Oct 18, 2024</span>
+                                <span>Flight SFO→NYC</span>
+                            </div>
+                        </div>
+                        <div class="transaction-amount amount-debit">-$847.50</div>
+                        <div class="category-selector">
+                            <button class="category-btn">Assign Category</button>
+                        </div>
+                    </div>
+
+                    <div class="transaction-row">
+                        <input type="checkbox" class="transaction-checkbox" aria-label="Select Le Bernardin transaction">
+                        <div class="transaction-details">
+                            <div class="transaction-merchant">Le Bernardin</div>
+                            <div class="transaction-meta">
+                                <span class="card-indicator">Business Amex</span>
+                                <span>Oct 19, 2024</span>
+                                <span>Client dinner</span>
+                            </div>
+                        </div>
+                        <div class="transaction-amount amount-debit">-$485.67</div>
+                        <div class="category-selector">
+                            <button class="category-btn">Assign Category</button>
+                        </div>
+                    </div>
+
+                    <div class="transaction-row">
+                        <input type="checkbox" class="transaction-checkbox" aria-label="Select Marriott transaction">
+                        <div class="transaction-details">
+                            <div class="transaction-merchant">Marriott Hotels</div>
+                            <div class="transaction-meta">
+                                <span class="card-indicator">Business Amex</span>
+                                <span>Oct 18-20, 2024</span>
+                                <span>2 nights business trip</span>
+                            </div>
+                        </div>
+                        <div class="transaction-amount amount-debit">-$967.84</div>
+                        <div class="category-selector">
+                            <button class="category-btn">Assign Category</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="batch-actions-bar">
+                    <div class="bulk-controls">
+                        <span>Select: </span>
+                        <select class="bulk-category-select">
+                            <option value="">Choose category</option>
+                            <option value="travel">Business Travel</option>
+                            <option value="meals">Client Entertainment</option>
+                            <option value="lodging">Lodging</option>
+                        </select>
+                        <button class="apply-btn" disabled>Apply to Selected</button>
+                    </div>
+                    <div class="batch-progress">
+                        0 of 24 categorized
+                    </div>
+                </div>
+            </article>
+
+            <!-- Software & Subscriptions Batch -->
+            <article class="batch-group">
+                <div class="batch-header-mini">
+                    <div class="batch-info">
+                        <h3>Software & SaaS Subscriptions</h3>
+                        <div class="batch-meta">
+                            <span>15 transactions</span>
+                            <span>$3,247.91</span>
+                            <span>9 vendors</span>
+                        </div>
+                    </div>
+                    <div class="batch-status">
+                        <span class="status-indicator status-pending"></span>
+                        Pending
+                    </div>
+                </div>
+                
+                <div class="batch-transactions">
+                    <div class="transaction-row">
+                        <input type="checkbox" class="transaction-checkbox" aria-label="Select Microsoft transaction">
+                        <div class="transaction-details">
+                            <div class="transaction-merchant">Microsoft Corporation</div>
+                            <div class="transaction-meta">
+                                <span class="card-indicator">Corp Visa</span>
+                                <span>Oct 1, 2024</span>
+                                <span>Office 365 Business</span>
+                            </div>
+                        </div>
+                        <div class="transaction-amount amount-debit">-$1,250.00</div>
+                        <div class="category-selector">
+                            <button class="category-btn">Assign Category</button>
+                        </div>
+                    </div>
+
+                    <div class="transaction-row">
+                        <input type="checkbox" class="transaction-checkbox" aria-label="Select Salesforce transaction">
+                        <div class="transaction-details">
+                            <div class="transaction-merchant">Salesforce.com</div>
+                            <div class="transaction-meta">
+                                <span class="card-indicator">Corp Visa</span>
+                                <span>Oct 5, 2024</span>
+                                <span>CRM monthly subscription</span>
+                            </div>
+                        </div>
+                        <div class="transaction-amount amount-debit">-$450.00</div>
+                        <div class="category-selector">
+                            <button class="category-btn">Assign Category</button>
+                        </div>
+                    </div>
+
+                    <div class="transaction-row">
+                        <input type="checkbox" class="transaction-checkbox" aria-label="Select Slack transaction">
+                        <div class="transaction-details">
+                            <div class="transaction-merchant">Slack Technologies</div>
+                            <div class="transaction-meta">
+                                <span class="card-indicator">Corp Amex</span>
+                                <span>Oct 12, 2024</span>
+                                <span>Team communication</span>
+                            </div>
+                        </div>
+                        <div class="transaction-amount amount-debit">-$125.50</div>
+                        <div class="category-selector">
+                            <button class="category-btn">Assign Category</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="batch-actions-bar">
+                    <div class="bulk-controls">
+                        <span>Select: </span>
+                        <select class="bulk-category-select">
+                            <option value="">Choose category</option>
+                            <option value="software">Software</option>
+                            <option value="subscriptions">Subscriptions</option>
+                            <option value="communications">Communications</option>
+                        </select>
+                        <button class="apply-btn" disabled>Apply to Selected</button>
+                    </div>
+                    <div class="batch-progress">
+                        0 of 15 categorized
+                    </div>
+                </div>
+            </article>
+
+            <!-- Unusual Transactions Batch -->
+            <article class="batch-group needs-attention">
+                <div class="batch-header-mini">
+                    <div class="batch-info">
+                        <h3>⚠️ Unusual Transactions</h3>
+                        <div class="batch-meta">
+                            <span>4 transactions</span>
+                            <span>$1,847.23</span>
+                            <span>Needs attention</span>
+                        </div>
+                    </div>
+                    <div class="batch-status">
+                        <span class="status-indicator status-flagged"></span>
+                        Flagged
+                    </div>
+                </div>
+                
+                <div class="batch-transactions">
+                    <div class="transaction-row">
+                        <input type="checkbox" class="transaction-checkbox" aria-label="Select luxury store transaction">
+                        <div class="transaction-details">
+                            <div class="transaction-merchant">TIFFANY & CO</div>
+                            <div class="transaction-meta">
+                                <span class="card-indicator">Corp Amex</span>
+                                <span>Oct 22, 2024</span>
+                                <span>⚠️ High-value personal expense?</span>
+                            </div>
+                        </div>
+                        <div class="transaction-amount amount-debit">-$1,250.00</div>
+                        <div class="category-selector">
+                            <button class="category-btn" style="background: #fee2e2; border-color: #ef4444;">Review Required</button>
+                        </div>
+                    </div>
+
+                    <div class="transaction-row">
+                        <input type="checkbox" class="transaction-checkbox" aria-label="Select weekend transaction">
+                        <div class="transaction-details">
+                            <div class="transaction-merchant">Shell Gas Station</div>
+                            <div class="transaction-meta">
+                                <span class="card-indicator">Corp Visa</span>
+                                <span>Oct 13, 2024 (Saturday)</span>
+                                <span>⚠️ Weekend business expense?</span>
+                            </div>
+                        </div>
+                        <div class="transaction-amount amount-debit">-$89.45</div>
+                        <div class="category-selector">
+                            <button class="category-btn" style="background: #fef3c7; border-color: #f59e0b;">Verify Required</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="batch-actions-bar">
+                    <div class="bulk-controls">
+                        <span style="color: var(--danger-red); font-weight: 500;">Manual review required</span>
+                    </div>
+                    <div class="batch-progress">
+                        0 of 4 reviewed
+                    </div>
+                </div>
+            </article>
+        </main>
+
+        <!-- Quick Review Summary -->
+        <aside class="quick-review">
+            <div class="review-header">
+                <h2>Smart Insights</h2>
+                <button class="btn btn-secondary" style="padding: 6px 12px; font-size: 13px;">View Details</button>
+            </div>
+
+            <div class="anomaly-list">
+                <div class="anomaly-item critical">
+                    <div class="anomaly-title">High-Value Personal Expense Detected</div>
+                    <div class="anomaly-desc">$1,250 luxury retail purchase on corporate card - requires manual review</div>
+                </div>
+
+                <div class="anomaly-item">
+                    <div class="anomaly-title">Weekend Business Expenses</div>
+                    <div class="anomaly-desc">3 transactions on Saturday/Sunday - verify business purpose</div>
+                </div>
+
+                <div class="anomaly-item">
+                    <div class="anomaly-title">Duplicate Subscription Detected</div>
+                    <div class="anomaly-desc">Adobe Creative Cloud charged on both Corp Visa and Amex</div>
+                </div>
+            </div>
+
+            <div style="margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border-color);">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                    <span style="font-weight: 500;">Monthly Progress</span>
+                    <span style="font-size: 14px; color: var(--text-secondary);">67% complete</span>
+                </div>
+                <div style="width: 100%; height: 6px; background: var(--light-gray); border-radius: 3px; overflow: hidden;">
+                    <div style="width: 67%; height: 100%; background: var(--success-green); border-radius: 3px; transition: width 300ms ease;"></div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <script>
+        // Enhanced Smart Batch Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Checkbox Selection Logic
+            const checkboxes = document.querySelectorAll('.transaction-checkbox');
+            const applyButtons = document.querySelectorAll('.apply-btn');
+            const categorySelects = document.querySelectorAll('.bulk-category-select');
+
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const row = this.closest('.transaction-row');
+                    const batchGroup = this.closest('.batch-group');
+                    const applyBtn = batchGroup.querySelector('.apply-btn');
+                    const categorySelect = batchGroup.querySelector('.bulk-category-select');
+                    
+                    // Toggle row selection
+                    if (this.checked) {
+                        row.classList.add('selected');
+                    } else {
+                        row.classList.remove('selected');
+                    }
+
+                    // Update apply button state
+                    const selectedInBatch = batchGroup.querySelectorAll('.transaction-checkbox:checked').length;
+                    const hasCategory = categorySelect.value !== '';
+                    
+                    applyBtn.disabled = !(selectedInBatch > 0 && hasCategory);
+                    
+                    // Update progress display
+                    updateBatchProgress(batchGroup);
+                });
+            });
+
+            // Category Selection Logic
+            categorySelects.forEach(select => {
+                select.addEventListener('change', function() {
+                    const batchGroup = this.closest('.batch-group');
+                    const applyBtn = batchGroup.querySelector('.apply-btn');
+                    const selectedCount = batchGroup.querySelectorAll('.transaction-checkbox:checked').length;
+                    
+                    applyBtn.disabled = !(selectedCount > 0 && this.value !== '');
+                });
+            });
+
+            // Apply Category to Selected Transactions
+            applyButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const batchGroup = this.closest('.batch-group');
+                    const categorySelect = batchGroup.querySelector('.bulk-category-select');
+                    const selectedRows = batchGroup.querySelectorAll('.transaction-row.selected');
+                    
+                    if (categorySelect.value && selectedRows.length > 0) {
+                        selectedRows.forEach(row => {
+                            const categoryBtn = row.querySelector('.category-btn');
+                            categoryBtn.textContent = getCategoryDisplayName(categorySelect.value);
+                            categoryBtn.classList.add('assigned');
+                            
+                            // Uncheck the row
+                            const checkbox = row.querySelector('.transaction-checkbox');
+                            checkbox.checked = false;
+                            row.classList.remove('selected');
+                        });
+
+                        // Reset form
+                        categorySelect.value = '';
+                        this.disabled = true;
+                        
+                        // Update batch progress
+                        updateBatchProgress(batchGroup);
+                        
+                        // Check if batch is complete
+                        checkBatchCompletion(batchGroup);
+                    }
+                });
+            });
+
+            function updateBatchProgress(batchGroup) {
+                const totalTransactions = batchGroup.querySelectorAll('.transaction-row').length;
+                const categorizedTransactions = batchGroup.querySelectorAll('.category-btn.assigned').length;
+                const progressText = batchGroup.querySelector('.batch-progress');
+                
+                if (progressText) {
+                    if (categorizedTransactions === totalTransactions) {
+                        progressText.textContent = '✓ Ready for export';
+                        progressText.style.color = 'var(--success-green)';
+                    } else {
+                        progressText.textContent = `${categorizedTransactions} of ${totalTransactions} categorized`;
+                        progressText.style.color = 'var(--text-secondary)';
+                    }
+                }
+            }
+
+            function checkBatchCompletion(batchGroup) {
+                const totalTransactions = batchGroup.querySelectorAll('.transaction-row').length;
+                const categorizedTransactions = batchGroup.querySelectorAll('.category-btn.assigned').length;
+                
+                if (categorizedTransactions === totalTransactions) {
+                    batchGroup.classList.add('completed');
+                    batchGroup.classList.remove('needs-attention');
+                    
+                    const statusIndicator = batchGroup.querySelector('.status-indicator');
+                    const statusText = statusIndicator.nextSibling;
+                    
+                    statusIndicator.className = 'status-indicator status-completed';
+                    statusText.textContent = ' Completed';
+                    
+                    // Update global stats
+                    updateGlobalStats();
+                }
+            }
+
+            function updateGlobalStats() {
+                const completedBatches = document.querySelectorAll('.batch-group.completed').length;
+                const pendingBatches = document.querySelectorAll('.batch-group:not(.completed)').length;
+                
+                document.querySelector('.stat-value').textContent = completedBatches;
+                document.querySelectorAll('.stat-value')[1].textContent = pendingBatches;
+            }
+
+            function getCategoryDisplayName(value) {
+                const categoryNames = {
+                    'travel': 'Business Travel',
+                    'meals': 'Client Entertainment',
+                    'lodging': 'Lodging',
+                    'software': 'Software',
+                    'subscriptions': 'Subscriptions',
+                    'communications': 'Communications',
+                    'office-supplies': 'Office Supplies',
+                    'equipment': 'Equipment'
+                };
+                return categoryNames[value] || value;
+            }
+
+            // Initialize progress displays
+            document.querySelectorAll('.batch-group').forEach(updateBatchProgress);
+        });
+    </script>
+</body>
+</html>

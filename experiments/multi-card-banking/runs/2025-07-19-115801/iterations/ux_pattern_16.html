@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Spending Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #ffffff;
+            color: #1f2937;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 32px 24px;
+        }
+
+        .header {
+            margin-bottom: 48px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 16px;
+            letter-spacing: -0.025em;
+        }
+
+        .header p {
+            font-size: 1.125rem;
+            color: #6b7280;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .spending-overview {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 32px;
+            border: 1px solid #e2e8f0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .spending-overview::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #2563eb, #10b981);
+        }
+
+        .total-available {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .total-amount {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #10b981;
+            margin-bottom: 8px;
+            display: block;
+            transition: all 0.3s ease;
+        }
+
+        .total-label {
+            font-size: 1.125rem;
+            color: #6b7280;
+            font-weight: 500;
+        }
+
+        .confidence-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 16px;
+            padding: 12px 24px;
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 32px;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            max-width: 300px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .confidence-icon {
+            width: 20px;
+            height: 20px;
+            background: #10b981;
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .confidence-icon::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .confidence-text {
+            color: #065f46;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 24px;
+            border: 2px solid #e5e7eb;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+            border-color: #2563eb;
+        }
+
+        .card.recommended {
+            border-color: #10b981;
+            background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%);
+        }
+
+        .card.recommended::before {
+            content: 'RECOMMENDED';
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: #10b981;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 16px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .card-type {
+            font-size: 0.875rem;
+            color: #6b7280;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .card-name {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin: 4px 0;
+        }
+
+        .card-number {
+            font-size: 0.875rem;
+            color: #9ca3af;
+            font-family: 'SF Mono', monospace;
+        }
+
+        .available-amount {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #10b981;
+            margin: 16px 0 8px 0;
+            transition: all 0.3s ease;
+        }
+
+        .card.low-balance .available-amount {
+            color: #dc2626;
+        }
+
+        .card.warning .available-amount {
+            color: #f59e0b;
+        }
+
+        .usage-bar {
+            background: #f3f4f6;
+            border-radius: 8px;
+            height: 8px;
+            margin: 16px 0;
+            overflow: hidden;
+        }
+
+        .usage-fill {
+            height: 100%;
+            border-radius: 8px;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            background: linear-gradient(90deg, #10b981, #059669);
+        }
+
+        .usage-fill.warning {
+            background: linear-gradient(90deg, #f59e0b, #d97706);
+        }
+
+        .usage-fill.danger {
+            background: linear-gradient(90deg, #dc2626, #b91c1c);
+        }
+
+        .card-details {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 16px;
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        .quick-actions {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 32px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .quick-actions h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .purchase-simulator {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .amount-input {
+            flex: 1;
+            min-width: 200px;
+            position: relative;
+        }
+
+        .amount-input input {
+            width: 100%;
+            padding: 16px 20px 16px 40px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1.125rem;
+            font-weight: 600;
+            transition: all 0.25s ease;
+            background: #ffffff;
+        }
+
+        .amount-input input:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .amount-input::before {
+            content: '$';
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6b7280;
+            font-size: 1.125rem;
+            font-weight: 600;
+        }
+
+        .check-button {
+            padding: 16px 32px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            white-space: nowrap;
+        }
+
+        .check-button:hover {
+            background: #1d4ed8;
+            transform: scale(1.02);
+        }
+
+        .check-button:active {
+            transform: scale(0.98);
+        }
+
+        .recommendation {
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            border: 1px solid #bfdbfe;
+            border-radius: 12px;
+            padding: 24px;
+            margin-top: 24px;
+            text-align: center;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .recommendation.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .recommendation.success {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border-color: #bbf7d0;
+        }
+
+        .recommendation.warning {
+            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+            border-color: #fde68a;
+        }
+
+        .recommendation.danger {
+            background: linear-gradient(135deg, #fef2f2 0%, #fecaca 100%);
+            border-color: #fca5a5;
+        }
+
+        .recommendation-icon {
+            font-size: 2rem;
+            margin-bottom: 16px;
+        }
+
+        .recommendation h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .recommendation p {
+            color: #6b7280;
+            margin-bottom: 16px;
+        }
+
+        .recommended-card {
+            background: #ffffff;
+            padding: 16px;
+            border-radius: 8px;
+            border: 2px solid #10b981;
+            display: inline-block;
+            margin-top: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 24px 16px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .total-amount {
+                font-size: 2.5rem;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .purchase-simulator {
+                flex-direction: column;
+            }
+
+            .amount-input {
+                min-width: auto;
+            }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+
+        .slide-in {
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Business Spending Dashboard</h1>
+            <p>Check your available spending power across all payment methods instantly</p>
+        </header>
+
+        <div class="spending-overview">
+            <div class="total-available">
+                <span class="total-amount" id="totalAmount">$47,850</span>
+                <div class="total-label">Total Available to Spend</div>
+                <div class="confidence-indicator">
+                    <div class="confidence-icon"></div>
+                    <span class="confidence-text">Ready for business purchases</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="cards-grid">
+            <div class="card recommended" data-available="25000" data-name="Business Rewards">
+                <div class="card-header">
+                    <div>
+                        <div class="card-type">Business Credit</div>
+                        <div class="card-name">Business Rewards</div>
+                        <div class="card-number">•••• 4892</div>
+                    </div>
+                </div>
+                <div class="available-amount">$25,000</div>
+                <div class="usage-bar">
+                    <div class="usage-fill" style="width: 37.5%;"></div>
+                </div>
+                <div class="card-details">
+                    <span>Used: $15,000</span>
+                    <span>Limit: $40,000</span>
+                </div>
+            </div>
+
+            <div class="card" data-available="12500" data-name="Business Cash">
+                <div class="card-header">
+                    <div>
+                        <div class="card-type">Business Debit</div>
+                        <div class="card-name">Business Cash</div>
+                        <div class="card-number">•••• 7241</div>
+                    </div>
+                </div>
+                <div class="available-amount">$12,500</div>
+                <div class="usage-bar">
+                    <div class="usage-fill" style="width: 20%;"></div>
+                </div>
+                <div class="card-details">
+                    <span>Balance: $12,500</span>
+                    <span>Account: Checking</span>
+                </div>
+            </div>
+
+            <div class="card" data-available="8350" data-name="Equipment Line">
+                <div class="card-header">
+                    <div>
+                        <div class="card-type">Equipment Credit</div>
+                        <div class="card-name">Equipment Line</div>
+                        <div class="card-number">•••• 3156</div>
+                    </div>
+                </div>
+                <div class="available-amount">$8,350</div>
+                <div class="usage-bar">
+                    <div class="usage-fill" style="width: 67%;"></div>
+                </div>
+                <div class="card-details">
+                    <span>Used: $16,650</span>
+                    <span>Limit: $25,000</span>
+                </div>
+            </div>
+
+            <div class="card warning" data-available="2000" data-name="Express Card">
+                <div class="card-header">
+                    <div>
+                        <div class="card-type">Business Credit</div>
+                        <div class="card-name">Express Card</div>
+                        <div class="card-number">•••• 9873</div>
+                    </div>
+                </div>
+                <div class="available-amount">$2,000</div>
+                <div class="usage-bar">
+                    <div class="usage-fill warning" style="width: 80%;"></div>
+                </div>
+                <div class="card-details">
+                    <span>Used: $8,000</span>
+                    <span>Limit: $10,000</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="quick-actions">
+            <h2>Check Purchase Affordability</h2>
+            <div class="purchase-simulator">
+                <div class="amount-input">
+                    <input 
+                        type="number" 
+                        id="purchaseAmount" 
+                        placeholder="0.00" 
+                        min="0" 
+                        step="0.01"
+                        aria-label="Purchase amount"
+                    >
+                </div>
+                <button class="check-button" onclick="checkAffordability()" aria-label="Check if purchase is affordable">
+                    Check Affordability
+                </button>
+            </div>
+            
+            <div class="recommendation" id="recommendation" role="alert" aria-live="polite">
+                <div class="recommendation-icon" id="recIcon">💡</div>
+                <h3 id="recTitle">Enter an amount to get started</h3>
+                <p id="recMessage">Type in your purchase amount and we'll show you the best payment method and confirm if it's safe to proceed.</p>
+                <div class="recommended-card" id="recCard" style="display: none;">
+                    <strong id="recCardName">Best Choice</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const cards = [
+            { name: 'Business Rewards', available: 25000, element: document.querySelector('[data-name="Business Rewards"]') },
+            { name: 'Business Cash', available: 12500, element: document.querySelector('[data-name="Business Cash"]') },
+            { name: 'Equipment Line', available: 8350, element: document.querySelector('[data-name="Equipment Line"]') },
+            { name: 'Express Card', available: 2000, element: document.querySelector('[data-name="Express Card"]') }
+        ];
+
+        function checkAffordability() {
+            const amount = parseFloat(document.getElementById('purchaseAmount').value);
+            const recommendation = document.getElementById('recommendation');
+            const recIcon = document.getElementById('recIcon');
+            const recTitle = document.getElementById('recTitle');
+            const recMessage = document.getElementById('recMessage');
+            const recCard = document.getElementById('recCard');
+            const recCardName = document.getElementById('recCardName');
+
+            if (!amount || amount <= 0) {
+                showRecommendation('', '💡', 'Enter an amount to get started', 'Type in your purchase amount and we\'ll show you the best payment method and confirm if it\'s safe to proceed.', '');
+                return;
+            }
+
+            // Find best card (highest available amount that can cover the purchase)
+            const affordableCards = cards.filter(card => card.available >= amount);
+            
+            if (affordableCards.length === 0) {
+                showRecommendation('danger', '⚠️', 'Purchase Not Recommended', `$${amount.toLocaleString()} exceeds your available spending power. Consider reducing the amount or waiting for payments to clear.`, '');
+                return;
+            }
+
+            // Sort by available amount (descending) to get the best option
+            affordableCards.sort((a, b) => b.available - a.available);
+            const bestCard = affordableCards[0];
+
+            // Determine confidence level
+            const remainingAfterPurchase = bestCard.available - amount;
+            const percentageUsed = (amount / bestCard.available) * 100;
+
+            let status, icon, title, message;
+
+            if (percentageUsed <= 30) {
+                status = 'success';
+                icon = '✅';
+                title = 'Safe to Proceed';
+                message = `Excellent choice! This purchase leaves you with $${remainingAfterPurchase.toLocaleString()} remaining on your ${bestCard.name}.`;
+            } else if (percentageUsed <= 60) {
+                status = 'success';
+                icon = '✅';
+                title = 'Good to Go';
+                message = `This purchase is well within your limits. You'll have $${remainingAfterPurchase.toLocaleString()} left on your ${bestCard.name}.`;
+            } else if (percentageUsed <= 80) {
+                status = 'warning';
+                icon = '⚡';
+                title = 'Proceed with Caution';
+                message = `This purchase will use most of your ${bestCard.name} limit. You'll have $${remainingAfterPurchase.toLocaleString()} remaining.`;
+            } else {
+                status = 'warning';
+                icon = '⚠️';
+                title = 'High Utilization Warning';
+                message = `This purchase will leave only $${remainingAfterPurchase.toLocaleString()} on your ${bestCard.name}. Consider if you need emergency funds.`;
+            }
+
+            showRecommendation(status, icon, title, message, bestCard.name);
+
+            // Highlight the recommended card
+            cards.forEach(card => card.element.classList.remove('recommended'));
+            bestCard.element.classList.add('recommended');
+            bestCard.element.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function showRecommendation(status, icon, title, message, cardName) {
+            const recommendation = document.getElementById('recommendation');
+            const recIcon = document.getElementById('recIcon');
+            const recTitle = document.getElementById('recTitle');
+            const recMessage = document.getElementById('recMessage');
+            const recCard = document.getElementById('recCard');
+            const recCardName = document.getElementById('recCardName');
+
+            // Remove all status classes
+            recommendation.className = 'recommendation';
+            
+            // Add new status class if provided
+            if (status) {
+                recommendation.classList.add(status);
+            }
+
+            recIcon.textContent = icon;
+            recTitle.textContent = title;
+            recMessage.textContent = message;
+
+            if (cardName) {
+                recCard.style.display = 'inline-block';
+                recCardName.textContent = `Use: ${cardName}`;
+            } else {
+                recCard.style.display = 'none';
+            }
+
+            recommendation.classList.add('show');
+        }
+
+        // Add enter key support for input
+        document.getElementById('purchaseAmount').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkAffordability();
+            }
+        });
+
+        // Add some preset amounts for quick testing
+        const presetAmounts = [500, 2500, 7500, 15000, 30000];
+        
+        // Add click handlers to cards for quick insights
+        cards.forEach(card => {
+            card.element.addEventListener('click', function() {
+                // Remove previous highlights
+                cards.forEach(c => c.element.classList.remove('recommended'));
+                
+                // Highlight clicked card
+                this.classList.add('recommended');
+                
+                // Show card-specific information
+                const amount = card.available;
+                const recommendation = document.getElementById('recommendation');
+                
+                showRecommendation('', '💳', `${card.name} Details`, `This card has $${amount.toLocaleString()} available for immediate business purchases.`, '');
+            });
+        });
+
+        // Initialize with default recommendation
+        showRecommendation('', '💡', 'Enter an amount to get started', 'Type in your purchase amount and we\'ll show you the best payment method and confirm if it\'s safe to proceed.', '');
+
+        // Add smooth animations on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const elements = document.querySelectorAll('.card, .spending-overview, .quick-actions');
+            elements.forEach((el, index) => {
+                setTimeout(() => {
+                    el.classList.add('slide-in');
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html>

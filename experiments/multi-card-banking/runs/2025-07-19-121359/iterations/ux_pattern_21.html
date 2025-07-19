@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Reconciliation Hub - Multi-Card Banking</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f3f4f6;
+            color: #1f2937;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        .header {
+            background: #ffffff;
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .period-selector {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .period-selector select {
+            padding: 8px 16px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            background: #ffffff;
+            font-size: 14px;
+        }
+
+        .reconciliation-status {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .status-card {
+            background: #f9fafb;
+            padding: 16px;
+            border-radius: 8px;
+            border-left: 4px solid #e5e7eb;
+        }
+
+        .status-card.completed {
+            border-left-color: #10b981;
+            background: #f0fdf4;
+        }
+
+        .status-card.in-progress {
+            border-left-color: #f59e0b;
+            background: #fffbeb;
+        }
+
+        .status-card.pending {
+            border-left-color: #6b7280;
+            background: #f9fafb;
+        }
+
+        .status-number {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .status-label {
+            font-size: 12px;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .main-layout {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 24px;
+        }
+
+        .sidebar {
+            background: #ffffff;
+            border-radius: 8px;
+            padding: 24px;
+            height: fit-content;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-list {
+            margin-bottom: 24px;
+        }
+
+        .card-list h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #1f2937;
+        }
+
+        .card-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 200ms ease;
+            border: 1px solid transparent;
+        }
+
+        .card-item:hover {
+            background: #f9fafb;
+            border-color: #e5e7eb;
+        }
+
+        .card-item.active {
+            background: #eff6ff;
+            border-color: #2563eb;
+        }
+
+        .card-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .card-icon {
+            width: 32px;
+            height: 20px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .card-icon.visa { background: #1a1f71; }
+        .card-icon.mastercard { background: #eb001b; }
+        .card-icon.amex { background: #006fcf; }
+
+        .card-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-name {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .card-number {
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        .transaction-count {
+            font-size: 12px;
+            color: #6b7280;
+            background: #f3f4f6;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .categories-section {
+            border-top: 1px solid #e5e7eb;
+            padding-top: 24px;
+        }
+
+        .category-item {
+            display: flex;
+            align-items: center;
+            justify-content: between;
+            padding: 8px 12px;
+            border-radius: 6px;
+            margin-bottom: 4px;
+            cursor: pointer;
+            transition: all 200ms ease;
+        }
+
+        .category-item:hover {
+            background: #f9fafb;
+        }
+
+        .category-item.active {
+            background: #eff6ff;
+            color: #2563eb;
+        }
+
+        .category-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .category-name {
+            flex: 1;
+            font-size: 14px;
+        }
+
+        .category-amount {
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        .content-area {
+            background: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .content-header {
+            padding: 24px;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .content-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .bulk-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: none;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 200ms ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-secondary {
+            background: #f3f4f6;
+            color: #374151;
+        }
+
+        .btn-secondary:hover {
+            background: #e5e7eb;
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+        }
+
+        .transaction-list {
+            padding: 0;
+        }
+
+        .transaction-group {
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .group-header {
+            background: #f9fafb;
+            padding: 12px 24px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #374151;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .group-date {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .group-total {
+            font-size: 14px;
+            color: #1f2937;
+        }
+
+        .transaction-item {
+            padding: 16px 24px;
+            border-bottom: 1px solid #f3f4f6;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 200ms ease;
+            cursor: pointer;
+        }
+
+        .transaction-item:hover {
+            background: #f9fafb;
+        }
+
+        .transaction-item.selected {
+            background: #eff6ff;
+            border-left: 4px solid #2563eb;
+        }
+
+        .transaction-item.anomaly {
+            background: #fef2f2;
+            border-left: 4px solid #ef4444;
+        }
+
+        .transaction-main {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex: 1;
+        }
+
+        .transaction-checkbox {
+            width: 16px;
+            height: 16px;
+            border: 1px solid #d1d5db;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .transaction-checkbox.checked {
+            background: #2563eb;
+            border-color: #2563eb;
+            position: relative;
+        }
+
+        .transaction-checkbox.checked::after {
+            content: '✓';
+            color: #ffffff;
+            font-size: 10px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .merchant-info {
+            display: flex;
+            flex-direction: column;
+            min-width: 200px;
+        }
+
+        .merchant-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: #1f2937;
+        }
+
+        .merchant-category {
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        .transaction-amount {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1f2937;
+            min-width: 80px;
+            text-align: right;
+        }
+
+        .category-selector {
+            position: relative;
+        }
+
+        .category-dropdown {
+            padding: 6px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            background: #ffffff;
+            font-size: 12px;
+            min-width: 120px;
+            cursor: pointer;
+        }
+
+        .category-dropdown:hover {
+            border-color: #2563eb;
+        }
+
+        .anomaly-badge {
+            background: #fef2f2;
+            color: #dc2626;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .quick-actions {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            min-width: 200px;
+        }
+
+        .quick-actions h4 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #1f2937;
+        }
+
+        .quick-action-btn {
+            padding: 8px 12px;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            background: #ffffff;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 200ms ease;
+            text-align: left;
+        }
+
+        .quick-action-btn:hover {
+            background: #f9fafb;
+            border-color: #2563eb;
+        }
+
+        .progress-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: #e5e7eb;
+            z-index: 1000;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: #10b981;
+            width: 68%;
+            transition: width 300ms ease;
+        }
+
+        .filters-bar {
+            padding: 16px 24px;
+            background: #f9fafb;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .filter-chip {
+            padding: 6px 12px;
+            background: #ffffff;
+            border: 1px solid #d1d5db;
+            border-radius: 16px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 200ms ease;
+        }
+
+        .filter-chip.active {
+            background: #2563eb;
+            color: #ffffff;
+            border-color: #2563eb;
+        }
+
+        .filter-chip:hover:not(.active) {
+            border-color: #2563eb;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 16px;
+            }
+
+            .main-layout {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .sidebar {
+                order: 2;
+            }
+
+            .reconciliation-status {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .quick-actions {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-indicator">
+        <div class="progress-bar"></div>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <div class="header-top">
+                <h1>Monthly Expense Reconciliation</h1>
+                <div class="period-selector">
+                    <select>
+                        <option>December 2024</option>
+                        <option>November 2024</option>
+                        <option>October 2024</option>
+                    </select>
+                </div>
+            </div>
+            <div class="reconciliation-status">
+                <div class="status-card completed">
+                    <div class="status-number">247</div>
+                    <div class="status-label">Categorized</div>
+                </div>
+                <div class="status-card in-progress">
+                    <div class="status-number">89</div>
+                    <div class="status-label">Remaining</div>
+                </div>
+                <div class="status-card pending">
+                    <div class="status-number">12</div>
+                    <div class="status-label">Anomalies</div>
+                </div>
+                <div class="status-card">
+                    <div class="status-number">$28,450</div>
+                    <div class="status-label">Total Expenses</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-layout">
+            <div class="sidebar">
+                <div class="card-list">
+                    <h3>Payment Methods</h3>
+                    <div class="card-item active">
+                        <div class="card-info">
+                            <div class="card-icon visa">VISA</div>
+                            <div class="card-details">
+                                <div class="card-name">Business Platinum</div>
+                                <div class="card-number">••••4532</div>
+                            </div>
+                        </div>
+                        <div class="transaction-count">156</div>
+                    </div>
+                    <div class="card-item">
+                        <div class="card-info">
+                            <div class="card-icon mastercard">MC</div>
+                            <div class="card-details">
+                                <div class="card-name">Corporate Gold</div>
+                                <div class="card-number">••••8901</div>
+                            </div>
+                        </div>
+                        <div class="transaction-count">98</div>
+                    </div>
+                    <div class="card-item">
+                        <div class="card-info">
+                            <div class="card-icon amex">AMEX</div>
+                            <div class="card-details">
+                                <div class="card-name">Business Green</div>
+                                <div class="card-number">••••7645</div>
+                            </div>
+                        </div>
+                        <div class="transaction-count">42</div>
+                    </div>
+                </div>
+
+                <div class="categories-section">
+                    <h3>Categories</h3>
+                    <div class="category-item active">
+                        <div class="category-color" style="background: #3b82f6;"></div>
+                        <div class="category-name">Office Supplies</div>
+                        <div class="category-amount">$2,340</div>
+                    </div>
+                    <div class="category-item">
+                        <div class="category-color" style="background: #10b981;"></div>
+                        <div class="category-name">Travel</div>
+                        <div class="category-amount">$8,920</div>
+                    </div>
+                    <div class="category-item">
+                        <div class="category-color" style="background: #f59e0b;"></div>
+                        <div class="category-name">Marketing</div>
+                        <div class="category-amount">$5,670</div>
+                    </div>
+                    <div class="category-item">
+                        <div class="category-color" style="background: #8b5cf6;"></div>
+                        <div class="category-name">Software</div>
+                        <div class="category-amount">$3,450</div>
+                    </div>
+                    <div class="category-item">
+                        <div class="category-color" style="background: #ef4444;"></div>
+                        <div class="category-name">Meals</div>
+                        <div class="category-amount">$4,120</div>
+                    </div>
+                    <div class="category-item">
+                        <div class="category-color" style="background: #6b7280;"></div>
+                        <div class="category-name">Uncategorized</div>
+                        <div class="category-amount">$3,950</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-area">
+                <div class="content-header">
+                    <div class="content-title">Business Platinum (••••4532) - 156 transactions</div>
+                    <div class="bulk-actions">
+                        <button class="btn btn-secondary">
+                            <span>📂</span>
+                            Bulk Categorize
+                        </button>
+                        <button class="btn btn-primary">
+                            <span>✓</span>
+                            Mark as Reviewed
+                        </button>
+                    </div>
+                </div>
+
+                <div class="filters-bar">
+                    <div class="filter-chip active">All Transactions</div>
+                    <div class="filter-chip">Uncategorized (89)</div>
+                    <div class="filter-chip">Anomalies (12)</div>
+                    <div class="filter-chip">High Amount (>$500)</div>
+                    <div class="filter-chip">Recurring</div>
+                </div>
+
+                <div class="transaction-list">
+                    <div class="transaction-group">
+                        <div class="group-header">
+                            <div class="group-date">
+                                <span>📅</span>
+                                December 15, 2024
+                            </div>
+                            <div class="group-total">$2,450.67</div>
+                        </div>
+
+                        <div class="transaction-item anomaly">
+                            <div class="transaction-main">
+                                <div class="transaction-checkbox"></div>
+                                <div class="merchant-info">
+                                    <div class="merchant-name">AMAZON WEB SERVICES</div>
+                                    <div class="merchant-category">Cloud Services • Unusual amount</div>
+                                </div>
+                                <div class="anomaly-badge">Anomaly</div>
+                            </div>
+                            <div class="transaction-amount">$1,250.00</div>
+                            <div class="category-selector">
+                                <select class="category-dropdown">
+                                    <option>Software</option>
+                                    <option>Office Supplies</option>
+                                    <option>Marketing</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="transaction-item selected">
+                            <div class="transaction-main">
+                                <div class="transaction-checkbox checked"></div>
+                                <div class="merchant-info">
+                                    <div class="merchant-name">OFFICE DEPOT #2847</div>
+                                    <div class="merchant-category">Office Supplies • Categorized</div>
+                                </div>
+                            </div>
+                            <div class="transaction-amount">$284.50</div>
+                            <div class="category-selector">
+                                <select class="category-dropdown">
+                                    <option selected>Office Supplies</option>
+                                    <option>Marketing</option>
+                                    <option>Travel</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="transaction-item">
+                            <div class="transaction-main">
+                                <div class="transaction-checkbox"></div>
+                                <div class="merchant-info">
+                                    <div class="merchant-name">STARBUCKS STORE #15891</div>
+                                    <div class="merchant-category">Coffee Shop • Client meeting</div>
+                                </div>
+                            </div>
+                            <div class="transaction-amount">$47.80</div>
+                            <div class="category-selector">
+                                <select class="category-dropdown">
+                                    <option>Meals</option>
+                                    <option>Travel</option>
+                                    <option>Marketing</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="transaction-item">
+                            <div class="transaction-main">
+                                <div class="transaction-checkbox"></div>
+                                <div class="merchant-info">
+                                    <div class="merchant-name">UBER TRIP #HK8901</div>
+                                    <div class="merchant-category">Transportation • Airport trip</div>
+                                </div>
+                            </div>
+                            <div class="transaction-amount">$68.25</div>
+                            <div class="category-selector">
+                                <select class="category-dropdown">
+                                    <option>Travel</option>
+                                    <option>Meals</option>
+                                    <option>Marketing</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="transaction-group">
+                        <div class="group-header">
+                            <div class="group-date">
+                                <span>📅</span>
+                                December 14, 2024
+                            </div>
+                            <div class="group-total">$1,890.40</div>
+                        </div>
+
+                        <div class="transaction-item">
+                            <div class="transaction-main">
+                                <div class="transaction-checkbox"></div>
+                                <div class="merchant-info">
+                                    <div class="merchant-name">ADOBE CREATIVE CLOUD</div>
+                                    <div class="merchant-category">Software Subscription • Monthly</div>
+                                </div>
+                            </div>
+                            <div class="transaction-amount">$79.99</div>
+                            <div class="category-selector">
+                                <select class="category-dropdown">
+                                    <option>Software</option>
+                                    <option>Marketing</option>
+                                    <option>Office Supplies</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="transaction-item anomaly">
+                            <div class="transaction-main">
+                                <div class="transaction-checkbox"></div>
+                                <div class="merchant-info">
+                                    <div class="merchant-name">BEST BUY STORE #1247</div>
+                                    <div class="merchant-category">Electronics • High amount</div>
+                                </div>
+                                <div class="anomaly-badge">Review</div>
+                            </div>
+                            <div class="transaction-amount">$1,650.00</div>
+                            <div class="category-selector">
+                                <select class="category-dropdown">
+                                    <option>Office Supplies</option>
+                                    <option>Software</option>
+                                    <option>Marketing</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="transaction-item">
+                            <div class="transaction-main">
+                                <div class="transaction-checkbox"></div>
+                                <div class="merchant-info">
+                                    <div class="merchant-name">LINKEDIN PREMIUM</div>
+                                    <div class="merchant-category">Professional Services • Subscription</div>
+                                </div>
+                            </div>
+                            <div class="transaction-amount">$59.99</div>
+                            <div class="category-selector">
+                                <select class="category-dropdown">
+                                    <option>Marketing</option>
+                                    <option>Software</option>
+                                    <option>Travel</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="transaction-group">
+                        <div class="group-header">
+                            <div class="group-date">
+                                <span>📅</span>
+                                December 13, 2024
+                            </div>
+                            <div class="group-total">$456.78</div>
+                        </div>
+
+                        <div class="transaction-item">
+                            <div class="transaction-main">
+                                <div class="transaction-checkbox"></div>
+                                <div class="merchant-info">
+                                    <div class="merchant-name">FEDEX OFFICE #5412</div>
+                                    <div class="merchant-category">Shipping & Printing</div>
+                                </div>
+                            </div>
+                            <div class="transaction-amount">$127.45</div>
+                            <div class="category-selector">
+                                <select class="category-dropdown">
+                                    <option>Office Supplies</option>
+                                    <option>Marketing</option>
+                                    <option>Travel</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="transaction-item">
+                            <div class="transaction-main">
+                                <div class="transaction-checkbox"></div>
+                                <div class="merchant-info">
+                                    <div class="merchant-name">MARRIOTT HOTEL CHICAGO</div>
+                                    <div class="merchant-category">Lodging • Business trip</div>
+                                </div>
+                            </div>
+                            <div class="transaction-amount">$329.33</div>
+                            <div class="category-selector">
+                                <select class="category-dropdown">
+                                    <option>Travel</option>
+                                    <option>Meals</option>
+                                    <option>Marketing</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="quick-actions">
+        <h4>Quick Actions</h4>
+        <button class="quick-action-btn">📊 Generate Expense Report</button>
+        <button class="quick-action-btn">📤 Export to QuickBooks</button>
+        <button class="quick-action-btn">🔍 Find Similar Transactions</button>
+        <button class="quick-action-btn">⚠️ Review All Anomalies</button>
+        <button class="quick-action-btn">✅ Mark Month Complete</button>
+    </div>
+
+    <script>
+        // Card selection functionality
+        document.querySelectorAll('.card-item').forEach(card => {
+            card.addEventListener('click', () => {
+                document.querySelectorAll('.card-item').forEach(c => c.classList.remove('active'));
+                card.classList.add('active');
+                
+                // Update content header
+                const cardName = card.querySelector('.card-name').textContent;
+                const cardNumber = card.querySelector('.card-number').textContent;
+                const transactionCount = card.querySelector('.transaction-count').textContent;
+                document.querySelector('.content-title').textContent = 
+                    `${cardName} (${cardNumber}) - ${transactionCount} transactions`;
+            });
+        });
+
+        // Category selection
+        document.querySelectorAll('.category-item').forEach(category => {
+            category.addEventListener('click', () => {
+                document.querySelectorAll('.category-item').forEach(c => c.classList.remove('active'));
+                category.classList.add('active');
+            });
+        });
+
+        // Transaction selection
+        document.querySelectorAll('.transaction-item').forEach(transaction => {
+            const checkbox = transaction.querySelector('.transaction-checkbox');
+            
+            transaction.addEventListener('click', (e) => {
+                if (e.target.closest('.category-dropdown')) return;
+                
+                transaction.classList.toggle('selected');
+                checkbox.classList.toggle('checked');
+            });
+        });
+
+        // Filter chips
+        document.querySelectorAll('.filter-chip').forEach(chip => {
+            chip.addEventListener('click', () => {
+                document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+                chip.classList.add('active');
+                
+                // Filter transactions based on selection
+                const filterType = chip.textContent;
+                const transactions = document.querySelectorAll('.transaction-item');
+                
+                transactions.forEach(transaction => {
+                    if (filterType.includes('Uncategorized')) {
+                        transaction.style.display = transaction.querySelector('.category-dropdown').value === 'Uncategorized' ? 'flex' : 'none';
+                    } else if (filterType.includes('Anomalies')) {
+                        transaction.style.display = transaction.classList.contains('anomaly') ? 'flex' : 'none';
+                    } else if (filterType.includes('High Amount')) {
+                        const amount = parseFloat(transaction.querySelector('.transaction-amount').textContent.replace(/[$,]/g, ''));
+                        transaction.style.display = amount > 500 ? 'flex' : 'none';
+                    } else {
+                        transaction.style.display = 'flex';
+                    }
+                });
+            });
+        });
+
+        // Bulk actions
+        document.querySelector('.btn:contains("Bulk Categorize")') && document.querySelector('.btn').addEventListener('click', () => {
+            const selectedTransactions = document.querySelectorAll('.transaction-item.selected');
+            if (selectedTransactions.length > 0) {
+                alert(`Ready to categorize ${selectedTransactions.length} selected transactions`);
+            } else {
+                alert('Please select transactions to categorize');
+            }
+        });
+
+        // Category dropdown changes
+        document.querySelectorAll('.category-dropdown').forEach(dropdown => {
+            dropdown.addEventListener('change', (e) => {
+                const transaction = e.target.closest('.transaction-item');
+                const merchantCategory = transaction.querySelector('.merchant-category');
+                
+                // Update the merchant category to show it's been categorized
+                if (!merchantCategory.textContent.includes('• Categorized')) {
+                    merchantCategory.textContent += ' • Categorized';
+                }
+                
+                // Update progress
+                updateProgress();
+            });
+        });
+
+        // Progress tracking
+        function updateProgress() {
+            const totalTransactions = document.querySelectorAll('.transaction-item').length;
+            const categorizedTransactions = document.querySelectorAll('.merchant-category').length;
+            const progress = Math.min((categorizedTransactions / totalTransactions) * 100, 100);
+            
+            document.querySelector('.progress-bar').style.width = progress + '%';
+            
+            // Update status cards
+            const remaining = totalTransactions - categorizedTransactions;
+            document.querySelector('.status-card.in-progress .status-number').textContent = remaining;
+            document.querySelector('.status-card.completed .status-number').textContent = categorizedTransactions;
+        }
+
+        // Quick actions
+        document.querySelectorAll('.quick-action-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const action = btn.textContent;
+                
+                if (action.includes('Generate Expense Report')) {
+                    alert('Generating comprehensive expense report for December 2024...');
+                } else if (action.includes('Export to QuickBooks')) {
+                    alert('Exporting categorized transactions to QuickBooks...');
+                } else if (action.includes('Find Similar')) {
+                    alert('Analyzing transaction patterns for bulk categorization...');
+                } else if (action.includes('Review All Anomalies')) {
+                    // Filter to show only anomalies
+                    document.querySelector('.filter-chip:nth-child(3)').click();
+                } else if (action.includes('Mark Month Complete')) {
+                    const remaining = document.querySelector('.status-card.in-progress .status-number').textContent;
+                    if (remaining === '0') {
+                        alert('Month marked as complete! Ready for bookkeeper handoff.');
+                    } else {
+                        alert(`${remaining} transactions still need categorization before completing the month.`);
+                    }
+                }
+            });
+        });
+
+        // Auto-categorization suggestions
+        function suggestCategories() {
+            document.querySelectorAll('.transaction-item').forEach(transaction => {
+                const merchantName = transaction.querySelector('.merchant-name').textContent.toLowerCase();
+                const dropdown = transaction.querySelector('.category-dropdown');
+                
+                // Simple auto-categorization logic
+                if (merchantName.includes('amazon web services') || merchantName.includes('adobe')) {
+                    dropdown.value = 'Software';
+                } else if (merchantName.includes('office depot') || merchantName.includes('fedex')) {
+                    dropdown.value = 'Office Supplies';
+                } else if (merchantName.includes('marriott') || merchantName.includes('uber')) {
+                    dropdown.value = 'Travel';
+                } else if (merchantName.includes('starbucks')) {
+                    dropdown.value = 'Meals';
+                } else if (merchantName.includes('linkedin')) {
+                    dropdown.value = 'Marketing';
+                }
+            });
+        }
+
+        // Initialize suggestions after a short delay
+        setTimeout(suggestCategories, 1000);
+        
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey || e.metaKey) {
+                switch (e.key) {
+                    case 'a':
+                        e.preventDefault();
+                        // Select all visible transactions
+                        document.querySelectorAll('.transaction-item:not([style*="display: none"])').forEach(t => {
+                            t.classList.add('selected');
+                            t.querySelector('.transaction-checkbox').classList.add('checked');
+                        });
+                        break;
+                    case 'r':
+                        e.preventDefault();
+                        // Show review anomalies
+                        document.querySelector('.filter-chip:nth-child(3)').click();
+                        break;
+                    case 'e':
+                        e.preventDefault();
+                        // Export action
+                        document.querySelector('.quick-action-btn:nth-child(3)').click();
+                        break;
+                }
+            }
+        });
+
+        // Initialize progress
+        updateProgress();
+    </script>
+</body>
+</html>
