@@ -25,6 +25,13 @@ Systematic enhancement approaches for improving existing UI/UX work through anal
 - Improve functional efficiency and task completion
 - Best for: Making interfaces more intuitive and efficient
 
+### `demo-fidelity.md`
+**Demo Fidelity Enhancement**
+- Transform functional prototypes into fully interactive demonstrations
+- Complete state management and workflow implementation
+- Production-ready polish for stakeholder presentations
+- Best for: Making interfaces demo-ready with complete functionality
+
 ## Usage in Experiments
 
 Add enhancement strategies to any experiment's `spec-config.yml`:
@@ -35,6 +42,7 @@ dependencies:
     - multi-card-banking/current/iterations/ux_pattern_14.html
   enhancement-strategies:
     - interactions  # Apply interaction design enhancement
+    - demo-fidelity # Transform into demo-ready interface
   design-systems:
     - geist-core
   spec-modules:

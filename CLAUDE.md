@@ -59,7 +59,7 @@ The project uses Claude Code's custom commands feature with enhanced auto-discov
 - **`experiments/shared/spec-modules/`** - Modular quality standards (accessibility, performance, realistic data)
 - **`experiments/shared/moodboards/`** - Visual inspiration and aesthetic direction for brand personality
 - **`experiments/shared/data/`** - Realistic business context (banking, e-commerce scenarios)
-- **`experiments/shared/enhancement-strategies/`** - Systematic improvement methodologies (interactions, innovations, patterns)
+- **`experiments/shared/enhancement-strategies/`** - Systematic improvement methodologies (interactions, innovations, patterns, demo-fidelity)
 
 #### **Dependency Resolution Process**
 1. Read experiment's `spec-config.yml` for dependency requirements
@@ -91,7 +91,7 @@ The infinite command implements sophisticated parallel agent coordination:
   - `spec-modules/` - Accessibility, performance, and data quality standards
   - `moodboards/` - Visual inspiration and aesthetic direction (modern-minimalist, organic-nature, tech-startup)
   - `data/` - Realistic business context (banking, e-commerce scenarios)
-  - `enhancement-strategies/` - Systematic improvement methodologies (interactions, innovations, patterns)
+  - `enhancement-strategies/` - Systematic improvement methodologies (interactions, innovations, patterns, demo-fidelity)
 - **`experiments/ui-components/runs/`** - Timestamped execution history
   - `2025-01-16-legacy-migration/` - 35+ themed hybrid components (legacy)
   - `[current-timestamp]/iterations/` - Latest generated components

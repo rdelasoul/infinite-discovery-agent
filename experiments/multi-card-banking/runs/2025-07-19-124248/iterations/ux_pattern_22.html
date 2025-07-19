@@ -1,0 +1,1826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Expense Reconciliation Hub - Enhanced Multi-Card Banking</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f3f4f6;
+            color: #1f2937;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        .header {
+            background: #ffffff;
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .period-selector {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .period-selector select {
+            padding: 8px 16px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            background: #ffffff;
+            font-size: 14px;
+            cursor: pointer;
+            transition: border-color 200ms ease;
+        }
+
+        .period-selector select:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .auto-sync-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: #10b981;
+            background: #f0fdf4;
+            padding: 4px 8px;
+            border-radius: 12px;
+        }
+
+        .sync-indicator {
+            width: 6px;
+            height: 6px;
+            background: #10b981;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .reconciliation-status {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .status-card {
+            background: #f9fafb;
+            padding: 16px;
+            border-radius: 8px;
+            border-left: 4px solid #e5e7eb;
+            cursor: pointer;
+            transition: all 200ms ease;
+        }
+
+        .status-card:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .status-card.completed {
+            border-left-color: #10b981;
+            background: #f0fdf4;
+        }
+
+        .status-card.in-progress {
+            border-left-color: #f59e0b;
+            background: #fffbeb;
+        }
+
+        .status-card.anomalies {
+            border-left-color: #ef4444;
+            background: #fef2f2;
+        }
+
+        .status-card.pending {
+            border-left-color: #6b7280;
+            background: #f9fafb;
+        }
+
+        .status-number {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .status-label {
+            font-size: 12px;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .main-layout {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 24px;
+        }
+
+        .sidebar {
+            background: #ffffff;
+            border-radius: 8px;
+            padding: 24px;
+            height: fit-content;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-list {
+            margin-bottom: 24px;
+        }
+
+        .card-list h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #1f2937;
+        }
+
+        .card-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 200ms ease;
+            border: 1px solid transparent;
+            position: relative;
+        }
+
+        .card-item:hover {
+            background: #f9fafb;
+            border-color: #e5e7eb;
+            transform: translateX(2px);
+        }
+
+        .card-item.active {
+            background: #eff6ff;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .card-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .card-icon {
+            width: 36px;
+            height: 22px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8px;
+            font-weight: 700;
+            color: #ffffff;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-icon.visa { background: linear-gradient(135deg, #1a1f71, #0d1247); }
+        .card-icon.mastercard { background: linear-gradient(135deg, #eb001b, #c5001a); }
+        .card-icon.amex { background: linear-gradient(135deg, #006fcf, #004c8a); }
+
+        .card-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-name {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .card-number {
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        .transaction-badge {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 11px;
+            color: #6b7280;
+            background: #f3f4f6;
+            padding: 3px 8px;
+            border-radius: 8px;
+        }
+
+        .uncategorized-count {
+            background: #fef2f2;
+            color: #dc2626;
+        }
+
+        .ai-suggestions-panel {
+            border-top: 1px solid #e5e7eb;
+            padding-top: 24px;
+            margin-top: 24px;
+        }
+
+        .ai-suggestions h4 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #1f2937;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .suggestion-item {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: 6px;
+            padding: 8px 12px;
+            margin-bottom: 8px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 200ms ease;
+        }
+
+        .suggestion-item:hover {
+            background: #dcfce7;
+            border-color: #86efac;
+        }
+
+        .suggestion-confidence {
+            color: #059669;
+            font-weight: 500;
+        }
+
+        .categories-section {
+            border-top: 1px solid #e5e7eb;
+            padding-top: 24px;
+        }
+
+        .category-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 12px;
+            border-radius: 6px;
+            margin-bottom: 4px;
+            cursor: pointer;
+            transition: all 200ms ease;
+        }
+
+        .category-item:hover {
+            background: #f9fafb;
+            transform: translateX(2px);
+        }
+
+        .category-item.active {
+            background: #eff6ff;
+            color: #2563eb;
+            border: 1px solid #dbeafe;
+        }
+
+        .category-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+        }
+
+        .category-name {
+            flex: 1;
+            font-size: 14px;
+        }
+
+        .category-amount {
+            font-size: 12px;
+            color: #6b7280;
+            font-weight: 500;
+        }
+
+        .content-area {
+            background: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .content-header {
+            padding: 24px;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, #ffffff, #f9fafb);
+        }
+
+        .content-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .bulk-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: none;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 200ms ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            min-height: 44px;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            background: #f3f4f6;
+            color: #374151;
+            border: 1px solid #d1d5db;
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: #e5e7eb;
+            transform: translateY(-1px);
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: #ffffff;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: #1d4ed8;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-success {
+            background: #10b981;
+            color: #ffffff;
+        }
+
+        .btn-success:hover:not(:disabled) {
+            background: #059669;
+            transform: translateY(-1px);
+        }
+
+        .smart-filters {
+            padding: 16px 24px;
+            background: #f9fafb;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .filter-chip {
+            padding: 8px 12px;
+            background: #ffffff;
+            border: 1px solid #d1d5db;
+            border-radius: 20px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 200ms ease;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            white-space: nowrap;
+        }
+
+        .filter-chip.active {
+            background: #2563eb;
+            color: #ffffff;
+            border-color: #2563eb;
+            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+        }
+
+        .filter-chip:hover:not(.active) {
+            border-color: #2563eb;
+            background: #f0f9ff;
+        }
+
+        .filter-badge {
+            background: rgba(255, 255, 255, 0.3);
+            color: inherit;
+            padding: 2px 6px;
+            border-radius: 8px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .search-bar {
+            flex: 1;
+            max-width: 300px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 8px 16px 8px 40px;
+            border: 1px solid #d1d5db;
+            border-radius: 20px;
+            font-size: 14px;
+            background: #ffffff;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6b7280;
+        }
+
+        .transaction-list {
+            padding: 0;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        .transaction-group {
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .group-header {
+            background: #f9fafb;
+            padding: 12px 24px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #374151;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .group-date {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .group-total {
+            font-size: 14px;
+            color: #1f2937;
+        }
+
+        .transaction-item {
+            padding: 16px 24px;
+            border-bottom: 1px solid #f3f4f6;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 200ms ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .transaction-item:hover {
+            background: #f9fafb;
+        }
+
+        .transaction-item.selected {
+            background: #eff6ff;
+            border-left: 4px solid #2563eb;
+        }
+
+        .transaction-item.anomaly {
+            background: #fef2f2;
+            border-left: 4px solid #ef4444;
+        }
+
+        .transaction-item.ai-suggested {
+            background: #f0fdf4;
+            border-left: 4px solid #10b981;
+        }
+
+        .transaction-main {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex: 1;
+        }
+
+        .transaction-checkbox {
+            width: 18px;
+            height: 18px;
+            border: 2px solid #d1d5db;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 200ms ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .transaction-checkbox.checked {
+            background: #2563eb;
+            border-color: #2563eb;
+            color: #ffffff;
+        }
+
+        .merchant-info {
+            display: flex;
+            flex-direction: column;
+            min-width: 240px;
+        }
+
+        .merchant-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: #1f2937;
+        }
+
+        .merchant-category {
+            font-size: 12px;
+            color: #6b7280;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .confidence-indicator {
+            font-size: 10px;
+            padding: 1px 4px;
+            border-radius: 4px;
+            background: #10b981;
+            color: #ffffff;
+        }
+
+        .transaction-amount {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1f2937;
+            min-width: 100px;
+            text-align: right;
+        }
+
+        .category-selector {
+            position: relative;
+            min-width: 140px;
+        }
+
+        .category-dropdown {
+            padding: 6px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            background: #ffffff;
+            font-size: 12px;
+            width: 100%;
+            cursor: pointer;
+            transition: all 200ms ease;
+        }
+
+        .category-dropdown:hover {
+            border-color: #2563eb;
+        }
+
+        .category-dropdown:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .anomaly-badge {
+            background: #fef2f2;
+            color: #dc2626;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            animation: pulse-red 2s infinite;
+        }
+
+        @keyframes pulse-red {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .ai-badge {
+            background: #f0fdf4;
+            color: #059669;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .smart-actions {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            min-width: 220px;
+            z-index: 1000;
+        }
+
+        .smart-actions h4 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #1f2937;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .smart-action-btn {
+            padding: 10px 12px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            background: #ffffff;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 200ms ease;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .smart-action-btn:hover {
+            background: #f9fafb;
+            border-color: #2563eb;
+            transform: translateY(-1px);
+        }
+
+        .progress-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: #e5e7eb;
+            z-index: 1000;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #10b981, #059669);
+            width: 73%;
+            transition: width 500ms ease;
+            position: relative;
+        }
+
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 20px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3));
+        }
+
+        .notification-toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            display: none;
+            z-index: 1001;
+            max-width: 300px;
+        }
+
+        .notification-toast.success {
+            border-left: 4px solid #10b981;
+        }
+
+        .notification-toast.warning {
+            border-left: 4px solid #f59e0b;
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1002;
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f4f6;
+            border-top: 4px solid #2563eb;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 16px;
+            }
+
+            .main-layout {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .sidebar {
+                order: 2;
+            }
+
+            .reconciliation-status {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .smart-actions {
+                display: none;
+            }
+
+            .smart-filters {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-bar {
+                max-width: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-indicator">
+        <div class="progress-bar"></div>
+    </div>
+
+    <div class="notification-toast" id="notificationToast">
+        <div id="notificationMessage"></div>
+    </div>
+
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <div class="header-top">
+                <h1>Smart Expense Reconciliation Hub</h1>
+                <div class="period-selector">
+                    <select id="periodSelector">
+                        <option value="2024-12">December 2024</option>
+                        <option value="2024-11">November 2024</option>
+                        <option value="2024-10">October 2024</option>
+                    </select>
+                    <div class="auto-sync-status">
+                        <div class="sync-indicator"></div>
+                        Auto-synced
+                    </div>
+                </div>
+            </div>
+            <div class="reconciliation-status">
+                <div class="status-card completed" onclick="filterByStatus('completed')">
+                    <div class="status-number" id="completedCount">261</div>
+                    <div class="status-label">Categorized</div>
+                </div>
+                <div class="status-card in-progress" onclick="filterByStatus('uncategorized')">
+                    <div class="status-number" id="uncategorizedCount">75</div>
+                    <div class="status-label">Remaining</div>
+                </div>
+                <div class="status-card anomalies" onclick="filterByStatus('anomalies')">
+                    <div class="status-number" id="anomaliesCount">8</div>
+                    <div class="status-label">Anomalies</div>
+                </div>
+                <div class="status-card pending" onclick="filterByStatus('ai-suggested')">
+                    <div class="status-number" id="aiSuggestedCount">43</div>
+                    <div class="status-label">AI Suggested</div>
+                </div>
+                <div class="status-card">
+                    <div class="status-number" id="totalAmount">$31,240</div>
+                    <div class="status-label">Total Expenses</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-layout">
+            <div class="sidebar">
+                <div class="card-list">
+                    <h3>Payment Methods</h3>
+                    <div class="card-item active" data-card="visa-4532">
+                        <div class="card-info">
+                            <div class="card-icon visa">VISA</div>
+                            <div class="card-details">
+                                <div class="card-name">Business Platinum</div>
+                                <div class="card-number">••••4532</div>
+                            </div>
+                        </div>
+                        <div class="transaction-badge">
+                            <span>168</span>
+                            <span class="uncategorized-count">34</span>
+                        </div>
+                    </div>
+                    <div class="card-item" data-card="mc-8901">
+                        <div class="card-info">
+                            <div class="card-icon mastercard">MC</div>
+                            <div class="card-details">
+                                <div class="card-name">Corporate Gold</div>
+                                <div class="card-number">••••8901</div>
+                            </div>
+                        </div>
+                        <div class="transaction-badge">
+                            <span>104</span>
+                            <span class="uncategorized-count">21</span>
+                        </div>
+                    </div>
+                    <div class="card-item" data-card="amex-7645">
+                        <div class="card-info">
+                            <div class="card-icon amex">AMEX</div>
+                            <div class="card-details">
+                                <div class="card-name">Business Green</div>
+                                <div class="card-number">••••7645</div>
+                            </div>
+                        </div>
+                        <div class="transaction-badge">
+                            <span>72</span>
+                            <span class="uncategorized-count">20</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ai-suggestions-panel">
+                    <h4>🤖 AI Suggestions</h4>
+                    <div class="suggestion-item" onclick="applyAISuggestion('recurring')">
+                        Auto-categorize 23 recurring transactions
+                        <div class="suggestion-confidence">95% confidence</div>
+                    </div>
+                    <div class="suggestion-item" onclick="applyAISuggestion('similar')">
+                        Group 12 similar merchant transactions
+                        <div class="suggestion-confidence">88% confidence</div>
+                    </div>
+                    <div class="suggestion-item" onclick="applyAISuggestion('patterns')">
+                        Apply learned categorization patterns
+                        <div class="suggestion-confidence">92% confidence</div>
+                    </div>
+                </div>
+
+                <div class="categories-section">
+                    <h3>Categories</h3>
+                    <div class="category-item active" data-category="office-supplies">
+                        <div class="category-color" style="background: #3b82f6;"></div>
+                        <div class="category-name">Office Supplies</div>
+                        <div class="category-amount">$2,890</div>
+                    </div>
+                    <div class="category-item" data-category="travel">
+                        <div class="category-color" style="background: #10b981;"></div>
+                        <div class="category-name">Travel</div>
+                        <div class="category-amount">$9,240</div>
+                    </div>
+                    <div class="category-item" data-category="marketing">
+                        <div class="category-color" style="background: #f59e0b;"></div>
+                        <div class="category-name">Marketing</div>
+                        <div class="category-amount">$6,120</div>
+                    </div>
+                    <div class="category-item" data-category="software">
+                        <div class="category-color" style="background: #8b5cf6;"></div>
+                        <div class="category-name">Software</div>
+                        <div class="category-amount">$4,890</div>
+                    </div>
+                    <div class="category-item" data-category="meals">
+                        <div class="category-color" style="background: #ef4444;"></div>
+                        <div class="category-name">Meals</div>
+                        <div class="category-amount">$3,450</div>
+                    </div>
+                    <div class="category-item" data-category="uncategorized">
+                        <div class="category-color" style="background: #6b7280;"></div>
+                        <div class="category-name">Uncategorized</div>
+                        <div class="category-amount">$4,650</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-area">
+                <div class="content-header">
+                    <div class="content-title" id="contentTitle">Business Platinum (••••4532) - 168 transactions</div>
+                    <div class="bulk-actions">
+                        <button class="btn btn-secondary" id="bulkCategorizeBtn" disabled>
+                            <span>📂</span>
+                            Bulk Categorize (<span id="selectedCount">0</span>)
+                        </button>
+                        <button class="btn btn-success" id="applyAIBtn">
+                            <span>🤖</span>
+                            Apply AI Suggestions
+                        </button>
+                        <button class="btn btn-primary" id="markReviewedBtn">
+                            <span>✓</span>
+                            Mark as Reviewed
+                        </button>
+                    </div>
+                </div>
+
+                <div class="smart-filters">
+                    <div class="filter-chip active" data-filter="all">
+                        All Transactions
+                    </div>
+                    <div class="filter-chip" data-filter="uncategorized">
+                        Uncategorized <span class="filter-badge">75</span>
+                    </div>
+                    <div class="filter-chip" data-filter="anomalies">
+                        Anomalies <span class="filter-badge">8</span>
+                    </div>
+                    <div class="filter-chip" data-filter="high-amount">
+                        High Amount (>$500) <span class="filter-badge">24</span>
+                    </div>
+                    <div class="filter-chip" data-filter="ai-suggested">
+                        AI Suggested <span class="filter-badge">43</span>
+                    </div>
+                    <div class="filter-chip" data-filter="recurring">
+                        Recurring <span class="filter-badge">31</span>
+                    </div>
+                    <div class="search-bar">
+                        <div class="search-icon">🔍</div>
+                        <input type="text" class="search-input" placeholder="Search transactions..." id="searchInput">
+                    </div>
+                </div>
+
+                <div class="transaction-list" id="transactionList">
+                    <div class="transaction-group">
+                        <div class="group-header">
+                            <div class="group-date">
+                                <span>📅</span>
+                                December 18, 2024
+                            </div>
+                            <div class="group-total">$3,247.83</div>
+                        </div>
+
+                        <div class="transaction-item ai-suggested" data-amount="1450" data-category="software">
+                            <div class="transaction-main">
+                                <div class="transaction-checkbox"></div>
+                                <div class="merchant-info">
+                                    <div class="merchant-name">AMAZON WEB SERVICES</div>
+                                    <div class="merchant-category">
+                                        Cloud Computing Services
+                                        <span class="confidence-indicator">AI 94%</span>
+                                    </div>
+                                </div>
+                                <div class="ai-badge">AI Match</div>
+                            </div>
+                            <div class="transaction-amount">$1,450.00</div>
+                            <div class="category-selector">
+                                <select class="category-dropdown">
+                                    <option value="software" selected>Software</option>
+                                    <option value="office-supplies">Office Supplies</option>
+                                    <option value="marketing">Marketing</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="transaction-item anomaly" data-amount="1250" data-category="uncategorized">
+                            <div class="transaction-main">
+                                <div class="transaction-checkbox"></div>
+                                <div class="merchant-info">
+                                    <div class="merchant-name">TECH EQUIPMENT STORE #847</div>
+                                    <div class="merchant-category">Electronics • Unusual high amount</div>
+                                </div>
+                                <div class="anomaly-badge">Review Required</div>
+                            </div>
+                            <div class="transaction-amount">$1,250.00</div>
+                            <div class="category-selector">
+                                <select class="category-dropdown">
+                                    <option value="uncategorized" selected>Uncategorized</option>
+                                    <option value="office-supplies">Office Supplies</option>
+                                    <option value="software">Software</option>
+                                    <option value="marketing">Marketing</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="transaction-item" data-amount="325" data-category="office-supplies">
+                            <div class="transaction-main">
+                                <div class="transaction-checkbox"></div>
+                                <div class="merchant-info">
+                                    <div class="merchant-name">STAPLES BUSINESS DEPOT</div>
+                                    <div class="merchant-category">Office Supplies • Categorized</div>
+                                </div>
+                            </div>
+                            <div class="transaction-amount">$325.50</div>
+                            <div class="category-selector">
+                                <select class="category-dropdown">
+                                    <option value="office-supplies" selected>Office Supplies</option>
+                                    <option value="marketing">Marketing</option>
+                                    <option value="travel">Travel</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="transaction-item ai-suggested" data-amount="89" data-category="meals">
+                            <div class="transaction-main">
+                                <div class="transaction-checkbox"></div>
+                                <div class="merchant-info">
+                                    <div class="merchant-name">OLIVE GARDEN #2814</div>
+                                    <div class="merchant-category">
+                                        Restaurant • Client dinner
+                                        <span class="confidence-indicator">AI 91%</span>
+                                    </div>
+                                </div>
+                                <div class="ai-badge">AI Match</div>
+                            </div>
+                            <div class="transaction-amount">$89.45</div>
+                            <div class="category-selector">
+                                <select class="category-dropdown">
+                                    <option value="meals" selected>Meals</option>
+                                    <option value="travel">Travel</option>
+                                    <option value="marketing">Marketing</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="transaction-item" data-amount="132" data-category="travel">
+                            <div class="transaction-main">
+                                <div class="transaction-checkbox"></div>
+                                <div class="merchant-info">
+                                    <div class="merchant-name">HERTZ CAR RENTAL</div>
+                                    <div class="merchant-category">Car Rental • Business trip</div>
+                                </div>
+                            </div>
+                            <div class="transaction-amount">$132.88</div>
+                            <div class="category-selector">
+                                <select class="category-dropdown">
+                                    <option value="travel" selected>Travel</option>
+                                    <option value="meals">Meals</option>
+                                    <option value="marketing">Marketing</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="transaction-group">
+                        <div class="group-header">
+                            <div class="group-date">
+                                <span>📅</span>
+                                December 17, 2024
+                            </div>
+                            <div class="group-total">$2,156.92</div>
+                        </div>
+
+                        <div class="transaction-item ai-suggested" data-amount="199" data-category="software">
+                            <div class="transaction-main">
+                                <div class="transaction-checkbox"></div>
+                                <div class="merchant-info">
+                                    <div class="merchant-name">MICROSOFT OFFICE 365</div>
+                                    <div class="merchant-category">
+                                        Software Subscription • Monthly recurring
+                                        <span class="confidence-indicator">AI 98%</span>
+                                    </div>
+                                </div>
+                                <div class="ai-badge">AI Match</div>
+                            </div>
+                            <div class="transaction-amount">$199.99</div>
+                            <div class="category-selector">
+                                <select class="category-dropdown">
+                                    <option value="software" selected>Software</option>
+                                    <option value="marketing">Marketing</option>
+                                    <option value="office-supplies">Office Supplies</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="transaction-item anomaly" data-amount="1750" data-category="uncategorized">
+                            <div class="transaction-main">
+                                <div class="transaction-checkbox"></div>
+                                <div class="merchant-info">
+                                    <div class="merchant-name">CONFERENCE CENTER CHICAGO</div>
+                                    <div class="merchant-category">Event Services • Large expense</div>
+                                </div>
+                                <div class="anomaly-badge">High Amount</div>
+                            </div>
+                            <div class="transaction-amount">$1,750.00</div>
+                            <div class="category-selector">
+                                <select class="category-dropdown">
+                                    <option value="uncategorized" selected>Uncategorized</option>
+                                    <option value="marketing">Marketing</option>
+                                    <option value="travel">Travel</option>
+                                    <option value="office-supplies">Office Supplies</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="transaction-item" data-amount="89" data-category="marketing">
+                            <div class="transaction-main">
+                                <div class="transaction-checkbox"></div>
+                                <div class="merchant-info">
+                                    <div class="merchant-name">GOOGLE ADS</div>
+                                    <div class="merchant-category">Digital Marketing • Categorized</div>
+                                </div>
+                            </div>
+                            <div class="transaction-amount">$89.50</div>
+                            <div class="category-selector">
+                                <select class="category-dropdown">
+                                    <option value="marketing" selected>Marketing</option>
+                                    <option value="software">Software</option>
+                                    <option value="travel">Travel</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="transaction-item ai-suggested" data-amount="117" data-category="travel">
+                            <div class="transaction-main">
+                                <div class="transaction-checkbox"></div>
+                                <div class="merchant-info">
+                                    <div class="merchant-name">DELTA AIRLINES</div>
+                                    <div class="merchant-category">
+                                        Airline • Business travel
+                                        <span class="confidence-indicator">AI 96%</span>
+                                    </div>
+                                </div>
+                                <div class="ai-badge">AI Match</div>
+                            </div>
+                            <div class="transaction-amount">$117.43</div>
+                            <div class="category-selector">
+                                <select class="category-dropdown">
+                                    <option value="travel" selected>Travel</option>
+                                    <option value="meals">Meals</option>
+                                    <option value="marketing">Marketing</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="transaction-group">
+                        <div class="group-header">
+                            <div class="group-date">
+                                <span>📅</span>
+                                December 16, 2024
+                            </div>
+                            <div class="group-total">$1,234.67</div>
+                        </div>
+
+                        <div class="transaction-item" data-amount="450" data-category="office-supplies">
+                            <div class="transaction-main">
+                                <div class="transaction-checkbox"></div>
+                                <div class="merchant-info">
+                                    <div class="merchant-name">BEST BUY BUSINESS</div>
+                                    <div class="merchant-category">Electronics • Office equipment</div>
+                                </div>
+                            </div>
+                            <div class="transaction-amount">$450.25</div>
+                            <div class="category-selector">
+                                <select class="category-dropdown">
+                                    <option value="office-supplies" selected>Office Supplies</option>
+                                    <option value="software">Software</option>
+                                    <option value="marketing">Marketing</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="transaction-item ai-suggested" data-amount="234" data-category="meals">
+                            <div class="transaction-main">
+                                <div class="transaction-checkbox"></div>
+                                <div class="merchant-info">
+                                    <div class="merchant-name">MORTON'S STEAKHOUSE</div>
+                                    <div class="merchant-category">
+                                        Fine Dining • Team celebration
+                                        <span class="confidence-indicator">AI 87%</span>
+                                    </div>
+                                </div>
+                                <div class="ai-badge">AI Match</div>
+                            </div>
+                            <div class="transaction-amount">$234.89</div>
+                            <div class="category-selector">
+                                <select class="category-dropdown">
+                                    <option value="meals" selected>Meals</option>
+                                    <option value="marketing">Marketing</option>
+                                    <option value="travel">Travel</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="transaction-item" data-amount="549" data-category="travel">
+                            <div class="transaction-main">
+                                <div class="transaction-checkbox"></div>
+                                <div class="merchant-info">
+                                    <div class="merchant-name">HILTON HOTELS CHICAGO</div>
+                                    <div class="merchant-category">Lodging • Conference stay</div>
+                                </div>
+                            </div>
+                            <div class="transaction-amount">$549.53</div>
+                            <div class="category-selector">
+                                <select class="category-dropdown">
+                                    <option value="travel" selected>Travel</option>
+                                    <option value="meals">Meals</option>
+                                    <option value="marketing">Marketing</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="smart-actions">
+        <h4>🚀 Smart Actions</h4>
+        <button class="smart-action-btn" onclick="generateReport()">
+            📊 Generate AI Expense Report
+        </button>
+        <button class="smart-action-btn" onclick="exportToQuickBooks()">
+            📤 Export to QuickBooks
+        </button>
+        <button class="smart-action-btn" onclick="findSimilarTransactions()">
+            🔍 Find & Group Similar Transactions
+        </button>
+        <button class="smart-action-btn" onclick="reviewAllAnomalies()">
+            ⚠️ Review All Anomalies (8)
+        </button>
+        <button class="smart-action-btn" onclick="markMonthComplete()">
+            ✅ Mark Month Complete
+        </button>
+        <button class="smart-action-btn" onclick="scheduleBookkeeperMeeting()">
+            📅 Schedule Bookkeeper Meeting
+        </button>
+    </div>
+
+    <script>
+        // Enhanced state management
+        let appState = {
+            selectedTransactions: new Set(),
+            currentCard: 'visa-4532',
+            currentFilter: 'all',
+            searchTerm: '',
+            categoryCounts: {
+                'office-supplies': 2890,
+                'travel': 9240,
+                'marketing': 6120,
+                'software': 4890,
+                'meals': 3450,
+                'uncategorized': 4650
+            },
+            aiSuggestions: {
+                applied: false,
+                confidence: 0
+            }
+        };
+
+        // Enhanced notification system
+        function showNotification(message, type = 'success') {
+            const toast = document.getElementById('notificationToast');
+            const messageEl = document.getElementById('notificationMessage');
+            
+            messageEl.textContent = message;
+            toast.className = `notification-toast ${type}`;
+            toast.style.display = 'block';
+            
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 3000);
+        }
+
+        // Enhanced loading states
+        function showLoading() {
+            document.getElementById('loadingOverlay').style.display = 'flex';
+        }
+
+        function hideLoading() {
+            document.getElementById('loadingOverlay').style.display = 'none';
+        }
+
+        // Enhanced card selection with animation
+        document.querySelectorAll('.card-item').forEach(card => {
+            card.addEventListener('click', () => {
+                document.querySelectorAll('.card-item').forEach(c => c.classList.remove('active'));
+                card.classList.add('active');
+                
+                const cardId = card.dataset.card;
+                appState.currentCard = cardId;
+                
+                const cardName = card.querySelector('.card-name').textContent;
+                const cardNumber = card.querySelector('.card-number').textContent;
+                const transactionBadge = card.querySelector('.transaction-badge span').textContent;
+                
+                document.getElementById('contentTitle').textContent = 
+                    `${cardName} (${cardNumber}) - ${transactionBadge} transactions`;
+                
+                showNotification(`Switched to ${cardName} card`, 'success');
+                loadTransactionsForCard(cardId);
+            });
+        });
+
+        // Enhanced transaction selection with keyboard support
+        document.querySelectorAll('.transaction-item').forEach(transaction => {
+            const checkbox = transaction.querySelector('.transaction-checkbox');
+            
+            transaction.addEventListener('click', (e) => {
+                if (e.target.closest('.category-dropdown')) return;
+                
+                const isSelected = transaction.classList.contains('selected');
+                
+                if (isSelected) {
+                    transaction.classList.remove('selected');
+                    checkbox.classList.remove('checked');
+                    checkbox.innerHTML = '';
+                    appState.selectedTransactions.delete(transaction);
+                } else {
+                    transaction.classList.add('selected');
+                    checkbox.classList.add('checked');
+                    checkbox.innerHTML = '✓';
+                    appState.selectedTransactions.add(transaction);
+                }
+                
+                updateBulkActionButtons();
+            });
+        });
+
+        // Enhanced filter system with smooth transitions
+        document.querySelectorAll('.filter-chip').forEach(chip => {
+            chip.addEventListener('click', () => {
+                document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+                chip.classList.add('active');
+                
+                const filterType = chip.dataset.filter;
+                appState.currentFilter = filterType;
+                applyFilter(filterType);
+                
+                showNotification(`Filtered to: ${chip.textContent.trim()}`, 'success');
+            });
+        });
+
+        // Enhanced search functionality
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            appState.searchTerm = e.target.value.toLowerCase();
+            applySearchFilter();
+        });
+
+        // Advanced filtering logic
+        function applyFilter(filterType) {
+            const transactions = document.querySelectorAll('.transaction-item');
+            
+            transactions.forEach(transaction => {
+                let shouldShow = true;
+                
+                switch (filterType) {
+                    case 'uncategorized':
+                        shouldShow = transaction.querySelector('.category-dropdown').value === 'uncategorized';
+                        break;
+                    case 'anomalies':
+                        shouldShow = transaction.classList.contains('anomaly');
+                        break;
+                    case 'high-amount':
+                        const amount = parseFloat(transaction.dataset.amount || '0');
+                        shouldShow = amount > 500;
+                        break;
+                    case 'ai-suggested':
+                        shouldShow = transaction.classList.contains('ai-suggested');
+                        break;
+                    case 'recurring':
+                        shouldShow = transaction.querySelector('.merchant-category').textContent.includes('recurring') ||
+                                   transaction.querySelector('.merchant-category').textContent.includes('Monthly');
+                        break;
+                    default:
+                        shouldShow = true;
+                }
+                
+                transaction.style.display = shouldShow ? 'flex' : 'none';
+            });
+            
+            updateGroupVisibility();
+        }
+
+        function applySearchFilter() {
+            if (!appState.searchTerm) {
+                applyFilter(appState.currentFilter);
+                return;
+            }
+            
+            const transactions = document.querySelectorAll('.transaction-item');
+            
+            transactions.forEach(transaction => {
+                const merchantName = transaction.querySelector('.merchant-name').textContent.toLowerCase();
+                const merchantCategory = transaction.querySelector('.merchant-category').textContent.toLowerCase();
+                const amount = transaction.querySelector('.transaction-amount').textContent.toLowerCase();
+                
+                const matches = merchantName.includes(appState.searchTerm) ||
+                              merchantCategory.includes(appState.searchTerm) ||
+                              amount.includes(appState.searchTerm);
+                
+                transaction.style.display = matches ? 'flex' : 'none';
+            });
+            
+            updateGroupVisibility();
+        }
+
+        function updateGroupVisibility() {
+            document.querySelectorAll('.transaction-group').forEach(group => {
+                const visibleTransactions = group.querySelectorAll('.transaction-item[style=""]');
+                const hasVisibleTransactions = Array.from(group.querySelectorAll('.transaction-item'))
+                    .some(t => t.style.display !== 'none');
+                group.style.display = hasVisibleTransactions ? 'block' : 'none';
+            });
+        }
+
+        // Enhanced AI suggestions system
+        function applyAISuggestion(type) {
+            showLoading();
+            
+            setTimeout(() => {
+                const transactions = document.querySelectorAll('.transaction-item.ai-suggested');
+                let appliedCount = 0;
+                
+                transactions.forEach(transaction => {
+                    const dropdown = transaction.querySelector('.category-dropdown');
+                    const currentValue = dropdown.value;
+                    
+                    if (currentValue !== 'uncategorized') {
+                        transaction.classList.remove('ai-suggested');
+                        transaction.querySelector('.ai-badge')?.remove();
+                        transaction.querySelector('.confidence-indicator')?.remove();
+                        
+                        const merchantCategory = transaction.querySelector('.merchant-category');
+                        if (!merchantCategory.textContent.includes('• AI Categorized')) {
+                            merchantCategory.textContent += ' • AI Categorized';
+                        }
+                        
+                        appliedCount++;
+                    }
+                });
+                
+                hideLoading();
+                updateProgress();
+                updateStatusCards();
+                
+                showNotification(`Applied AI suggestions to ${appliedCount} transactions`, 'success');
+                
+                // Update AI suggestion panel
+                updateAISuggestionPanel();
+                
+            }, 1500);
+        }
+
+        function updateAISuggestionPanel() {
+            const suggestionItems = document.querySelectorAll('.suggestion-item');
+            suggestionItems.forEach(item => {
+                item.style.opacity = '0.5';
+                item.style.pointerEvents = 'none';
+                item.innerHTML = item.innerHTML.replace(/\d+/, '0');
+            });
+        }
+
+        // Enhanced bulk actions
+        function updateBulkActionButtons() {
+            const selectedCount = appState.selectedTransactions.size;
+            const bulkBtn = document.getElementById('bulkCategorizeBtn');
+            const selectedCountEl = document.getElementById('selectedCount');
+            
+            selectedCountEl.textContent = selectedCount;
+            bulkBtn.disabled = selectedCount === 0;
+            
+            if (selectedCount > 0) {
+                bulkBtn.classList.add('btn-primary');
+                bulkBtn.classList.remove('btn-secondary');
+            } else {
+                bulkBtn.classList.add('btn-secondary');
+                bulkBtn.classList.remove('btn-primary');
+            }
+        }
+
+        document.getElementById('bulkCategorizeBtn').addEventListener('click', () => {
+            if (appState.selectedTransactions.size === 0) return;
+            
+            const category = prompt('Select category for selected transactions:', 'office-supplies');
+            if (!category) return;
+            
+            showLoading();
+            
+            setTimeout(() => {
+                appState.selectedTransactions.forEach(transaction => {
+                    const dropdown = transaction.querySelector('.category-dropdown');
+                    dropdown.value = category;
+                    
+                    const merchantCategory = transaction.querySelector('.merchant-category');
+                    if (!merchantCategory.textContent.includes('• Bulk Categorized')) {
+                        merchantCategory.textContent += ' • Bulk Categorized';
+                    }
+                    
+                    transaction.classList.remove('selected');
+                    transaction.querySelector('.transaction-checkbox').classList.remove('checked');
+                    transaction.querySelector('.transaction-checkbox').innerHTML = '';
+                });
+                
+                appState.selectedTransactions.clear();
+                updateBulkActionButtons();
+                updateProgress();
+                updateStatusCards();
+                hideLoading();
+                
+                showNotification(`Bulk categorized ${appState.selectedTransactions.size} transactions`, 'success');
+            }, 1000);
+        });
+
+        // Enhanced category change handling
+        document.querySelectorAll('.category-dropdown').forEach(dropdown => {
+            dropdown.addEventListener('change', (e) => {
+                const transaction = e.target.closest('.transaction-item');
+                const merchantCategory = transaction.querySelector('.merchant-category');
+                const newCategory = e.target.value;
+                
+                // Remove AI badges if manually categorized
+                if (transaction.classList.contains('ai-suggested')) {
+                    transaction.classList.remove('ai-suggested');
+                    transaction.querySelector('.ai-badge')?.remove();
+                    transaction.querySelector('.confidence-indicator')?.remove();
+                }
+                
+                // Update merchant category
+                if (!merchantCategory.textContent.includes('• Categorized')) {
+                    merchantCategory.textContent += ' • Categorized';
+                }
+                
+                updateProgress();
+                updateStatusCards();
+                
+                showNotification(`Transaction categorized as ${newCategory}`, 'success');
+            });
+        });
+
+        // Enhanced progress tracking
+        function updateProgress() {
+            const totalTransactions = document.querySelectorAll('.transaction-item').length;
+            const categorizedTransactions = document.querySelectorAll('.category-dropdown').length;
+            const uncategorizedTransactions = Array.from(document.querySelectorAll('.category-dropdown'))
+                .filter(dropdown => dropdown.value === 'uncategorized').length;
+            
+            const progress = Math.min(((totalTransactions - uncategorizedTransactions) / totalTransactions) * 100, 100);
+            
+            document.querySelector('.progress-bar').style.width = progress + '%';
+            
+            // Animate progress bar
+            if (progress >= 90) {
+                document.querySelector('.progress-bar').style.background = 
+                    'linear-gradient(90deg, #10b981, #059669)';
+            }
+        }
+
+        function updateStatusCards() {
+            const totalTransactions = document.querySelectorAll('.transaction-item').length;
+            const uncategorizedCount = Array.from(document.querySelectorAll('.category-dropdown'))
+                .filter(dropdown => dropdown.value === 'uncategorized').length;
+            const categorizedCount = totalTransactions - uncategorizedCount;
+            const anomaliesCount = document.querySelectorAll('.transaction-item.anomaly').length;
+            const aiSuggestedCount = document.querySelectorAll('.transaction-item.ai-suggested').length;
+            
+            document.getElementById('completedCount').textContent = categorizedCount;
+            document.getElementById('uncategorizedCount').textContent = uncategorizedCount;
+            document.getElementById('anomaliesCount').textContent = anomaliesCount;
+            document.getElementById('aiSuggestedCount').textContent = aiSuggestedCount;
+        }
+
+        // Enhanced smart actions
+        function generateReport() {
+            showLoading();
+            setTimeout(() => {
+                hideLoading();
+                showNotification('AI Expense Report generated successfully! 📊', 'success');
+            }, 2000);
+        }
+
+        function exportToQuickBooks() {
+            showLoading();
+            setTimeout(() => {
+                hideLoading();
+                showNotification('Transactions exported to QuickBooks successfully! 📤', 'success');
+            }, 1500);
+        }
+
+        function findSimilarTransactions() {
+            showLoading();
+            setTimeout(() => {
+                hideLoading();
+                showNotification('Found 23 similar transactions and grouped them automatically! 🔍', 'success');
+            }, 2000);
+        }
+
+        function reviewAllAnomalies() {
+            document.querySelector('[data-filter="anomalies"]').click();
+            showNotification('Showing all anomalies for review ⚠️', 'warning');
+        }
+
+        function markMonthComplete() {
+            const uncategorizedCount = parseInt(document.getElementById('uncategorizedCount').textContent);
+            
+            if (uncategorizedCount > 0) {
+                showNotification(`${uncategorizedCount} transactions still need categorization`, 'warning');
+                return;
+            }
+            
+            showLoading();
+            setTimeout(() => {
+                hideLoading();
+                showNotification('Month marked as complete! Ready for bookkeeper handoff ✅', 'success');
+            }, 1000);
+        }
+
+        function scheduleBookkeeperMeeting() {
+            showNotification('Opening calendar to schedule bookkeeper meeting 📅', 'success');
+        }
+
+        function filterByStatus(status) {
+            const filterMap = {
+                'completed': 'all',
+                'uncategorized': 'uncategorized',
+                'anomalies': 'anomalies',
+                'ai-suggested': 'ai-suggested'
+            };
+            
+            const filterChip = document.querySelector(`[data-filter="${filterMap[status]}"]`);
+            if (filterChip) {
+                filterChip.click();
+            }
+        }
+
+        // Enhanced keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey || e.metaKey) {
+                switch (e.key) {
+                    case 'a':
+                        e.preventDefault();
+                        // Select all visible transactions
+                        document.querySelectorAll('.transaction-item:not([style*="display: none"])').forEach(t => {
+                            if (!t.classList.contains('selected')) {
+                                t.click();
+                            }
+                        });
+                        break;
+                    case 'r':
+                        e.preventDefault();
+                        reviewAllAnomalies();
+                        break;
+                    case 'e':
+                        e.preventDefault();
+                        exportToQuickBooks();
+                        break;
+                    case 'f':
+                        e.preventDefault();
+                        document.getElementById('searchInput').focus();
+                        break;
+                    case 'i':
+                        e.preventDefault();
+                        document.getElementById('applyAIBtn').click();
+                        break;
+                }
+            }
+        });
+
+        // Period selector functionality
+        document.getElementById('periodSelector').addEventListener('change', (e) => {
+            showLoading();
+            setTimeout(() => {
+                hideLoading();
+                showNotification(`Loaded data for ${e.target.selectedOptions[0].text}`, 'success');
+            }, 1000);
+        });
+
+        // Auto-categorization on page load
+        function initializeAutoCategorization() {
+            setTimeout(() => {
+                document.querySelectorAll('.transaction-item').forEach(transaction => {
+                    const merchantName = transaction.querySelector('.merchant-name').textContent.toLowerCase();
+                    const dropdown = transaction.querySelector('.category-dropdown');
+                    
+                    // Auto-categorize based on merchant patterns
+                    if (merchantName.includes('amazon web services') || merchantName.includes('microsoft')) {
+                        if (dropdown.value === 'uncategorized') {
+                            dropdown.value = 'software';
+                            transaction.classList.add('ai-suggested');
+                        }
+                    } else if (merchantName.includes('staples') || merchantName.includes('office depot')) {
+                        if (dropdown.value === 'uncategorized') {
+                            dropdown.value = 'office-supplies';
+                        }
+                    } else if (merchantName.includes('hotel') || merchantName.includes('airline') || merchantName.includes('hertz')) {
+                        if (dropdown.value === 'uncategorized') {
+                            dropdown.value = 'travel';
+                        }
+                    } else if (merchantName.includes('restaurant') || merchantName.includes('steakhouse') || merchantName.includes('olive garden')) {
+                        if (dropdown.value === 'uncategorized') {
+                            dropdown.value = 'meals';
+                            transaction.classList.add('ai-suggested');
+                        }
+                    } else if (merchantName.includes('google ads') || merchantName.includes('linkedin')) {
+                        if (dropdown.value === 'uncategorized') {
+                            dropdown.value = 'marketing';
+                        }
+                    }
+                });
+                
+                updateProgress();
+                updateStatusCards();
+            }, 500);
+        }
+
+        // Enhanced category sidebar interaction
+        document.querySelectorAll('.category-item').forEach(category => {
+            category.addEventListener('click', () => {
+                document.querySelectorAll('.category-item').forEach(c => c.classList.remove('active'));
+                category.classList.add('active');
+                
+                const categoryType = category.dataset.category;
+                
+                // Filter transactions by category
+                const transactions = document.querySelectorAll('.transaction-item');
+                transactions.forEach(transaction => {
+                    const dropdown = transaction.querySelector('.category-dropdown');
+                    const matches = dropdown.value === categoryType;
+                    transaction.style.display = matches ? 'flex' : 'none';
+                });
+                
+                updateGroupVisibility();
+                showNotification(`Showing ${category.querySelector('.category-name').textContent} transactions`, 'success');
+            });
+        });
+
+        // Initialize the application
+        function initializeApp() {
+            updateProgress();
+            updateStatusCards();
+            updateBulkActionButtons();
+            initializeAutoCategorization();
+            
+            // Show welcome message
+            setTimeout(() => {
+                showNotification('Smart Expense Reconciliation Hub loaded successfully! 🚀', 'success');
+            }, 1000);
+        }
+
+        // Start the application
+        initializeApp();
+    </script>
+</body>
+</html>

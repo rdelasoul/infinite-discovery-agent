@@ -25,7 +25,7 @@ Each experiment type follows the pattern:
   - `spec-modules/` - Quality standards (accessibility, performance)
   - `moodboards/` - Visual aesthetic direction
   - `data/` - Realistic business contexts
-  - `enhancement-strategies/` - Systematic improvement methodologies
+  - `enhancement-strategies/` - Systematic improvement methodologies (interactions, innovations, patterns, demo-fidelity)
 
 ## Usage
 
