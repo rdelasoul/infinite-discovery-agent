@@ -1,311 +1,182 @@
-# Perantara Reps Digital Platform UI Specification
+# Perantara Reps Homepage Specification
 
 ## Core Challenge
 
-Create a **trustworthy, culturally intelligent, and distinctively authentic** digital presence for Perantara Reps, the New Zealand Destination Management Company that travel agents from Philippines, Indonesia, and Thailand actually want to work with. The platform must embody the "Your reliable NZ partner" brand identity with the personality of a trustworthy older cousin - slightly unconventional, fashion-forward, but completely reliable when it matters.
+Create a **professional, multi-market bridge website** for Perantara Reps - the established operator connecting New Zealand and Indonesia travel markets with 30 years of expertise. Serve three distinct customer segments through one cohesive homepage experience that demonstrates bi-directional market expertise and cultural intelligence.
 
-Apply a distinctive design language that positions Perantara Reps as the DMC that truly "gets it" - understanding Southeast Asian client needs and NZ local culture, solving travel agent challenges through an integrated platform that makes their job easier while making their clients' NZ experiences unforgettable.
+## Brand Identity
 
-## Output Requirements
+**Positioning**: "Your bridge between New Zealand & Indonesia travel markets"  
+**Personality**: Professional, established, culturally intelligent, trustworthy  
+**Visual Approach**: Split NZ/Indonesia imagery showing bi-directional expertise
+**Design Character**: Clean, professional aesthetic that builds trust across both markets
 
-**File Naming**: `perantara_homepage_[iteration_number].html`
+## Three Customer Segments
 
-**Content Structure**: Complete one-page HTML file showcasing the full Perantara Reps homepage
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perantara Reps - [Theme Variation]</title>
-    <style>
-        /* Complete embedded CSS styling */
-        /* Brand-consistent color palette and typography */
-        /* Responsive design with mobile-first approach */
-    </style>
-</head>
-<body>
-    <main>
-        <!-- Fixed Navigation Header -->
-        <!-- Hero Section with "Your On-the-Ground NZ DMC" -->
-        <!-- About/What We Do Section -->
-        <!-- Why Partner Benefits Grid -->
-        <!-- How It Works Process Steps -->
-        <!-- FAQ section -->
-        <!-- Contact Form with Netlify Forms -->
-        <!-- Footer -->
-    </main>
-    
-    <script>
-        /* All JavaScript functionality embedded */
-        /* Smooth scrolling, form validation, animations */
-    </script>
-</body>
-</html>
-```
+### 1. SEA Wholesalers & Agencies
+- **Pain Points**: Vendor coordination hassles, service quality risks, time-zone friction
+- **Need**: Seamless NZ tours via one bilingual team
+- **Outcome**: Turnkey NZ coordination without supplier hassles
+- **CTA**: "Request sample itinerary"
 
-**Technical Requirements**:
-- Self-contained HTML file with embedded CSS and JavaScript
-- No external dependencies beyond web fonts
-- Mobile-responsive design using CSS Grid and Flexbox
-- Progressive enhancement with accessible fallbacks
+### 2. NZ Agencies & Niche Groups  
+- **Pain Points**: Safety concerns, supplier vetting, complex multi-island logistics
+- **Need**: Beyond Bali adventures with NZ-based support
+- **Outcome**: Curated Indonesia experiences with local expertise
+- **CTA**: "Get Indonesia sample pack"
 
-## Design Dimensions
+### 3. Overseas DMCs
+- **Pain Points**: Indonesian bureaucracy, high capital costs, market intelligence gaps
+- **Need**: Jakarta team drives your Indonesia sales  
+- **Outcome**: Local market representation without office overhead
+- **CTA**: "Book discovery call"
 
-### **Brand Identity Implementation**
+## Complete Site Navigation Requirements
 
-The "Your reliable NZ partner" concept must be consistently expressed through:
+The homepage must include navigation that links to these required pages:
 
-#### **Authentic & Distinctive Visual Language**
-- **Typography Character**: Interesting font pairings with personality - not corporate mono-culture
-- **Asymmetrical Confidence**: Thoughtful layout breaking that shows creative intelligence
-- **Real Moment Photography**: Behind-the-scenes cultural authenticity, not stock landscapes
-- **Intentional Interface**: Focused but warm layouts that feel like talking to a smart friend
-- **Contemporary Craft**: Modern CSS with purposeful animations that enhance understanding
+### Header Navigation
+- **Logo**: Perantara Reps with "Your bridge between NZ & Indonesia" tagline
+- **Why Perantara** → `/why-perantara` (timeline, leadership, accreditations)
+- **Solutions** (mega-menu) → Three persona landing pages:
+  - "SEA Wholesalers & Agencies" → `/solutions/sea-wholesalers`
+  - "NZ Agencies & Niche Groups" → `/solutions/nz-agencies` 
+  - "Overseas DMCs" → `/solutions/overseas-dmcs`
+- **Services** (dropdown) → Three service pages:
+  - "NZ Inbound DMC" → `/services/nz-inbound-dmc`
+  - "Indonesia Inbound DMC" → `/services/indonesia-inbound-dmc`
+  - "Indonesia Representation" → `/services/indonesia-rep`
+- **Contact** → `/contact`
+- **Primary CTA**: "Get a quote" button
 
-#### **Trustworthy Cousin Indicators**
-- **Genuine Stories**: Real travel agent testimonials from Philippines, Indonesia, and Thailand with specific client successes
-- **Cultural Intelligence**: Deep understanding shown through design choices and content
-- **Reliable Quirkiness**: Consistent branding that's memorable but dependable
-- **B2B Efficiency**: Clear processes that make travel agents' jobs easier
-- **Transparent Operations**: Open communication about how they handle client needs
+### Mobile Navigation
+- Collapsible hamburger menu
+- Mega-menu becomes accordion
+- All links stacked vertically
 
-### **Cultural Bridge Design Themes**
+## Required Homepage Sections
 
-#### **New Zealand Authenticity**
-- **Monochromatic Sophistication**: One primary color (deep forest, warm charcoal, or rich burgundy) in 7-8 shades
-- **Unexpected Accents**: Single pop color (bright coral, electric yellow, or vibrant teal) for CTAs
-- **Cultural Respect**: Thoughtful integration of Māori design elements without appropriation
-- **Real Connection**: Visual elements that show genuine local relationships and knowledge
-- **Progressive Character**: Design that reflects NZ's forward-thinking, slightly unconventional spirit
+### 1. Hero Section - Bridge Positioning
+- **Main Headline**: "Your bridge between New Zealand & Indonesia travel markets"
+- **Subtitle**: "30 years of DMC & representation expertise connecting both directions"
+- **Persona CTAs**: 
+  - "I'm a SEA Wholesaler" → `/solutions/sea-wholesalers`
+  - "I'm a NZ Agency" → `/solutions/nz-agencies`  
+  - "I'm an Overseas DMC" → `/solutions/overseas-dmcs`
+- **Background**: Split imagery showing NZ/Indonesia connection (professional settings, not tourist photos)
 
-#### **Southeast Asian Travel Agent Understanding**
-- **B2B Efficiency**: Features that make travel agents look good to their clients
-- **Cultural Bridge**: Understanding what Filipino, Indonesian, and Thai travelers actually need (family experiences, cultural sensitivity, flexible scheduling)
-- **Business Intelligence**: Knowledge of Southeast Asian travel booking patterns and agent challenges
-- **Trust Building**: Elements that help agents feel confident recommending Perantara
-- **Reliable Partnership**: Visual cues that communicate dependable collaboration
+### 2. Solution Tiles Grid
+Three distinct value propositions with hover effects:
 
-## Enhancement Principles
+#### SEA Wholesalers Card
+- **Headline**: "Seamless NZ tours for SEA wholesalers"
+- **Outcome**: "Sell profitable NZ itineraries without extra admin"
+- **Key Benefit**: Turnkey coordination via bilingual team
+- **Proof**: Fam-trip gallery, client testimonials
 
-### **Authentic Brand Expression**
-- **Character Typography**: Headlines with personality that feel like conversations with a smart friend
-- **Asymmetrical Confidence**: Layout that breaks rules thoughtfully, showing creative intelligence
-- **Monochromatic Sophistication**: One primary color family with strategic accent for impact
-- **Real Moment Imagery**: Behind-the-scenes authenticity that shows genuine cultural connection
-- **Conversational CTAs**: Action buttons that feel like natural next steps, not pushy sales
+#### NZ Agencies Card  
+- **Headline**: "Curated Indonesia trips for Kiwi agencies"
+- **Outcome**: "Delight your clients with Beyond-Bali adventures"
+- **Key Benefit**: NZ-based support with local expertise
+- **Proof**: Route map illustrations, safety protocols
 
-### **Warm User Experience**
-- **Purposeful Animations**: Smooth transitions that enhance understanding and delight
-- **Intuitive Flow**: Navigation that feels like following a knowledgeable local guide
-- **Generous Breathing Room**: Confident white space that lets important things stand out
-- **Mobile-First Efficiency**: Touch interactions optimized for travel agents working on phones
-- **Contemporary Craft**: Modern CSS techniques that feel current but not trendy
+#### Overseas DMCs Card
+- **Headline**: "Grow Indonesia sales without a local office"
+- **Outcome**: "Jakarta sales rep that acts as your in-market team"  
+- **Key Benefit**: Local representation without overhead
+- **Proof**: Silver Africa case study snippet
 
-### **Trustworthy Cousin Patterns**
-- **Genuine Transparency**: Real processes, honest timelines, authentic agent testimonials
-- **Cultural Intelligence**: Design choices that show deep understanding of both cultures
-- **Dependable Quirkiness**: Memorable branding that Southeast Asian agents trust completely
-- **Inclusive Design**: Accessibility that demonstrates care for all users naturally
-- **Open Communication**: Contact methods that feel approachable (WhatsApp for Southeast Asian markets)
+### 3. Proof Logos Strip
+- Airline partners (greyscale logos)
+- Tourism board certifications
+- Industry association memberships
+- Carousel format on mobile
 
-### **Reliable B2B Functionality**
-- **Agent-Focused Performance**: Fast loading optimized for busy travel professionals
-- **Smart Error Prevention**: Validation that helps rather than blocks agent workflows
-- **Progressive Enhancement**: Core booking functions work even with poor connections
-- **Cross-Platform Reliability**: Consistent experience across all devices and browsers
-- **Mobile-Centric Design**: Primary interface designed for smartphones first
+### 4. Track Record Stats
+- **30 years in market**: Established presence across both NZ and Indonesia
+- **4,000+ passengers per year**: Proven volume and operational capability  
+- **5 continent rep offices**: Global reach and local market intelligence
+- **Multi-language support**: English, Bahasa Indonesia, Thai capabilities
 
-## Homepage Section Requirements
+### 5. Why Choose Perantara
+- **Bi-directional expertise**: Only operator serving both NZ→Indonesia and SEA→NZ markets (unique differentiator)
+- **Established infrastructure**: 30-year supplier networks in both countries
+- **Multi-segment focus**: Dedicated teams for wholesalers, agencies, and DMC representation
+- **Cultural intelligence**: Deep understanding of business practices in both markets
+- **Proven track record**: Measurable results across all business lines
 
-### **Essential Page Sections**
+### 6. Contact Section with Persona Forms
+- **Persona-specific entry points**: Different forms for each customer segment
+- **Service selection dropdown**: NZ Inbound DMC, Indonesia Inbound DMC, Jakarta Representation
+- **Form fields**: Name, Email, Company, Service interest, Group size, Specific requirements
+- **WhatsApp integration**: Click-to-chat for immediate connection (market preference)
+- **Analytics tracking**: `data-sol` attributes for persona-based conversion tracking
+- **Response commitment**: "We'll respond with relevant information within 48 hours"
 
-Each iteration must include ALL of these sections in a single flowing homepage:
-
-#### **1. Fixed Navigation Header**
-- Logo/brand identity with "Your reliable NZ partner" tagline
-- Navigation links: About, Why Partner, How It Works, Contact
-- Primary CTA button: "Request itinerary" or "Partnership info"
-- Mobile-responsive hamburger menu
-
-#### **2. Hero Section - Brand Character**
-- Main headline: "NZ DMC that Southeast Asian agents trust" or "Your reliable NZ partner"
-- Subtitle: "We handle cultural nuances, family needs, and group dynamics - so you look good"
-- Two CTAs: "Get custom itinerary" + "See our difference"
-- Background: Real cultural connection moments, not stock photos
-
-#### **3. What Makes Us Different Section**
-- "Your reliable NZ partner" - We speak your clients' languages, literally and culturally
-- Three advantages: Multi-market expertise, 48h response, local connections
-- Proof: We prevent awkward moments and deliver authentic experiences
-
-#### **4. Why travel agents choose us**
-- **Southeast Asian client expertise**: Family dynamics, cultural sensitivity, value for money - we get it
-- **48-hour response**: Your clients don't wait, your reputation stays intact
-- **Language support**: English, Bahasa Indonesia, Thai - we speak your clients' languages
-- **Cultural intelligence**: No awkward moments, no cultural mistakes
-- **Local insider access**: Connections tourist boards don't have
-
-#### **5. How we work together**
-- Visual: 3-step process
-- Step 1: You brief us, we listen (properly)
-- Step 2: Custom proposal that makes you look good
-- Step 3: We execute, your clients rave
-
-#### **6. FAQ section**
-- **"Do you handle large group bookings?"** - Yes, we specialize in group travel from 10-50+ people
-- **"How fast do you respond?"** - 48 hours guaranteed, usually within 24
-- **"What about language support?"** - We have English, Bahasa Indonesia, and Thai-speaking team members
-- **"Family-friendly activities?"** - All our tours work for multi-generational groups
-- **"Cultural dietary requirements?"** - We accommodate all dietary needs and cultural preferences
-- **"Value for money?"** - We focus on authentic experiences that deliver exceptional value
-
-#### **7. Let's create something memorable**
-- Contact form: "Tell us about your clients"
-- Fields: Group size, interests, budget, special needs
-- WhatsApp option: +64 XXX XXX XXX
-- Next step: "We'll send custom proposal within 48h"
-
-#### **8. Footer**
-- Company information and contact details
+### 7. Footer
+- Company contact information (NZ and Jakarta offices)
+- Social links (LinkedIn, WhatsApp business)
 - Privacy policy and terms links
-- Cultural respect acknowledgments
+- Cultural respect acknowledgments (Māori and Indonesian)
+- Copyright notice
 
-## Quality Standards
+## Design Implementation Requirements
 
-### **Brand Consistency Metrics**
-- **Visual Identity**: 100% adherence to color palette, typography, and spacing guidelines
-- **Messaging Alignment**: Consistent "Your reliable NZ partner" positioning across all components
-- **Cultural Sensitivity**: Appropriate representation of NZ and Southeast Asian cultural elements
-- **Professional Polish**: Enterprise-grade visual quality that instills confidence
-- **Competitive Differentiation**: Distinctive design that stands out from generic tourism sites
+### Professional Brand Expression
+- **Typography hierarchy**: Clear information architecture appropriate for B2B audiences
+- **Visual balance**: Professional aesthetic that builds credibility and trust
+- **Layout patterns**: Strategic use of white space and thoughtful content organization
+- **Cultural balance**: Equal visual weight to NZ and Indonesian elements
+- **Professional imagery**: Behind-the-scenes authenticity, business contexts, real team members
 
-### **Perantara-Specific Performance**
-- **Southeast Asian Market Optimization**: Fast loading for typical Philippines, Indonesia, and Thailand internet speeds
-- **Mobile-First Performance**: Optimized for travel agents working primarily on mobile devices
-- **B2B Efficiency**: Quick load times that don't interrupt agent workflows
+### Multi-Market Credibility Patterns
+- **Established authority**: Visual cues that communicate 30-year track record
+- **Bi-directional capability**: Design elements showing expertise in both market directions
+- **Cultural intelligence**: Thoughtful integration of design elements from both cultures
+- **Professional trust**: Enterprise-grade polish appropriate for B2B audiences
+- **Segment clarity**: Clear differentiation between customer types without confusion
 
-### **Perantara-Specific Accessibility**
-- **Cultural Inclusivity**: Design that respects NZ and Southeast Asian cultural accessibility needs
-- **Multi-Language Considerations**: Structure that supports English, Bahasa Indonesia, and Thai language content
-- **Business Context**: Accessibility patterns appropriate for B2B travel agent workflows
+## Technical Specifications
 
-### **Technical Excellence**
-- **Cross-Browser Support**: Consistent experience across Chrome, Firefox, Safari, Edge
-- **Responsive Design**: Seamless adaptation from mobile (320px) to large desktop (1920px+)
-- **Progressive Enhancement**: Core functionality works without JavaScript
-- **Error Handling**: Graceful degradation and meaningful error messages
-- **Security Best Practices**: XSS prevention, secure form handling, privacy compliance
+### Responsive Design
+- **Mobile-first approach**: Primary design for 320px+
+- **Breakpoints**: 640px (sm), 768px (md), 1024px (lg), 1280px (xl)
+- **Navigation adaptation**: Hamburger menu below 768px
+- **Grid responsiveness**: Single column mobile → multi-column desktop
+- **Touch optimization**: 44px minimum touch targets
 
-## Iteration Evolution Strategy
+### Form Functionality  
+- **Validation**: Real-time validation with helpful error messages
+- **Persona routing**: Different form actions based on customer type selection
+- **Progressive enhancement**: Core functionality works without JavaScript
+- **Accessibility**: Proper labels, ARIA attributes, keyboard navigation
 
-### **Theme Variation Dimensions**
+### Performance Optimization
+- **Global loading**: Optimized for NZ, Indonesia, and international users
+- **Image optimization**: WebP with fallbacks, appropriate sizing
+- **Font loading**: Efficient web font loading strategy
+- **Mobile performance**: Optimized for varying connection speeds
 
-Each iteration should explore different approaches while maintaining core brand consistency:
+## Output Format
 
-#### **Perantara-Specific Theme Variations**
-- **Cultural Authenticity**: Emphasize NZ/Southeast Asian cultural bridge elements with genuine local connections
-- **Your reliable NZ partner**: Balance international professionalism with local authenticity
-- **Trust & Security**: Highlight reliability through multi-market travel agent testimonials
-- **Warm Hospitality**: Friendly, welcoming tone that feels like a trustworthy cousin
+**File naming**: `perantara_homepage_[iteration].html`
 
-#### **Design Implementation Approaches**
-- **Color Palette Variations**: Different balances of teal, red, gold, and neutral tones
-- **Typography Treatments**: Font pairings, hierarchy emphasis, cultural considerations
-- **Layout Patterns**: Grid systems, section arrangements, content flow variations
-- **Animation Styles**: Motion approaches that respect cultural sensitivities
-- **Content Emphasis**: Which sections receive primary visual attention
+**Structure**: Single self-contained HTML file with:
+- Embedded CSS with CSS custom properties for theming
+- Embedded JavaScript for interactions and form handling
+- No external dependencies except web fonts as needed
+- Mobile-responsive design using CSS Grid and Flexbox
+- Accessible markup with proper semantic structure
 
-## Responsive Strategy
+## Theme Variations
 
-### **Breakpoint System**
-```css
-/* Mobile First Approach */
-:root {
-  --breakpoint-sm: 640px;   /* Small tablets */
-  --breakpoint-md: 768px;   /* Tablets */
-  --breakpoint-lg: 1024px;  /* Small laptops */
-  --breakpoint-xl: 1280px;  /* Laptops */
-  --breakpoint-2xl: 1536px; /* Large screens */
-}
-```
+Each iteration should explore different visual approaches to the bi-directional bridge concept:
 
-### **Component Adaptation Patterns**
-- **Navigation**: Collapsible hamburger menu below 768px
-- **Hero Section**: Stacked layout on mobile, horizontal on desktop
-- **Benefits Grid**: Single column mobile, 2 columns tablet, 4 columns desktop
-- **Contact Form**: Stacked inputs mobile, side-by-side desktop
-- **Typography**: Scaled font sizes using clamp() for fluid responsiveness
+### Consistency Requirements
+- Maintain professional credibility appropriate for 30-year established company
+- Clear segment differentiation in Solutions grid without confusion
+- Strong conversion paths for all three customer types
+- Cultural sensitivity in both NZ and Indonesian contexts
+- Focus on unique multi-market positioning vs generic DMC patterns
 
-## Animation & Interaction Principles
-
-### **Subtle Enhancement Philosophy**
-- **Performance First**: Hardware-accelerated transforms, 60fps animations
-- **Purposeful Motion**: Animations that guide attention and provide feedback
-- **Reduced Motion Respect**: Honors `prefers-reduced-motion` user preferences
-- **Progressive Loading**: Skeleton screens and staggered content reveals
-- **Micro-Interactions**: Button hover states, form focus effects, smooth transitions
-
-### **Brand-Appropriate Animations**
-- **Professional Elegance**: Sophisticated easing curves (ease-out, ease-in-out)
-- **Confident Transitions**: Smooth state changes that reinforce reliability
-- **Cultural Sensitivity**: Animations that respect NZ and Southeast Asian cultural norms
-- **Trust Building**: Smooth, predictable interactions that build user confidence
-- **Premium Feel**: Subtle animations that enhance perceived quality
-
-## Brand Visual Character
-
-### **Perantara Color Philosophy**
-- **Cultural Bridge Colors**: Visual elements that honor NZ and Southeast Asian cultural significance
-- **Trustworthy Cousin Palette**: Professional yet approachable - memorable but dependable
-- **Monochromatic Sophistication**: One primary color family with strategic accent for impact
-- **Premium Positioning**: Colors that communicate quality without being pretentious
-
-### **Typography Personality**
-- **Conversational Headlines**: Typography that feels like talking to a smart, trustworthy friend
-- **Cultural Sensitivity**: Font choices that respect NZ and Southeast Asian reading patterns
-- **Authentic Character**: "Interesting font pairings with personality - not corporate mono-culture"
-- **Reliable Clarity**: Clear hierarchy that makes travel agents' jobs easier
-
-## Ultra-Thinking Directive
-
-Before creating each Perantara Reps component, deeply consider:
-
-**Brand Expression:**
-- How does this component reinforce our "Your reliable NZ partner" positioning?
-- What visual cues communicate boldness without appearing aggressive?
-- How can we demonstrate cultural intelligence through design choices?
-- What elements make this feel premium and trustworthy to Southeast Asian partners?
-
-**User Journey Optimization:**
-- How does this component move B2B partners toward inquiry conversion?
-- What information do Southeast Asian travel agents need at this stage?
-- How can we reduce friction while maintaining professional credibility?
-- What cultural considerations should influence the user experience?
-
-**Technical Excellence:**
-- How does this component contribute to 90+ Lighthouse scores?
-- What Astro-specific optimizations can enhance performance?
-- How does this integrate seamlessly with Netlify Forms and deployment?
-- What accessibility features are essential for inclusive design?
-
-**Competitive Differentiation:**
-- How does this component distinguish us from generic DMC websites?
-- What innovative interactions reinforce our premium positioning?
-- How can we showcase operational excellence through UI design?
-- What unique value propositions should be emphasized visually?
-
-**Scalability & Maintenance:**
-- How does this component support future feature additions?
-- What design tokens ensure consistent brand application?
-- How can this component be efficiently maintained and updated?
-- What documentation helps future developers understand brand requirements?
-
-**Generate components that are:**
-- **Authentically Confident**: Design that feels like a trustworthy cousin - reliable but not boring
-- **Warmly Functional**: Interfaces that make travel agents' jobs easier while feeling personal
-- **Trustworthy by Nature**: Visual cues that build confidence through genuine cultural understanding
-- **Reliably Creative**: Consistent performance with unexpected delightful touches
-- **Culturally Intelligent**: Thoughtful integration that shows deep respect for both cultures
-
-The success of Perantara Reps' digital platform depends on creating a brand experience that Southeast Asian travel agents immediately think: "Finally, a DMC that gets my business AND my clients - they're different but I trust them completely with my reputation."
+The goal is distinctive visual approaches that reinforce Perantara's unique bi-directional business model while serving diverse customer needs efficiently.
