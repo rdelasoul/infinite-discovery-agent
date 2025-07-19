@@ -1,0 +1,1252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perantara Reps - Local DMC Expertise for NZ & Indonesia</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #1D3557;
+            --accent-blue: #457B9D;
+            --teal: #A8DADC;
+            --light-cream: #F1FAEE;
+            --coral: #E63946;
+            --white: #FFFFFF;
+            --gray-50: #F8FAFC;
+            --gray-100: #F1F5F9;
+            --gray-200: #E2E8F0;
+            --gray-300: #CBD5E1;
+            --gray-400: #94A3B8;
+            --gray-500: #64748B;
+            --gray-600: #475569;
+            --gray-700: #334155;
+            --gray-800: #1E293B;
+            --gray-900: #0F172A;
+            
+            --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            --transition: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+            --border-radius: 12px;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--gray-50);
+            color: var(--gray-900);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Floating Header */
+        .floating-header {
+            position: fixed;
+            top: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            width: calc(100% - 48px);
+            max-width: 1200px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 24px;
+            padding: 16px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: var(--transition);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .floating-header:hover {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: var(--shadow-xl);
+            transform: translateX(-50%) translateY(-2px);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+        }
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--gray-700);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            padding: 8px 0;
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-blue);
+            transition: var(--transition);
+        }
+
+        .nav-link:hover {
+            color: var(--accent-blue);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            padding: 16px;
+            min-width: 200px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-8px);
+            transition: var(--transition);
+        }
+
+        .nav-dropdown:hover .dropdown-content {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-item {
+            display: block;
+            padding: 8px 12px;
+            color: var(--gray-700);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        .dropdown-item:hover {
+            background: var(--gray-100);
+            color: var(--accent-blue);
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, var(--accent-blue), var(--teal));
+            color: var(--white);
+            padding: 12px 24px;
+            border: none;
+            border-radius: 24px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+            box-shadow: var(--shadow-md);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+            opacity: 0.9;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 120px 24px 96px;
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 64px;
+            align-items: center;
+            min-height: 90vh;
+        }
+
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(168, 218, 220, 0.2);
+            color: var(--accent-blue);
+            padding: 8px 16px;
+            border-radius: 24px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            width: fit-content;
+            border: 1px solid rgba(168, 218, 220, 0.3);
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-title .highlight {
+            color: var(--accent-blue);
+            position: relative;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--gray-600);
+            line-height: 1.5;
+            max-width: 580px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .primary-cta {
+            background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
+            color: var(--white);
+            padding: 16px 32px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+            box-shadow: var(--shadow-md);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .primary-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .secondary-cta {
+            color: var(--accent-blue);
+            padding: 16px 24px;
+            border: 2px solid var(--accent-blue);
+            background: transparent;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .secondary-cta:hover {
+            background: var(--accent-blue);
+            color: var(--white);
+        }
+
+        /* Cascading Cards System */
+        .cascading-cards {
+            position: relative;
+            height: 600px;
+            width: 100%;
+        }
+
+        .service-card {
+            position: absolute;
+            background: var(--white);
+            border-radius: 20px;
+            padding: 32px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--gray-200);
+            transition: var(--transition);
+            width: 320px;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .card-1 {
+            top: 0;
+            right: 0;
+            z-index: 3;
+            background: linear-gradient(135deg, var(--white), var(--light-cream));
+        }
+
+        .card-2 {
+            top: 120px;
+            right: 80px;
+            z-index: 2;
+            background: linear-gradient(135deg, var(--white), rgba(168, 218, 220, 0.1));
+        }
+
+        .card-3 {
+            top: 240px;
+            right: 160px;
+            z-index: 1;
+            background: linear-gradient(135deg, var(--white), rgba(69, 123, 157, 0.05));
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--teal));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--primary-blue);
+            margin-bottom: 8px;
+        }
+
+        .card-description {
+            color: var(--gray-600);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        /* Trust Section with Diagonal Flow */
+        .trust-section {
+            background: linear-gradient(135deg, var(--white) 0%, var(--light-cream) 100%);
+            padding: 96px 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .trust-section::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            left: 0;
+            right: 0;
+            height: 100px;
+            background: var(--gray-50);
+            transform: skewY(-2deg);
+            transform-origin: top left;
+        }
+
+        .trust-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 96px;
+            align-items: start;
+        }
+
+        .trust-content {
+            display: flex;
+            flex-direction: column;
+            gap: 48px;
+        }
+
+        .trust-header {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .trust-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            line-height: 1.2;
+        }
+
+        .trust-subtitle {
+            font-size: 1.125rem;
+            color: var(--gray-600);
+            max-width: 500px;
+        }
+
+        .trust-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+        }
+
+        .trust-feature {
+            background: var(--white);
+            padding: 32px;
+            border-radius: 16px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--gray-200);
+            transition: var(--transition);
+        }
+
+        .trust-feature:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--teal), var(--accent-blue));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+        }
+
+        .feature-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--primary-blue);
+            margin-bottom: 8px;
+        }
+
+        .feature-description {
+            color: var(--gray-600);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        /* Sticky Metrics Sidebar */
+        .metrics-sidebar {
+            position: sticky;
+            top: 120px;
+            background: var(--white);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--gray-200);
+        }
+
+        .metrics-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--primary-blue);
+            margin-bottom: 32px;
+            text-align: center;
+        }
+
+        .metrics-list {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .metric-item {
+            text-align: center;
+            padding: 20px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--gray-50), var(--light-cream));
+            border: 1px solid var(--gray-200);
+        }
+
+        .metric-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-blue);
+            display: block;
+        }
+
+        .metric-label {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            font-weight: 500;
+        }
+
+        /* Growth Opportunities Section */
+        .growth-section {
+            padding: 96px 24px;
+            background: var(--primary-blue);
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .growth-section::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            left: 0;
+            right: 0;
+            height: 100px;
+            background: var(--light-cream);
+            transform: skewY(2deg);
+            transform-origin: top left;
+        }
+
+        .growth-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 64px;
+        }
+
+        .growth-header {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .growth-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+            line-height: 1.2;
+        }
+
+        .growth-subtitle {
+            font-size: 1.125rem;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+
+        .benefit-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 32px;
+            transition: var(--transition);
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .benefit-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--coral), var(--teal));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .benefit-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .benefit-description {
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            padding: 96px 24px;
+            background: linear-gradient(135deg, var(--light-cream), var(--white));
+        }
+
+        .contact-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 24px;
+        }
+
+        .contact-subtitle {
+            font-size: 1.125rem;
+            color: var(--gray-600);
+            margin-bottom: 48px;
+        }
+
+        .contact-form {
+            background: var(--white);
+            padding: 48px;
+            border-radius: 24px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--gray-200);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: var(--gray-700);
+            font-size: 0.95rem;
+        }
+
+        .form-input,
+        .form-textarea {
+            padding: 16px;
+            border: 2px solid var(--gray-200);
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: var(--transition);
+            font-family: var(--font-family);
+        }
+
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px rgba(69, 123, 157, 0.1);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .submit-button {
+            background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
+            color: var(--white);
+            padding: 16px 48px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            justify-self: center;
+            grid-column: 1 / -1;
+        }
+
+        .submit-button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--gray-900);
+            color: var(--white);
+            padding: 64px 24px 32px;
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 48px;
+            margin-bottom: 48px;
+        }
+
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--teal);
+        }
+
+        .footer-description {
+            color: var(--gray-400);
+            line-height: 1.6;
+            max-width: 300px;
+        }
+
+        .footer-column h4 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--teal);
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            list-style: none;
+        }
+
+        .footer-link {
+            color: var(--gray-400);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-link:hover {
+            color: var(--teal);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--gray-800);
+            padding-top: 32px;
+            text-align: center;
+            color: var(--gray-400);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .floating-header {
+                top: 16px;
+                width: calc(100% - 32px);
+                padding: 12px 20px;
+                border-radius: 16px;
+            }
+
+            .nav-menu {
+                display: none;
+            }
+
+            .hero {
+                grid-template-columns: 1fr;
+                gap: 48px;
+                padding: 100px 24px 64px;
+                text-align: center;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .cascading-cards {
+                height: auto;
+                position: relative;
+            }
+
+            .service-card {
+                position: relative;
+                width: 100%;
+                margin-bottom: 24px;
+            }
+
+            .card-1, .card-2, .card-3 {
+                top: auto;
+                right: auto;
+                position: relative;
+            }
+
+            .trust-container {
+                grid-template-columns: 1fr;
+                gap: 48px;
+            }
+
+            .metrics-sidebar {
+                position: relative;
+                top: auto;
+            }
+
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-form {
+                grid-template-columns: 1fr;
+                padding: 32px;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+        }
+
+        /* Focus Indicators for Accessibility */
+        .nav-link:focus,
+        .cta-button:focus,
+        .primary-cta:focus,
+        .secondary-cta:focus,
+        .submit-button:focus {
+            outline: 3px solid var(--accent-blue);
+            outline-offset: 2px;
+        }
+
+        /* Scroll Animation */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .animate-on-scroll.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Service Icons */
+        .icon-nz::before {
+            content: "🏔️";
+            font-size: 24px;
+        }
+
+        .icon-indonesia::before {
+            content: "🌴";
+            font-size: 24px;
+        }
+
+        .icon-representation::before {
+            content: "🤝";
+            font-size: 24px;
+        }
+
+        .icon-expertise::before {
+            content: "⭐";
+            font-size: 20px;
+        }
+
+        .icon-local::before {
+            content: "📍";
+            font-size: 20px;
+        }
+
+        .icon-support::before {
+            content: "💬";
+            font-size: 20px;
+        }
+
+        .icon-growth::before {
+            content: "📈";
+            font-size: 24px;
+        }
+
+        .icon-network::before {
+            content: "🌐";
+            font-size: 24px;
+        }
+
+        .icon-efficiency::before {
+            content: "⚡";
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Header -->
+    <header class="floating-header">
+        <div class="logo">Perantara Reps</div>
+        <nav>
+            <ul class="nav-menu">
+                <li class="nav-item nav-dropdown">
+                    <a href="#" class="nav-link">Solutions</a>
+                    <div class="dropdown-content">
+                        <a href="#" class="dropdown-item">NZ Inbound Tours</a>
+                        <a href="#" class="dropdown-item">Indonesia Adventures</a>
+                        <a href="#" class="dropdown-item">Sales Representation</a>
+                        <a href="#" class="dropdown-item">Local Office Services</a>
+                    </div>
+                </li>
+                <li class="nav-item nav-dropdown">
+                    <a href="#" class="nav-link">Services</a>
+                    <div class="dropdown-content">
+                        <a href="#" class="dropdown-item">Tour Operations</a>
+                        <a href="#" class="dropdown-item">Client Management</a>
+                        <a href="#" class="dropdown-item">Local Partnerships</a>
+                        <a href="#" class="dropdown-item">24/7 Support</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">About</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Contact</a>
+                </li>
+            </ul>
+        </nav>
+        <a href="#contact" class="cta-button">Get Started</a>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content animate-on-scroll">
+            <div class="hero-badge">
+                <span>🏆 30 Years of Local Expertise</span>
+            </div>
+            <h1 class="hero-title">
+                Local expertise that delivers 
+                <span class="highlight">seamless client experiences</span>
+            </h1>
+            <p class="hero-subtitle">
+                Established DMC helping travel professionals deliver exceptional client experiences across New Zealand and Indonesia markets with three decades of proven local expertise and market knowledge.
+            </p>
+            <div class="hero-actions">
+                <a href="#contact" class="primary-cta">
+                    <span>Start Partnership</span>
+                    <span>→</span>
+                </a>
+                <a href="#solutions" class="secondary-cta">
+                    View Solutions
+                </a>
+            </div>
+        </div>
+
+        <div class="cascading-cards animate-on-scroll">
+            <div class="service-card card-1">
+                <div class="card-icon icon-nz"></div>
+                <h3 class="card-title">NZ Inbound Expertise</h3>
+                <p class="card-description">
+                    Seamless tour experiences across New Zealand's diverse landscapes with established local partnerships and proven operational excellence.
+                </p>
+            </div>
+            <div class="service-card card-2">
+                <div class="card-icon icon-indonesia"></div>
+                <h3 class="card-title">Indonesia Adventures</h3>
+                <p class="card-description">
+                    Safe, authentic Indonesian experiences with deep cultural knowledge and comprehensive safety protocols for diverse client needs.
+                </p>
+            </div>
+            <div class="service-card card-3">
+                <div class="card-icon icon-representation"></div>
+                <h3 class="card-title">Sales Representation</h3>
+                <p class="card-description">
+                    Local office presence without overhead costs - dedicated representation that extends your reach into Indonesia's growing markets.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust & Credibility Section -->
+    <section class="trust-section">
+        <div class="trust-container">
+            <div class="trust-content">
+                <div class="trust-header animate-on-scroll">
+                    <h2 class="trust-title">Built on three decades of trusted partnerships</h2>
+                    <p class="trust-subtitle">
+                        Our deep local knowledge and established networks ensure your clients receive exceptional experiences while you maintain operational efficiency and market reputation.
+                    </p>
+                </div>
+
+                <div class="trust-features">
+                    <div class="trust-feature animate-on-scroll">
+                        <div class="feature-icon icon-expertise"></div>
+                        <h3 class="feature-title">Proven Track Record</h3>
+                        <p class="feature-description">
+                            30 years of delivering exceptional client experiences with consistent quality standards and operational excellence across both markets.
+                        </p>
+                    </div>
+                    <div class="trust-feature animate-on-scroll">
+                        <div class="feature-icon icon-local"></div>
+                        <h3 class="feature-title">Deep Local Networks</h3>
+                        <p class="feature-description">
+                            Established partnerships with premium suppliers, local guides, and service providers ensuring authentic experiences and competitive rates.
+                        </p>
+                    </div>
+                    <div class="trust-feature animate-on-scroll">
+                        <div class="feature-icon icon-support"></div>
+                        <h3 class="feature-title">24/7 Client Support</h3>
+                        <p class="feature-description">
+                            Round-the-clock assistance with local language capabilities and immediate problem resolution to protect your client relationships.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="metrics-sidebar animate-on-scroll">
+                <h3 class="metrics-title">Our Impact</h3>
+                <div class="metrics-list">
+                    <div class="metric-item">
+                        <span class="metric-number">30+</span>
+                        <span class="metric-label">Years Experience</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-number">2</span>
+                        <span class="metric-label">Key Markets</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-number">24/7</span>
+                        <span class="metric-label">Client Support</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-number">100%</span>
+                        <span class="metric-label">Local Expertise</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Growth Opportunities Section -->
+    <section class="growth-section">
+        <div class="growth-container">
+            <div class="growth-header animate-on-scroll">
+                <h2 class="growth-title">Expand into Indonesia without the overhead</h2>
+                <p class="growth-subtitle">
+                    Gain a local presence in Indonesia's growing travel market through our established office and experienced team, giving you competitive advantages without operational complexity.
+                </p>
+            </div>
+
+            <div class="benefits-grid">
+                <div class="benefit-card animate-on-scroll">
+                    <div class="benefit-icon icon-growth"></div>
+                    <h3 class="benefit-title">Market Growth Access</h3>
+                    <p class="benefit-description">
+                        Tap into Indonesia's expanding travel market with established local connections and proven market entry strategies.
+                    </p>
+                </div>
+                <div class="benefit-card animate-on-scroll">
+                    <div class="benefit-icon icon-network"></div>
+                    <h3 class="benefit-title">Instant Local Presence</h3>
+                    <p class="benefit-description">
+                        Professional office representation with local staff who understand cultural nuances and business practices.
+                    </p>
+                </div>
+                <div class="benefit-card animate-on-scroll">
+                    <div class="benefit-icon icon-efficiency"></div>
+                    <h3 class="benefit-title">Cost-Efficient Expansion</h3>
+                    <p class="benefit-description">
+                        Achieve market presence without setup costs, staffing overhead, or regulatory complexity - we handle the local operations.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="contact-container">
+            <div class="animate-on-scroll">
+                <h2 class="contact-title">Ready to enhance your client experiences?</h2>
+                <p class="contact-subtitle">
+                    Let's discuss how our local expertise can strengthen your market position and client satisfaction across New Zealand and Indonesia.
+                </p>
+            </div>
+
+            <form class="contact-form animate-on-scroll">
+                <div class="form-group">
+                    <label for="firstName" class="form-label">First Name</label>
+                    <input type="text" id="firstName" name="firstName" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label for="lastName" class="form-label">Last Name</label>
+                    <input type="text" id="lastName" name="lastName" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label for="email" class="form-label">Email Address</label>
+                    <input type="email" id="email" name="email" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label for="company" class="form-label">Company</label>
+                    <input type="text" id="company" name="company" class="form-input" required>
+                </div>
+                <div class="form-group full-width">
+                    <label for="message" class="form-label">How can we help your business?</label>
+                    <textarea id="message" name="message" class="form-textarea" placeholder="Tell us about your current challenges and goals..." required></textarea>
+                </div>
+                <button type="submit" class="submit-button">Start Our Partnership</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <div class="footer-logo">Perantara Reps</div>
+                <p class="footer-description">
+                    Local DMC expertise for seamless client experiences across New Zealand and Indonesia markets. 30 years of trusted partnerships and proven results.
+                </p>
+            </div>
+            <div class="footer-column">
+                <h4>Solutions</h4>
+                <ul class="footer-links">
+                    <li><a href="#" class="footer-link">NZ Inbound Tours</a></li>
+                    <li><a href="#" class="footer-link">Indonesia Adventures</a></li>
+                    <li><a href="#" class="footer-link">Sales Representation</a></li>
+                    <li><a href="#" class="footer-link">Local Office Services</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Services</h4>
+                <ul class="footer-links">
+                    <li><a href="#" class="footer-link">Tour Operations</a></li>
+                    <li><a href="#" class="footer-link">Client Management</a></li>
+                    <li><a href="#" class="footer-link">Local Partnerships</a></li>
+                    <li><a href="#" class="footer-link">24/7 Support</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Company</h4>
+                <ul class="footer-links">
+                    <li><a href="#" class="footer-link">About Us</a></li>
+                    <li><a href="#" class="footer-link">Our Team</a></li>
+                    <li><a href="#" class="footer-link">Careers</a></li>
+                    <li><a href="#" class="footer-link">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Perantara Reps. All rights reserved. | Privacy Policy | Terms of Service</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animated');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all elements with animation class
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Enhanced floating header scroll effect
+        let lastScrollY = window.scrollY;
+        const header = document.querySelector('.floating-header');
+
+        window.addEventListener('scroll', () => {
+            const currentScrollY = window.scrollY;
+            
+            if (currentScrollY > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+                header.style.backdropFilter = 'blur(25px)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+                header.style.backdropFilter = 'blur(20px)';
+            }
+            
+            lastScrollY = currentScrollY;
+        });
+
+        // Form submission handler
+        document.querySelector('.contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData.entries());
+            
+            // Simulate form submission
+            const submitButton = this.querySelector('.submit-button');
+            const originalText = submitButton.textContent;
+            
+            submitButton.textContent = 'Sending...';
+            submitButton.disabled = true;
+            
+            setTimeout(() => {
+                submitButton.textContent = 'Message Sent!';
+                setTimeout(() => {
+                    submitButton.textContent = originalText;
+                    submitButton.disabled = false;
+                    this.reset();
+                }, 2000);
+            }, 1500);
+        });
+
+        // Enhanced cascading cards animation on load
+        window.addEventListener('load', () => {
+            const cards = document.querySelectorAll('.service-card');
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.transform = 'translateY(0) scale(1)';
+                    card.style.opacity = '1';
+                }, index * 200);
+            });
+        });
+
+        // Initialize cards with hidden state
+        document.querySelectorAll('.service-card').forEach(card => {
+            card.style.transform = 'translateY(20px) scale(0.95)';
+            card.style.opacity = '0';
+            card.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+        });
+
+        // Parallax effect for hero background
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            if (hero) {
+                hero.style.transform = `translateY(${scrolled * 0.1}px)`;
+            }
+        });
+
+        // Dynamic gradient animation for CTAs
+        document.querySelectorAll('.primary-cta, .cta-button').forEach(button => {
+            button.addEventListener('mousemove', (e) => {
+                const rect = button.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                button.style.background = `radial-gradient(circle at ${x}px ${y}px, var(--accent-blue), var(--primary-blue))`;
+            });
+            
+            button.addEventListener('mouseleave', () => {
+                button.style.background = 'linear-gradient(135deg, var(--primary-blue), var(--accent-blue))';
+            });
+        });
+    </script>
+</body>
+</html>

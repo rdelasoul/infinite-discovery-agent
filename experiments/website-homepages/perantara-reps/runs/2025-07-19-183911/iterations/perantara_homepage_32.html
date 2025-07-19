@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perantara Reps - Local DMC Expertise for New Zealand & Indonesia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #1D3557;
+            --accent-blue: #457B9D;
+            --teal: #A8DADC;
+            --light-cream: #F1FAEE;
+            --coral: #E63946;
+            --white: #FFFFFF;
+            --gray-50: #F8FAFC;
+            --gray-100: #F1F5F9;
+            --gray-200: #E2E8F0;
+            --gray-300: #CBD5E1;
+            --gray-600: #475569;
+            --gray-800: #1E293B;
+            --gray-900: #0F172A;
+            
+            --spacing-xs: 8px;
+            --spacing-sm: 16px;
+            --spacing-md: 24px;
+            --spacing-lg: 32px;
+            --spacing-xl: 48px;
+            --spacing-2xl: 64px;
+            --spacing-3xl: 96px;
+            
+            --transition: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--gray-800);
+            background: var(--white);
+            overflow-x: hidden;
+        }
+
+        /* Floating Header */
+        .floating-header {
+            position: fixed;
+            top: var(--spacing-md);
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 48px);
+            max-width: 1200px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            border: 1px solid var(--gray-200);
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--spacing-sm) var(--spacing-lg);
+            height: 64px;
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-lg);
+        }
+
+        .nav-link {
+            color: var(--gray-600);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .nav-link:hover {
+            color: var(--primary-blue);
+        }
+
+        .nav-link.has-dropdown::after {
+            content: '↓';
+            margin-left: var(--spacing-xs);
+            font-size: 0.875rem;
+        }
+
+        .cta-button {
+            background: var(--coral);
+            color: var(--white);
+            padding: 12px var(--spacing-md);
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .cta-button:hover {
+            background: #D6324A;
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 112px;
+            padding: var(--spacing-3xl) var(--spacing-md);
+            min-height: 90vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 3fr 2fr;
+            gap: var(--spacing-2xl);
+            align-items: center;
+            height: 100%;
+        }
+
+        .hero-content {
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            line-height: 1.2;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--accent-blue);
+            margin-bottom: var(--spacing-lg);
+            font-weight: 500;
+        }
+
+        .hero-description {
+            font-size: 1.125rem;
+            color: var(--gray-600);
+            margin-bottom: var(--spacing-xl);
+            max-width: 500px;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: var(--spacing-sm);
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: var(--coral);
+            color: var(--white);
+            padding: 16px var(--spacing-lg);
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+
+        .btn-primary:hover {
+            background: #D6324A;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary-blue);
+            padding: 16px var(--spacing-lg);
+            border: 2px solid var(--primary-blue);
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary-blue);
+            color: var(--white);
+        }
+
+        /* Cascading Cards - Diamond Formation */
+        .cascading-cards {
+            position: relative;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card {
+            position: absolute;
+            width: 280px;
+            height: 200px;
+            background: var(--white);
+            border-radius: 16px;
+            padding: var(--spacing-lg);
+            box-shadow: 0 10px 40px rgba(29, 53, 87, 0.1);
+            border: 1px solid var(--gray-200);
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(29, 53, 87, 0.15);
+        }
+
+        /* Diamond Formation Layout */
+        .card:nth-child(1) {
+            z-index: 3;
+            transform: translateY(-40px) translateX(0);
+            background: linear-gradient(135deg, var(--light-cream), var(--white));
+        }
+
+        .card:nth-child(2) {
+            z-index: 2;
+            transform: translateY(20px) translateX(-120px);
+            background: linear-gradient(135deg, var(--teal), var(--light-cream));
+        }
+
+        .card:nth-child(3) {
+            z-index: 1;
+            transform: translateY(20px) translateX(120px);
+            background: linear-gradient(135deg, var(--accent-blue), var(--teal));
+            color: var(--white);
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: var(--spacing-sm);
+            font-size: 1.5rem;
+        }
+
+        .card:nth-child(1) .card-icon {
+            background: var(--coral);
+            color: var(--white);
+        }
+
+        .card:nth-child(2) .card-icon {
+            background: var(--primary-blue);
+            color: var(--white);
+        }
+
+        .card:nth-child(3) .card-icon {
+            background: rgba(255, 255, 255, 0.2);
+            color: var(--white);
+        }
+
+        .card-title {
+            font-weight: 600;
+            margin-bottom: var(--spacing-xs);
+            font-size: 1.125rem;
+        }
+
+        .card-description {
+            font-size: 0.875rem;
+            opacity: 0.8;
+        }
+
+        /* Trust Section */
+        .trust-section {
+            padding: var(--spacing-3xl) var(--spacing-md);
+            background: var(--gray-50);
+        }
+
+        .trust-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: var(--spacing-2xl);
+        }
+
+        .trust-content h2 {
+            font-size: 2rem;
+            color: var(--primary-blue);
+            margin-bottom: var(--spacing-md);
+            font-weight: 700;
+        }
+
+        .trust-description {
+            font-size: 1.125rem;
+            color: var(--gray-600);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        /* Hexagonal Partner Logo Grid */
+        .partner-logos {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .partner-logo {
+            width: 100px;
+            height: 80px;
+            background: var(--white);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--gray-200);
+            font-weight: 600;
+            color: var(--gray-600);
+            font-size: 0.75rem;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .partner-logo:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(29, 53, 87, 0.1);
+        }
+
+        .partner-logo:nth-child(2),
+        .partner-logo:nth-child(5) {
+            transform: translateY(-20px);
+        }
+
+        .partner-logo:nth-child(3),
+        .partner-logo:nth-child(6) {
+            transform: translateY(-40px);
+        }
+
+        .certifications {
+            display: flex;
+            gap: var(--spacing-sm);
+            flex-wrap: wrap;
+        }
+
+        .cert-badge {
+            background: var(--accent-blue);
+            color: var(--white);
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        /* Sticky Metrics Sidebar */
+        .metrics-sidebar {
+            position: sticky;
+            top: 140px;
+            background: var(--white);
+            border-radius: 16px;
+            padding: var(--spacing-lg);
+            border: 1px solid var(--gray-200);
+            box-shadow: 0 10px 40px rgba(29, 53, 87, 0.08);
+        }
+
+        .metrics-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--primary-blue);
+            margin-bottom: var(--spacing-md);
+            text-align: center;
+        }
+
+        .metric {
+            text-align: center;
+            margin-bottom: var(--spacing-md);
+            padding: var(--spacing-sm);
+            border-radius: 12px;
+            background: var(--light-cream);
+        }
+
+        .metric:last-child {
+            margin-bottom: 0;
+        }
+
+        .metric-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--coral);
+            display: block;
+        }
+
+        .metric-label {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            font-weight: 500;
+        }
+
+        /* Growth Section */
+        .growth-section {
+            padding: var(--spacing-3xl) var(--spacing-md);
+            background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
+            color: var(--white);
+        }
+
+        .growth-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .growth-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .growth-subtitle {
+            font-size: 1.25rem;
+            margin-bottom: var(--spacing-xl);
+            opacity: 0.9;
+        }
+
+        .growth-benefits {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .benefit-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: var(--spacing-lg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: var(--transition);
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-4px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .benefit-icon {
+            width: 56px;
+            height: 56px;
+            background: var(--coral);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto var(--spacing-sm);
+            font-size: 1.5rem;
+        }
+
+        .benefit-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .benefit-description {
+            font-size: 0.875rem;
+            opacity: 0.9;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            padding: var(--spacing-3xl) var(--spacing-md);
+            background: var(--light-cream);
+        }
+
+        .contact-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact-title {
+            font-size: 2rem;
+            color: var(--primary-blue);
+            margin-bottom: var(--spacing-md);
+            font-weight: 700;
+        }
+
+        .contact-description {
+            font-size: 1.125rem;
+            color: var(--gray-600);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .contact-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-input {
+            padding: 16px;
+            border: 1px solid var(--gray-300);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: var(--transition);
+            background: var(--white);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px rgba(69, 123, 157, 0.1);
+        }
+
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .submit-button {
+            background: var(--coral);
+            color: var(--white);
+            padding: 16px var(--spacing-xl);
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            justify-self: center;
+        }
+
+        .submit-button:hover {
+            background: #D6324A;
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--primary-blue);
+            color: var(--white);
+            padding: var(--spacing-xl) var(--spacing-md) var(--spacing-lg);
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-lg);
+        }
+
+        .footer-section h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
+            color: var(--light-cream);
+        }
+
+        .footer-link {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            display: block;
+            margin-bottom: var(--spacing-xs);
+            transition: var(--transition);
+        }
+
+        .footer-link:hover {
+            color: var(--white);
+        }
+
+        .footer-bottom {
+            margin-top: var(--spacing-lg);
+            padding-top: var(--spacing-lg);
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .floating-header {
+                width: calc(100% - 24px);
+                top: var(--spacing-sm);
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                margin-top: 88px;
+                padding: var(--spacing-xl) var(--spacing-sm);
+            }
+
+            .hero-container {
+                grid-template-columns: 1fr;
+                gap: var(--spacing-xl);
+                text-align: center;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .cascading-cards {
+                height: 600px;
+            }
+
+            .card {
+                width: 240px;
+                height: 180px;
+                padding: var(--spacing-sm);
+            }
+
+            .card:nth-child(2) {
+                transform: translateY(160px) translateX(-40px);
+            }
+
+            .card:nth-child(3) {
+                transform: translateY(160px) translateX(40px);
+            }
+
+            .trust-container {
+                grid-template-columns: 1fr;
+                gap: var(--spacing-lg);
+            }
+
+            .metrics-sidebar {
+                position: static;
+            }
+
+            .partner-logos {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .contact-form {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+
+        /* Accessibility */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+        }
+
+        /* Focus indicators */
+        .nav-link:focus,
+        .cta-button:focus,
+        .btn-primary:focus,
+        .btn-secondary:focus,
+        .form-input:focus,
+        .submit-button:focus {
+            outline: 2px solid var(--coral);
+            outline-offset: 2px;
+        }
+
+        /* Animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .animate-on-scroll.visible {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Header -->
+    <header class="floating-header">
+        <div class="header-content">
+            <a href="#" class="logo">Perantara Reps</a>
+            <nav class="nav-links">
+                <a href="#solutions" class="nav-link has-dropdown">Solutions</a>
+                <a href="#services" class="nav-link has-dropdown">Services</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </nav>
+            <a href="#contact" class="cta-button">Get Started</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content animate-on-scroll">
+                <h1 class="hero-title">Local expertise that delivers seamless client experiences</h1>
+                <p class="hero-subtitle">Established DMC connecting travel professionals to New Zealand & Indonesia markets</p>
+                <p class="hero-description">
+                    With 30 years of proven expertise, we help travel wholesalers, agencies, and DMCs deliver exceptional experiences through our deep local knowledge and reliable partnerships.
+                </p>
+                <div class="hero-cta">
+                    <a href="#contact" class="btn-primary">
+                        Start Partnership
+                        <span>→</span>
+                    </a>
+                    <a href="#solutions" class="btn-secondary">Explore Solutions</a>
+                </div>
+            </div>
+            
+            <div class="cascading-cards">
+                <div class="card animate-on-scroll">
+                    <div class="card-icon">🏔️</div>
+                    <h3 class="card-title">NZ Inbound Tours</h3>
+                    <p class="card-description">Seamless New Zealand experiences for international travelers with local expertise.</p>
+                </div>
+                <div class="card animate-on-scroll">
+                    <div class="card-icon">🌋</div>
+                    <h3 class="card-title">Indonesia Adventures</h3>
+                    <p class="card-description">Safe, authentic Indonesian experiences with trusted local partnerships.</p>
+                </div>
+                <div class="card animate-on-scroll">
+                    <div class="card-icon">🤝</div>
+                    <h3 class="card-title">Sales Representation</h3>
+                    <p class="card-description">Local office presence without overhead for overseas DMCs.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust & Credibility Section -->
+    <section class="trust-section">
+        <div class="trust-container">
+            <div class="trust-content animate-on-scroll">
+                <h2>Trusted by industry leaders across the globe</h2>
+                <p class="trust-description">
+                    Our three decades of experience have built lasting partnerships with travel professionals who rely on our local expertise to deliver exceptional client experiences.
+                </p>
+                
+                <div class="partner-logos">
+                    <div class="partner-logo">Premium Travel Co.</div>
+                    <div class="partner-logo">Global Adventures</div>
+                    <div class="partner-logo">Elite Tours NZ</div>
+                    <div class="partner-logo">Indonesia Specialists</div>
+                    <div class="partner-logo">Luxury Escapes</div>
+                    <div class="partner-logo">Heritage Tours</div>
+                </div>
+                
+                <div class="certifications">
+                    <span class="cert-badge">IATA Certified</span>
+                    <span class="cert-badge">Tourism NZ Partner</span>
+                    <span class="cert-badge">Indonesia Tourism Board</span>
+                </div>
+            </div>
+            
+            <div class="metrics-sidebar animate-on-scroll">
+                <h3 class="metrics-title">Performance Metrics</h3>
+                <div class="metric">
+                    <span class="metric-number">30+</span>
+                    <span class="metric-label">Years Experience</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-number">500+</span>
+                    <span class="metric-label">Partner Agencies</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-number">98%</span>
+                    <span class="metric-label">Client Satisfaction</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-number">24/7</span>
+                    <span class="metric-label">Local Support</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Growth Opportunities Section -->
+    <section class="growth-section">
+        <div class="growth-container animate-on-scroll">
+            <h2 class="growth-title">Expand your reach without the overhead</h2>
+            <p class="growth-subtitle">Perfect for overseas DMCs looking to establish presence in Indonesia markets</p>
+            
+            <div class="growth-benefits">
+                <div class="benefit-card">
+                    <div class="benefit-icon">🏢</div>
+                    <h3 class="benefit-title">Local Office Presence</h3>
+                    <p class="benefit-description">Establish credibility with a professional local office without setup costs or ongoing overhead.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">📈</div>
+                    <h3 class="benefit-title">Sales Representation</h3>
+                    <p class="benefit-description">Dedicated sales team promoting your services to local travel agencies and operators.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">🌐</div>
+                    <h3 class="benefit-title">Market Expertise</h3>
+                    <p class="benefit-description">30 years of local market knowledge to position your offerings effectively.</p>
+                </div>
+            </div>
+            
+            <a href="#contact" class="btn-primary">Explore Partnership Opportunities</a>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section" id="contact">
+        <div class="contact-container animate-on-scroll">
+            <h2 class="contact-title">Ready to enhance your client experiences?</h2>
+            <p class="contact-description">
+                Let's discuss how our local expertise can help you deliver seamless travel experiences for your clients.
+            </p>
+            
+            <form class="contact-form" action="#" method="POST">
+                <div class="form-group">
+                    <input type="text" class="form-input" placeholder="Your Name" required aria-label="Your Name">
+                </div>
+                <div class="form-group">
+                    <input type="email" class="form-input" placeholder="Email Address" required aria-label="Email Address">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-input" placeholder="Company Name" required aria-label="Company Name">
+                </div>
+                <div class="form-group">
+                    <select class="form-input" required aria-label="Business Type">
+                        <option value="">Select Business Type</option>
+                        <option value="wholesaler">Travel Wholesaler</option>
+                        <option value="agency">Travel Agency</option>
+                        <option value="dmc">DMC</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group full-width">
+                    <textarea class="form-input form-textarea" placeholder="Tell us about your needs and how we can help..." aria-label="Message"></textarea>
+                </div>
+                <button type="submit" class="submit-button">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Perantara Reps</h3>
+                <p style="color: rgba(255, 255, 255, 0.8); margin-bottom: var(--spacing-sm);">
+                    Local expertise delivering seamless client experiences across New Zealand and Indonesia markets.
+                </p>
+            </div>
+            <div class="footer-section">
+                <h3>Solutions</h3>
+                <a href="#" class="footer-link">NZ Inbound Tours</a>
+                <a href="#" class="footer-link">Indonesia Adventures</a>
+                <a href="#" class="footer-link">Sales Representation</a>
+                <a href="#" class="footer-link">Custom Packages</a>
+            </div>
+            <div class="footer-section">
+                <h3>Services</h3>
+                <a href="#" class="footer-link">Group Tours</a>
+                <a href="#" class="footer-link">FIT Services</a>
+                <a href="#" class="footer-link">Event Management</a>
+                <a href="#" class="footer-link">24/7 Support</a>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <a href="mailto:info@perantarareps.com" class="footer-link">info@perantarareps.com</a>
+                <a href="tel:+64-9-xxx-xxxx" class="footer-link">+64 9 XXX XXXX</a>
+                <a href="#" class="footer-link">Auckland, New Zealand</a>
+                <a href="#" class="footer-link">Jakarta, Indonesia</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Perantara Reps. All rights reserved. | Connecting travel professionals for 30+ years.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const headerOffset = 100;
+                    const elementPosition = target.getBoundingClientPosition().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Scroll-based animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Header scroll effect
+        let lastScrollY = window.scrollY;
+        const header = document.querySelector('.floating-header');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+                header.style.boxShadow = '0 8px 32px rgba(29, 53, 87, 0.1)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+                header.style.boxShadow = 'none';
+            }
+            lastScrollY = window.scrollY;
+        });
+
+        // Form submission
+        document.querySelector('.contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+            
+            // Simulate form submission
+            const submitButton = this.querySelector('.submit-button');
+            const originalText = submitButton.textContent;
+            
+            submitButton.textContent = 'Sending...';
+            submitButton.disabled = true;
+            
+            setTimeout(() => {
+                submitButton.textContent = 'Message Sent!';
+                setTimeout(() => {
+                    submitButton.textContent = originalText;
+                    submitButton.disabled = false;
+                    this.reset();
+                }, 2000);
+            }, 1500);
+        });
+
+        // Card hover effects
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = this.style.transform + ' scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = this.style.transform.replace(' scale(1.02)', '');
+            });
+        });
+
+        // Keyboard navigation enhancement
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Tab') {
+                document.body.classList.add('keyboard-nav');
+            }
+        });
+
+        document.addEventListener('mousedown', function() {
+            document.body.classList.remove('keyboard-nav');
+        });
+    </script>
+</body>
+</html>

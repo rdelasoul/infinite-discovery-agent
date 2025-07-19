@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perantara Reps - Local Expertise That Delivers Seamless Client Experiences</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #1D3557;
+            --accent-blue: #457B9D;
+            --teal: #A8DADC;
+            --light-cream: #F1FAEE;
+            --coral: #E63946;
+            --white: #ffffff;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-600: #4b5563;
+            --gray-900: #111827;
+            --transition: cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--gray-900);
+            background: var(--white);
+            overflow-x: hidden;
+        }
+
+        /* Typography Scale */
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--primary-blue);
+        }
+
+        h2 {
+            font-size: 2rem;
+            font-weight: 600;
+            line-height: 1.3;
+            color: var(--primary-blue);
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            line-height: 1.4;
+            color: var(--primary-blue);
+        }
+
+        .body-text {
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.6;
+        }
+
+        .small-text {
+            font-size: 0.875rem;
+            font-weight: 400;
+            line-height: 1.5;
+        }
+
+        /* Floating Header */
+        .header {
+            position: fixed;
+            top: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 48px);
+            max-width: 1200px;
+            height: 64px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(16px);
+            border-radius: 32px;
+            border: 1px solid rgba(29, 53, 87, 0.1);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 32px;
+            box-shadow: 0 8px 32px rgba(29, 53, 87, 0.08);
+            transition: all 300ms var(--transition);
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            text-decoration: none;
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .nav-item {
+            position: relative;
+            color: var(--gray-600);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 300ms var(--transition);
+            cursor: pointer;
+        }
+
+        .nav-item:hover {
+            color: var(--primary-blue);
+        }
+
+        /* Mega Menu */
+        .mega-menu {
+            position: absolute;
+            top: calc(100% + 16px);
+            left: -100px;
+            width: 600px;
+            background: var(--white);
+            border-radius: 16px;
+            border: 1px solid var(--gray-200);
+            box-shadow: 0 16px 64px rgba(0, 0, 0, 0.12);
+            padding: 32px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-8px);
+            transition: all 300ms var(--transition);
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 32px;
+        }
+
+        .nav-item:hover .mega-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .mega-section h4 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--primary-blue);
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .mega-section a {
+            display: block;
+            padding: 8px 0;
+            color: var(--gray-600);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 300ms var(--transition);
+        }
+
+        .mega-section a:hover {
+            color: var(--primary-blue);
+        }
+
+        .cta-button {
+            background: var(--primary-blue);
+            color: var(--white);
+            padding: 12px 24px;
+            border-radius: 24px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 300ms var(--transition);
+            border: none;
+            cursor: pointer;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+        }
+
+        .cta-button:hover {
+            background: var(--accent-blue);
+            transform: scale(1.02);
+        }
+
+        /* Hero Section with Innovative Diagonal Grid */
+        .hero {
+            padding: 144px 0 96px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: grid;
+            grid-template-columns: 3fr 2fr;
+            gap: 64px;
+            align-items: center;
+        }
+
+        .hero-content {
+            transform: translateX(-32px);
+            animation: slideInLeft 1000ms var(--transition) forwards;
+        }
+
+        .hero-title {
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .hero-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 64px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--coral), var(--teal));
+            border-radius: 2px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--gray-600);
+            margin-bottom: 32px;
+            font-weight: 400;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 48px;
+        }
+
+        .secondary-button {
+            background: transparent;
+            color: var(--primary-blue);
+            padding: 12px 24px;
+            border-radius: 24px;
+            border: 2px solid var(--primary-blue);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 300ms var(--transition);
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+        }
+
+        .secondary-button:hover {
+            background: var(--primary-blue);
+            color: var(--white);
+        }
+
+        /* Diagonal Cascading Cards System */
+        .hero-visual {
+            position: relative;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            transform: rotate(5deg);
+            perspective: 1000px;
+        }
+
+        .cascade-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 16px 48px rgba(29, 53, 87, 0.12);
+            border: 1px solid var(--gray-100);
+            transition: all 500ms var(--transition);
+            transform-style: preserve-3d;
+        }
+
+        .cascade-card:nth-child(1) {
+            z-index: 3;
+            transform: translateY(-32px) rotateX(5deg);
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, var(--teal), var(--accent-blue));
+            color: var(--white);
+        }
+
+        .cascade-card:nth-child(2) {
+            z-index: 2;
+            transform: translateY(16px) translateX(-16px) rotateY(-5deg);
+            background: var(--light-cream);
+        }
+
+        .cascade-card:nth-child(3) {
+            z-index: 1;
+            transform: translateY(32px) translateX(16px) rotateY(5deg);
+            background: var(--white);
+        }
+
+        .cascade-card:hover {
+            transform: translateY(-8px) scale(1.02);
+        }
+
+        .cascade-card h4 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .cascade-card p {
+            font-size: 0.875rem;
+            opacity: 0.9;
+        }
+
+        /* Trust Section with Revolutionary Sticky Metrics */
+        .trust {
+            padding: 96px 0;
+            background: var(--gray-50);
+            position: relative;
+        }
+
+        .trust-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 96px;
+            align-items: start;
+        }
+
+        .trust-content h2 {
+            margin-bottom: 24px;
+        }
+
+        .trust-story {
+            font-size: 1.125rem;
+            color: var(--gray-600);
+            margin-bottom: 48px;
+            line-height: 1.7;
+        }
+
+        .markets-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            margin-bottom: 48px;
+        }
+
+        .market-card {
+            background: var(--white);
+            padding: 32px;
+            border-radius: 16px;
+            border: 1px solid var(--gray-200);
+            transition: all 300ms var(--transition);
+        }
+
+        .market-card:hover {
+            border-color: var(--teal);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 32px rgba(168, 218, 220, 0.2);
+        }
+
+        .market-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--teal), var(--accent-blue));
+            border-radius: 12px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: 600;
+            font-size: 1.25rem;
+        }
+
+        .market-card h4 {
+            font-size: 1.125rem;
+            margin-bottom: 8px;
+        }
+
+        .market-card p {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+        }
+
+        /* Revolutionary Floating Metrics Sidebar */
+        .metrics-sidebar {
+            position: sticky;
+            top: 144px;
+            background: var(--white);
+            border-radius: 20px;
+            padding: 48px 32px;
+            border: 1px solid var(--gray-200);
+            box-shadow: 0 20px 60px rgba(29, 53, 87, 0.08);
+            transform: translateY(32px);
+            animation: floatIn 1000ms var(--transition) forwards;
+        }
+
+        .metrics-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--primary-blue);
+            margin-bottom: 32px;
+            text-align: center;
+        }
+
+        .metric-item {
+            text-align: center;
+            margin-bottom: 32px;
+            padding: 16px;
+            border-radius: 12px;
+            transition: all 300ms var(--transition);
+        }
+
+        .metric-item:hover {
+            background: var(--light-cream);
+            transform: scale(1.02);
+        }
+
+        .metric-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--coral);
+            display: block;
+            line-height: 1;
+        }
+
+        .metric-label {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            margin-top: 8px;
+            font-weight: 500;
+        }
+
+        /* Growth Opportunities Section */
+        .growth {
+            padding: 96px 0;
+            background: var(--primary-blue);
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .growth::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .growth-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .growth-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+
+        .growth-header h2 {
+            color: var(--white);
+            margin-bottom: 16px;
+        }
+
+        .growth-subtitle {
+            font-size: 1.25rem;
+            color: var(--teal);
+            font-weight: 400;
+        }
+
+        .growth-features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+
+        .growth-feature {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(8px);
+            padding: 48px 32px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+            transition: all 300ms var(--transition);
+        }
+
+        .growth-feature:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-8px);
+        }
+
+        .feature-icon {
+            width: 64px;
+            height: 64px;
+            background: var(--coral);
+            border-radius: 16px;
+            margin: 0 auto 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--white);
+        }
+
+        .growth-feature h3 {
+            color: var(--white);
+            margin-bottom: 16px;
+        }
+
+        .growth-feature p {
+            color: var(--teal);
+            line-height: 1.6;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 96px 0;
+            background: var(--light-cream);
+        }
+
+        .contact-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 24px;
+            text-align: center;
+        }
+
+        .contact h2 {
+            margin-bottom: 16px;
+        }
+
+        .contact-subtitle {
+            font-size: 1.25rem;
+            color: var(--gray-600);
+            margin-bottom: 48px;
+        }
+
+        .contact-form {
+            background: var(--white);
+            padding: 48px;
+            border-radius: 20px;
+            border: 1px solid var(--gray-200);
+            box-shadow: 0 16px 48px rgba(29, 53, 87, 0.08);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            font-weight: 500;
+            color: var(--primary-blue);
+            margin-bottom: 8px;
+            font-size: 0.875rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 16px;
+            border: 2px solid var(--gray-200);
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border-color 300ms var(--transition);
+            min-height: 44px;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--teal);
+            box-shadow: 0 0 0 4px rgba(168, 218, 220, 0.2);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-submit {
+            grid-column: 1 / -1;
+            justify-self: center;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--primary-blue);
+            color: var(--white);
+            padding: 64px 0 32px;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 48px;
+            margin-bottom: 48px;
+        }
+
+        .footer-brand h3 {
+            color: var(--white);
+            margin-bottom: 16px;
+        }
+
+        .footer-brand p {
+            color: var(--teal);
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
+        .footer-section h4 {
+            color: var(--white);
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .footer-section a {
+            display: block;
+            color: var(--teal);
+            text-decoration: none;
+            padding: 4px 0;
+            transition: color 300ms var(--transition);
+        }
+
+        .footer-section a:hover {
+            color: var(--white);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(168, 218, 220, 0.2);
+            padding-top: 32px;
+            text-align: center;
+            color: var(--teal);
+            font-size: 0.875rem;
+        }
+
+        /* Animations */
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-64px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes floatIn {
+            from {
+                opacity: 0;
+                transform: translateY(64px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .header {
+                top: 16px;
+                width: calc(100% - 32px);
+                padding: 0 20px;
+            }
+
+            .nav {
+                display: none;
+            }
+
+            .hero {
+                padding: 120px 0 64px;
+            }
+
+            .hero-container {
+                grid-template-columns: 1fr;
+                gap: 48px;
+                text-align: center;
+            }
+
+            .hero-visual {
+                transform: none;
+                grid-template-columns: 1fr;
+            }
+
+            .cascade-card {
+                transform: none !important;
+            }
+
+            .trust-container {
+                grid-template-columns: 1fr;
+                gap: 48px;
+            }
+
+            .metrics-sidebar {
+                position: static;
+                transform: none;
+            }
+
+            .markets-grid,
+            .growth-features {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-form {
+                grid-template-columns: 1fr;
+                padding: 32px;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Focus Styles for Accessibility */
+        .nav-item:focus,
+        .cta-button:focus,
+        .secondary-button:focus {
+            outline: 2px solid var(--coral);
+            outline-offset: 2px;
+        }
+
+        /* Scroll Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(32px);
+            transition: all 600ms var(--transition);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Header -->
+    <header class="header">
+        <a href="#" class="logo" aria-label="Perantara Reps Homepage">Perantara Reps</a>
+        <nav class="nav" role="navigation" aria-label="Main navigation">
+            <div class="nav-item" tabindex="0" role="button" aria-haspopup="true" aria-expanded="false">
+                Solutions
+                <div class="mega-menu" role="menu">
+                    <div class="mega-section">
+                        <h4>New Zealand Inbound</h4>
+                        <a href="#" role="menuitem">Luxury Lodge Tours</a>
+                        <a href="#" role="menuitem">Adventure Packages</a>
+                        <a href="#" role="menuitem">Cultural Experiences</a>
+                        <a href="#" role="menuitem">FIT Services</a>
+                    </div>
+                    <div class="mega-section">
+                        <h4>Indonesia Inbound</h4>
+                        <a href="#" role="menuitem">Bali & Lombok</a>
+                        <a href="#" role="menuitem">Java Heritage</a>
+                        <a href="#" role="menuitem">Sumatra Adventures</a>
+                        <a href="#" role="menuitem">Custom Itineraries</a>
+                    </div>
+                    <div class="mega-section">
+                        <h4>Sales Representation</h4>
+                        <a href="#" role="menuitem">Market Entry</a>
+                        <a href="#" role="menuitem">Trade Shows</a>
+                        <a href="#" role="menuitem">Agent Training</a>
+                        <a href="#" role="menuitem">Sales Support</a>
+                    </div>
+                </div>
+            </div>
+            <a href="#about" class="nav-item">About</a>
+            <a href="#contact" class="nav-item">Contact</a>
+            <a href="#" class="cta-button">Get Started</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">Local expertise that delivers seamless client experiences</h1>
+                <p class="hero-subtitle">Trusted DMC partner for 30 years, connecting travel professionals to unforgettable New Zealand and Indonesia experiences with unmatched local knowledge.</p>
+                <div class="hero-actions">
+                    <a href="#contact" class="cta-button">Start Partnership</a>
+                    <a href="#solutions" class="secondary-button">Explore Solutions</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="cascade-card">
+                    <h4>30 Years Strong</h4>
+                    <p>Three decades of delivering exceptional travel experiences across New Zealand and Indonesia markets.</p>
+                </div>
+                <div class="cascade-card">
+                    <h4>Multi-Market Bridge</h4>
+                    <p>Seamless operations spanning two premier destinations with local expertise in both markets.</p>
+                </div>
+                <div class="cascade-card">
+                    <h4>Professional Partners</h4>
+                    <p>Trusted by travel wholesalers, agencies, and DMCs worldwide for reliable service delivery.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust & Credibility Section -->
+    <section class="trust reveal">
+        <div class="trust-container">
+            <div class="trust-content">
+                <h2>Three decades of market leadership</h2>
+                <p class="trust-story">Since 1994, Perantara Reps has been the bridge between international travel professionals and the extraordinary experiences that New Zealand and Indonesia offer. Our deep local knowledge, established supplier networks, and unwavering commitment to service excellence have made us the preferred DMC partner for discerning travel professionals worldwide.</p>
+                
+                <div class="markets-grid">
+                    <div class="market-card">
+                        <div class="market-icon">NZ</div>
+                        <h4>New Zealand Specialists</h4>
+                        <p>From Milford Sound to Bay of Islands, we curate authentic Kiwi experiences that showcase the country's natural beauty and adventure spirit.</p>
+                    </div>
+                    <div class="market-card">
+                        <div class="market-icon">ID</div>
+                        <h4>Indonesia Experts</h4>
+                        <p>Navigate the cultural richness of Indonesia with confidence, from Bali's luxury resorts to Java's heritage temples and beyond.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="metrics-sidebar">
+                <h3 class="metrics-title">Market Presence</h3>
+                <div class="metric-item">
+                    <span class="metric-number">30</span>
+                    <div class="metric-label">Years Experience</div>
+                </div>
+                <div class="metric-item">
+                    <span class="metric-number">2</span>
+                    <div class="metric-label">Key Markets</div>
+                </div>
+                <div class="metric-item">
+                    <span class="metric-number">500+</span>
+                    <div class="metric-label">Partner Agents</div>
+                </div>
+                <div class="metric-item">
+                    <span class="metric-number">98%</span>
+                    <div class="metric-label">Client Satisfaction</div>
+                </div>
+                <div class="metric-item">
+                    <span class="metric-number">24/7</span>
+                    <div class="metric-label">Support Available</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Growth Opportunities Section -->
+    <section class="growth reveal">
+        <div class="growth-container">
+            <div class="growth-header">
+                <h2>Expand your Indonesia presence without the overhead</h2>
+                <p class="growth-subtitle">Partner with us for complete sales representation and local office services in the Indonesian market</p>
+            </div>
+            
+            <div class="growth-features">
+                <div class="growth-feature">
+                    <div class="feature-icon">🏢</div>
+                    <h3>Local Office Presence</h3>
+                    <p>Establish your Indonesian operations through our established local office without the setup costs and administrative complexity.</p>
+                </div>
+                <div class="growth-feature">
+                    <div class="feature-icon">🤝</div>
+                    <h3>Sales Representation</h3>
+                    <p>Leverage our existing relationships and market knowledge to accelerate your Indonesia market penetration and revenue growth.</p>
+                </div>
+                <div class="growth-feature">
+                    <div class="feature-icon">📈</div>
+                    <h3>Market Intelligence</h3>
+                    <p>Access real-time market insights, competitor analysis, and trend data to make informed strategic decisions for your Indonesia expansion.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact reveal" id="contact">
+        <div class="contact-container">
+            <h2>Ready to elevate your travel offerings?</h2>
+            <p class="contact-subtitle">Connect with our team to discuss how we can support your business goals in New Zealand and Indonesia</p>
+            
+            <form class="contact-form" role="form" aria-label="Contact form">
+                <div class="form-group">
+                    <label for="name">Full Name *</label>
+                    <input type="text" id="name" name="name" required aria-required="true">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address *</label>
+                    <input type="email" id="email" name="email" required aria-required="true">
+                </div>
+                <div class="form-group">
+                    <label for="company">Company Name</label>
+                    <input type="text" id="company" name="company">
+                </div>
+                <div class="form-group">
+                    <label for="market">Primary Interest</label>
+                    <select id="market" name="market">
+                        <option value="">Select Market</option>
+                        <option value="nz-inbound">New Zealand Inbound</option>
+                        <option value="indonesia-inbound">Indonesia Inbound</option>
+                        <option value="sales-representation">Sales Representation</option>
+                        <option value="both-markets">Both Markets</option>
+                    </select>
+                </div>
+                <div class="form-group full-width">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" placeholder="Tell us about your specific needs and how we can help..."></textarea>
+                </div>
+                <div class="form-submit">
+                    <button type="submit" class="cta-button">Send Message</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h3>Perantara Reps</h3>
+                    <p>Your trusted DMC partner for seamless New Zealand and Indonesia travel experiences. Connecting travel professionals with unforgettable destinations since 1994.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Solutions</h4>
+                    <a href="#">New Zealand Inbound</a>
+                    <a href="#">Indonesia Inbound</a>
+                    <a href="#">Sales Representation</a>
+                    <a href="#">Custom Packages</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <a href="#">About Us</a>
+                    <a href="#">Our Team</a>
+                    <a href="#">Careers</a>
+                    <a href="#">News</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <a href="#">Contact</a>
+                    <a href="#">Documentation</a>
+                    <a href="#">Resources</a>
+                    <a href="#">Partners</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Perantara Reps. All rights reserved. | Privacy Policy | Terms of Service</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Scroll Reveal Animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Smooth Scrolling for Anchor Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Header Scroll Effect
+        let lastScrollY = window.scrollY;
+        const header = document.querySelector('.header');
+
+        window.addEventListener('scroll', () => {
+            const currentScrollY = window.scrollY;
+            
+            if (currentScrollY > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+                header.style.boxShadow = '0 8px 32px rgba(29, 53, 87, 0.12)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+                header.style.boxShadow = '0 8px 32px rgba(29, 53, 87, 0.08)';
+            }
+            
+            lastScrollY = currentScrollY;
+        });
+
+        // Enhanced Keyboard Navigation
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    this.click();
+                }
+            });
+        });
+
+        // Form Enhancement
+        const form = document.querySelector('.contact-form');
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Basic form validation
+            const requiredFields = form.querySelectorAll('[required]');
+            let isValid = true;
+            
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    isValid = false;
+                    field.style.borderColor = 'var(--coral)';
+                } else {
+                    field.style.borderColor = 'var(--gray-200)';
+                }
+            });
+            
+            if (isValid) {
+                // Simulate form submission
+                const button = form.querySelector('.cta-button');
+                const originalText = button.textContent;
+                button.textContent = 'Sending...';
+                button.disabled = true;
+                
+                setTimeout(() => {
+                    button.textContent = 'Message Sent!';
+                    setTimeout(() => {
+                        button.textContent = originalText;
+                        button.disabled = false;
+                        form.reset();
+                    }, 2000);
+                }, 1000);
+            }
+        });
+
+        // Dynamic Metrics Animation
+        const animateMetrics = () => {
+            const metrics = document.querySelectorAll('.metric-number');
+            metrics.forEach(metric => {
+                const text = metric.textContent;
+                const number = parseInt(text.replace(/\D/g, ''));
+                if (number) {
+                    let current = 0;
+                    const increment = number / 30;
+                    const timer = setInterval(() => {
+                        current += increment;
+                        if (current >= number) {
+                            metric.textContent = text;
+                            clearInterval(timer);
+                        } else {
+                            metric.textContent = Math.floor(current) + text.replace(/\d/g, '').replace(/\+/g, '');
+                        }
+                    }, 50);
+                }
+            });
+        };
+
+        // Trigger metrics animation when sidebar comes into view
+        const metricsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateMetrics();
+                    metricsObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        const metricsSidebar = document.querySelector('.metrics-sidebar');
+        if (metricsSidebar) {
+            metricsObserver.observe(metricsSidebar);
+        }
+    </script>
+</body>
+</html>
