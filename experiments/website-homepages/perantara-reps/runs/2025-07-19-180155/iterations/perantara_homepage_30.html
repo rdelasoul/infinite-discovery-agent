@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perantara Reps - Your Trusted DMC Bridge for 30 Years</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #1D3557;
+            --accent-blue: #457B9D;
+            --teal: #A8DADC;
+            --light-cream: #F1FAEE;
+            --coral: #E63946;
+            --white: #FFFFFF;
+            --gray-100: #F8F9FA;
+            --gray-200: #E9ECEF;
+            --gray-600: #6C757D;
+            --gray-800: #343A40;
+            --spacing-unit: 8px;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--gray-800);
+            background-color: var(--white);
+        }
+
+        /* Typography */
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        h2 {
+            font-size: 2rem;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        p {
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 calc(var(--spacing-unit) * 3);
+        }
+
+        /* Header with Floating Trust Indicators */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .header-trust-bar {
+            background: var(--primary-blue);
+            color: var(--white);
+            padding: calc(var(--spacing-unit) * 1) 0;
+            font-size: 0.875rem;
+            overflow: hidden;
+        }
+
+        .trust-ticker {
+            display: flex;
+            animation: scroll 30s linear infinite;
+        }
+
+        .trust-ticker-item {
+            display: flex;
+            align-items: center;
+            margin-right: calc(var(--spacing-unit) * 6);
+            white-space: nowrap;
+        }
+
+        .trust-ticker-item svg {
+            width: 16px;
+            height: 16px;
+            margin-right: calc(var(--spacing-unit) * 1);
+            fill: var(--teal);
+        }
+
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .header-main {
+            padding: calc(var(--spacing-unit) * 2) 0;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: calc(var(--spacing-unit) * 2);
+        }
+
+        .logo-badge {
+            background: var(--coral);
+            color: var(--white);
+            padding: calc(var(--spacing-unit) * 0.5) calc(var(--spacing-unit) * 1.5);
+            border-radius: 100px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            align-items: center;
+            gap: calc(var(--spacing-unit) * 4);
+        }
+
+        .nav-link {
+            color: var(--gray-800);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: calc(var(--spacing-unit) * 1) 0;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-blue);
+        }
+
+        /* Mega Menu */
+        .has-megamenu {
+            position: relative;
+        }
+
+        .megamenu-trigger::after {
+            content: '▼';
+            font-size: 0.75rem;
+            margin-left: calc(var(--spacing-unit) * 1);
+            transition: transform 0.3s ease;
+        }
+
+        .has-megamenu:hover .megamenu-trigger::after {
+            transform: rotate(180deg);
+        }
+
+        .megamenu {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--white);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            border-radius: calc(var(--spacing-unit) * 2);
+            padding: calc(var(--spacing-unit) * 4);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            width: 800px;
+            margin-top: calc(var(--spacing-unit) * 2);
+        }
+
+        .has-megamenu:hover .megamenu {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .megamenu-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: calc(var(--spacing-unit) * 4);
+        }
+
+        .megamenu-column h4 {
+            color: var(--primary-blue);
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: calc(var(--spacing-unit) * 2);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .megamenu-link {
+            display: block;
+            color: var(--gray-800);
+            text-decoration: none;
+            padding: calc(var(--spacing-unit) * 1.5) 0;
+            border-bottom: 1px solid var(--gray-100);
+            transition: all 0.3s ease;
+        }
+
+        .megamenu-link:hover {
+            color: var(--accent-blue);
+            padding-left: calc(var(--spacing-unit) * 2);
+        }
+
+        .megamenu-link:last-child {
+            border-bottom: none;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: calc(var(--spacing-unit) * 1);
+        }
+
+        .mobile-menu-toggle span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--gray-800);
+            margin: 5px 0;
+            transition: all 0.3s ease;
+        }
+
+        /* Hero Section with Animated Split */
+        .hero {
+            margin-top: 120px;
+            position: relative;
+            overflow: hidden;
+            height: 600px;
+        }
+
+        .hero-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            height: 100%;
+            position: relative;
+        }
+
+        .hero-side {
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .hero-side:hover {
+            flex: 1.2;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.5s ease;
+        }
+
+        .hero-side:hover .hero-bg {
+            transform: scale(1.05);
+        }
+
+        .hero-nz .hero-bg {
+            background-image: linear-gradient(rgba(29, 53, 87, 0.7), rgba(29, 53, 87, 0.7)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%231D3557" width="1200" height="600"/><path fill="%23457B9D" d="M0,300 Q300,200 600,300 T1200,300 L1200,600 L0,600 Z"/></svg>');
+        }
+
+        .hero-indonesia .hero-bg {
+            background-image: linear-gradient(rgba(69, 123, 157, 0.7), rgba(69, 123, 157, 0.7)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%23457B9D" width="1200" height="600"/><circle fill="%23E63946" cx="800" cy="200" r="150" opacity="0.3"/></svg>');
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: var(--white);
+            padding: calc(var(--spacing-unit) * 6);
+        }
+
+        .hero-label {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: calc(var(--spacing-unit) * 1) calc(var(--spacing-unit) * 3);
+            border-radius: 100px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: calc(var(--spacing-unit) * 3);
+        }
+
+        .hero h1 {
+            margin-bottom: calc(var(--spacing-unit) * 2);
+        }
+
+        .hero-description {
+            font-size: 1.125rem;
+            margin-bottom: calc(var(--spacing-unit) * 4);
+            max-width: 400px;
+        }
+
+        /* Button Styles */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 48px;
+            padding: 0 calc(var(--spacing-unit) * 4);
+            border: none;
+            border-radius: calc(var(--spacing-unit) * 1);
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: var(--coral);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: #D62839;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(230, 57, 70, 0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--primary-blue);
+        }
+
+        .btn-secondary:hover {
+            background: var(--white);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Trust Section with Carousel */
+        .trust-section {
+            padding: calc(var(--spacing-unit) * 12) 0;
+            background: var(--gray-100);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .trust-header {
+            text-align: center;
+            margin-bottom: calc(var(--spacing-unit) * 8);
+        }
+
+        .trust-metrics {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: calc(var(--spacing-unit) * 4);
+            margin-bottom: calc(var(--spacing-unit) * 8);
+        }
+
+        .metric-card {
+            background: var(--white);
+            padding: calc(var(--spacing-unit) * 4);
+            border-radius: calc(var(--spacing-unit) * 2);
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--coral), var(--accent-blue));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .metric-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .metric-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: calc(var(--spacing-unit) * 1);
+        }
+
+        .metric-label {
+            color: var(--gray-600);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Logo Carousel */
+        .logo-carousel {
+            position: relative;
+            margin-top: calc(var(--spacing-unit) * 8);
+        }
+
+        .carousel-track {
+            display: flex;
+            gap: calc(var(--spacing-unit) * 6);
+            animation: carousel 40s linear infinite;
+        }
+
+        .partner-logo {
+            flex-shrink: 0;
+            width: 150px;
+            height: 80px;
+            background: var(--white);
+            border-radius: calc(var(--spacing-unit) * 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            font-weight: 600;
+            color: var(--gray-600);
+        }
+
+        @keyframes carousel {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Solutions Preview */
+        .solutions-preview {
+            padding: calc(var(--spacing-unit) * 12) 0;
+        }
+
+        .solutions-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: calc(var(--spacing-unit) * 4);
+            margin-top: calc(var(--spacing-unit) * 6);
+        }
+
+        .solution-card {
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: calc(var(--spacing-unit) * 2);
+            padding: calc(var(--spacing-unit) * 4);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .solution-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            background: linear-gradient(to top, rgba(69, 123, 157, 0.05), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .solution-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            border-color: var(--accent-blue);
+        }
+
+        .solution-card:hover::after {
+            opacity: 1;
+        }
+
+        .solution-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--teal);
+            border-radius: calc(var(--spacing-unit) * 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: calc(var(--spacing-unit) * 3);
+            font-size: 1.5rem;
+        }
+
+        .solution-card h3 {
+            margin-bottom: calc(var(--spacing-unit) * 2);
+            color: var(--primary-blue);
+        }
+
+        .solution-card p {
+            color: var(--gray-600);
+            margin-bottom: calc(var(--spacing-unit) * 3);
+        }
+
+        .solution-link {
+            color: var(--accent-blue);
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: calc(var(--spacing-unit) * 1);
+            transition: gap 0.3s ease;
+        }
+
+        .solution-link:hover {
+            gap: calc(var(--spacing-unit) * 2);
+        }
+
+        /* Contact Section */
+        .contact-section {
+            padding: calc(var(--spacing-unit) * 12) 0;
+            background: linear-gradient(to bottom, var(--gray-100), var(--white));
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: calc(var(--spacing-unit) * 8);
+            align-items: center;
+        }
+
+        .contact-info h2 {
+            margin-bottom: calc(var(--spacing-unit) * 3);
+            color: var(--primary-blue);
+        }
+
+        .contact-info p {
+            color: var(--gray-600);
+            margin-bottom: calc(var(--spacing-unit) * 4);
+        }
+
+        .contact-form {
+            background: var(--white);
+            padding: calc(var(--spacing-unit) * 6);
+            border-radius: calc(var(--spacing-unit) * 2);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-group {
+            margin-bottom: calc(var(--spacing-unit) * 3);
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: calc(var(--spacing-unit) * 1);
+            font-weight: 500;
+            color: var(--gray-800);
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: calc(var(--spacing-unit) * 1.5) calc(var(--spacing-unit) * 2);
+            border: 1px solid var(--gray-200);
+            border-radius: calc(var(--spacing-unit) * 1);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: var(--white);
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px rgba(69, 123, 157, 0.1);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary-blue);
+            color: var(--white);
+            padding: calc(var(--spacing-unit) * 8) 0 calc(var(--spacing-unit) * 4);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: calc(var(--spacing-unit) * 6);
+            margin-bottom: calc(var(--spacing-unit) * 6);
+        }
+
+        .footer-brand h3 {
+            margin-bottom: calc(var(--spacing-unit) * 2);
+        }
+
+        .footer-brand p {
+            color: var(--teal);
+            margin-bottom: calc(var(--spacing-unit) * 3);
+        }
+
+        .footer-column h4 {
+            margin-bottom: calc(var(--spacing-unit) * 3);
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .footer-link {
+            display: block;
+            color: var(--light-cream);
+            text-decoration: none;
+            padding: calc(var(--spacing-unit) * 1) 0;
+            transition: color 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--teal);
+        }
+
+        .footer-bottom {
+            padding-top: calc(var(--spacing-unit) * 4);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            color: var(--teal);
+        }
+
+        /* Mobile Styles */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 calc(var(--spacing-unit) * 2);
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .header-trust-bar {
+                display: none;
+            }
+
+            .nav {
+                display: none;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            /* Mobile Menu */
+            .mobile-menu {
+                position: fixed;
+                top: 60px;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: var(--white);
+                transform: translateX(100%);
+                transition: transform 0.3s ease;
+                overflow-y: auto;
+                z-index: 999;
+            }
+
+            .mobile-menu.active {
+                transform: translateX(0);
+            }
+
+            .mobile-nav {
+                padding: calc(var(--spacing-unit) * 4);
+            }
+
+            .mobile-nav-link {
+                display: block;
+                padding: calc(var(--spacing-unit) * 2) 0;
+                color: var(--gray-800);
+                text-decoration: none;
+                font-weight: 500;
+                border-bottom: 1px solid var(--gray-100);
+            }
+
+            .hero {
+                margin-top: 60px;
+                height: auto;
+            }
+
+            .hero-split {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-side {
+                height: 400px;
+            }
+
+            .trust-metrics {
+                grid-template-columns: 1fr;
+                gap: calc(var(--spacing-unit) * 2);
+            }
+
+            .solutions-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-content {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+
+        /* Skip Link */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--primary-blue);
+            color: var(--white);
+            padding: calc(var(--spacing-unit) * 1) calc(var(--spacing-unit) * 2);
+            text-decoration: none;
+            border-radius: 0 0 calc(var(--spacing-unit) * 1) 0;
+        }
+
+        .skip-link:focus {
+            top: 0;
+        }
+    </style>
+</head>
+<body>
+    <a href="#main" class="skip-link">Skip to main content</a>
+
+    <!-- Header with Trust Bar -->
+    <header>
+        <div class="header-trust-bar">
+            <div class="container">
+                <div class="trust-ticker">
+                    <div class="trust-ticker-item">
+                        <svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <span>30 Years of Excellence</span>
+                    </div>
+                    <div class="trust-ticker-item">
+                        <svg viewBox="0 0 20 20"><path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/></svg>
+                        <span>4,000+ Happy Travelers</span>
+                    </div>
+                    <div class="trust-ticker-item">
+                        <svg viewBox="0 0 20 20"><path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"/></svg>
+                        <span>150+ Trusted Partners</span>
+                    </div>
+                    <!-- Duplicated for continuous scroll -->
+                    <div class="trust-ticker-item">
+                        <svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <span>30 Years of Excellence</span>
+                    </div>
+                    <div class="trust-ticker-item">
+                        <svg viewBox="0 0 20 20"><path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/></svg>
+                        <span>4,000+ Happy Travelers</span>
+                    </div>
+                    <div class="trust-ticker-item">
+                        <svg viewBox="0 0 20 20"><path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"/></svg>
+                        <span>150+ Trusted Partners</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="header-main">
+            <div class="container">
+                <div class="header-content">
+                    <a href="#" class="logo">
+                        Perantara Reps
+                        <span class="logo-badge">Est. 1994</span>
+                    </a>
+                    <nav>
+                        <a href="#" class="nav-link">About</a>
+                        <div class="has-megamenu">
+                            <a href="#" class="nav-link megamenu-trigger">Solutions</a>
+                            <div class="megamenu">
+                                <div class="megamenu-grid">
+                                    <div class="megamenu-column">
+                                        <h4>For Travel Agents</h4>
+                                        <a href="#" class="megamenu-link">New Zealand Packages</a>
+                                        <a href="#" class="megamenu-link">Indonesia Adventures</a>
+                                        <a href="#" class="megamenu-link">Group Tours</a>
+                                        <a href="#" class="megamenu-link">Custom Itineraries</a>
+                                    </div>
+                                    <div class="megamenu-column">
+                                        <h4>For DMCs</h4>
+                                        <a href="#" class="megamenu-link">Partner Program</a>
+                                        <a href="#" class="megamenu-link">Market Access</a>
+                                        <a href="#" class="megamenu-link">Sales Support</a>
+                                        <a href="#" class="megamenu-link">Marketing Tools</a>
+                                    </div>
+                                    <div class="megamenu-column">
+                                        <h4>Resources</h4>
+                                        <a href="#" class="megamenu-link">Destination Guides</a>
+                                        <a href="#" class="megamenu-link">Training Programs</a>
+                                        <a href="#" class="megamenu-link">Industry Updates</a>
+                                        <a href="#" class="megamenu-link">Success Stories</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#" class="nav-link">Partners</a>
+                        <a href="#contact" class="btn btn-primary">Get Started</a>
+                    </nav>
+                    <button class="mobile-menu-toggle" aria-label="Toggle menu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <nav class="mobile-nav">
+            <a href="#" class="mobile-nav-link">About</a>
+            <a href="#" class="mobile-nav-link">Solutions</a>
+            <a href="#" class="mobile-nav-link">Partners</a>
+            <a href="#contact" class="mobile-nav-link">Contact</a>
+        </nav>
+    </div>
+
+    <main id="main">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-split">
+                <div class="hero-side hero-nz">
+                    <div class="hero-bg"></div>
+                    <div class="hero-content">
+                        <div class="hero-label">New Zealand Market</div>
+                        <h1>Discover Indonesia</h1>
+                        <p class="hero-description">Connect with trusted Indonesian DMCs for authentic experiences and seamless operations</p>
+                        <a href="#contact" class="btn btn-secondary">Explore Indonesia</a>
+                    </div>
+                </div>
+                <div class="hero-side hero-indonesia">
+                    <div class="hero-bg"></div>
+                    <div class="hero-content">
+                        <div class="hero-label">Indonesia Market</div>
+                        <h1>Experience New Zealand</h1>
+                        <p class="hero-description">Access premium New Zealand travel products through our established network</p>
+                        <a href="#contact" class="btn btn-primary">Discover NZ</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Trust Section -->
+        <section class="trust-section">
+            <div class="container">
+                <div class="trust-header">
+                    <h2>Trusted Bridge Between Two Nations</h2>
+                    <p>Three decades of connecting Indonesia and New Zealand through exceptional travel experiences</p>
+                </div>
+                <div class="trust-metrics">
+                    <div class="metric-card">
+                        <div class="metric-number">30+</div>
+                        <div class="metric-label">Years of Excellence</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-number">4,000+</div>
+                        <div class="metric-label">Happy Travelers</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-number">150+</div>
+                        <div class="metric-label">Partner Network</div>
+                    </div>
+                </div>
+                <div class="logo-carousel">
+                    <div class="carousel-track">
+                        <div class="partner-logo">Partner 1</div>
+                        <div class="partner-logo">Partner 2</div>
+                        <div class="partner-logo">Partner 3</div>
+                        <div class="partner-logo">Partner 4</div>
+                        <div class="partner-logo">Partner 5</div>
+                        <div class="partner-logo">Partner 6</div>
+                        <div class="partner-logo">Partner 7</div>
+                        <div class="partner-logo">Partner 8</div>
+                        <!-- Duplicated for seamless loop -->
+                        <div class="partner-logo">Partner 1</div>
+                        <div class="partner-logo">Partner 2</div>
+                        <div class="partner-logo">Partner 3</div>
+                        <div class="partner-logo">Partner 4</div>
+                        <div class="partner-logo">Partner 5</div>
+                        <div class="partner-logo">Partner 6</div>
+                        <div class="partner-logo">Partner 7</div>
+                        <div class="partner-logo">Partner 8</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Solutions Preview -->
+        <section class="solutions-preview">
+            <div class="container">
+                <div class="trust-header">
+                    <h2>Complete Solutions for Every Partner</h2>
+                    <p>Tailored services for travel agents, DMCs, and tour operators</p>
+                </div>
+                <div class="solutions-grid">
+                    <div class="solution-card">
+                        <div class="solution-icon">🌏</div>
+                        <h3>Market Access</h3>
+                        <p>Open doors to new markets with our established networks in both Indonesia and New Zealand</p>
+                        <a href="#" class="solution-link">Learn more →</a>
+                    </div>
+                    <div class="solution-card">
+                        <div class="solution-icon">🤝</div>
+                        <h3>Partner Support</h3>
+                        <p>Comprehensive support from product development to on-ground operations</p>
+                        <a href="#" class="solution-link">Learn more →</a>
+                    </div>
+                    <div class="solution-card">
+                        <div class="solution-icon">📈</div>
+                        <h3>Sales Excellence</h3>
+                        <p>Dedicated sales representation and marketing support in your target markets</p>
+                        <a href="#" class="solution-link">Learn more →</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="contact-section">
+            <div class="container">
+                <div class="contact-content">
+                    <div class="contact-info">
+                        <h2>Start Your Journey With Us</h2>
+                        <p>Whether you're a travel agent looking for reliable partners or a DMC seeking market expansion, we're here to help you succeed.</p>
+                        <p>Our team of experts will guide you through every step, ensuring smooth operations and exceptional experiences for your clients.</p>
+                    </div>
+                    <form class="contact-form">
+                        <div class="form-group">
+                            <label for="name" class="form-label">Your Name</label>
+                            <input type="text" id="name" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="form-label">Email Address</label>
+                            <input type="email" id="email" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="segment" class="form-label">I am a...</label>
+                            <select id="segment" class="form-select" required>
+                                <option value="">Select your segment</option>
+                                <option value="nz-agent">New Zealand Travel Agent</option>
+                                <option value="indonesia-agent">Indonesia Travel Agent</option>
+                                <option value="indonesia-dmc">Indonesia DMC/Tour Operator</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message" class="form-label">How can we help?</label>
+                            <textarea id="message" class="form-textarea" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>Perantara Reps</h3>
+                    <p>Your trusted DMC bridge between Indonesia and New Zealand since 1994</p>
+                </div>
+                <div class="footer-column">
+                    <h4>Solutions</h4>
+                    <a href="#" class="footer-link">For Travel Agents</a>
+                    <a href="#" class="footer-link">For DMCs</a>
+                    <a href="#" class="footer-link">Partner Program</a>
+                </div>
+                <div class="footer-column">
+                    <h4>Company</h4>
+                    <a href="#" class="footer-link">About Us</a>
+                    <a href="#" class="footer-link">Our Team</a>
+                    <a href="#" class="footer-link">Success Stories</a>
+                </div>
+                <div class="footer-column">
+                    <h4>Contact</h4>
+                    <a href="#" class="footer-link">Get in Touch</a>
+                    <a href="#" class="footer-link">Partner Inquiry</a>
+                    <a href="#" class="footer-link">Support</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Perantara Reps. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        
+        mobileMenuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('active');
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    // Close mobile menu if open
+                    mobileMenu.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+        });
+
+        // Header scroll effect
+        let lastScroll = 0;
+        const header = document.querySelector('header');
+        
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > 100) {
+                header.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+            } else {
+                header.style.boxShadow = 'none';
+            }
+            
+            lastScroll = currentScroll;
+        });
+
+        // Form submission
+        const contactForm = document.querySelector('.contact-form');
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Thank you for your inquiry! We will get back to you within 24 hours.');
+            contactForm.reset();
+        });
+    </script>
+</body>
+</html>
