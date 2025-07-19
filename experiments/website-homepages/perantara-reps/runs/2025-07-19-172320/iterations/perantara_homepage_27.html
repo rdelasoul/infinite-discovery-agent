@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perantara Reps - Your Trusted Travel Partner for NZ & Indonesia</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-blue: #1D3557;
+            --accent-blue: #457B9D;
+            --teal: #A8DADC;
+            --light-cream: #F1FAEE;
+            --coral: #E63946;
+            --white: #ffffff;
+            --gray-100: #f8f9fa;
+            --gray-200: #e9ecef;
+            --gray-600: #6c757d;
+            --gray-800: #343a40;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            line-height: 1.6;
+            font-weight: 400;
+            color: var(--gray-800);
+            overflow-x: hidden;
+        }
+
+        /* Typography System */
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            line-height: 1.1;
+            color: var(--primary-blue);
+        }
+
+        h2 {
+            font-size: 2rem;
+            font-weight: 600;
+            line-height: 1.2;
+            color: var(--primary-blue);
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            font-weight: 500;
+            line-height: 1.3;
+            color: var(--primary-blue);
+        }
+
+        .small {
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+
+        /* Button System */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 48px;
+            padding: 0 24px;
+            border-radius: 1rem;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 300ms ease;
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background-color: var(--coral);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background-color: #d32f3f;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary-blue);
+            border-color: var(--primary-blue);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--primary-blue);
+            color: var(--white);
+        }
+
+        /* Unique Layout Approach: Asymmetric Split Header */
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: var(--white);
+            border-bottom: 1px solid var(--gray-200);
+            height: 64px;
+        }
+
+        .header-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 16px;
+            height: 100%;
+            display: grid;
+            grid-template-columns: 200px 1fr auto;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-blue);
+            text-decoration: none;
+        }
+
+        /* Distinctive Navigation: Centered with Visual Grouping */
+        .nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 48px;
+        }
+
+        .nav-item {
+            position: relative;
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 300ms ease;
+            padding: 8px 0;
+        }
+
+        .nav-item:hover {
+            color: var(--accent-blue);
+        }
+
+        .nav-item.has-mega::after {
+            content: '▼';
+            margin-left: 8px;
+            font-size: 0.75rem;
+            transition: transform 300ms ease;
+        }
+
+        .nav-item.has-mega:hover::after {
+            transform: rotate(180deg);
+        }
+
+        /* Revolutionary Mega-Menu: Floating Card Design */
+        .mega-menu {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(8px);
+            width: 900px;
+            background: var(--white);
+            border-radius: 1rem;
+            box-shadow: 0 20px 60px rgba(29, 53, 87, 0.15);
+            padding: 32px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 300ms ease;
+            border: 2px solid var(--light-cream);
+        }
+
+        .nav-item:hover .mega-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(16px);
+        }
+
+        .mega-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .mega-column {
+            padding: 24px;
+            border-radius: 1rem;
+            background: var(--light-cream);
+            transition: transform 300ms ease;
+        }
+
+        .mega-column:hover {
+            transform: translateY(-4px);
+            background: var(--teal);
+        }
+
+        .mega-column h4 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--primary-blue);
+            margin-bottom: 8px;
+        }
+
+        .mega-column p {
+            color: var(--gray-600);
+            font-size: 0.875rem;
+            line-height: 1.4;
+        }
+
+        .mega-column a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Hero Section: Diagonal Split Layout */
+        .hero {
+            position: relative;
+            min-height: 90vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 96px 64px;
+            background: linear-gradient(135deg, var(--light-cream) 0%, var(--white) 100%);
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-content::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: -50px;
+            width: 100px;
+            height: 100%;
+            background: inherit;
+            transform: skewX(-10deg);
+            z-index: -1;
+        }
+
+        .hero-visual {
+            background: linear-gradient(45deg, var(--accent-blue) 0%, var(--teal) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .hero-visual::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300px;
+            height: 300px;
+            background: var(--white);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0.1;
+        }
+
+        .hero-tagline {
+            font-size: 1.25rem;
+            color: var(--accent-blue);
+            margin-bottom: 16px;
+            font-weight: 500;
+        }
+
+        .hero-subtitle {
+            font-size: 1.125rem;
+            color: var(--gray-600);
+            margin: 24px 0 32px 0;
+        }
+
+        .hero-ctas {
+            display: flex;
+            gap: 16px;
+            margin-top: 32px;
+        }
+
+        /* Trust Section: Horizontal Carousel Layout */
+        .trust-section {
+            background: var(--white);
+            padding: 96px 0;
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .trust-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+
+        .trust-grid {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 64px;
+            align-items: center;
+        }
+
+        .trust-content h2 {
+            margin-bottom: 24px;
+        }
+
+        .trust-metrics {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            margin-top: 32px;
+        }
+
+        .metric {
+            text-align: center;
+            padding: 24px;
+            border-radius: 1rem;
+            background: var(--light-cream);
+        }
+
+        .metric-number {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--coral);
+            display: block;
+        }
+
+        .metric-label {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            margin-top: 8px;
+        }
+
+        .trust-logos {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 32px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .trust-logo {
+            width: 120px;
+            height: 60px;
+            background: var(--gray-100);
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: var(--gray-600);
+            font-size: 0.875rem;
+            text-align: center;
+            transition: all 300ms ease;
+        }
+
+        .trust-logo:hover {
+            background: var(--teal);
+            transform: translateY(-4px);
+        }
+
+        /* Growth Section: Offset Card Design */
+        .growth-section {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--accent-blue) 100%);
+            padding: 96px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .growth-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(168, 218, 220, 0.1) 0%, transparent 70%);
+        }
+
+        .growth-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 16px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .growth-card {
+            background: var(--white);
+            border-radius: 1rem;
+            padding: 48px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: 64px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        }
+
+        .growth-card h2 {
+            margin-bottom: 24px;
+        }
+
+        .growth-card p {
+            margin-bottom: 32px;
+            color: var(--gray-600);
+        }
+
+        /* Contact Section: Side-by-Side Layout */
+        .contact-section {
+            background: var(--light-cream);
+            padding: 96px 0;
+        }
+
+        .contact-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 16px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+            align-items: start;
+        }
+
+        .contact-info h2 {
+            margin-bottom: 24px;
+        }
+
+        .contact-info p {
+            margin-bottom: 32px;
+            color: var(--gray-600);
+        }
+
+        .whatsapp-integration {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 24px;
+            background: var(--white);
+            border-radius: 1rem;
+            margin-top: 32px;
+        }
+
+        .whatsapp-icon {
+            width: 48px;
+            height: 48px;
+            background: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: 600;
+        }
+
+        .contact-form {
+            background: var(--white);
+            padding: 48px;
+            border-radius: 1rem;
+            box-shadow: 0 10px 30px rgba(29, 53, 87, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--primary-blue);
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 16px;
+            border: 2px solid var(--gray-200);
+            border-radius: 1rem;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border-color 300ms ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+        }
+
+        /* Footer: Minimal Horizontal Layout */
+        .footer {
+            background: var(--primary-blue);
+            color: var(--white);
+            padding: 48px 0 32px 0;
+        }
+
+        .footer-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 16px;
+            display: grid;
+            grid-template-columns: 1fr auto auto;
+            gap: 64px;
+            align-items: center;
+        }
+
+        .footer-info h3 {
+            color: var(--white);
+            margin-bottom: 16px;
+        }
+
+        .footer-info p {
+            color: var(--teal);
+            margin-bottom: 8px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 16px;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background: var(--accent-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            text-decoration: none;
+            transition: all 300ms ease;
+        }
+
+        .social-link:hover {
+            background: var(--coral);
+            transform: translateY(-2px);
+        }
+
+        .footer-copyright {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding-top: 32px;
+            border-top: 1px solid var(--accent-blue);
+            color: var(--teal);
+            font-size: 0.875rem;
+            margin-top: 32px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .header-container {
+                grid-template-columns: auto 1fr auto;
+                gap: 24px;
+            }
+
+            .nav {
+                gap: 32px;
+            }
+
+            .mega-menu {
+                width: 600px;
+            }
+
+            .mega-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .hero {
+                grid-template-columns: 1fr;
+                min-height: auto;
+            }
+
+            .hero-content {
+                padding: 64px 32px;
+            }
+
+            .hero-content::after {
+                display: none;
+            }
+
+            .hero-visual {
+                min-height: 300px;
+            }
+
+            .trust-grid {
+                grid-template-columns: 1fr;
+                gap: 48px;
+                text-align: center;
+            }
+
+            .contact-container {
+                grid-template-columns: 1fr;
+                gap: 48px;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr;
+                gap: 32px;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .header-container {
+                grid-template-columns: 1fr;
+                gap: 16px;
+                text-align: center;
+            }
+
+            .nav {
+                display: none;
+            }
+
+            .hero-content {
+                padding: 48px 24px;
+            }
+
+            .hero-ctas {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .trust-metrics {
+                grid-template-columns: 1fr;
+            }
+
+            .growth-card {
+                margin-right: 0;
+                padding: 32px 24px;
+            }
+
+            .contact-form {
+                padding: 32px 24px;
+            }
+
+            .mega-menu {
+                position: static;
+                width: 100%;
+                transform: none;
+                margin-top: 16px;
+                display: none;
+            }
+
+            .mega-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .trust-logos {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .trust-logo {
+                width: 100%;
+            }
+        }
+
+        /* Accessibility Enhancements */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* Focus styles for keyboard navigation */
+        .btn:focus,
+        .nav-item:focus,
+        input:focus,
+        select:focus {
+            outline: 2px solid var(--coral);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Asymmetric Split Layout -->
+    <header class="header" role="banner">
+        <div class="header-container">
+            <a href="/" class="logo" aria-label="Perantara Reps Homepage">
+                Perantara Reps
+            </a>
+            
+            <nav class="nav" role="navigation" aria-label="Main navigation">
+                <a href="/why-perantara" class="nav-item">Why Perantara</a>
+                
+                <div class="nav-item has-mega" tabindex="0" role="button" aria-haspopup="true" aria-expanded="false">
+                    Solutions
+                    <div class="mega-menu" role="menu">
+                        <div class="mega-grid">
+                            <a href="/travel-wholesalers-nz-inbound" class="mega-column" role="menuitem">
+                                <h4>NZ Inbound Solutions</h4>
+                                <p>Seamless NZ tours for travel wholesalers & agencies</p>
+                            </a>
+                            <a href="/travel-wholesalers-id-inbound" class="mega-column" role="menuitem">
+                                <h4>Indonesia Inbound Solutions</h4>
+                                <p>Curated Indonesia trips for travel wholesalers & agencies</p>
+                            </a>
+                            <a href="/overseas-dmcs-indonesia-rep" class="mega-column" role="menuitem">
+                                <h4>Indonesia Representation</h4>
+                                <p>Grow Indonesia sales without opening a local office</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <a href="/services" class="nav-item">Services</a>
+                <a href="/contact" class="nav-item">Contact</a>
+            </nav>
+            
+            <a href="#contact" class="btn btn-primary">Get a Quote</a>
+        </div>
+    </header>
+
+    <!-- Hero Section with Diagonal Split -->
+    <section class="hero" role="banner">
+        <div class="hero-content">
+            <div class="hero-tagline">30 years of trusted partnership</div>
+            <h1>Helping travel professionals deliver seamless client experiences in New Zealand & Indonesia</h1>
+            <p class="hero-subtitle">30 years of local expertise. Zero operational headaches.</p>
+            <div class="hero-ctas">
+                <a href="/travel-wholesalers-nz-inbound" class="btn btn-primary">Sell NZ with Confidence</a>
+                <a href="/travel-wholesalers-id-inbound" class="btn btn-secondary">Indonesia Made Safe & Simple</a>
+            </div>
+        </div>
+        <div class="hero-visual" aria-hidden="true">
+            <div style="color: var(--white); font-size: 3rem; font-weight: 600; text-align: center;">
+                NZ & ID<br>
+                <span style="font-size: 1.5rem; opacity: 0.8;">Travel Expertise</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Section with Horizontal Carousel -->
+    <section class="trust-section">
+        <div class="trust-container">
+            <div class="trust-grid">
+                <div class="trust-content">
+                    <h2>Trusted by Industry Leaders</h2>
+                    <p>Three decades of proven success serving travel professionals across New Zealand and Indonesia markets.</p>
+                    
+                    <div class="trust-metrics">
+                        <div class="metric">
+                            <span class="metric-number">30</span>
+                            <div class="metric-label">Years Experience</div>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-number">4000+</span>
+                            <div class="metric-label">Passengers/Year</div>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-number">150+</span>
+                            <div class="metric-label">Supplier Partners</div>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-number">Multi</span>
+                            <div class="metric-label">Language Support</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="trust-logos">
+                    <div class="trust-logo">Air New Zealand</div>
+                    <div class="trust-logo">Garuda Indonesia</div>
+                    <div class="trust-logo">Singapore Airlines</div>
+                    <div class="trust-logo">Tourism NZ</div>
+                    <div class="trust-logo">Tourism Indonesia</div>
+                    <div class="trust-logo">Silver Africa</div>
+                    <div class="trust-logo">IATA Member</div>
+                    <div class="trust-logo">TAANZ Member</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Growth Section with Offset Card -->
+    <section class="growth-section">
+        <div class="growth-container">
+            <div class="growth-card">
+                <h2>Want to grow Indonesia sales without a local office?</h2>
+                <p>Join 50+ overseas DMCs who trust us to represent their Indonesia operations. We handle local partnerships, supplier relationships, and on-ground support so you can focus on selling.</p>
+                <a href="/overseas-dmcs-indonesia-rep" class="btn btn-primary">Explore Partnership Opportunities</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section with Side-by-Side Layout -->
+    <section id="contact" class="contact-section">
+        <div class="contact-container">
+            <div class="contact-info">
+                <h2>Ready to elevate your travel offerings?</h2>
+                <p>Whether you're looking to expand into New Zealand, enhance your Indonesia operations, or need local representation, we're here to help you succeed.</p>
+                
+                <div class="whatsapp-integration">
+                    <div class="whatsapp-icon">WA</div>
+                    <div>
+                        <div style="font-weight: 600; color: var(--primary-blue);">WhatsApp Support</div>
+                        <div class="small" style="color: var(--gray-600);">+64 21 123 4567</div>
+                    </div>
+                </div>
+            </div>
+            
+            <form class="contact-form" role="form" aria-label="Contact form">
+                <div class="form-group">
+                    <label for="name">Full Name *</label>
+                    <input type="text" id="name" name="name" required aria-required="true">
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email Address *</label>
+                    <input type="email" id="email" name="email" required aria-required="true">
+                </div>
+                
+                <div class="form-group">
+                    <label for="service">I'm interested in *</label>
+                    <select id="service" name="service" required aria-required="true">
+                        <option value="">Select your interest</option>
+                        <option value="A1">A1 - NZ Inbound for Travel Wholesalers</option>
+                        <option value="A2">A2 - Indonesia Inbound for Travel Wholesalers</option>
+                        <option value="B1">B1 - Indonesia Representation for Overseas DMCs</option>
+                        <option value="unsure">Unsure - Need guidance</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="btn btn-primary" style="width: 100%;">
+                    Get Your Custom Quote
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer with Minimal Horizontal Layout -->
+    <footer class="footer" role="contentinfo">
+        <div class="footer-container">
+            <div class="footer-info">
+                <h3>Perantara Reps</h3>
+                <p>Your trusted travel partner for NZ & Indonesia</p>
+                <p>📧 info@perantarareps.com</p>
+                <p>📱 +64 21 123 4567</p>
+            </div>
+            
+            <div class="social-links">
+                <a href="#" class="social-link" aria-label="Facebook">f</a>
+                <a href="#" class="social-link" aria-label="LinkedIn">in</a>
+                <a href="#" class="social-link" aria-label="Instagram">ig</a>
+            </div>
+            
+            <div style="text-align: right;">
+                <div style="color: var(--teal); margin-bottom: 8px;">Auckland | Jakarta</div>
+                <div class="small">EST. 1994</div>
+            </div>
+        </div>
+        
+        <div class="footer-copyright">
+            © 2024 Perantara Reps. All rights reserved. | 30 years of connecting travel professionals across NZ & Indonesia.
+        </div>
+    </footer>
+
+    <script>
+        // Enhanced mega-menu functionality with keyboard support
+        document.addEventListener('DOMContentLoaded', function() {
+            const megaMenuTrigger = document.querySelector('.has-mega');
+            const megaMenu = document.querySelector('.mega-menu');
+            
+            if (megaMenuTrigger && megaMenu) {
+                // Mouse events
+                megaMenuTrigger.addEventListener('mouseenter', function() {
+                    megaMenu.style.opacity = '1';
+                    megaMenu.style.visibility = 'visible';
+                    megaMenuTrigger.setAttribute('aria-expanded', 'true');
+                });
+                
+                megaMenuTrigger.addEventListener('mouseleave', function() {
+                    megaMenu.style.opacity = '0';
+                    megaMenu.style.visibility = 'hidden';
+                    megaMenuTrigger.setAttribute('aria-expanded', 'false');
+                });
+                
+                // Keyboard events
+                megaMenuTrigger.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        const isExpanded = megaMenuTrigger.getAttribute('aria-expanded') === 'true';
+                        
+                        if (isExpanded) {
+                            megaMenu.style.opacity = '0';
+                            megaMenu.style.visibility = 'hidden';
+                            megaMenuTrigger.setAttribute('aria-expanded', 'false');
+                        } else {
+                            megaMenu.style.opacity = '1';
+                            megaMenu.style.visibility = 'visible';
+                            megaMenuTrigger.setAttribute('aria-expanded', 'true');
+                        }
+                    }
+                    
+                    if (e.key === 'Escape') {
+                        megaMenu.style.opacity = '0';
+                        megaMenu.style.visibility = 'hidden';
+                        megaMenuTrigger.setAttribute('aria-expanded', 'false');
+                        megaMenuTrigger.focus();
+                    }
+                });
+            }
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+            
+            // Form submission handling
+            const contactForm = document.querySelector('.contact-form');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Basic form validation
+                    const name = this.querySelector('#name').value.trim();
+                    const email = this.querySelector('#email').value.trim();
+                    const service = this.querySelector('#service').value;
+                    
+                    if (!name || !email || !service) {
+                        alert('Please fill in all required fields.');
+                        return;
+                    }
+                    
+                    // Simulate form submission
+                    const submitBtn = this.querySelector('button[type="submit"]');
+                    const originalText = submitBtn.textContent;
+                    submitBtn.textContent = 'Sending...';
+                    submitBtn.disabled = true;
+                    
+                    setTimeout(() => {
+                        alert('Thank you! We\'ll be in touch within 24 hours.');
+                        this.reset();
+                        submitBtn.textContent = originalText;
+                        submitBtn.disabled = false;
+                    }, 2000);
+                });
+            }
+            
+            // Performance optimization: Lazy load animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+            
+            // Apply fade-in animation to sections
+            const sections = document.querySelectorAll('.trust-section, .growth-section, .contact-section');
+            sections.forEach(section => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(30px)';
+                section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(section);
+            });
+        });
+    </script>
+</body>
+</html>

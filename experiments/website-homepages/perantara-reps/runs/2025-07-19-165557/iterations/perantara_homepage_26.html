@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perantara Reps - Helping travel professionals deliver seamless client experiences</title>
+    <meta name="description" content="30 years of local expertise. Zero operational headaches. Helping travel professionals deliver seamless client experiences in New Zealand & Indonesia.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-blue: #1D3557;
+            --accent-blue: #457B9D;
+            --teal: #A8DADC;
+            --light-cream: #F1FAEE;
+            --coral: #E63946;
+            --white: #ffffff;
+            --text-dark: #1D3557;
+            --text-medium: #457B9D;
+            --text-light: #6B7280;
+            --border-radius: 1rem;
+            --shadow-sm: 0 1px 3px rgba(29, 53, 87, 0.12);
+            --shadow-md: 0 4px 12px rgba(29, 53, 87, 0.15);
+            --shadow-lg: 0 8px 25px rgba(29, 53, 87, 0.2);
+            --transition-base: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--white);
+            overflow-x: hidden;
+        }
+
+        /* Cascading Viewport Layout System - Unique responsive breakpoint strategy */
+        .viewport-cascade {
+            --cascade-offset: 0;
+            transform: translateX(var(--cascade-offset));
+            transition: var(--transition-slow);
+        }
+
+        /* Staggered breakpoints for fluid morphing */
+        @media (max-width: 1400px) {
+            .viewport-cascade { --cascade-offset: -2vw; }
+        }
+        @media (max-width: 1200px) {
+            .viewport-cascade { --cascade-offset: -4vw; }
+        }
+        @media (max-width: 992px) {
+            .viewport-cascade { --cascade-offset: 0; }
+        }
+        @media (max-width: 768px) {
+            .viewport-cascade { --cascade-offset: 2vw; }
+        }
+        @media (max-width: 576px) {
+            .viewport-cascade { --cascade-offset: 0; }
+        }
+
+        /* Morphing Container System */
+        .morphing-container {
+            --morph-scale: 1;
+            --morph-spacing: 1rem;
+            --morph-columns: 1fr;
+            padding: calc(var(--morph-spacing) * 2) var(--morph-spacing);
+            transform: scale(var(--morph-scale));
+            transform-origin: center;
+            transition: var(--transition-slow);
+        }
+
+        @media (min-width: 576px) {
+            .morphing-container {
+                --morph-scale: 1.02;
+                --morph-spacing: 1.5rem;
+            }
+        }
+        @media (min-width: 768px) {
+            .morphing-container {
+                --morph-scale: 1.04;
+                --morph-spacing: 2rem;
+                --morph-columns: 1fr 1fr;
+            }
+        }
+        @media (min-width: 992px) {
+            .morphing-container {
+                --morph-scale: 1.06;
+                --morph-spacing: 3rem;
+            }
+        }
+        @media (min-width: 1200px) {
+            .morphing-container {
+                --morph-scale: 1;
+                --morph-spacing: 4rem;
+            }
+        }
+
+        /* Header with Fluid Navigation Morphing */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(29, 53, 87, 0.1);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: var(--transition-base);
+        }
+
+        .header.scrolled {
+            padding: 0.5rem 0;
+            box-shadow: var(--shadow-md);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            align-items: center;
+            gap: 2rem;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            text-decoration: none;
+            transition: var(--transition-base);
+        }
+
+        .logo:hover {
+            color: var(--accent-blue);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            transition: var(--transition-base);
+        }
+
+        .nav-link:hover {
+            color: var(--accent-blue);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-blue);
+            transition: var(--transition-base);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            min-width: 200px;
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: var(--transition-base);
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+
+        .dropdown:hover .dropdown-content {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .cta-button {
+            background: var(--coral);
+            color: var(--white);
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition-base);
+            border: 2px solid var(--coral);
+        }
+
+        .cta-button:hover {
+            background: transparent;
+            color: var(--coral);
+            box-shadow: var(--shadow-md);
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0.5rem;
+        }
+
+        .hamburger-line {
+            width: 25px;
+            height: 3px;
+            background: var(--primary-blue);
+            margin: 3px 0;
+            transition: var(--transition-base);
+        }
+
+        /* Hero Section with Split Morphing Layout */
+        .hero {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: var(--morph-columns);
+            align-items: center;
+            gap: 4rem;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--light-cream) 0%, var(--teal) 100%);
+        }
+
+        .hero-content {
+            max-width: 600px;
+            z-index: 2;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--primary-blue);
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            color: var(--primary-blue);
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-medium);
+            margin-bottom: 2rem;
+            font-weight: 400;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+        }
+
+        .hero-ctas {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease-out 0.6s both;
+        }
+
+        .hero-cta {
+            padding: 1rem 2rem;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition-base);
+            min-width: 200px;
+            text-align: center;
+        }
+
+        .hero-cta.primary {
+            background: var(--primary-blue);
+            color: var(--white);
+            border: 2px solid var(--primary-blue);
+        }
+
+        .hero-cta.primary:hover {
+            background: transparent;
+            color: var(--primary-blue);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .hero-cta.secondary {
+            background: transparent;
+            color: var(--accent-blue);
+            border: 2px solid var(--accent-blue);
+        }
+
+        .hero-cta.secondary:hover {
+            background: var(--accent-blue);
+            color: var(--white);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .hero-visual {
+            position: relative;
+            height: 500px;
+            overflow: hidden;
+            border-radius: var(--border-radius);
+            animation: fadeInRight 1s ease-out 0.8s both;
+        }
+
+        .hero-split-bg {
+            position: absolute;
+            inset: 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+
+        .bg-nz {
+            background: linear-gradient(45deg, rgba(29, 53, 87, 0.8), rgba(69, 123, 157, 0.6)),
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"><rect fill="%23457B9D" width="400" height="300"/><circle fill="%23A8DADC" cx="100" cy="80" r="30"/><circle fill="%23A8DADC" cx="300" cy="200" r="40"/><path fill="%23F1FAEE" d="M0,200 Q200,150 400,200 L400,300 L0,300 Z"/></svg>');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .bg-indonesia {
+            background: linear-gradient(45deg, rgba(230, 57, 70, 0.8), rgba(168, 218, 220, 0.6)),
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"><rect fill="%23E63946" width="400" height="300"/><circle fill="%23A8DADC" cx="320" cy="60" r="25"/><circle fill="%23F1FAEE" cx="80" cy="180" r="35"/><path fill="%2369123157" d="M0,100 Q200,50 400,100 L400,0 L0,0 Z"/></svg>');
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Trust Section with Cascading Cards */
+        .trust-section {
+            background: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .trust-content {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            font-size: 1.125rem;
+            color: var(--text-medium);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .trust-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .metric-card {
+            background: var(--light-cream);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            text-align: center;
+            transition: var(--transition-base);
+            border: 2px solid transparent;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--teal);
+        }
+
+        .metric-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--coral);
+            display: block;
+        }
+
+        .metric-label {
+            font-size: 1rem;
+            color: var(--text-medium);
+            font-weight: 500;
+        }
+
+        .partner-logos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+            align-items: center;
+            opacity: 0.7;
+        }
+
+        .partner-logo {
+            height: 60px;
+            background: var(--text-light);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: 600;
+            transition: var(--transition-base);
+        }
+
+        .partner-logo:hover {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+
+        /* Growth Section with Offset Layout */
+        .growth-section {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--accent-blue) 100%);
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .growth-content {
+            display: grid;
+            grid-template-columns: var(--morph-columns);
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .growth-text h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .growth-text p {
+            font-size: 1.125rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .growth-features {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .growth-feature {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: var(--border-radius);
+            transition: var(--transition-base);
+        }
+
+        .growth-feature:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(10px);
+        }
+
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--coral);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: bold;
+        }
+
+        /* Contact Section with Floating Form */
+        .contact-section {
+            background: var(--light-cream);
+            position: relative;
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: var(--morph-columns);
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .contact-info h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-info p {
+            font-size: 1.125rem;
+            color: var(--text-medium);
+            margin-bottom: 2rem;
+        }
+
+        .contact-form {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            z-index: 2;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 500;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-input,
+        .form-select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--teal);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: var(--transition-base);
+            background: var(--white);
+        }
+
+        .form-input:focus,
+        .form-select:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px rgba(69, 123, 157, 0.1);
+        }
+
+        .form-button {
+            width: 100%;
+            padding: 1rem;
+            background: var(--coral);
+            color: var(--white);
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-base);
+            min-height: 44px;
+        }
+
+        .form-button:hover {
+            background: var(--primary-blue);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Footer with Fluid Grid */
+        .footer {
+            background: var(--primary-blue);
+            color: var(--white);
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--teal);
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            margin-bottom: 0.5rem;
+            display: block;
+            transition: var(--transition-base);
+        }
+
+        .footer-section a:hover {
+            color: var(--teal);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background: var(--accent-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            text-decoration: none;
+            transition: var(--transition-base);
+        }
+
+        .social-link:hover {
+            background: var(--coral);
+            transform: translateY(-2px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Responsive Morphing Adjustments */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .mobile-menu-toggle {
+                display: flex;
+            }
+
+            .hero {
+                grid-template-columns: 1fr;
+                text-align: center;
+                padding-top: 120px;
+            }
+
+            .hero-visual {
+                height: 300px;
+                order: -1;
+            }
+
+            .hero-ctas {
+                justify-content: center;
+            }
+
+            .hero-cta {
+                min-width: auto;
+                flex: 1;
+            }
+
+            .growth-content,
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .morphing-container {
+                padding: 2rem 1rem;
+            }
+
+            .viewport-cascade {
+                --cascade-offset: 0;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .trust-metrics {
+                grid-template-columns: 1fr;
+            }
+
+            .partner-logos {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .social-links {
+                justify-content: center;
+            }
+        }
+
+        /* Accessibility Enhancements */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* Focus indicators */
+        .cta-button:focus,
+        .hero-cta:focus,
+        .form-input:focus,
+        .form-select:focus,
+        .form-button:focus,
+        .nav-link:focus {
+            outline: 2px solid var(--coral);
+            outline-offset: 2px;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Intersection Observer Animation Classes */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: var(--transition-slow);
+        }
+
+        .animate-on-scroll.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <nav class="nav-container">
+            <a href="#" class="logo" aria-label="Perantara Reps Home">Perantara Reps</a>
+            
+            <ul class="nav-menu" role="menubar">
+                <li role="none">
+                    <a href="#why" class="nav-link" role="menuitem">Why Perantara</a>
+                </li>
+                <li class="dropdown" role="none">
+                    <a href="#solutions" class="nav-link" role="menuitem" aria-haspopup="true" aria-expanded="false">
+                        Solutions
+                    </a>
+                    <div class="dropdown-content" role="menu">
+                        <a href="#nz-solutions" role="menuitem">New Zealand</a>
+                        <a href="#indonesia-solutions" role="menuitem">Indonesia</a>
+                        <a href="#dmc-services" role="menuitem">DMC Services</a>
+                    </div>
+                </li>
+                <li class="dropdown" role="none">
+                    <a href="#services" class="nav-link" role="menuitem" aria-haspopup="true" aria-expanded="false">
+                        Services
+                    </a>
+                    <div class="dropdown-content" role="menu">
+                        <a href="#representation" role="menuitem">Market Representation</a>
+                        <a href="#operations" role="menuitem">Operations Support</a>
+                        <a href="#consulting" role="menuitem">Travel Consulting</a>
+                    </div>
+                </li>
+                <li role="none">
+                    <a href="#contact" class="nav-link" role="menuitem">Contact</a>
+                </li>
+            </ul>
+            
+            <a href="#quote" class="cta-button">Get a Quote</a>
+            
+            <button class="mobile-menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <main>
+        <section class="hero viewport-cascade morphing-container" id="hero" aria-labelledby="hero-title">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span>🏔️</span>
+                    <span>30 Years of Excellence</span>
+                </div>
+                
+                <h1 class="hero-title" id="hero-title">
+                    Helping travel professionals deliver seamless client experiences in New Zealand & Indonesia
+                </h1>
+                
+                <p class="hero-subtitle">
+                    30 years of local expertise. Zero operational headaches.
+                </p>
+                
+                <div class="hero-ctas">
+                    <a href="#nz-confidence" class="hero-cta primary">Sell NZ with Confidence</a>
+                    <a href="#indonesia-simple" class="hero-cta secondary">Indonesia Made Safe & Simple</a>
+                </div>
+            </div>
+            
+            <div class="hero-visual">
+                <div class="hero-split-bg">
+                    <div class="bg-nz" aria-label="New Zealand landscape representation"></div>
+                    <div class="bg-indonesia" aria-label="Indonesia landscape representation"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Trust & Credibility Section -->
+        <section class="trust-section viewport-cascade morphing-container animate-on-scroll" id="trust" aria-labelledby="trust-title">
+            <div class="trust-content">
+                <h2 class="section-title" id="trust-title">Trusted by Industry Leaders</h2>
+                <p class="section-subtitle">
+                    Three decades of proven results, building bridges between travel markets with unmatched local expertise.
+                </p>
+            </div>
+            
+            <div class="trust-metrics">
+                <div class="metric-card">
+                    <span class="metric-number">30</span>
+                    <span class="metric-label">Years of Experience</span>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-number">4000+</span>
+                    <span class="metric-label">Passengers Annually</span>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-number">150+</span>
+                    <span class="metric-label">Partner Networks</span>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-number">24/7</span>
+                    <span class="metric-label">Local Support</span>
+                </div>
+            </div>
+            
+            <div class="partner-logos">
+                <div class="partner-logo">Air New Zealand</div>
+                <div class="partner-logo">Tourism NZ</div>
+                <div class="partner-logo">Indonesia Tourism</div>
+                <div class="partner-logo">Garuda Indonesia</div>
+                <div class="partner-logo">IATA</div>
+                <div class="partner-logo">PATA</div>
+            </div>
+        </section>
+
+        <!-- Growth Opportunities Section -->
+        <section class="growth-section viewport-cascade morphing-container animate-on-scroll" id="growth" aria-labelledby="growth-title">
+            <div class="growth-content">
+                <div class="growth-text">
+                    <h2 id="growth-title">Want to grow Indonesia sales without a local office?</h2>
+                    <p>
+                        Expand your Indonesia market presence with zero overhead. Our established network, local expertise, and proven systems eliminate the complexity of international expansion.
+                    </p>
+                    
+                    <div class="growth-features">
+                        <div class="growth-feature">
+                            <div class="feature-icon">🏢</div>
+                            <div>
+                                <strong>No Local Office Needed</strong><br>
+                                Full market presence without physical setup
+                            </div>
+                        </div>
+                        <div class="growth-feature">
+                            <div class="feature-icon">🤝</div>
+                            <div>
+                                <strong>Established Partnerships</strong><br>
+                                Immediate access to 150+ verified suppliers
+                            </div>
+                        </div>
+                        <div class="growth-feature">
+                            <div class="feature-icon">📞</div>
+                            <div>
+                                <strong>24/7 Local Support</strong><br>
+                                Round-the-clock assistance in local time zones
+                            </div>
+                        </div>
+                        <div class="growth-feature">
+                            <div class="feature-icon">💰</div>
+                            <div>
+                                <strong>Cost-Effective Growth</strong><br>
+                                Expand markets without operational overhead
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="growth-visual">
+                    <!-- Growth illustration could go here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contact-section viewport-cascade morphing-container animate-on-scroll" id="contact" aria-labelledby="contact-title">
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h2 id="contact-title">Ready to Expand Your Market Reach?</h2>
+                    <p>
+                        Connect with our team to discuss how Perantara Reps can help you deliver exceptional client experiences in New Zealand and Indonesia.
+                    </p>
+                    <p>
+                        <strong>Response time:</strong> Within 4 business hours<br>
+                        <strong>Languages:</strong> English, Bahasa Indonesia, Mandarin
+                    </p>
+                </div>
+                
+                <form class="contact-form" aria-labelledby="contact-title">
+                    <div class="form-group">
+                        <label for="name" class="form-label">Full Name *</label>
+                        <input type="text" id="name" name="name" class="form-input" required aria-required="true">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email Address *</label>
+                        <input type="email" id="email" name="email" class="form-input" required aria-required="true">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="company" class="form-label">Company</label>
+                        <input type="text" id="company" name="company" class="form-input">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="service" class="form-label">Service Interest *</label>
+                        <select id="service" name="service" class="form-select" required aria-required="true">
+                            <option value="">Select a service...</option>
+                            <option value="nz-representation">New Zealand Representation</option>
+                            <option value="indonesia-representation">Indonesia Representation</option>
+                            <option value="dmc-services">DMC Services</option>
+                            <option value="operations-support">Operations Support</option>
+                            <option value="consulting">Travel Consulting</option>
+                            <option value="partnership">Partnership Opportunities</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message" class="form-label">Message</label>
+                        <textarea id="message" name="message" class="form-input" rows="4" placeholder="Tell us about your specific needs..."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="form-button">Send Message</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+        <div class="viewport-cascade morphing-container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Perantara Reps</h3>
+                    <p>Your trusted bridge between New Zealand and Indonesia travel markets.</p>
+                    <p>Building seamless experiences for 30 years.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link" aria-label="LinkedIn">Li</a>
+                        <a href="#" class="social-link" aria-label="Facebook">Fb</a>
+                        <a href="#" class="social-link" aria-label="Instagram">Ig</a>
+                        <a href="#" class="social-link" aria-label="Email">@</a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Services</h3>
+                    <a href="#representation">Market Representation</a>
+                    <a href="#dmc">DMC Services</a>
+                    <a href="#operations">Operations Support</a>
+                    <a href="#consulting">Travel Consulting</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Markets</h3>
+                    <a href="#new-zealand">New Zealand</a>
+                    <a href="#indonesia">Indonesia</a>
+                    <a href="#partnerships">Partnerships</a>
+                    <a href="#network">Supplier Network</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <p>📧 info@perantara-reps.com</p>
+                    <p>📞 +64 9 XXX XXXX (NZ)</p>
+                    <p>📞 +62 21 XXX XXXX (ID)</p>
+                    <p>🌐 24/7 Support Available</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 Perantara Reps. All rights reserved. | Privacy Policy | Terms of Service</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Header scroll behavior
+        const header = document.getElementById('header');
+        let lastScrollY = window.scrollY;
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animated');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all animate-on-scroll elements
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Form submission handling
+        const contactForm = document.querySelector('.contact-form');
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(contactForm);
+            const formObject = Object.fromEntries(formData);
+            
+            // Simple validation
+            if (!formObject.name || !formObject.email || !formObject.service) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+            
+            // Simulate form submission
+            const submitButton = contactForm.querySelector('.form-button');
+            const originalText = submitButton.textContent;
+            
+            submitButton.textContent = 'Sending...';
+            submitButton.disabled = true;
+            
+            setTimeout(() => {
+                alert('Thank you for your message! We\'ll get back to you within 4 business hours.');
+                contactForm.reset();
+                submitButton.textContent = originalText;
+                submitButton.disabled = false;
+            }, 2000);
+        });
+
+        // Keyboard navigation for dropdowns
+        document.querySelectorAll('.dropdown').forEach(dropdown => {
+            const link = dropdown.querySelector('.nav-link');
+            const content = dropdown.querySelector('.dropdown-content');
+            
+            link.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    content.style.opacity = content.style.opacity === '1' ? '0' : '1';
+                    content.style.visibility = content.style.visibility === 'visible' ? 'hidden' : 'visible';
+                    link.setAttribute('aria-expanded', content.style.visibility === 'visible');
+                }
+            });
+        });
+
+        // Mobile menu toggle (basic implementation)
+        const mobileToggle = document.querySelector('.mobile-menu-toggle');
+        const navMenu = document.querySelector('.nav-menu');
+        
+        if (mobileToggle) {
+            mobileToggle.addEventListener('click', () => {
+                const isExpanded = mobileToggle.getAttribute('aria-expanded') === 'true';
+                mobileToggle.setAttribute('aria-expanded', !isExpanded);
+                // In a full implementation, this would show/hide the mobile menu
+            });
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const headerHeight = header.offsetHeight;
+                    const targetPosition = target.offsetTop - headerHeight;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Performance optimization: Lazy load background images
+        const lazyBackgrounds = document.querySelectorAll('.bg-nz, .bg-indonesia');
+        
+        const backgroundObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.backgroundImage = entry.target.style.backgroundImage;
+                    backgroundObserver.unobserve(entry.target);
+                }
+            });
+        });
+
+        lazyBackgrounds.forEach(bg => backgroundObserver.observe(bg));
+    </script>
+</body>
+</html>

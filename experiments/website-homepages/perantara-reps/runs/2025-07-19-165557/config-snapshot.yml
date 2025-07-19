@@ -1,0 +1,40 @@
+# Perantara Reps Homepage Specification Configuration
+
+# LAYOUT-FOCUSED ITERATION: Color scheme is pre-defined in spec.md
+# Focus dependencies on layout patterns, component arrangements, and structural design
+
+dependencies:
+  # Design system dependencies (empty for maximum layout creativity)
+  design-systems: []
+    # Keeping empty to allow creative layout approaches without system constraints
+    # Color scheme is defined in spec.md - focus on spatial arrangements
+  
+  # Specification modules (essential for professional quality)
+  spec-modules:
+    - accessibility-standards      # Essential for professional business website
+    - performance-requirements     # Critical for good user experience and SEO
+    # Note: realistic-data-requirements not needed - content is defined in spec
+  
+  # Visual inspiration and aesthetic direction 
+  moodboards: []
+    # Removing modern-minimalist to avoid color palette conflicts
+    # Color scheme is pre-defined - agents should focus on layout innovation
+    # Future: Consider layout-specific moodboards (grid patterns, navigation structures)
+  
+  # Data sets (not needed - content defined in spec)
+  data: []
+
+# Experiment configuration
+experiment:
+  type: "website-homepages"
+  project: "perantara-reps"
+  output_format: "single-file"
+  naming_pattern: "perantara_homepage_{iteration}.html"
+  iteration_focus: "layout-patterns"
+
+# Updated project context:
+# - Bridge operator connecting NZ & Indonesia travel markets (30 years)
+# - Three customer segments: A1 (Travel Wholesalers NZ-bound), A2 (Travel Wholesalers ID-bound), B1 (Overseas DMCs)
+# - Professional B2B positioning with cultural intelligence
+# - LAYOUT FOCUS: Iterate on component arrangements, navigation patterns, section flows
+# - Color scheme defined: Primary Blue #1D3557, Accent Blue #457B9D, Teal #A8DADC, Light Cream #F1FAEE, Coral #E63946

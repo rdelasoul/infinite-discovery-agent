@@ -1,0 +1,1517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perantara Reps - Travel Professional's Partner in NZ & Indonesia</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #1D3557;
+            --accent-blue: #457B9D;
+            --teal: #A8DADC;
+            --light-cream: #F1FAEE;
+            --coral: #E63946;
+            --white: #ffffff;
+            --gray-100: #f8f9fa;
+            --gray-200: #e9ecef;
+            --gray-300: #dee2e6;
+            --gray-600: #6c757d;
+            --gray-800: #343a40;
+            --shadow: 0 4px 20px rgba(29, 53, 87, 0.1);
+            --shadow-lg: 0 8px 40px rgba(29, 53, 87, 0.15);
+            --border-radius: 1rem;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--gray-800);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Header with Innovative Vertical Mega Menu */
+        .header {
+            background: var(--white);
+            border-bottom: 1px solid var(--gray-200);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        .header.scrolled {
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 0;
+            position: relative;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            text-decoration: none;
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            position: relative;
+            color: var(--gray-800);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            transition: var(--transition);
+            border-radius: var(--border-radius);
+        }
+
+        .nav-link:hover,
+        .nav-link:focus {
+            color: var(--primary-blue);
+            background: var(--light-cream);
+            outline: none;
+        }
+
+        /* Innovative Vertical Mega Menu */
+        .mega-menu-trigger {
+            cursor: pointer;
+        }
+
+        .mega-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: var(--transition);
+            margin-top: 0.5rem;
+        }
+
+        .mega-menu.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .mega-menu-content {
+            display: grid;
+            grid-template-columns: 1fr 2px 1fr;
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .mega-menu-divider {
+            background: linear-gradient(to bottom, transparent, var(--teal), transparent);
+            width: 2px;
+            justify-self: center;
+        }
+
+        .mega-menu-section h3 {
+            color: var(--primary-blue);
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .mega-menu-section h3::before {
+            content: '';
+            width: 4px;
+            height: 20px;
+            background: var(--coral);
+            border-radius: 2px;
+        }
+
+        .mega-menu-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .mega-menu-link {
+            color: var(--gray-600);
+            text-decoration: none;
+            padding: 0.5rem 0;
+            transition: var(--transition);
+            border-left: 3px solid transparent;
+            padding-left: 1rem;
+        }
+
+        .mega-menu-link:hover,
+        .mega-menu-link:focus {
+            color: var(--primary-blue);
+            border-left-color: var(--accent-blue);
+            transform: translateX(4px);
+            outline: none;
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: var(--transition);
+            margin-top: 0.5rem;
+            min-width: 200px;
+        }
+
+        .dropdown:hover .dropdown-menu,
+        .dropdown:focus-within .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-link {
+            display: block;
+            padding: 0.75rem 1rem;
+            color: var(--gray-600);
+            text-decoration: none;
+            transition: var(--transition);
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .dropdown-link:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-link:hover,
+        .dropdown-link:focus {
+            background: var(--light-cream);
+            color: var(--primary-blue);
+            outline: none;
+        }
+
+        .cta-btn {
+            background: var(--coral);
+            color: var(--white);
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cta-btn:hover,
+        .cta-btn:focus {
+            background: #d63384;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+            outline: 2px solid var(--coral);
+            outline-offset: 2px;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--primary-blue);
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            min-height: 44px;
+            min-width: 44px;
+        }
+
+        .mobile-menu-btn:hover,
+        .mobile-menu-btn:focus {
+            background: var(--light-cream);
+            outline: 2px solid var(--primary-blue);
+            outline-offset: 2px;
+        }
+
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            max-width: 400px;
+            height: 100vh;
+            background: var(--white);
+            z-index: 1001;
+            transition: var(--transition);
+            overflow-y: auto;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .mobile-menu.active {
+            right: 0;
+        }
+
+        .mobile-menu-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .mobile-menu-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--primary-blue);
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: var(--border-radius);
+            margin-left: auto;
+            min-height: 44px;
+            min-width: 44px;
+        }
+
+        .mobile-menu-nav {
+            padding: 1rem;
+        }
+
+        .mobile-nav-link {
+            display: block;
+            padding: 1rem;
+            color: var(--gray-800);
+            text-decoration: none;
+            border-bottom: 1px solid var(--gray-200);
+            transition: var(--transition);
+        }
+
+        .mobile-nav-link:hover,
+        .mobile-nav-link:focus {
+            background: var(--light-cream);
+            color: var(--primary-blue);
+            outline: none;
+        }
+
+        /* Hero Section with Split Layout */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--accent-blue) 50%, var(--teal) 100%);
+            color: var(--white);
+            padding: 8rem 0 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(168, 218, 220, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(230, 57, 70, 0.2) 0%, transparent 50%);
+        }
+
+        .hero-container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-text {
+            max-width: 600px;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--white) 0%, var(--light-cream) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero .subtitle {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            font-weight: 400;
+        }
+
+        .hero-ctas {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .hero-cta {
+            background: var(--coral);
+            color: var(--white);
+            padding: 1rem 2rem;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            min-height: 44px;
+            width: 100%;
+            max-width: 300px;
+            justify-content: center;
+        }
+
+        .hero-cta:hover,
+        .hero-cta:focus {
+            background: #d63384;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(230, 57, 70, 0.3);
+            outline: 2px solid var(--white);
+            outline-offset: 2px;
+        }
+
+        .hero-cta.secondary {
+            background: transparent;
+            border: 2px solid var(--white);
+        }
+
+        .hero-cta.secondary:hover,
+        .hero-cta.secondary:focus {
+            background: var(--white);
+            color: var(--primary-blue);
+        }
+
+        .hero-visual {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            height: 400px;
+        }
+
+        .destination-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .destination-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .destination-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .destination-card p {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        /* Innovative Trust Section with Floating Cards */
+        .trust {
+            padding: 4rem 0;
+            background: var(--gray-100);
+            position: relative;
+        }
+
+        .trust-container {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .trust-content h2 {
+            font-size: 2.5rem;
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .trust-content p {
+            font-size: 1.1rem;
+            color: var(--gray-600);
+            margin-bottom: 2rem;
+        }
+
+        .trust-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+        }
+
+        .metric {
+            text-align: center;
+            padding: 1rem;
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
+        .metric-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--coral);
+            display: block;
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: var(--gray-600);
+            margin-top: 0.25rem;
+        }
+
+        .trust-logos {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            position: relative;
+        }
+
+        .trust-logo {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            height: 100px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .trust-logo:nth-child(even) {
+            transform: translateY(-10px);
+        }
+
+        .trust-logo:nth-child(3n) {
+            transform: translateY(10px);
+        }
+
+        .trust-logo:hover {
+            transform: translateY(-15px) scale(1.05);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .trust-logo::before {
+            content: attr(data-company);
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: var(--primary-blue);
+            font-size: 0.9rem;
+        }
+
+        /* Growth Section with Asymmetric Layout */
+        .growth {
+            padding: 4rem 0;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--accent-blue) 100%);
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .growth::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 100%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(168, 218, 220, 0.1) 0%, transparent 70%);
+            transform: rotate(15deg);
+        }
+
+        .growth-container {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .growth-content h2 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .growth-content p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .growth-features {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .growth-feature {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: var(--border-radius);
+            backdrop-filter: blur(10px);
+        }
+
+        .growth-feature-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--coral);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .growth-cta {
+            background: var(--coral);
+            color: var(--white);
+            padding: 1rem 2rem;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: var(--transition);
+            margin-top: 1rem;
+            min-height: 44px;
+        }
+
+        .growth-cta:hover,
+        .growth-cta:focus {
+            background: #d63384;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(230, 57, 70, 0.3);
+            outline: 2px solid var(--white);
+            outline-offset: 2px;
+        }
+
+        .growth-visual {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .growth-stat {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            width: 100%;
+        }
+
+        .growth-stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .growth-stat-label {
+            opacity: 0.8;
+        }
+
+        /* Contact Section with Modern Form */
+        .contact {
+            padding: 4rem 0;
+            background: var(--white);
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .contact-content h2 {
+            font-size: 2.5rem;
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .contact-content p {
+            font-size: 1.1rem;
+            color: var(--gray-600);
+            margin-bottom: 2rem;
+        }
+
+        .contact-info {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--gray-100);
+            border-radius: var(--border-radius);
+        }
+
+        .contact-item-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--accent-blue);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .contact-form {
+            background: var(--gray-100);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--primary-blue);
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--gray-300);
+            border-radius: var(--border-radius);
+            font-family: inherit;
+            font-size: 1rem;
+            transition: var(--transition);
+            min-height: 44px;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px rgba(69, 123, 157, 0.1);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-submit {
+            background: var(--coral);
+            color: var(--white);
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 100%;
+            font-size: 1rem;
+            min-height: 44px;
+        }
+
+        .form-submit:hover,
+        .form-submit:focus {
+            background: #d63384;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+            outline: 2px solid var(--coral);
+            outline-offset: 2px;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--primary-blue);
+            color: var(--white);
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-section a:hover,
+        .footer-section a:focus {
+            color: var(--teal);
+            outline: none;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: var(--white);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .social-link:hover,
+        .social-link:focus {
+            background: var(--coral);
+            transform: translateY(-2px);
+            outline: 2px solid var(--white);
+            outline-offset: 2px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            padding-top: 1rem;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 2rem;
+            }
+
+            .hero-visual {
+                grid-template-columns: 1fr;
+                height: auto;
+                gap: 1rem;
+            }
+
+            .trust-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .trust-logos {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+
+            .trust-logo:nth-child(even),
+            .trust-logo:nth-child(3n) {
+                transform: none;
+            }
+
+            .growth-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .contact-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .mega-menu-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .mega-menu-divider {
+                display: none;
+            }
+
+            .hero-ctas {
+                align-items: center;
+            }
+
+            .hero-cta {
+                max-width: none;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                padding: 6rem 0 2rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .trust-logos {
+                grid-template-columns: 1fr;
+            }
+
+            .growth-content h2 {
+                font-size: 2rem;
+            }
+
+            .contact-content h2 {
+                font-size: 2rem;
+            }
+        }
+
+        /* Focus indicators for accessibility */
+        .nav-link:focus,
+        .dropdown-link:focus,
+        .mega-menu-link:focus,
+        .mobile-nav-link:focus {
+            outline: 2px solid var(--primary-blue);
+            outline-offset: 2px;
+        }
+
+        /* Animation for page load */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-content,
+        .trust-container,
+        .growth-container,
+        .contact-container {
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            :root {
+                --shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+                --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.4);
+            }
+        }
+
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container">
+            <div class="header-container">
+                <a href="#" class="logo" aria-label="Perantara Reps Home">Perantara Reps</a>
+                
+                <nav class="nav" role="navigation" aria-label="Main navigation">
+                    <a href="#" class="nav-link">Why Perantara</a>
+                    
+                    <div class="dropdown mega-menu-trigger" tabindex="0" role="button" aria-haspopup="true" aria-expanded="false" aria-label="Solutions menu">
+                        <span class="nav-link">Solutions</span>
+                        <div class="mega-menu" role="menu">
+                            <div class="mega-menu-content">
+                                <div class="mega-menu-section">
+                                    <h3>New Zealand</h3>
+                                    <div class="mega-menu-links">
+                                        <a href="#" class="mega-menu-link" role="menuitem">Adventure Tourism</a>
+                                        <a href="#" class="mega-menu-link" role="menuitem">Luxury Escapes</a>
+                                        <a href="#" class="mega-menu-link" role="menuitem">Group Tours</a>
+                                        <a href="#" class="mega-menu-link" role="menuitem">Corporate Retreats</a>
+                                        <a href="#" class="mega-menu-link" role="menuitem">MICE Services</a>
+                                    </div>
+                                </div>
+                                
+                                <div class="mega-menu-divider" aria-hidden="true"></div>
+                                
+                                <div class="mega-menu-section">
+                                    <h3>Indonesia</h3>
+                                    <div class="mega-menu-links">
+                                        <a href="#" class="mega-menu-link" role="menuitem">Cultural Immersion</a>
+                                        <a href="#" class="mega-menu-link" role="menuitem">Island Hopping</a>
+                                        <a href="#" class="mega-menu-link" role="menuitem">Wellness Retreats</a>
+                                        <a href="#" class="mega-menu-link" role="menuitem">Business Travel</a>
+                                        <a href="#" class="mega-menu-link" role="menuitem">Custom Itineraries</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="dropdown">
+                        <span class="nav-link" tabindex="0" role="button" aria-haspopup="true" aria-expanded="false">Services</span>
+                        <div class="dropdown-menu" role="menu">
+                            <a href="#" class="dropdown-link" role="menuitem">Ground Handling</a>
+                            <a href="#" class="dropdown-link" role="menuitem">Accommodation</a>
+                            <a href="#" class="dropdown-link" role="menuitem">Transportation</a>
+                            <a href="#" class="dropdown-link" role="menuitem">Activities & Tours</a>
+                            <a href="#" class="dropdown-link" role="menuitem">24/7 Support</a>
+                        </div>
+                    </div>
+                    
+                    <a href="#contact" class="nav-link">Contact</a>
+                    <a href="#contact" class="cta-btn">Get a Quote</a>
+                </nav>
+                
+                <button class="mobile-menu-btn" aria-label="Open mobile menu" aria-expanded="false">
+                    <span aria-hidden="true">☰</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Mobile navigation">
+        <div class="mobile-menu-header">
+            <div class="logo">Perantara Reps</div>
+            <button class="mobile-menu-close" aria-label="Close mobile menu">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <nav class="mobile-menu-nav" role="navigation">
+            <a href="#" class="mobile-nav-link">Why Perantara</a>
+            <a href="#" class="mobile-nav-link">Solutions</a>
+            <a href="#" class="mobile-nav-link">Services</a>
+            <a href="#contact" class="mobile-nav-link">Contact</a>
+            <a href="#contact" class="cta-btn" style="margin: 1rem;">Get a Quote</a>
+        </nav>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" role="banner">
+        <div class="container">
+            <div class="hero-container">
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <h1>Helping travel professionals deliver seamless client experiences in New Zealand & Indonesia</h1>
+                        <p class="subtitle">30 years of local expertise. Zero operational headaches.</p>
+                        <div class="hero-ctas">
+                            <a href="#contact" class="hero-cta" aria-label="Learn more about New Zealand services">
+                                Sell NZ with Confidence
+                                <span aria-hidden="true">→</span>
+                            </a>
+                            <a href="#contact" class="hero-cta secondary" aria-label="Learn more about Indonesia services">
+                                Indonesia Made Safe & Simple
+                                <span aria-hidden="true">→</span>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="hero-visual">
+                        <div class="destination-card">
+                            <h3>New Zealand</h3>
+                            <p>Adventure • Nature • Culture</p>
+                        </div>
+                        <div class="destination-card">
+                            <h3>Indonesia</h3>
+                            <p>Islands • Heritage • Wellness</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust & Credibility Section -->
+    <section class="trust" id="trust">
+        <div class="container">
+            <div class="trust-container">
+                <div class="trust-content">
+                    <h2>Trusted by Industry Leaders</h2>
+                    <p>Three decades of partnerships with airlines, tourism boards, and travel professionals worldwide. Our reputation is built on reliability, local expertise, and unwavering commitment to excellence.</p>
+                    
+                    <div class="trust-metrics">
+                        <div class="metric">
+                            <span class="metric-number">30</span>
+                            <span class="metric-label">Years Experience</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-number">4000+</span>
+                            <span class="metric-label">Passengers/Year</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-number">150+</span>
+                            <span class="metric-label">Partnerships</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="trust-logos">
+                    <div class="trust-logo" data-company="Air New Zealand" aria-label="Air New Zealand partnership"></div>
+                    <div class="trust-logo" data-company="Tourism NZ" aria-label="Tourism New Zealand partnership"></div>
+                    <div class="trust-logo" data-company="Garuda Indonesia" aria-label="Garuda Indonesia partnership"></div>
+                    <div class="trust-logo" data-company="Tourism Indonesia" aria-label="Tourism Indonesia partnership"></div>
+                    <div class="trust-logo" data-company="Singapore Airlines" aria-label="Singapore Airlines partnership"></div>
+                    <div class="trust-logo" data-company="Qantas" aria-label="Qantas partnership"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Growth Opportunities Section -->
+    <section class="growth" id="growth">
+        <div class="container">
+            <div class="growth-container">
+                <div class="growth-content">
+                    <h2>Want to grow Indonesia sales without a local office?</h2>
+                    <p>Skip the overhead, complexity, and risk. Partner with Indonesia's most trusted DMC and start selling with confidence from day one.</p>
+                    
+                    <div class="growth-features">
+                        <div class="growth-feature">
+                            <div class="growth-feature-icon" aria-hidden="true">✓</div>
+                            <div>Instant market access with 30 years of local relationships</div>
+                        </div>
+                        <div class="growth-feature">
+                            <div class="growth-feature-icon" aria-hidden="true">✓</div>
+                            <div>24/7 ground support in your clients' language</div>
+                        </div>
+                        <div class="growth-feature">
+                            <div class="growth-feature-icon" aria-hidden="true">✓</div>
+                            <div>Pre-vetted suppliers and safety protocols</div>
+                        </div>
+                        <div class="growth-feature">
+                            <div class="growth-feature-icon" aria-hidden="true">✓</div>
+                            <div>Competitive pricing with transparent margins</div>
+                        </div>
+                    </div>
+                    
+                    <a href="#contact" class="growth-cta" aria-label="Start partnership conversation">
+                        Start Selling Today
+                        <span aria-hidden="true">→</span>
+                    </a>
+                </div>
+                
+                <div class="growth-visual">
+                    <div class="growth-stat">
+                        <span class="growth-stat-number">95%</span>
+                        <span class="growth-stat-label">Client Satisfaction</span>
+                    </div>
+                    <div class="growth-stat">
+                        <span class="growth-stat-number">48hr</span>
+                        <span class="growth-stat-label">Quote Turnaround</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="contact-container">
+                <div class="contact-content">
+                    <h2>Ready to Partner?</h2>
+                    <p>Let's discuss how we can help you deliver exceptional experiences for your clients in New Zealand and Indonesia.</p>
+                    
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <div class="contact-item-icon" aria-hidden="true">📧</div>
+                            <div>
+                                <strong>Email</strong><br>
+                                partnerships@perantarareps.com
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-item-icon" aria-hidden="true">📞</div>
+                            <div>
+                                <strong>Phone</strong><br>
+                                +64 9 123 4567 (NZ)<br>
+                                +62 21 345 6789 (ID)
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-item-icon" aria-hidden="true">🕐</div>
+                            <div>
+                                <strong>Response Time</strong><br>
+                                Within 2 business hours
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <form class="contact-form" aria-label="Contact form">
+                    <div class="form-group">
+                        <label for="name" class="form-label">Full Name *</label>
+                        <input type="text" id="name" name="name" class="form-input" required aria-required="true">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email Address *</label>
+                        <input type="email" id="email" name="email" class="form-input" required aria-required="true">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="company" class="form-label">Company</label>
+                        <input type="text" id="company" name="company" class="form-input">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="service" class="form-label">Service Interest *</label>
+                        <select id="service" name="service" class="form-select" required aria-required="true">
+                            <option value="">Select a service</option>
+                            <option value="nz-programs">New Zealand Programs</option>
+                            <option value="indonesia-programs">Indonesia Programs</option>
+                            <option value="both-destinations">Both Destinations</option>
+                            <option value="mice-services">MICE Services</option>
+                            <option value="partnership">Partnership Opportunities</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message" class="form-label">Message</label>
+                        <textarea id="message" name="message" class="form-textarea" placeholder="Tell us about your travel program needs..."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="form-submit">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Perantara Reps</h3>
+                    <p>Your trusted partner for exceptional travel experiences in New Zealand and Indonesia.</p>
+                    <div class="footer-social">
+                        <a href="#" class="social-link" aria-label="Follow us on LinkedIn">in</a>
+                        <a href="#" class="social-link" aria-label="Follow us on Facebook">f</a>
+                        <a href="#" class="social-link" aria-label="Follow us on Instagram">ig</a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <p><a href="#">About Us</a></p>
+                    <p><a href="#">Our Services</a></p>
+                    <p><a href="#">Destinations</a></p>
+                    <p><a href="#">Contact</a></p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Contact Info</h3>
+                    <p>New Zealand: +64 9 123 4567</p>
+                    <p>Indonesia: +62 21 345 6789</p>
+                    <p>partnerships@perantarareps.com</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 Perantara Reps. All rights reserved. | Privacy Policy | Terms of Service</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu functionality
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileMenuClose = document.querySelector('.mobile-menu-close');
+
+        function openMobileMenu() {
+            mobileMenu.classList.add('active');
+            mobileMenuBtn.setAttribute('aria-expanded', 'true');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMobileMenu() {
+            mobileMenu.classList.remove('active');
+            mobileMenuBtn.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = '';
+        }
+
+        mobileMenuBtn.addEventListener('click', openMobileMenu);
+        mobileMenuClose.addEventListener('click', closeMobileMenu);
+
+        // Close mobile menu when clicking outside
+        mobileMenu.addEventListener('click', (e) => {
+            if (e.target === mobileMenu) {
+                closeMobileMenu();
+            }
+        });
+
+        // Close mobile menu on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
+                closeMobileMenu();
+            }
+        });
+
+        // Mega menu functionality
+        const megaMenuTrigger = document.querySelector('.mega-menu-trigger');
+        const megaMenu = document.querySelector('.mega-menu');
+
+        function showMegaMenu() {
+            megaMenu.classList.add('active');
+            megaMenuTrigger.setAttribute('aria-expanded', 'true');
+        }
+
+        function hideMegaMenu() {
+            megaMenu.classList.remove('active');
+            megaMenuTrigger.setAttribute('aria-expanded', 'false');
+        }
+
+        megaMenuTrigger.addEventListener('mouseenter', showMegaMenu);
+        megaMenuTrigger.addEventListener('mouseleave', hideMegaMenu);
+        megaMenuTrigger.addEventListener('focusin', showMegaMenu);
+        megaMenuTrigger.addEventListener('focusout', (e) => {
+            if (!megaMenuTrigger.contains(e.relatedTarget)) {
+                hideMegaMenu();
+            }
+        });
+
+        // Keyboard navigation for mega menu
+        megaMenuTrigger.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                if (megaMenu.classList.contains('active')) {
+                    hideMegaMenu();
+                } else {
+                    showMegaMenu();
+                }
+            }
+        });
+
+        // Close mega menu on escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && megaMenu.classList.contains('active')) {
+                hideMegaMenu();
+                megaMenuTrigger.focus();
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href === '#') return;
+                
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) {
+                    const offsetTop = target.offsetTop - 80; // Account for fixed header
+                    window.scrollTo({
+                        top: offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Form submission
+        document.querySelector('.contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            const name = formData.get('name');
+            const email = formData.get('email');
+            const service = formData.get('service');
+            
+            // Basic validation
+            if (!name || !email || !service) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+            
+            // Simulate form submission
+            const submitBtn = this.querySelector('.form-submit');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Sending...';
+            submitBtn.disabled = true;
+            
+            setTimeout(() => {
+                alert('Thank you for your message! We will get back to you within 2 business hours.');
+                this.reset();
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }, 1500);
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animation
+        document.querySelectorAll('.trust-logo, .growth-stat, .metric').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+
+        // Stagger animations for trust logos
+        document.querySelectorAll('.trust-logo').forEach((logo, index) => {
+            logo.style.transitionDelay = `${index * 0.1}s`;
+        });
+
+        // Performance optimization: Preload critical resources
+        const preloadLink = document.createElement('link');
+        preloadLink.rel = 'preload';
+        preloadLink.href = 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap';
+        preloadLink.as = 'style';
+        document.head.appendChild(preloadLink);
+
+        // Error handling for failed resource loads
+        window.addEventListener('error', (e) => {
+            if (e.target.tagName === 'IMG') {
+                e.target.style.display = 'none';
+            }
+        });
+
+        // Accessibility: Focus management
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Tab') {
+                document.body.classList.add('keyboard-nav');
+            }
+        });
+
+        document.addEventListener('click', () => {
+            document.body.classList.remove('keyboard-nav');
+        });
+    </script>
+</body>
+</html>
