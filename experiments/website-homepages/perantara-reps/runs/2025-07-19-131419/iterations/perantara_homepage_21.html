@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perantara Reps - Your Bridge Between NZ & Indonesia Travel Markets</title>
+    <meta name="description" content="30 years of DMC & representation expertise connecting New Zealand and Indonesia travel markets. Serving SEA wholesalers, NZ agencies, and overseas DMCs.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --background-color: #ffffff;
+            --accent-color: #10b981;
+            --text-color: #1f2937;
+            --light-gray: #f3f4f6;
+            --medium-gray: #6b7280;
+            --border-color: #e5e7eb;
+            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --transition: all 200ms ease-out;
+            --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            --shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        body {
+            font-family: var(--font-family);
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+        }
+
+        /* Header Styles */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        .nav-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            height: 72px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text-color);
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-title {
+            font-size: 20px;
+            font-weight: 600;
+            line-height: 1.1;
+        }
+
+        .logo-tagline {
+            font-size: 12px;
+            color: var(--medium-gray);
+            line-height: 1.2;
+        }
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color);
+        }
+
+        .cta-button {
+            background: var(--primary-color);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+        }
+
+        .cta-button:hover {
+            background: #1d4ed8;
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-color);
+            padding: 8px;
+            border-radius: 4px;
+            min-height: 44px;
+            min-width: 44px;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 72px;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.05) 0%, rgba(16, 185, 129, 0.05) 100%);
+            padding: 96px 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400"><path d="M0,200 Q300,100 600,200 T1200,200 L1200,400 L0,400 Z" fill="rgba(37,99,235,0.02)"/></svg>') no-repeat center;
+            background-size: cover;
+        }
+
+        .hero-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 700;
+            line-height: 1.1;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--medium-gray);
+            line-height: 1.4;
+        }
+
+        .hero-ctas {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .persona-button {
+            background: white;
+            border: 2px solid var(--border-color);
+            padding: 16px 24px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 44px;
+        }
+
+        .persona-button:hover {
+            border-color: var(--primary-color);
+            background: rgba(37, 99, 235, 0.02);
+            transform: translateX(4px);
+        }
+
+        .persona-button .arrow {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .hero-visual {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+
+        .bridge-visual {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 24px;
+            flex-direction: column;
+        }
+
+        .country-badge {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .nz-badge {
+            background: linear-gradient(135deg, #000, #333);
+            color: white;
+        }
+
+        .indonesia-badge {
+            background: linear-gradient(135deg, #dc2626, #ef4444);
+            color: white;
+        }
+
+        .bridge-connector {
+            width: 2px;
+            height: 40px;
+            background: linear-gradient(to bottom, var(--primary-color), var(--accent-color));
+            position: relative;
+        }
+
+        .bridge-connector::before,
+        .bridge-connector::after {
+            content: '';
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--primary-color);
+        }
+
+        .bridge-connector::before {
+            top: -6px;
+            left: -5px;
+        }
+
+        .bridge-connector::after {
+            bottom: -6px;
+            left: -5px;
+            background: var(--accent-color);
+        }
+
+        /* Solutions Grid */
+        .solutions {
+            padding: 96px 24px;
+            background: var(--light-gray);
+        }
+
+        .solutions-container {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            line-height: 1.1;
+        }
+
+        .section-subtitle {
+            font-size: 1.125rem;
+            color: var(--medium-gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .solutions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 32px;
+        }
+
+        .solution-card {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .solution-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+        }
+
+        .solution-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .solution-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 24px;
+            color: white;
+        }
+
+        .sea-icon {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+        }
+
+        .nz-icon {
+            background: linear-gradient(135deg, #059669, #047857);
+        }
+
+        .dmc-icon {
+            background: linear-gradient(135deg, #7c3aed, #5b21b6);
+        }
+
+        .solution-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            line-height: 1.2;
+        }
+
+        .solution-outcome {
+            color: var(--medium-gray);
+            margin-bottom: 16px;
+            font-weight: 500;
+        }
+
+        .solution-benefit {
+            color: var(--text-color);
+            font-size: 14px;
+            background: var(--light-gray);
+            padding: 12px 16px;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        /* Proof Section */
+        .proof {
+            padding: 64px 24px;
+            background: white;
+        }
+
+        .proof-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .proof-title {
+            font-size: 1.125rem;
+            color: var(--medium-gray);
+            margin-bottom: 32px;
+            font-weight: 500;
+        }
+
+        .proof-logos {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 48px;
+            flex-wrap: wrap;
+        }
+
+        .proof-logo {
+            padding: 16px 24px;
+            background: var(--light-gray);
+            border-radius: 8px;
+            font-weight: 600;
+            color: var(--medium-gray);
+            font-size: 14px;
+            opacity: 0.7;
+        }
+
+        /* Stats Section */
+        .stats {
+            padding: 96px 24px;
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .stats-container {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 48px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, white, rgba(255, 255, 255, 0.8));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-size: 1.125rem;
+            opacity: 0.9;
+            line-height: 1.3;
+        }
+
+        /* Why Choose Section */
+        .why-choose {
+            padding: 96px 24px;
+            background: white;
+        }
+
+        .why-choose-container {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+            margin-top: 48px;
+        }
+
+        .feature-item {
+            padding: 24px;
+            border-radius: 12px;
+            background: var(--light-gray);
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .feature-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--text-color);
+        }
+
+        .feature-description {
+            color: var(--medium-gray);
+            line-height: 1.5;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 96px 24px;
+            background: var(--light-gray);
+        }
+
+        .contact-container {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+            margin-top: 48px;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        .office-card {
+            background: white;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+        }
+
+        .office-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--text-color);
+        }
+
+        .office-details {
+            color: var(--medium-gray);
+            line-height: 1.5;
+        }
+
+        .contact-form {
+            background: white;
+            padding: 32px;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-family: var(--font-family);
+            font-size: 16px;
+            transition: var(--transition);
+            min-height: 44px;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .submit-button {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 100%;
+            min-height: 44px;
+            font-size: 16px;
+        }
+
+        .submit-button:hover {
+            background: #1d4ed8;
+            transform: translateY(-1px);
+        }
+
+        .submit-button:active {
+            transform: translateY(0);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--text-color);
+            color: white;
+            padding: 48px 24px 24px;
+        }
+
+        .footer-container {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 32px;
+            margin-bottom: 32px;
+        }
+
+        .footer-section {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .footer-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .footer-link {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-link:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 24px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 14px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .hero-container {
+                grid-template-columns: 1fr;
+                gap: 48px;
+                text-align: center;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .solutions-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 32px;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+
+            .proof-logos {
+                gap: 24px;
+            }
+
+            .nav-container {
+                padding: 0 16px;
+            }
+
+            .hero,
+            .solutions,
+            .stats,
+            .why-choose,
+            .contact {
+                padding: 64px 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 1.75rem;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .logo-text {
+                display: none;
+            }
+        }
+
+        /* Accessibility */
+        .interactive-element:focus {
+            outline: 2px solid var(--primary-color);
+            outline-offset: 2px;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* Animation Classes */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" role="banner">
+        <div class="nav-container">
+            <a href="#" class="logo" aria-label="Perantara Reps Homepage">
+                <div class="logo-icon">PR</div>
+                <div class="logo-text">
+                    <div class="logo-title">Perantara Reps</div>
+                    <div class="logo-tagline">Your bridge between NZ & Indonesia</div>
+                </div>
+            </a>
+            
+            <nav role="navigation" aria-label="Main navigation">
+                <ul class="nav-menu">
+                    <li><a href="/why-perantara" class="nav-link">Why Perantara</a></li>
+                    <li><a href="/solutions" class="nav-link">Solutions</a></li>
+                    <li><a href="/services" class="nav-link">Services</a></li>
+                    <li><a href="/contact" class="nav-link">Contact</a></li>
+                </ul>
+                <a href="/quote" class="cta-button">Get a Quote</a>
+            </nav>
+            
+            <button class="mobile-menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false">
+                ☰
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content" role="main" id="main-content">
+        <!-- Hero Section -->
+        <section class="hero" aria-label="Hero section">
+            <div class="hero-container">
+                <div class="hero-content">
+                    <h1 class="hero-title">Your bridge between New Zealand & Indonesia travel markets</h1>
+                    <p class="hero-subtitle">30 years of DMC & representation expertise connecting both directions</p>
+                    
+                    <div class="hero-ctas">
+                        <a href="#contact" class="persona-button" data-sol="sea-wholesalers">
+                            <span><strong>SEA Wholesalers:</strong> Request sample itinerary</span>
+                            <span class="arrow">→</span>
+                        </a>
+                        <a href="#contact" class="persona-button" data-sol="nz-agencies">
+                            <span><strong>NZ Agencies:</strong> Get Indonesia sample pack</span>
+                            <span class="arrow">→</span>
+                        </a>
+                        <a href="#contact" class="persona-button" data-sol="overseas-dmcs">
+                            <span><strong>Overseas DMCs:</strong> Book discovery call</span>
+                            <span class="arrow">→</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="hero-visual">
+                    <div class="bridge-visual">
+                        <div class="country-badge nz-badge">🇳🇿 New Zealand</div>
+                        <div class="bridge-connector"></div>
+                        <div class="country-badge indonesia-badge">🇮🇩 Indonesia</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Solutions Section -->
+        <section class="solutions" aria-label="Solutions for different market segments">
+            <div class="solutions-container">
+                <div class="section-header">
+                    <h2 class="section-title">Tailored Solutions for Every Market</h2>
+                    <p class="section-subtitle">Three distinct value propositions serving diverse travel industry needs across both directions</p>
+                </div>
+                
+                <div class="solutions-grid">
+                    <div class="solution-card">
+                        <div class="solution-icon sea-icon">🌏</div>
+                        <h3 class="solution-title">Seamless NZ tours for SEA wholesalers</h3>
+                        <p class="solution-outcome">Sell profitable NZ itineraries without extra admin</p>
+                        <div class="solution-benefit">
+                            <strong>Key Benefit:</strong> Turnkey coordination via bilingual team
+                        </div>
+                    </div>
+                    
+                    <div class="solution-card">
+                        <div class="solution-icon nz-icon">🥝</div>
+                        <h3 class="solution-title">Curated Indonesia trips for Kiwi agencies</h3>
+                        <p class="solution-outcome">Delight your clients with Beyond-Bali adventures</p>
+                        <div class="solution-benefit">
+                            <strong>Key Benefit:</strong> NZ-based support with local expertise
+                        </div>
+                    </div>
+                    
+                    <div class="solution-card">
+                        <div class="solution-icon dmc-icon">🏢</div>
+                        <h3 class="solution-title">Grow Indonesia sales without a local office</h3>
+                        <p class="solution-outcome">Jakarta sales rep that acts as your in-market team</p>
+                        <div class="solution-benefit">
+                            <strong>Key Benefit:</strong> Local representation without overhead
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Proof Section -->
+        <section class="proof" aria-label="Industry partnerships and certifications">
+            <div class="proof-container">
+                <h2 class="proof-title">Trusted by leading travel industry partners</h2>
+                <div class="proof-logos">
+                    <div class="proof-logo">Air New Zealand</div>
+                    <div class="proof-logo">Tourism NZ</div>
+                    <div class="proof-logo">Indonesia Tourism</div>
+                    <div class="proof-logo">TAAI</div>
+                    <div class="proof-logo">ASITA</div>
+                    <div class="proof-logo">IATA</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="stats" aria-label="Company track record and achievements">
+            <div class="stats-container">
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number">30</div>
+                        <div class="stat-label">Years in Market<br>Established presence across both NZ and Indonesia</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">4,000+</div>
+                        <div class="stat-label">Passengers per Year<br>Proven volume and operational capability</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">5</div>
+                        <div class="stat-label">Continent Rep Offices<br>Global reach and local market intelligence</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">3</div>
+                        <div class="stat-label">Languages Supported<br>English, Bahasa Indonesia, Thai capabilities</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Choose Section -->
+        <section class="why-choose" aria-label="Why choose Perantara Reps">
+            <div class="why-choose-container">
+                <div class="section-header">
+                    <h2 class="section-title">Why Choose Perantara</h2>
+                    <p class="section-subtitle">The only operator truly serving both directions with established infrastructure and cultural intelligence</p>
+                </div>
+                
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <h3 class="feature-title">Bi-directional expertise</h3>
+                        <p class="feature-description">Only operator serving both NZ→Indonesia and SEA→NZ markets with deep local knowledge in both directions</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3 class="feature-title">Established infrastructure</h3>
+                        <p class="feature-description">30-year supplier networks in both countries providing reliable operations and competitive pricing</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3 class="feature-title">Multi-segment focus</h3>
+                        <p class="feature-description">Dedicated teams for wholesalers, agencies, and DMC representation with specialized expertise for each</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3 class="feature-title">Cultural intelligence</h3>
+                        <p class="feature-description">Deep understanding of business practices in both markets ensuring smooth cross-cultural operations</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contact" id="contact" aria-label="Contact and inquiry forms">
+            <div class="contact-container">
+                <div class="section-header">
+                    <h2 class="section-title">Ready to Connect?</h2>
+                    <p class="section-subtitle">Get in touch with our expert teams in both New Zealand and Indonesia</p>
+                </div>
+                
+                <div class="contact-grid">
+                    <div class="contact-info">
+                        <div class="office-card">
+                            <h3 class="office-title">🇳🇿 New Zealand Office</h3>
+                            <div class="office-details">
+                                <p><strong>Auckland Head Office</strong></p>
+                                <p>Level 3, 123 Queen Street<br>Auckland 1010, New Zealand</p>
+                                <p>Phone: +64 9 123 4567<br>Email: nz@perantara-reps.com</p>
+                            </div>
+                        </div>
+                        
+                        <div class="office-card">
+                            <h3 class="office-title">🇮🇩 Indonesia Office</h3>
+                            <div class="office-details">
+                                <p><strong>Jakarta Operations</strong></p>
+                                <p>Jl. Thamrin No. 45<br>Jakarta 10350, Indonesia</p>
+                                <p>Phone: +62 21 123 4567<br>Email: jakarta@perantara-reps.com</p>
+                            </div>
+                        </div>
+                        
+                        <div style="text-align: center;">
+                            <a href="https://wa.me/6421234567" class="cta-button" style="display: inline-flex; align-items: center; gap: 8px;">
+                                📱 WhatsApp Business
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <form class="contact-form" action="/contact" method="POST">
+                        <div class="form-group">
+                            <label for="customer-type" class="form-label">I am a:</label>
+                            <select id="customer-type" name="customer_type" class="form-select" required>
+                                <option value="">Select your business type</option>
+                                <option value="sea-wholesaler" data-sol="sea-wholesalers">SEA Wholesaler/Agency</option>
+                                <option value="nz-agency" data-sol="nz-agencies">NZ Travel Agency</option>
+                                <option value="overseas-dmc" data-sol="overseas-dmcs">Overseas DMC</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="service" class="form-label">Service Interest:</label>
+                            <select id="service" name="service" class="form-select" required>
+                                <option value="">Select service</option>
+                                <option value="nz-inbound">NZ Inbound DMC</option>
+                                <option value="indonesia-inbound">Indonesia Inbound DMC</option>
+                                <option value="jakarta-representation">Jakarta Representation</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="name" class="form-label">Name:</label>
+                            <input type="text" id="name" name="name" class="form-input" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email" class="form-label">Email:</label>
+                            <input type="email" id="email" name="email" class="form-input" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="company" class="form-label">Company:</label>
+                            <input type="text" id="company" name="company" class="form-input" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="group-size" class="form-label">Typical Group Size:</label>
+                            <select id="group-size" name="group_size" class="form-select">
+                                <option value="">Select group size</option>
+                                <option value="1-10">1-10 people</option>
+                                <option value="11-25">11-25 people</option>
+                                <option value="26-50">26-50 people</option>
+                                <option value="50+">50+ people</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="requirements" class="form-label">Specific Requirements:</label>
+                            <textarea id="requirements" name="requirements" class="form-textarea" placeholder="Tell us about your specific needs, destinations of interest, or questions..."></textarea>
+                        </div>
+                        
+                        <button type="submit" class="submit-button">Send Inquiry</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3 class="footer-title">Perantara Reps</h3>
+                    <p>Your trusted bridge between New Zealand and Indonesia travel markets for over 30 years.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3 class="footer-title">Services</h3>
+                    <a href="/nz-inbound" class="footer-link">NZ Inbound DMC</a>
+                    <a href="/indonesia-inbound" class="footer-link">Indonesia Inbound DMC</a>
+                    <a href="/representation" class="footer-link">Market Representation</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h3 class="footer-title">Solutions</h3>
+                    <a href="/sea-wholesalers" class="footer-link">SEA Wholesalers</a>
+                    <a href="/nz-agencies" class="footer-link">NZ Agencies</a>
+                    <a href="/overseas-dmcs" class="footer-link">Overseas DMCs</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h3 class="footer-title">Connect</h3>
+                    <a href="https://linkedin.com/company/perantara-reps" class="footer-link">LinkedIn</a>
+                    <a href="https://wa.me/6421234567" class="footer-link">WhatsApp Business</a>
+                    <a href="/contact" class="footer-link">Contact Us</a>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 Perantara Reps. All rights reserved. | <a href="/privacy" class="footer-link">Privacy Policy</a> | <a href="/terms" class="footer-link">Terms of Service</a></p>
+                <p>We acknowledge the traditional owners of the lands we operate in, both Tangata Whenua in New Zealand and the diverse peoples of Indonesia.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Form handling and interactions
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu toggle
+            const mobileToggle = document.querySelector('.mobile-menu-toggle');
+            const navMenu = document.querySelector('.nav-menu');
+            
+            if (mobileToggle && navMenu) {
+                mobileToggle.addEventListener('click', function() {
+                    const isExpanded = this.getAttribute('aria-expanded') === 'true';
+                    this.setAttribute('aria-expanded', (!isExpanded).toString());
+                    navMenu.style.display = isExpanded ? 'none' : 'flex';
+                });
+            }
+
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+
+            // Form submission handling
+            const contactForm = document.querySelector('.contact-form');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Basic form validation
+                    const requiredFields = this.querySelectorAll('[required]');
+                    let isValid = true;
+                    
+                    requiredFields.forEach(field => {
+                        if (!field.value.trim()) {
+                            isValid = false;
+                            field.style.borderColor = '#dc2626';
+                        } else {
+                            field.style.borderColor = '#10b981';
+                        }
+                    });
+                    
+                    if (isValid) {
+                        // Show success message (in real implementation, this would submit to server)
+                        const submitButton = this.querySelector('.submit-button');
+                        const originalText = submitButton.textContent;
+                        submitButton.textContent = 'Message Sent! ✓';
+                        submitButton.style.background = '#10b981';
+                        
+                        setTimeout(() => {
+                            submitButton.textContent = originalText;
+                            submitButton.style.background = '#2563eb';
+                            this.reset();
+                        }, 3000);
+                    }
+                });
+            }
+
+            // Intersection Observer for animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in');
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all solution cards and feature items
+            document.querySelectorAll('.solution-card, .feature-item, .stat-item').forEach(el => {
+                observer.observe(el);
+            });
+
+            // Header background on scroll
+            const header = document.querySelector('.header');
+            let lastScrollY = window.scrollY;
+
+            window.addEventListener('scroll', () => {
+                const currentScrollY = window.scrollY;
+                
+                if (currentScrollY > 50) {
+                    header.style.background = 'rgba(255, 255, 255, 0.98)';
+                    header.style.boxShadow = '0 1px 3px 0 rgba(0, 0, 0, 0.1)';
+                } else {
+                    header.style.background = 'rgba(255, 255, 255, 0.95)';
+                    header.style.boxShadow = 'none';
+                }
+                
+                lastScrollY = currentScrollY;
+            });
+
+            // Persona button tracking
+            document.querySelectorAll('[data-sol]').forEach(element => {
+                element.addEventListener('click', function() {
+                    const persona = this.getAttribute('data-sol');
+                    console.log(`Persona selected: ${persona}`);
+                    // In real implementation, this would send to analytics
+                });
+            });
+
+            // Dynamic service options based on customer type
+            const customerTypeSelect = document.getElementById('customer-type');
+            const serviceSelect = document.getElementById('service');
+            
+            if (customerTypeSelect && serviceSelect) {
+                customerTypeSelect.addEventListener('change', function() {
+                    const customerType = this.value;
+                    const serviceOptions = serviceSelect.querySelectorAll('option:not(:first-child)');
+                    
+                    serviceOptions.forEach(option => {
+                        option.style.display = 'block';
+                    });
+                    
+                    // Highlight recommended services based on customer type
+                    if (customerType === 'sea-wholesaler') {
+                        serviceSelect.querySelector('[value="nz-inbound"]').textContent = 'NZ Inbound DMC (Recommended)';
+                    } else if (customerType === 'nz-agency') {
+                        serviceSelect.querySelector('[value="indonesia-inbound"]').textContent = 'Indonesia Inbound DMC (Recommended)';
+                    } else if (customerType === 'overseas-dmc') {
+                        serviceSelect.querySelector('[value="jakarta-representation"]').textContent = 'Jakarta Representation (Recommended)';
+                    }
+                });
+            }
+        });
+
+        // Performance optimization: defer non-critical animations
+        window.addEventListener('load', function() {
+            document.body.classList.add('loaded');
+        });
+    </script>
+</body>
+</html>
