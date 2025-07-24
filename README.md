@@ -17,7 +17,7 @@ Enhanced infinite agentic loop system for UI/UX experimentation through parallel
 ## Core Concepts
 
 - **Experiments**: Self-contained generation types in `experiments/[type]/`
-- **Specs**: Generation instructions in `spec.md` files
+- **Specs**: Generation instructions in `spec.md` files (any format - verbose or minimal)
 - **Dependencies**: Shared components (design systems, moodboards, data) via `spec-config.yml`
 - **Runs**: Timestamped execution history with complete snapshots
 - **Parallel Agents**: Multiple AI agents generate simultaneously for efficiency
@@ -150,8 +150,10 @@ Bridge client aesthetic preferences to AI creative direction:
 
 1. Copy existing spec: `cp experiments/multi-card-banking/spec.md experiments/my-type/spec.md`
 2. Create config: `cp experiments/multi-card-banking/spec-config.yml experiments/my-type/spec-config.yml`
-3. Customize both files for your needs
+3. Customize both files for your needs (spec can be any format - detailed or minimal)
 4. Run: `/infinite my-type 5`
+
+The system adapts to any spec structure - from verbose thinking directives to minimal requirements.
 
 ## Advanced Features
 

@@ -47,11 +47,11 @@ The project uses Claude Code's custom commands feature with enhanced auto-discov
 - `.claude/settings.json` - Permissions configuration allowing Write, MultiEdit, Edit, and Bash
 
 ### Enhanced Specification & Dependency System
-- **Experiment-specific specs**: Each experiment type has its own `experiments/{type}/spec.md`
+- **Flexible experiment specs**: Each experiment type has its own `experiments/{type}/spec.md` (any format)
 - **Dependency configuration**: `experiments/{type}/spec-config.yml` controls shared component inclusion
 - **Shared dependencies**: `experiments/shared/` provides reusable components across all experiment types
 - **Reusable patterns**: Existing experiment specs can be copied and adapted for new experiment types
-- **Quality standards**: Ultra-detailed specifications with modular quality requirements
+- **Adaptive processing**: Commands work with verbose thinking directives or minimal requirement specs
 - **Evolution strategies**: How iterations should build upon each other with progressive sophistication
 
 #### **Shared Dependencies Structure**
@@ -144,7 +144,7 @@ runs/YYYY-MM-DD-HHMMSS/
 
 The system supports unlimited experiment types. To understand available experiment types and their purposes, see `experiments/README.md` which provides an overview of current experiment types and guidance on when to use each one.
 
-To create new experiment types, copy an existing `spec.md` and `spec-config.yml` from any experiment directory, customize for your needs, and run `/infinite [your-experiment-type] [count]`.
+To create new experiment types, copy an existing `spec.md` and `spec-config.yml` from any experiment directory, customize for your needs (spec can be any format), and run `/infinite [your-experiment-type] [count]`. The system intelligently adapts to whatever spec structure you provide.
 
 ## Iterative Spec Development Workflow
 
