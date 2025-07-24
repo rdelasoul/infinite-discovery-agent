@@ -49,37 +49,43 @@ If `references` array exists in config:
 4. **Fast Integration**: Include in streamlined spec as brief "REFERENCE_CONTEXT" section
 
 **1.3 Spec Preparation:**
-Create lightweight consolidated spec by actively removing ultra-thinking content:
+Create streamlined spec with intelligent content adaptation:
 
-**Step 1: Load and Parse Spec Content**
+**Step 1: Load and Analyze Spec Content**
 - Read base spec from spec_file
 - Include essential dependency content only
+- Detect if spec contains verbose thinking sections
 
-**Step 2: Remove Ultra-Thinking Sections**
-Remove entire sections that match these patterns:
-- Any section titled "## Ultra-Thinking Directive" (remove section header and all content until next ## header)
-- Any section titled "## Ultra-thinking Directive" (case variations)
-- Any section containing "Before creating each" followed by thinking prompts
-- Any section containing "deeply consider:" followed by bullet points
-- Any section with "Generate components that are:" followed by detailed thinking criteria
+**Step 2: Intelligent Content Processing**
+Detect and conditionally process based on spec structure:
 
-**Step 3: Remove Thinking Prompts**
-Remove paragraphs that contain:
-- "Think deeply about"
-- "Consider carefully"
-- "Analyze thoroughly"
-- "Before beginning"
-- "Extended thinking"
-- Long bullet lists with thinking questions (5+ thinking bullets)
+**Detection Phase:**
+Check if spec contains any of these patterns:
+- Sections titled "Ultra-Thinking Directive" (any case variation)
+- Sections with "Before creating each" or "deeply consider:"
+- Multiple paragraphs with thinking prompts ("Think deeply about", "Consider carefully", etc.)
+- Extended bullet lists with thinking questions (5+ items)
 
-**Step 4: Keep Core Requirements**
-Preserve only:
+**Processing Decision:**
+- **If verbose content detected**: Proceed with removal steps below
+- **If minimal spec detected**: Use spec as-is without modification
+- **Hybrid approach**: Remove only the detected verbose sections
+
+**Step 3: Conditional Removal (only if detected)**
+If verbose content was found, remove:
+- Entire "## Ultra-Thinking Directive" sections
+- Paragraphs starting with thinking prompts
+- Extended analytical bullet lists
+- Meta-instructions about thinking process
+
+**Step 4: Preserve Core Content**
+Always keep (regardless of spec style):
 - File naming and structure requirements
 - Technical specifications and output format
 - Quality standards (accessibility, performance)
-- Essential design requirements
-- Section requirements (what sections to include)
-- Basic brand guidelines
+- Design requirements and constraints
+- Section requirements (what to include)
+- Any custom directives from spec-config.yml
 
 **PHASE 2: FAST GENERATION**
 
@@ -101,24 +107,25 @@ For "infinite": Launch waves of 3-5 agents until context limits
 TASK: Generate iteration [NUMBER] for [EXPERIMENT_PATH]
 
 CONTEXT:
-- Spec: [STREAMLINED SPECIFICATION - All ultra-thinking sections removed, core requirements only]
+- Spec: [PROCESSED SPECIFICATION - Adapted to optimal format]
 - Output: experiments/{experiment_path}/runs/{run_timestamp}/iterations/
 - Iteration: [NUMBER]
 - Dependencies: [essential deps only]
 - Enhancement Strategy: [Strategy type if enhancement mode]
 - Reference Context: [30-line quick summary if enhancement mode]
+- Experiment Config: [Any custom config from spec-config.yml]
 
 REQUIREMENTS:
-1. Follow spec format exactly (no deep thinking required - requirements are direct)
+1. Follow the provided spec exactly as given
 2. Ensure uniqueness from existing iterations
 3. Use dependencies appropriately
 4. Create functional, accessible output
 5. **Quick Enhancement** (if applicable): Apply enhancement strategy efficiently using reference context
 6. File: experiments/{experiment_path}/runs/{run_timestamp}/iterations/[filename]
-7. Focus on efficient implementation - NO extensive analysis or ultra-thinking
+7. Focus on efficient, direct implementation
 
-APPROACH: Direct implementation based on streamlined requirements
-DELIVERABLE: Single functional file as specified
+APPROACH: Direct implementation following the spec requirements
+DELIVERABLE: Single functional file as specified in the spec
 ```
 
 **2.3 Parallel Execution:**
@@ -165,12 +172,12 @@ WHILE context allows:
 Begin execution by:
 1. Creating timestamped run directory with snapshots
 2. Quickly analyzing the experiment spec and resolving essential dependencies
-3. **ACTIVELY REMOVING ultra-thinking sections** from spec content following the 4-step process:
-   - Remove "## Ultra-Thinking Directive" sections entirely
-   - Remove "Before creating each" thinking prompts
-   - Remove "Think deeply about" paragraphs
-   - Keep only core requirements and specifications
-4. Launching parallel Sub Agents with streamlined spec (no thinking prompts)
+3. **INTELLIGENTLY ADAPTING spec content** based on detection:
+   - Detect if spec contains verbose thinking sections
+   - If found: Remove ultra-thinking content for efficiency
+   - If not found: Use spec as-is without modification
+   - Respect any custom structure from spec-config.yml
+4. Launching parallel Sub Agents with adapted spec
 5. Updating `current` symlink to point to new run upon completion
 
-This maintains the proper run-based architecture while achieving true token efficiency through streamlined spec preparation and fast execution approach.
+This maintains the proper run-based architecture while achieving token efficiency through intelligent spec adaptation that works with ANY spec format - verbose, minimal, or custom.

@@ -99,8 +99,9 @@ Analyze the consolidated specification to understand:
 - Any specific parameters or constraints
 - The intended evolution pattern between iterations
 - All dependency requirements and their implications
+- Custom experiment configuration from spec-config.yml
 
-Think carefully about how the resolved dependencies enhance the base specification.
+The specification structure is flexible - work with whatever format is provided, whether it includes thinking directives or is purely implementation-focused.
 
 **PHASE 4: HISTORICAL CONTEXT ANALYSIS** 
 Analyze previous runs to understand evolution trajectory:
@@ -144,12 +145,13 @@ TASK: Generate iteration [NUMBER] for [EXPERIMENT_PATH] in run [TIMESTAMP]
 You are Sub Agent [X] generating iteration [NUMBER] for a new run session.
 
 CONTEXT:
-- Consolidated Specification: [Full resolved spec with all dependencies]
+- Specification: [Full resolved spec with all dependencies - follow its structure and requirements exactly]
 - Previous Runs Analysis: [Summary of historical iterations across all runs]
 - Current Run: experiments/{experiment_path}/runs/{timestamp}/
 - Output Directory: experiments/{experiment_path}/runs/{timestamp}/iterations/
 - Your iteration number: [NUMBER]
 - Assigned creative direction: [Specific innovation dimension to explore]
+- Experiment Config: [Custom configuration from spec-config.yml]
 
 DEPENDENCIES AVAILABLE:
 - Design Systems: [List of resolved design system files from experiments/shared/design-systems/]
@@ -164,17 +166,17 @@ ENHANCEMENT CONTEXT (if enhancement mode):
 - Enhancement Focus: [Specific aspects to enhance based on strategy and reference analysis]
 
 REQUIREMENTS:
-1. Read and understand the consolidated specification completely
+1. Follow the provided specification exactly as written - it may be verbose or minimal
 2. Analyze previous runs to ensure your output is globally unique
 3. Utilize provided dependencies appropriately (reference files directly from experiments/shared/)
-4. Generate content following the resolved spec format exactly
+4. Generate content following the spec's format and structure
 5. Focus on [assigned innovation dimension] while maintaining spec compliance
-6. **Enhancement Mode** (if applicable): Apply enhancement strategies to reference work while maintaining core functionality
-7. **Reference Integration** (if applicable): Use reference summary to understand what to enhance and how
+6. **Enhancement Mode** (if applicable): Apply enhancement strategies to reference work
+7. **Reference Integration** (if applicable): Use reference summary for enhancement context
 8. Create file in: experiments/{experiment_path}/runs/{timestamp}/iterations/
-9. Ensure your iteration adds genuine value and novelty across all historical context
+9. Ensure your iteration adds genuine value and novelty
 
-DELIVERABLE: Single file as specified, with unique innovative content utilizing dependencies
+DELIVERABLE: Generate exactly what the specification requests, in the format it specifies
 ```
 
 **Parallel Execution Management:**
@@ -258,43 +260,27 @@ WHILE context_capacity > threshold:
 - Enable easy comparison between run approaches and outcomes
 - Maintain clean separation between different generation sessions
 
-**ULTRA-THINKING DIRECTIVE:**
-Before beginning generation, engage in extended thinking about:
+**EXECUTION STRATEGY:**
+Before beginning generation, consider the following based on specification complexity:
 
-**Enhanced Specification & Dependencies:**
-- The deeper implications of the consolidated specification
-- How resolved dependencies enhance the generation quality
-- Integration strategies for design systems, modules, and data
-- Dependency-driven evolution patterns across iterations
+**Specification Understanding:**
+- Analyze the consolidated specification structure and requirements
+- Understand how resolved dependencies enhance the generation
+- Identify key patterns and constraints from the spec
+- Note any custom configuration from spec-config.yml
 
-**Historical Evolution Analysis:**
-- Patterns across previous runs and their dependency usage
-- Opportunities for novel approaches not yet explored
-- How dependency resolution has evolved over time
-- Gaps in the historical coverage that new iterations can fill
+**Coordination Approach:**
+- Plan optimal Sub Agent distribution based on spec requirements
+- Assign distinct creative directions aligned with spec goals
+- Determine appropriate wave sizing for infinite mode
+- Manage context efficiently across parallel agents
 
-**Advanced Parallel Strategy:**
-- Optimal Sub Agent distribution leveraging dependency awareness
-- How to assign distinct creative directions that utilize different dependency aspects
-- Dependency-conscious wave sizing and timing for infinite mode
-- Context management across multiple parallel agents with shared dependency context
+**Quality & Uniqueness:**
+- Ensure each iteration is genuinely unique across all historical runs
+- Apply dependencies appropriately to enhance output quality
+- Balance spec compliance with creative innovation
+- Maintain consistency within the run's approach
 
-**Enhanced Coordination Challenges:**
-- How to prevent duplicate concepts across parallel streams and historical runs
-- Strategies for ensuring each agent produces genuinely unique output with proper dependency usage
-- Managing file organization within timestamped run directories
-- Quality control mechanisms for parallel outputs with dependency validation
+**Note**: The depth of analysis should match the specification's complexity. For minimal specs, proceed directly to execution. For complex specs with thinking directives, engage in deeper analysis as guided by the spec itself.
 
-**Dependency Integration Optimization:**
-- How to most effectively utilize resolved design systems in generated content
-- Strategies for incorporating realistic data sets into functional demonstrations
-- Integration patterns for accessibility, performance, and other spec modules
-- Balancing dependency adherence with creative innovation
-
-**Run-Based Workflow:**
-- Optimal run directory organization and snapshot strategies
-- How to maintain clean separation between different generation approaches
-- Strategies for evolving dependency configurations between runs
-- Long-term maintainability of the run-based system
-
-Begin execution with deep analysis of these enhanced coordination challenges, including full dependency resolution, and proceed systematically through each phase, leveraging Sub Agents for maximum creative output and efficiency while maintaining proper dependency integration and run organization.
+Begin execution by understanding the specification's intent and structure, then proceed systematically through each phase, leveraging Sub Agents for maximum creative output while respecting the spec's format and requirements.
