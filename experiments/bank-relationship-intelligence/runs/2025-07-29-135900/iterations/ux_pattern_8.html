@@ -1,0 +1,1463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Pipeline Optimization Interface - SMB Banking Sales Intelligence</title>
+    <style>
+        :root {
+            /* Geist Design System - Color Tokens */
+            --ds-gray-100: #fafafa;
+            --ds-gray-200: #eaeaea;
+            --ds-gray-300: #999999;
+            --ds-gray-400: #888888;
+            --ds-gray-500: #666666;
+            --ds-gray-600: #444444;
+            --ds-gray-700: #333333;
+            --ds-gray-800: #222222;
+            --ds-gray-900: #111111;
+            --ds-gray-1000: #000000;
+            --ds-blue-100: #e1f5fe;
+            --ds-blue-500: #0070f3;
+            --ds-blue-600: #0061d5;
+            --ds-blue-700: #004fc4;
+            --ds-red-500: #ee0000;
+            --ds-amber-500: #f5a623;
+            --ds-green-500: #00a82d;
+            --ds-purple-500: #7c3aed;
+
+            /* Typography */
+            --font-size-h1: 2.25rem;
+            --font-size-h2: 1.875rem;
+            --font-size-h3: 1.5rem;
+            --font-size-h4: 1.25rem;
+            --font-size-base: 1rem;
+            --font-size-small: 0.875rem;
+            --font-size-xs: 0.75rem;
+
+            /* Spacing */
+            --space-1: 0.25rem;
+            --space-2: 0.5rem;
+            --space-3: 0.75rem;
+            --space-4: 1rem;
+            --space-5: 1.25rem;
+            --space-6: 1.5rem;
+            --space-8: 2rem;
+            --space-10: 2.5rem;
+            --space-12: 3rem;
+            --space-16: 4rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Geist Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            font-size: var(--font-size-base);
+            line-height: 1.5;
+            color: var(--ds-gray-900);
+            background: var(--ds-gray-100);
+        }
+
+        .pipeline-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: var(--space-6);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-8);
+            padding: var(--space-6);
+            background: white;
+            border-radius: 8px;
+            border: 1px solid var(--ds-gray-200);
+        }
+
+        .header-info h1 {
+            font-size: var(--font-size-h2);
+            font-weight: 600;
+            color: var(--ds-gray-900);
+            margin-bottom: var(--space-2);
+        }
+
+        .header-stats {
+            display: flex;
+            gap: var(--space-8);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: var(--font-size-h3);
+            font-weight: 700;
+            color: var(--ds-blue-600);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-500);
+            margin-top: var(--space-1);
+        }
+
+        .pipeline-grid {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: var(--space-6);
+            margin-bottom: var(--space-8);
+        }
+
+        .pipeline-board {
+            background: white;
+            border-radius: 8px;
+            border: 1px solid var(--ds-gray-200);
+            padding: var(--space-6);
+        }
+
+        .board-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: var(--space-6);
+        }
+
+        .board-title {
+            font-size: var(--font-size-h4);
+            font-weight: 600;
+            color: var(--ds-gray-900);
+        }
+
+        .pipeline-stages {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: var(--space-4);
+            margin-bottom: var(--space-6);
+        }
+
+        .stage-column {
+            background: var(--ds-gray-100);
+            border-radius: 6px;
+            padding: var(--space-4);
+            min-height: 500px;
+        }
+
+        .stage-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-4);
+        }
+
+        .stage-title {
+            font-size: var(--font-size-small);
+            font-weight: 600;
+            color: var(--ds-gray-700);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stage-count {
+            background: var(--ds-gray-500);
+            color: white;
+            font-size: var(--font-size-xs);
+            font-weight: 600;
+            padding: var(--space-1) var(--space-2);
+            border-radius: 12px;
+        }
+
+        .prospect-card {
+            background: white;
+            border-radius: 6px;
+            padding: var(--space-4);
+            margin-bottom: var(--space-3);
+            border: 1px solid var(--ds-gray-200);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .prospect-card:hover {
+            border-color: var(--ds-blue-500);
+            box-shadow: 0 4px 12px rgba(0, 112, 243, 0.1);
+        }
+
+        .prospect-name {
+            font-weight: 600;
+            color: var(--ds-gray-900);
+            margin-bottom: var(--space-1);
+        }
+
+        .prospect-company {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-600);
+            margin-bottom: var(--space-2);
+        }
+
+        .prospect-metrics {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-3);
+        }
+
+        .conversion-score {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+
+        .score-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .score-high { background: var(--ds-green-500); }
+        .score-medium { background: var(--ds-amber-500); }
+        .score-low { background: var(--ds-red-500); }
+
+        .revenue-potential {
+            font-size: var(--font-size-small);
+            font-weight: 600;
+            color: var(--ds-blue-600);
+        }
+
+        .prospect-tags {
+            display: flex;
+            gap: var(--space-2);
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            font-size: var(--font-size-xs);
+            padding: var(--space-1) var(--space-2);
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .tag-priority { background: var(--ds-red-500); color: white; }
+        .tag-warm { background: var(--ds-amber-500); color: white; }
+        .tag-qualified { background: var(--ds-green-500); color: white; }
+        .tag-segment { background: var(--ds-blue-100); color: var(--ds-blue-700); }
+
+        .optimization-panel {
+            background: white;
+            border-radius: 8px;
+            border: 1px solid var(--ds-gray-200);
+            padding: var(--space-6);
+        }
+
+        .panel-section {
+            margin-bottom: var(--space-6);
+        }
+
+        .panel-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-title {
+            font-size: var(--font-size-h4);
+            font-weight: 600;
+            color: var(--ds-gray-900);
+            margin-bottom: var(--space-4);
+        }
+
+        .conversion-insights {
+            background: var(--ds-blue-100);
+            border-radius: 6px;
+            padding: var(--space-4);
+            margin-bottom: var(--space-4);
+        }
+
+        .insight-metric {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-2);
+        }
+
+        .insight-metric:last-child {
+            margin-bottom: 0;
+        }
+
+        .metric-label {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-700);
+        }
+
+        .metric-value {
+            font-weight: 600;
+            color: var(--ds-blue-700);
+        }
+
+        .opportunity-list {
+            list-style: none;
+        }
+
+        .opportunity-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            padding: var(--space-3);
+            border-radius: 6px;
+            margin-bottom: var(--space-2);
+            background: var(--ds-gray-100);
+            cursor: pointer;
+        }
+
+        .opportunity-item:hover {
+            background: var(--ds-blue-100);
+        }
+
+        .opportunity-priority {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .priority-critical { background: var(--ds-red-500); }
+        .priority-high { background: var(--ds-amber-500); }
+        .priority-medium { background: var(--ds-blue-500); }
+
+        .opportunity-content {
+            flex: 1;
+        }
+
+        .opportunity-title {
+            font-weight: 600;
+            color: var(--ds-gray-900);
+            margin-bottom: var(--space-1);
+        }
+
+        .opportunity-description {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-600);
+        }
+
+        .territory-performance {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-4);
+        }
+
+        .performance-card {
+            background: var(--ds-gray-100);
+            border-radius: 6px;
+            padding: var(--space-4);
+            text-align: center;
+        }
+
+        .performance-value {
+            font-size: var(--font-size-h3);
+            font-weight: 700;
+            color: var(--ds-gray-900);
+            margin-bottom: var(--space-1);
+        }
+
+        .performance-label {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-600);
+        }
+
+        .team-assignments {
+            margin-bottom: var(--space-6);
+        }
+
+        .assignment-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            padding: var(--space-3);
+            border-radius: 6px;
+            margin-bottom: var(--space-2);
+            background: var(--ds-gray-100);
+        }
+
+        .manager-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--ds-blue-500);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: var(--font-size-small);
+        }
+
+        .assignment-info {
+            flex: 1;
+        }
+
+        .manager-name {
+            font-weight: 600;
+            color: var(--ds-gray-900);
+        }
+
+        .assignment-stats {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-600);
+            margin-top: var(--space-1);
+        }
+
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--space-6);
+        }
+
+        .analytics-card {
+            background: white;
+            border-radius: 8px;
+            border: 1px solid var(--ds-gray-200);
+            padding: var(--space-6);
+        }
+
+        .chart-placeholder {
+            height: 200px;
+            background: var(--ds-gray-100);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--ds-gray-500);
+            font-size: var(--font-size-small);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: var(--space-3);
+            margin-top: var(--space-4);
+        }
+
+        .btn {
+            padding: var(--space-2) var(--space-4);
+            border-radius: 6px;
+            font-size: var(--font-size-small);
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--ds-blue-500);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--ds-blue-600);
+        }
+
+        .btn-secondary {
+            background: var(--ds-gray-200);
+            color: var(--ds-gray-700);
+        }
+
+        .btn-secondary:hover {
+            background: var(--ds-gray-300);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .pipeline-grid {
+                grid-template-columns: 1fr;
+                gap: var(--space-4);
+            }
+
+            .pipeline-stages {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .analytics-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .pipeline-stages {
+                grid-template-columns: 1fr;
+            }
+
+            .header-stats {
+                flex-direction: column;
+                gap: var(--space-4);
+            }
+
+            .territory-performance {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="pipeline-container">
+        <!-- Header with Key Metrics -->
+        <header class="header">
+            <div class="header-info">
+                <h1>Sales Pipeline Optimization</h1>
+                <p>SMB Banking Territory Management & Conversion Intelligence</p>
+            </div>
+            <div class="header-stats">
+                <div class="stat-item">
+                    <span class="stat-value">$2.4M</span>
+                    <div class="stat-label">Pipeline Value</div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value">34%</span>
+                    <div class="stat-label">Conversion Rate</div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value">127</span>
+                    <div class="stat-label">Active Prospects</div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value">89 days</span>
+                    <div class="stat-label">Avg. Sales Cycle</div>
+                </div>
+            </div>
+        </header>
+
+        <div class="pipeline-grid">
+            <!-- Pipeline Board -->
+            <div class="pipeline-board">
+                <div class="board-header">
+                    <h2 class="board-title">Sales Pipeline by Stage</h2>
+                </div>
+
+                <div class="pipeline-stages">
+                    <!-- Lead Generation -->
+                    <div class="stage-column">
+                        <div class="stage-header">
+                            <span class="stage-title">Lead Generation</span>
+                            <span class="stage-count">23</span>
+                        </div>
+
+                        <div class="prospect-card">
+                            <div class="prospect-name">NZ Tech Innovations</div>
+                            <div class="prospect-company">Software Development • 45 employees</div>
+                            <div class="prospect-metrics">
+                                <div class="conversion-score">
+                                    <div class="score-indicator score-high"></div>
+                                    <span>92% probability</span>
+                                </div>
+                                <div class="revenue-potential">$185K LTV</div>
+                            </div>
+                            <div class="prospect-tags">
+                                <span class="tag tag-priority">Priority</span>
+                                <span class="tag tag-segment">Tech</span>
+                            </div>
+                        </div>
+
+                        <div class="prospect-card">
+                            <div class="prospect-name">Auckland Medical Centre</div>
+                            <div class="prospect-company">Healthcare • 28 employees</div>
+                            <div class="prospect-metrics">
+                                <div class="conversion-score">
+                                    <div class="score-indicator score-medium"></div>
+                                    <span>76% probability</span>
+                                </div>
+                                <div class="revenue-potential">$142K LTV</div>
+                            </div>
+                            <div class="prospect-tags">
+                                <span class="tag tag-warm">Warm Lead</span>
+                                <span class="tag tag-segment">Healthcare</span>
+                            </div>
+                        </div>
+
+                        <div class="prospect-card">
+                            <div class="prospect-name">Green Earth Construction</div>
+                            <div class="prospect-company">Construction • 62 employees</div>
+                            <div class="prospect-metrics">
+                                <div class="conversion-score">
+                                    <div class="score-indicator score-high"></div>
+                                    <span>89% probability</span>
+                                </div>
+                                <div class="revenue-potential">$220K LTV</div>
+                            </div>
+                            <div class="prospect-tags">
+                                <span class="tag tag-qualified">Pre-qualified</span>
+                                <span class="tag tag-segment">Construction</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Initial Contact -->
+                    <div class="stage-column">
+                        <div class="stage-header">
+                            <span class="stage-title">Initial Contact</span>
+                            <span class="stage-count">18</span>
+                        </div>
+
+                        <div class="prospect-card">
+                            <div class="prospect-name">Pacific Logistics Ltd</div>
+                            <div class="prospect-company">Logistics • 78 employees</div>
+                            <div class="prospect-metrics">
+                                <div class="conversion-score">
+                                    <div class="score-indicator score-high"></div>
+                                    <span>84% probability</span>
+                                </div>
+                                <div class="revenue-potential">$195K LTV</div>
+                            </div>
+                            <div class="prospect-tags">
+                                <span class="tag tag-priority">Priority</span>
+                                <span class="tag tag-segment">Logistics</span>
+                            </div>
+                        </div>
+
+                        <div class="prospect-card">
+                            <div class="prospect-name">Fresh Foods Market</div>
+                            <div class="prospect-company">Retail • 23 employees</div>
+                            <div class="prospect-metrics">
+                                <div class="conversion-score">
+                                    <div class="score-indicator score-medium"></div>
+                                    <span>67% probability</span>
+                                </div>
+                                <div class="revenue-potential">$98K LTV</div>
+                            </div>
+                            <div class="prospect-tags">
+                                <span class="tag tag-warm">Responsive</span>
+                                <span class="tag tag-segment">Retail</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Needs Assessment -->
+                    <div class="stage-column">
+                        <div class="stage-header">
+                            <span class="stage-title">Needs Assessment</span>
+                            <span class="stage-count">15</span>
+                        </div>
+
+                        <div class="prospect-card">
+                            <div class="prospect-name">Wellington Design Studio</div>
+                            <div class="prospect-company">Creative Services • 19 employees</div>
+                            <div class="prospect-metrics">
+                                <div class="conversion-score">
+                                    <div class="score-indicator score-high"></div>
+                                    <span>91% probability</span>
+                                </div>
+                                <div class="revenue-potential">$156K LTV</div>
+                            </div>
+                            <div class="prospect-tags">
+                                <span class="tag tag-qualified">Qualified</span>
+                                <span class="tag tag-segment">Creative</span>
+                            </div>
+                        </div>
+
+                        <div class="prospect-card">
+                            <div class="prospect-name">Kiwi Manufacturing Co</div>
+                            <div class="prospect-company">Manufacturing • 85 employees</div>
+                            <div class="prospect-metrics">
+                                <div class="conversion-score">
+                                    <div class="score-indicator score-medium"></div>
+                                    <span>73% probability</span>
+                                </div>
+                                <div class="revenue-potential">$267K LTV</div>
+                            </div>
+                            <div class="prospect-tags">
+                                <span class="tag tag-priority">High Value</span>
+                                <span class="tag tag-segment">Manufacturing</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Proposal -->
+                    <div class="stage-column">
+                        <div class="stage-header">
+                            <span class="stage-title">Proposal</span>
+                            <span class="stage-count">12</span>
+                        </div>
+
+                        <div class="prospect-card">
+                            <div class="prospect-name">South Island Tourism</div>
+                            <div class="prospect-company">Tourism • 34 employees</div>
+                            <div class="prospect-metrics">
+                                <div class="conversion-score">
+                                    <div class="score-indicator score-high"></div>
+                                    <span>87% probability</span>
+                                </div>
+                                <div class="revenue-potential">$178K LTV</div>
+                            </div>
+                            <div class="prospect-tags">
+                                <span class="tag tag-qualified">Ready to Close</span>
+                                <span class="tag tag-segment">Tourism</span>
+                            </div>
+                        </div>
+
+                        <div class="prospect-card">
+                            <div class="prospect-name">Digital Marketing Hub</div>
+                            <div class="prospect-company">Marketing • 15 employees</div>
+                            <div class="prospect-metrics">
+                                <div class="conversion-score">
+                                    <div class="score-indicator score-medium"></div>
+                                    <span>71% probability</span>
+                                </div>
+                                <div class="revenue-potential">$124K LTV</div>
+                            </div>
+                            <div class="prospect-tags">
+                                <span class="tag tag-warm">Negotiating</span>
+                                <span class="tag tag-segment">Marketing</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Decision -->
+                    <div class="stage-column">
+                        <div class="stage-header">
+                            <span class="stage-title">Decision</span>
+                            <span class="stage-count">8</span>
+                        </div>
+
+                        <div class="prospect-card">
+                            <div class="prospect-name">Eco Solutions NZ</div>
+                            <div class="prospect-company">Environmental • 41 employees</div>
+                            <div class="prospect-metrics">
+                                <div class="conversion-score">
+                                    <div class="score-indicator score-high"></div>
+                                    <span>94% probability</span>
+                                </div>
+                                <div class="revenue-potential">$189K LTV</div>
+                            </div>
+                            <div class="prospect-tags">
+                                <span class="tag tag-priority">Closing Soon</span>
+                                <span class="tag tag-segment">Environmental</span>
+                            </div>
+                        </div>
+
+                        <div class="prospect-card">
+                            <div class="prospect-name">Tech Startup Collective</div>
+                            <div class="prospect-company">Technology • 12 employees</div>
+                            <div class="prospect-metrics">
+                                <div class="conversion-score">
+                                    <div class="score-indicator score-medium"></div>
+                                    <span>78% probability</span>
+                                </div>
+                                <div class="revenue-potential">$95K LTV</div>
+                            </div>
+                            <div class="prospect-tags">
+                                <span class="tag tag-qualified">Final Review</span>
+                                <span class="tag tag-segment">Startup</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Optimization Panel -->
+            <div class="optimization-panel">
+                <!-- Conversion Insights -->
+                <div class="panel-section">
+                    <h3 class="section-title">Conversion Intelligence</h3>
+                    <div class="conversion-insights">
+                        <div class="insight-metric">
+                            <span class="metric-label">This Week's Conversion Rate</span>
+                            <span class="metric-value">38% ↑ 4%</span>
+                        </div>
+                        <div class="insight-metric">
+                            <span class="metric-label">Average Deal Size</span>
+                            <span class="metric-value">$147K ↑ 12%</span>
+                        </div>
+                        <div class="insight-metric">
+                            <span class="metric-label">Sales Cycle Length</span>
+                            <span class="metric-value">82 days ↓ 7 days</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Priority Opportunities -->
+                <div class="panel-section">
+                    <h3 class="section-title">Priority Opportunities</h3>
+                    <ul class="opportunity-list">
+                        <li class="opportunity-item">
+                            <div class="opportunity-priority priority-critical"></div>
+                            <div class="opportunity-content">
+                                <div class="opportunity-title">Eco Solutions NZ - Closing Risk</div>
+                                <div class="opportunity-description">Decision maker changed, needs immediate attention</div>
+                            </div>
+                        </li>
+                        <li class="opportunity-item">
+                            <div class="opportunity-priority priority-high"></div>
+                            <div class="opportunity-content">
+                                <div class="opportunity-title">NZ Tech Innovations - Hot Lead</div>
+                                <div class="opportunity-description">92% conversion probability, schedule meeting</div>
+                            </div>
+                        </li>
+                        <li class="opportunity-item">
+                            <div class="opportunity-priority priority-medium"></div>
+                            <div class="opportunity-content">
+                                <div class="opportunity-title">Pacific Logistics - Follow Up</div>
+                                <div class="opportunity-description">Sent proposal 3 days ago, no response</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Territory Performance -->
+                <div class="panel-section">
+                    <h3 class="section-title">Territory Performance</h3>
+                    <div class="territory-performance">
+                        <div class="performance-card">
+                            <div class="performance-value">127%</div>
+                            <div class="performance-label">Quota Achievement</div>
+                        </div>
+                        <div class="performance-card">
+                            <div class="performance-value">$387K</div>
+                            <div class="performance-label">Revenue This Quarter</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Team Assignments -->
+                <div class="panel-section">
+                    <h3 class="section-title">Team Assignments</h3>
+                    <div class="team-assignments">
+                        <div class="assignment-item">
+                            <div class="manager-avatar">SJ</div>
+                            <div class="assignment-info">
+                                <div class="manager-name">Sarah Johnson</div>
+                                <div class="assignment-stats">32 prospects • 67% conversion • $289K quota</div>
+                            </div>
+                        </div>
+                        <div class="assignment-item">
+                            <div class="manager-avatar">MC</div>
+                            <div class="assignment-info">
+                                <div class="manager-name">Michael Chen</div>
+                                <div class="assignment-stats">28 prospects • 74% conversion • $245K quota</div>
+                            </div>
+                        </div>
+                        <div class="assignment-item">
+                            <div class="manager-avatar">LR</div>
+                            <div class="assignment-info">
+                                <div class="manager-name">Lisa Rodriguez</div>
+                                <div class="assignment-stats">35 prospects • 71% conversion • $312K quota</div>
+                            </div>
+                        </div>
+                        <div class="assignment-item">
+                            <div class="manager-avatar">DK</div>
+                            <div class="assignment-info">
+                                <div class="manager-name">David Kim</div>
+                                <div class="assignment-stats">32 prospects • 69% conversion • $278K quota</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn btn-primary">Optimize Pipeline</button>
+                    <button class="btn btn-secondary">Export Report</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analytics Section -->
+        <div class="analytics-grid">
+            <div class="analytics-card">
+                <h3 class="section-title">Conversion Rate Trends</h3>
+                <div class="chart-placeholder">
+                    Interactive conversion rate chart showing trends over time by stage and territory
+                </div>
+            </div>
+
+            <div class="analytics-card">
+                <h3 class="section-title">Revenue Pipeline Forecast</h3>
+                <div class="chart-placeholder">
+                    Predictive revenue chart showing expected closings by quarter and risk factors
+                </div>
+            </div>
+
+            <div class="analytics-card">
+                <h3 class="section-title">Territory Heat Map</h3>
+                <div class="chart-placeholder">
+                    Geographic visualization of prospect density and conversion rates by region
+                </div>
+            </div>
+
+            <div class="analytics-card">
+                <h3 class="section-title">Product Adoption Analysis</h3>
+                <div class="chart-placeholder">
+                    Product mix analysis showing adoption patterns and cross-sell opportunities
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sales Pipeline Optimization Engine
+        class PipelineOptimizer {
+            constructor() {
+                this.prospects = this.initializeProspects();
+                this.bindEvents();
+                this.calculateOptimizations();
+            }
+
+            initializeProspects() {
+                return [
+                    {
+                        id: 'tech-innovations',
+                        name: 'NZ Tech Innovations',
+                        company: 'Software Development',
+                        employees: 45,
+                        conversionProbability: 92,
+                        lifetimeValue: 185000,
+                        stage: 'lead-generation',
+                        priority: 'high',
+                        assignedTo: 'Sarah Johnson',
+                        lastContact: '2025-07-28',
+                        industry: 'Technology',
+                        annualRevenue: 2400000,
+                        currentBanking: 'ASB',
+                        painPoints: ['Cash flow management', 'International payments', 'Payroll efficiency'],
+                        recommendedProducts: ['Business Transaction Account', 'International Transfer Service', 'Payroll Solutions'],
+                        territory: 'Auckland Central'
+                    },
+                    {
+                        id: 'medical-centre',
+                        name: 'Auckland Medical Centre',
+                        company: 'Healthcare',
+                        employees: 28,
+                        conversionProbability: 76,
+                        lifetimeValue: 142000,
+                        stage: 'lead-generation',
+                        priority: 'medium',
+                        assignedTo: 'Michael Chen',
+                        lastContact: '2025-07-27',
+                        industry: 'Healthcare',
+                        annualRevenue: 1800000,
+                        currentBanking: 'Westpac',
+                        painPoints: ['Equipment financing', 'Patient payment processing', 'Practice insurance'],
+                        recommendedProducts: ['Healthcare Business Loan', 'EFTPOS Solutions', 'Professional Insurance'],
+                        territory: 'Auckland North'
+                    },
+                    {
+                        id: 'green-construction',
+                        name: 'Green Earth Construction',
+                        company: 'Construction',
+                        employees: 62,
+                        conversionProbability: 89,
+                        lifetimeValue: 220000,
+                        stage: 'lead-generation',
+                        priority: 'high',
+                        assignedTo: 'Lisa Rodriguez',
+                        lastContact: '2025-07-29',
+                        industry: 'Construction',
+                        annualRevenue: 3200000,
+                        currentBanking: 'BNZ',
+                        painPoints: ['Project financing', 'Equipment loans', 'Seasonal cash flow'],
+                        recommendedProducts: ['Construction Finance', 'Equipment Loan', 'Line of Credit'],
+                        territory: 'Auckland South'
+                    }
+                ];
+            }
+
+            bindEvents() {
+                // Prospect card interactions
+                document.querySelectorAll('.prospect-card').forEach(card => {
+                    card.addEventListener('click', (e) => {
+                        this.showProspectDetails(e.currentTarget);
+                    });
+                });
+
+                // Optimization buttons
+                document.querySelector('.btn-primary').addEventListener('click', () => {
+                    this.runPipelineOptimization();
+                });
+
+                // Team assignment interactions
+                document.querySelectorAll('.assignment-item').forEach(item => {
+                    item.addEventListener('click', (e) => {
+                        this.showTeamMemberDetails(e.currentTarget);
+                    });
+                });
+
+                // Opportunity item interactions
+                document.querySelectorAll('.opportunity-item').forEach(item => {
+                    item.addEventListener('click', (e) => {
+                        this.handleOpportunityAction(e.currentTarget);
+                    });
+                });
+            }
+
+            showProspectDetails(card) {
+                const prospectName = card.querySelector('.prospect-name').textContent;
+                const prospect = this.prospects.find(p => p.name === prospectName);
+                
+                if (prospect) {
+                    console.log('Prospect Intelligence:', {
+                        basicInfo: {
+                            name: prospect.name,
+                            industry: prospect.industry,
+                            employees: prospect.employees,
+                            annualRevenue: prospect.annualRevenue,
+                            territory: prospect.territory
+                        },
+                        salesIntelligence: {
+                            conversionProbability: `${prospect.conversionProbability}%`,
+                            lifetimeValue: `$${prospect.lifetimeValue.toLocaleString()}`,
+                            currentBanking: prospect.currentBanking,
+                            assignedTo: prospect.assignedTo,
+                            lastContact: prospect.lastContact
+                        },
+                        opportunityAnalysis: {
+                            painPoints: prospect.painPoints,
+                            recommendedProducts: prospect.recommendedProducts,
+                            competitivePosition: this.analyzeCompetitivePosition(prospect),
+                            optimalTiming: this.calculateOptimalTiming(prospect)
+                        },
+                        actionItems: this.generateActionItems(prospect)
+                    });
+
+                    // Visual feedback
+                    card.style.transform = 'scale(1.02)';
+                    card.style.borderColor = 'var(--ds-blue-500)';
+                    setTimeout(() => {
+                        card.style.transform = '';
+                        card.style.borderColor = '';
+                    }, 200);
+                }
+            }
+
+            analyzeCompetitivePosition(prospect) {
+                const competitiveAnalysis = {
+                    'ASB': { strength: 'Digital banking', weakness: 'SMB loan rates' },
+                    'Westpac': { strength: 'Branch network', weakness: 'Online experience' },
+                    'BNZ': { strength: 'Business banking', weakness: 'Innovation pace' }
+                };
+
+                return competitiveAnalysis[prospect.currentBanking] || { 
+                    strength: 'Market presence', 
+                    weakness: 'Specialized SMB services' 
+                };
+            }
+
+            calculateOptimalTiming(prospect) {
+                const factors = [];
+                
+                if (prospect.industry === 'Construction' && new Date().getMonth() >= 8) {
+                    factors.push('Construction season starting - high financing needs');
+                }
+                
+                if (prospect.conversionProbability > 85) {
+                    factors.push('High conversion probability - prioritize immediate outreach');
+                }
+                
+                if (prospect.lifetimeValue > 150000) {
+                    factors.push('High value prospect - allocate senior relationship manager');
+                }
+
+                return factors.length ? factors : ['Standard timing - proceed with regular cadence'];
+            }
+
+            generateActionItems(prospect) {
+                const actions = [];
+                
+                if (prospect.conversionProbability > 90) {
+                    actions.push('Schedule decision maker meeting within 48 hours');
+                }
+                
+                if (prospect.painPoints.includes('Cash flow management')) {
+                    actions.push('Prepare cash flow analysis and line of credit proposal');
+                }
+                
+                if (prospect.currentBanking !== 'ANZ') {
+                    actions.push('Develop competitive switching incentive package');
+                }
+
+                actions.push('Update CRM with latest intelligence');
+                actions.push('Set follow-up reminder based on prospect stage');
+
+                return actions;
+            }
+
+            runPipelineOptimization() {
+                console.log('Running Pipeline Optimization...');
+                
+                const optimizations = {
+                    territoryRebalancing: this.optimizeTerritoryAssignments(),
+                    conversionImprovements: this.identifyConversionOpportunities(),
+                    resourceAllocation: this.optimizeResourceAllocation(),
+                    timingOptimizations: this.optimizeOutreachTiming()
+                };
+
+                console.log('Optimization Results:', optimizations);
+
+                // Visual feedback
+                const button = document.querySelector('.btn-primary');
+                const originalText = button.textContent;
+                button.textContent = 'Optimizing...';
+                button.disabled = true;
+
+                setTimeout(() => {
+                    button.textContent = 'Optimization Complete';
+                    setTimeout(() => {
+                        button.textContent = originalText;
+                        button.disabled = false;
+                    }, 2000);
+                }, 1500);
+            }
+
+            optimizeTerritoryAssignments() {
+                return {
+                    recommendations: [
+                        'Reassign 3 high-value prospects from Sarah to David for balanced quota achievement',
+                        'Focus Michael on healthcare sector based on 74% conversion rate',
+                        'Allocate Lisa to construction prospects during peak season'
+                    ],
+                    expectedImpact: 'Increase overall conversion rate by 8-12%'
+                };
+            }
+
+            identifyConversionOpportunities() {
+                return {
+                    stageBottlenecks: [
+                        'Needs Assessment stage shows 23% drop-off - implement guided discovery tools',
+                        'Proposal stage taking 15 days average - automate proposal generation'
+                    ],
+                    quickWins: [
+                        'Follow up on 5 "warm" prospects within 24 hours',
+                        'Schedule product demos for qualified prospects'
+                    ]
+                };
+            }
+
+            optimizeResourceAllocation() {
+                return {
+                    highValueFocus: 'Allocate senior managers to prospects with >$150K lifetime value',
+                    automationOpportunities: [
+                        'Implement automated lead scoring for initial qualification',
+                        'Use AI-powered next best action recommendations'
+                    ],
+                    trainingNeeds: 'Focus on objection handling for construction sector'
+                };
+            }
+
+            optimizeOutreachTiming() {
+                return {
+                    bestTimes: {
+                        'Healthcare': 'Tuesday-Thursday 10AM-2PM (avoid patient hours)',
+                        'Construction': 'Early morning or late afternoon (avoid site hours)',
+                        'Technology': 'Mid-morning weekdays (avoid sprint ceremonies)'
+                    },
+                    seasonalFactors: 'Q4 budget planning season - emphasize cost savings and ROI'
+                };
+            }
+
+            showTeamMemberDetails(item) {
+                const managerName = item.querySelector('.manager-name').textContent;
+                const managers = {
+                    'Sarah Johnson': {
+                        role: 'Senior Relationship Manager',
+                        territory: 'Auckland Central',
+                        specialization: 'Technology & Professional Services',
+                        quotaAchievement: 127,
+                        prospects: 32,
+                        conversionRate: 67,
+                        averageDealSize: 156000,
+                        topSkills: ['Consultative selling', 'Technical product knowledge', 'C-suite presentations']
+                    },
+                    'Michael Chen': {
+                        role: 'Business Development Manager',
+                        territory: 'Auckland North',
+                        specialization: 'Healthcare & Manufacturing',
+                        quotaAchievement: 118,
+                        prospects: 28,
+                        conversionRate: 74,
+                        averageDealSize: 142000,
+                        topSkills: ['Industry expertise', 'Competitive analysis', 'Relationship building']
+                    },
+                    'Lisa Rodriguez': {
+                        role: 'Small Business Loan Officer',
+                        territory: 'Auckland South',
+                        specialization: 'Construction & Retail',
+                        quotaAchievement: 134,
+                        prospects: 35,
+                        conversionRate: 71,
+                        averageDealSize: 178000,
+                        topSkills: ['Credit analysis', 'Risk assessment', 'Loan structuring']
+                    },
+                    'David Kim': {
+                        role: 'Senior Relationship Manager',
+                        territory: 'Wellington',
+                        specialization: 'Professional Services & Hospitality',
+                        quotaAchievement: 122,
+                        prospects: 32,
+                        conversionRate: 69,
+                        averageDealSize: 163000,
+                        topSkills: ['Strategic planning', 'Complex solutions', 'Executive relationships']
+                    }
+                };
+
+                console.log('Team Member Performance:', managers[managerName]);
+
+                // Visual feedback
+                item.style.backgroundColor = 'var(--ds-blue-100)';
+                setTimeout(() => {
+                    item.style.backgroundColor = '';
+                }, 300);
+            }
+
+            handleOpportunityAction(item) {
+                const title = item.querySelector('.opportunity-title').textContent;
+                const actions = {
+                    'Eco Solutions NZ - Closing Risk': [
+                        'Contact new decision maker within 2 hours',
+                        'Prepare executive summary of proposal benefits',
+                        'Schedule urgent stakeholder meeting',
+                        'Activate relationship manager for immediate intervention'
+                    ],
+                    'NZ Tech Innovations - Hot Lead': [
+                        'Schedule technical product demonstration',
+                        'Prepare customized implementation timeline',
+                        'Contact within 4 hours while interest is high',
+                        'Involve solutions specialist in next meeting'
+                    ],
+                    'Pacific Logistics - Follow Up': [
+                        'Send personalized follow-up email with proposal recap',
+                        'Schedule phone call to address any questions',
+                        'Prepare competitive comparison if needed',
+                        'Set calendar reminder for 2-day follow-up'
+                    ]
+                };
+
+                console.log('Opportunity Actions:', {
+                    opportunity: title,
+                    recommendedActions: actions[title] || ['Review opportunity details', 'Schedule follow-up']
+                });
+
+                // Visual feedback
+                const priority = item.querySelector('.opportunity-priority');
+                const originalBackground = priority.style.backgroundColor;
+                priority.style.backgroundColor = 'var(--ds-green-500)';
+                setTimeout(() => {
+                    priority.style.backgroundColor = originalBackground;
+                }, 500);
+            }
+
+            calculateOptimizations() {
+                // Background optimization calculations
+                setTimeout(() => {
+                    console.log('Pipeline Intelligence Initialized:', {
+                        totalProspects: this.prospects.length,
+                        averageConversionProbability: this.calculateAverageConversion(),
+                        totalPipelineValue: this.calculateTotalPipelineValue(),
+                        territoryDistribution: this.analyzeTerritoryDistribution(),
+                        industryBreakdown: this.analyzeIndustryBreakdown(),
+                        optimizationOpportunities: this.identifyOptimizationOpportunities()
+                    });
+                }, 1000);
+            }
+
+            calculateAverageConversion() {
+                return Math.round(
+                    this.prospects.reduce((sum, p) => sum + p.conversionProbability, 0) / this.prospects.length
+                );
+            }
+
+            calculateTotalPipelineValue() {
+                return this.prospects.reduce((sum, p) => sum + p.lifetimeValue, 0);
+            }
+
+            analyzeTerritoryDistribution() {
+                const territories = {};
+                this.prospects.forEach(p => {
+                    territories[p.territory] = (territories[p.territory] || 0) + 1;
+                });
+                return territories;
+            }
+
+            analyzeIndustryBreakdown() {
+                const industries = {};
+                this.prospects.forEach(p => {
+                    industries[p.industry] = (industries[p.industry] || 0) + 1;
+                });
+                return industries;
+            }
+
+            identifyOptimizationOpportunities() {
+                return [
+                    'High-value prospects concentrated in Auckland - consider territory rebalancing',
+                    'Technology sector showing highest conversion rates - increase focus',
+                    'Construction prospects timing aligned with seasonal patterns - optimize outreach',
+                    'Healthcare prospects require specialized approach - provide industry training'
+                ];
+            }
+        }
+
+        // Progressive Enhancement for Sales Pipeline Analytics
+        class PipelineAnalytics {
+            constructor() {
+                this.initializeAnalytics();
+                this.simulateRealTimeUpdates();
+            }
+
+            initializeAnalytics() {
+                // Simulate advanced analytics calculations
+                console.log('Initializing Pipeline Analytics...');
+                
+                const analytics = {
+                    conversionTrends: this.calculateConversionTrends(),
+                    territoryPerformance: this.analyzeTerritory Performance(),
+                    productMix: this.analyzeProductMix(),
+                    competitiveAnalysis: this.performCompetitiveAnalysis()
+                };
+
+                console.log('Analytics Dashboard Data:', analytics);
+            }
+
+            calculateConversionTrends() {
+                return {
+                    currentQuarter: 34,
+                    previousQuarter: 29,
+                    yearOverYear: 38,
+                    trendDirection: 'increasing',
+                    confidenceInterval: 95,
+                    seasonalFactors: ['Q4 budget cycles', 'End-of-year decisions', 'Holiday disruptions']
+                };
+            }
+
+            analyzeTerritoryPerformance() {
+                return {
+                    aucklandCentral: { conversion: 67, quota: 127, prospects: 32 },
+                    aucklandNorth: { conversion: 74, quota: 118, prospects: 28 },
+                    aucklandSouth: { conversion: 71, quota: 134, prospects: 35 },
+                    wellington: { conversion: 69, quota: 122, prospects: 32 }
+                };
+            }
+
+            analyzeProductMix() {
+                return {
+                    businessTransactionAccounts: 45,
+                    businessLoans: 23,
+                    merchantServices: 18,
+                    internationalServices: 14,
+                    crossSellOpportunities: ['Equipment Finance', 'Business Insurance', 'Investment Services']
+                };
+            }
+
+            performCompetitiveAnalysis() {
+                return {
+                    marketShare: 28,
+                    winRate: 34,
+                    competitorSwitching: {
+                        fromASB: 42,
+                        fromWestpac: 38,
+                        fromBNZ: 35,
+                        fromKiwibank: 51
+                    },
+                    competitiveAdvantages: [
+                        'Superior digital banking platform',
+                        'Specialized SMB lending products',
+                        'Dedicated relationship managers',
+                        'Competitive pricing structure'
+                    ]
+                };
+            }
+
+            simulateRealTimeUpdates() {
+                // Simulate real-time data updates
+                setInterval(() => {
+                    this.updateMetrics();
+                }, 30000); // Update every 30 seconds
+
+                // Simulate prospect activity notifications
+                setTimeout(() => {
+                    this.showActivityNotification('New high-value prospect entered pipeline: Wellington Tech Consultants');
+                }, 5000);
+
+                setTimeout(() => {
+                    this.showActivityNotification('Eco Solutions NZ moved to Decision stage - schedule follow-up');
+                }, 12000);
+            }
+
+            updateMetrics() {
+                // Simulate minor metric fluctuations
+                const stats = document.querySelectorAll('.stat-value');
+                stats.forEach(stat => {
+                    if (stat.textContent.includes('%')) {
+                        // Conversion rate updates
+                        const currentValue = parseInt(stat.textContent);
+                        const variation = Math.random() * 2 - 1; // ±1%
+                        const newValue = Math.max(0, Math.min(100, currentValue + variation));
+                        stat.textContent = `${Math.round(newValue)}%`;
+                    }
+                });
+            }
+
+            showActivityNotification(message) {
+                console.log('Pipeline Activity:', message);
+                
+                // Visual notification (simplified)
+                const notification = document.createElement('div');
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: var(--ds-blue-500);
+                    color: white;
+                    padding: var(--space-4);
+                    border-radius: 6px;
+                    font-size: var(--font-size-small);
+                    z-index: 1000;
+                    max-width: 300px;
+                    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+                `;
+                notification.textContent = message;
+                
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.remove();
+                }, 5000);
+            }
+        }
+
+        // Initialize the Sales Pipeline Optimization System
+        document.addEventListener('DOMContentLoaded', () => {
+            const optimizer = new PipelineOptimizer();
+            const analytics = new PipelineAnalytics();
+            
+            console.log('Sales Pipeline Optimization Interface Initialized');
+            console.log('Connected Data Platform: Banking + Accounting + Merchant intelligence');
+            console.log('SMB Sales Intelligence: Conversion tracking and workflow automation active');
+        });
+
+        // Accessibility enhancements
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Tab') {
+                // Enhance focus visibility for keyboard navigation
+                const focusableElements = document.querySelectorAll(
+                    'button, .prospect-card, .opportunity-item, .assignment-item'
+                );
+                
+                focusableElements.forEach(element => {
+                    element.addEventListener('focus', () => {
+                        element.style.outline = '2px solid var(--ds-blue-500)';
+                        element.style.outlineOffset = '2px';
+                    });
+                    
+                    element.addEventListener('blur', () => {
+                        element.style.outline = '';
+                        element.style.outlineOffset = '';
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>

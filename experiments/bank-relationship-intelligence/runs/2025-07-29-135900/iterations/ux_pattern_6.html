@@ -1,0 +1,1512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMB Prospect Intelligence Dashboard - Banking Sales Intelligence</title>
+    <style>
+        /* Geist Design System Implementation */
+        :root {
+            /* Gray Scale */
+            --ds-gray-100: #fafafa;
+            --ds-gray-200: #eaeaea;
+            --ds-gray-300: #999999;
+            --ds-gray-400: #888888;
+            --ds-gray-500: #666666;
+            --ds-gray-600: #444444;
+            --ds-gray-700: #333333;
+            --ds-gray-800: #222222;
+            --ds-gray-900: #111111;
+            --ds-gray-1000: #000000;
+
+            /* Blue - Interactive elements */
+            --ds-blue-100: #e1f5fe;
+            --ds-blue-500: #0070f3;
+            --ds-blue-600: #0061d5;
+            --ds-blue-700: #004fc4;
+            --ds-blue-800: #0043a5;
+
+            /* Status Colors */
+            --ds-red-500: #ee0000;
+            --ds-amber-500: #f5a623;
+            --ds-green-500: #22c55e;
+            --ds-purple-500: #7c3aed;
+
+            /* Typography */
+            --font-size-h1: 2.25rem;
+            --font-size-h2: 1.875rem;
+            --font-size-h3: 1.5rem;
+            --font-size-h4: 1.25rem;
+            --font-size-base: 1rem;
+            --font-size-small: 0.875rem;
+            --font-size-xs: 0.75rem;
+
+            /* Spacing */
+            --space-1: 0.25rem;
+            --space-2: 0.5rem;
+            --space-3: 0.75rem;
+            --space-4: 1rem;
+            --space-5: 1.25rem;
+            --space-6: 1.5rem;
+            --space-8: 2rem;
+            --space-10: 2.5rem;
+            --space-12: 3rem;
+            --space-16: 4rem;
+            --space-20: 5rem;
+            --space-24: 6rem;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Geist Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background-color: var(--ds-gray-100);
+            color: var(--ds-gray-900);
+            line-height: 1.5;
+        }
+
+        .dashboard-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: var(--space-6);
+            min-height: 100vh;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-8);
+            padding-bottom: var(--space-6);
+            border-bottom: 1px solid var(--ds-gray-200);
+        }
+
+        .header h1 {
+            font-size: var(--font-size-h2);
+            font-weight: 600;
+            color: var(--ds-gray-900);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: var(--space-4);
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--ds-blue-500);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: var(--font-size-small);
+        }
+
+        .user-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user-name {
+            font-weight: 600;
+            color: var(--ds-gray-900);
+        }
+
+        .user-role {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-500);
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: var(--space-6);
+        }
+
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-6);
+        }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-6);
+        }
+
+        .card {
+            background: white;
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 8px;
+            padding: var(--space-6);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: between;
+            align-items: flex-start;
+            margin-bottom: var(--space-4);
+        }
+
+        .card-title {
+            font-size: var(--font-size-h4);
+            font-weight: 600;
+            color: var(--ds-gray-900);
+            margin-bottom: var(--space-2);
+        }
+
+        .card-subtitle {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-500);
+            margin-bottom: var(--space-4);
+        }
+
+        .prospect-list {
+            display: grid;
+            gap: var(--space-4);
+        }
+
+        .prospect-card {
+            background: white;
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 8px;
+            padding: var(--space-5);
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .prospect-card:hover {
+            border-color: var(--ds-blue-500);
+            box-shadow: 0 4px 12px rgba(0, 112, 243, 0.1);
+        }
+
+        .prospect-card.selected {
+            border-color: var(--ds-blue-500);
+            background: var(--ds-blue-100);
+        }
+
+        .prospect-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: var(--space-3);
+        }
+
+        .prospect-name {
+            font-weight: 600;
+            color: var(--ds-gray-900);
+            margin-bottom: var(--space-1);
+        }
+
+        .prospect-industry {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-500);
+        }
+
+        .health-score {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            font-size: var(--font-size-small);
+            font-weight: 600;
+        }
+
+        .score-excellent { color: var(--ds-green-500); }
+        .score-good { color: var(--ds-blue-500); }
+        .score-moderate { color: var(--ds-amber-500); }
+        .score-poor { color: var(--ds-red-500); }
+
+        .prospect-metrics {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: var(--space-4);
+            margin-top: var(--space-3);
+            padding-top: var(--space-3);
+            border-top: 1px solid var(--ds-gray-200);
+        }
+
+        .metric {
+            text-align: center;
+        }
+
+        .metric-value {
+            font-weight: 600;
+            color: var(--ds-gray-900);
+            display: block;
+        }
+
+        .metric-label {
+            font-size: var(--font-size-xs);
+            color: var(--ds-gray-500);
+            margin-top: var(--space-1);
+        }
+
+        .opportunity-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-2);
+            margin-top: var(--space-3);
+        }
+
+        .tag {
+            padding: var(--space-1) var(--space-2);
+            background: var(--ds-gray-100);
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 4px;
+            font-size: var(--font-size-xs);
+            color: var(--ds-gray-600);
+        }
+
+        .tag.high-priority {
+            background: #fef3f2;
+            border-color: #fecdca;
+            color: #b42318;
+        }
+
+        .tag.medium-priority {
+            background: #fffbeb;
+            border-color: #fed7aa;
+            color: #dc6803;
+        }
+
+        .detailed-analysis {
+            display: grid;
+            gap: var(--space-6);
+        }
+
+        .analysis-section {
+            background: white;
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 8px;
+            padding: var(--space-6);
+        }
+
+        .section-title {
+            font-size: var(--font-size-h4);
+            font-weight: 600;
+            color: var(--ds-gray-900);
+            margin-bottom: var(--space-4);
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+
+        .financial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-4);
+        }
+
+        .financial-metric {
+            background: var(--ds-gray-100);
+            padding: var(--space-4);
+            border-radius: 6px;
+        }
+
+        .financial-metric-label {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-500);
+            margin-bottom: var(--space-1);
+        }
+
+        .financial-metric-value {
+            font-size: var(--font-size-h4);
+            font-weight: 600;
+            color: var(--ds-gray-900);
+        }
+
+        .financial-metric-trend {
+            font-size: var(--font-size-xs);
+            margin-top: var(--space-1);
+        }
+
+        .trend-positive { color: var(--ds-green-500); }
+        .trend-negative { color: var(--ds-red-500); }
+        .trend-neutral { color: var(--ds-gray-500); }
+
+        .challenge-list {
+            display: grid;
+            gap: var(--space-3);
+        }
+
+        .challenge-item {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--space-3);
+            padding: var(--space-4);
+            background: var(--ds-gray-100);
+            border-radius: 6px;
+        }
+
+        .challenge-priority {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-top: var(--space-2);
+            flex-shrink: 0;
+        }
+
+        .priority-high { background-color: var(--ds-red-500); }
+        .priority-medium { background-color: var(--ds-amber-500); }
+        .priority-low { background-color: var(--ds-green-500); }
+
+        .challenge-content {
+            flex: 1;
+        }
+
+        .challenge-title {
+            font-weight: 600;
+            color: var(--ds-gray-900);
+            margin-bottom: var(--space-1);
+        }
+
+        .challenge-description {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-600);
+            line-height: 1.4;
+        }
+
+        .recommendations-list {
+            display: grid;
+            gap: var(--space-4);
+        }
+
+        .recommendation-card {
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 6px;
+            padding: var(--space-4);
+            background: white;
+        }
+
+        .recommendation-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: var(--space-3);
+        }
+
+        .recommendation-title {
+            font-weight: 600;
+            color: var(--ds-gray-900);
+            margin-bottom: var(--space-1);
+        }
+
+        .recommendation-fit {
+            background: var(--ds-green-500);
+            color: white;
+            padding: var(--space-1) var(--space-2);
+            border-radius: 4px;
+            font-size: var(--font-size-xs);
+            font-weight: 600;
+        }
+
+        .recommendation-fit.medium {
+            background: var(--ds-amber-500);
+        }
+
+        .recommendation-fit.low {
+            background: var(--ds-gray-400);
+        }
+
+        .recommendation-benefits {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-600);
+            line-height: 1.4;
+            margin-bottom: var(--space-3);
+        }
+
+        .recommendation-roi {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: var(--space-3);
+            border-top: 1px solid var(--ds-gray-200);
+        }
+
+        .roi-label {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-500);
+        }
+
+        .roi-value {
+            font-weight: 600;
+            color: var(--ds-green-500);
+        }
+
+        .conversation-starters {
+            display: grid;
+            gap: var(--space-3);
+        }
+
+        .starter-item {
+            padding: var(--space-4);
+            background: var(--ds-blue-100);
+            border: 1px solid var(--ds-blue-200);
+            border-radius: 6px;
+        }
+
+        .starter-topic {
+            font-weight: 600;
+            color: var(--ds-blue-800);
+            margin-bottom: var(--space-2);
+        }
+
+        .starter-content {
+            font-size: var(--font-size-small);
+            color: var(--ds-blue-700);
+            line-height: 1.4;
+        }
+
+        .quick-actions {
+            display: flex;
+            gap: var(--space-3);
+            margin-top: var(--space-6);
+        }
+
+        .btn {
+            padding: var(--space-3) var(--space-5);
+            border-radius: 6px;
+            font-size: var(--font-size-small);
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: var(--ds-blue-500);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--ds-blue-600);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--ds-gray-700);
+            border: 1px solid var(--ds-gray-200);
+        }
+
+        .btn-secondary:hover {
+            background: var(--ds-gray-100);
+        }
+
+        .filters {
+            display: flex;
+            gap: var(--space-3);
+            margin-bottom: var(--space-4);
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: var(--space-2) var(--space-3);
+            background: white;
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 6px;
+            font-size: var(--font-size-small);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .filter-btn.active {
+            background: var(--ds-blue-500);
+            color: white;
+            border-color: var(--ds-blue-500);
+        }
+
+        .search-bar {
+            margin-bottom: var(--space-4);
+        }
+
+        .search-input {
+            width: 100%;
+            padding: var(--space-3);
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 6px;
+            font-size: var(--font-size-small);
+        }
+
+        .search-input:focus {
+            outline: 2px solid var(--ds-blue-500);
+            outline-offset: 2px;
+            border-color: var(--ds-blue-500);
+        }
+
+        .stat-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-1);
+            font-size: var(--font-size-xs);
+            padding: var(--space-1);
+            border-radius: 4px;
+        }
+
+        .indicator-high {
+            background: #fef3f2;
+            color: #b42318;
+        }
+
+        .indicator-medium {
+            background: #fffbeb;
+            color: #dc6803;
+        }
+
+        .indicator-good {
+            background: #f0fdf4;
+            color: #15803d;
+        }
+
+        @media (max-width: 1200px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                order: -1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-container {
+                padding: var(--space-4);
+            }
+            
+            .header {
+                flex-direction: column;
+                gap: var(--space-4);
+                align-items: flex-start;
+            }
+            
+            .financial-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .prospect-metrics {
+                grid-template-columns: 1fr;
+                gap: var(--space-2);
+            }
+            
+            .quick-actions {
+                flex-direction: column;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <header class="header">
+            <div>
+                <h1>SMB Prospect Intelligence Dashboard</h1>
+                <div class="card-subtitle">Pre-contact assessment & opportunity identification</div>
+            </div>
+            <div class="user-info">
+                <div class="user-avatar">SM</div>
+                <div class="user-details">
+                    <div class="user-name">Sarah Mitchell</div>
+                    <div class="user-role">Senior Business Development Manager</div>
+                </div>
+            </div>
+        </header>
+
+        <div class="dashboard-grid">
+            <main class="main-content">
+                <!-- Prospect List Section -->
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">High-Potential SMB Prospects</div>
+                            <div class="card-subtitle">Pre-qualified prospects ranked by conversion probability and revenue potential</div>
+                        </div>
+                    </div>
+
+                    <div class="search-bar">
+                        <input type="text" class="search-input" placeholder="Search prospects by name, industry, or location..." aria-label="Search prospects">
+                    </div>
+
+                    <div class="filters">
+                        <button class="filter-btn active">All Prospects</button>
+                        <button class="filter-btn">High Potential</button>
+                        <button class="filter-btn">Growth Stage</button>
+                        <button class="filter-btn">Cash Flow Issues</button>
+                        <button class="filter-btn">Competitor Banks</button>
+                    </div>
+
+                    <div class="prospect-list">
+                        <div class="prospect-card selected" data-prospect="rodriguez-construction">
+                            <div class="prospect-header">
+                                <div>
+                                    <div class="prospect-name">Rodriguez Construction Ltd</div>
+                                    <div class="prospect-industry">Construction • Auckland • $2.1M Revenue</div>
+                                </div>
+                                <div class="health-score score-excellent">
+                                    <span class="stat-indicator indicator-good">●</span>
+                                    Excellent (94/100)
+                                </div>
+                            </div>
+                            <div class="prospect-metrics">
+                                <div class="metric">
+                                    <span class="metric-value">89%</span>
+                                    <div class="metric-label">Conversion Probability</div>
+                                </div>
+                                <div class="metric">
+                                    <span class="metric-value">$47K</span>
+                                    <div class="metric-label">Est. Annual Revenue</div>
+                                </div>
+                                <div class="metric">
+                                    <span class="metric-value">3 days</span>
+                                    <div class="metric-label">Optimal Contact Window</div>
+                                </div>
+                            </div>
+                            <div class="opportunity-tags">
+                                <span class="tag high-priority">Equipment Financing Need</span>
+                                <span class="tag medium-priority">Growth Capital</span>
+                                <span class="tag">Payroll Banking</span>
+                            </div>
+                        </div>
+
+                        <div class="prospect-card" data-prospect="chen-marketing">
+                            <div class="prospect-header">
+                                <div>
+                                    <div class="prospect-name">Chen Digital Marketing</div>
+                                    <div class="prospect-industry">Marketing • Wellington • $520K Revenue</div>
+                                </div>
+                                <div class="health-score score-good">
+                                    <span class="stat-indicator indicator-medium">●</span>
+                                    Good (78/100)
+                                </div>
+                            </div>
+                            <div class="prospect-metrics">
+                                <div class="metric">
+                                    <span class="metric-value">73%</span>
+                                    <div class="metric-label">Conversion Probability</div>
+                                </div>
+                                <div class="metric">
+                                    <span class="metric-value">$28K</span>
+                                    <div class="metric-label">Est. Annual Revenue</div>
+                                </div>
+                                <div class="metric">
+                                    <span class="metric-value">1 week</span>
+                                    <div class="metric-label">Optimal Contact Window</div>
+                                </div>
+                            </div>
+                            <div class="opportunity-tags">
+                                <span class="tag high-priority">High Deposit Growth</span>
+                                <span class="tag medium-priority">International Transfers</span>
+                                <span class="tag">Competitor Bank</span>
+                            </div>
+                        </div>
+
+                        <div class="prospect-card" data-prospect="thompson-legal">
+                            <div class="prospect-header">
+                                <div>
+                                    <div class="prospect-name">Thompson Legal Partners</div>
+                                    <div class="prospect-industry">Legal Services • Christchurch • $1.2M Revenue</div>
+                                </div>
+                                <div class="health-score score-excellent">
+                                    <span class="stat-indicator indicator-good">●</span>
+                                    Excellent (91/100)
+                                </div>
+                            </div>
+                            <div class="prospect-metrics">
+                                <div class="metric">
+                                    <span class="metric-value">85%</span>
+                                    <div class="metric-label">Conversion Probability</div>
+                                </div>
+                                <div class="metric">
+                                    <span class="metric-value">$38K</span>
+                                    <div class="metric-label">Est. Annual Revenue</div>
+                                </div>
+                                <div class="metric">
+                                    <span class="metric-value">2 weeks</span>
+                                    <div class="metric-label">Optimal Contact Window</div>
+                                </div>
+                            </div>
+                            <div class="opportunity-tags">
+                                <span class="tag medium-priority">Treasury Services</span>
+                                <span class="tag medium-priority">Trust Account Management</span>
+                                <span class="tag">Premium Banking</span>
+                            </div>
+                        </div>
+
+                        <div class="prospect-card" data-prospect="kim-restaurant">
+                            <div class="prospect-header">
+                                <div>
+                                    <div class="prospect-name">Kim's Korean Kitchen</div>
+                                    <div class="prospect-industry">Restaurant • Auckland • $780K Revenue</div>
+                                </div>
+                                <div class="health-score score-moderate">
+                                    <span class="stat-indicator indicator-medium">●</span>
+                                    Moderate (67/100)
+                                </div>
+                            </div>
+                            <div class="prospect-metrics">
+                                <div class="metric">
+                                    <span class="metric-value">61%</span>
+                                    <div class="metric-label">Conversion Probability</div>
+                                </div>
+                                <div class="metric">
+                                    <span class="metric-value">$23K</span>
+                                    <div class="metric-label">Est. Annual Revenue</div>
+                                </div>
+                                <div class="metric">
+                                    <span class="metric-value">5 days</span>
+                                    <div class="metric-label">Optimal Contact Window</div>
+                                </div>
+                            </div>
+                            <div class="opportunity-tags">
+                                <span class="tag high-priority">Working Capital Line</span>
+                                <span class="tag medium-priority">Seasonal Cash Flow</span>
+                                <span class="tag">Merchant Services</span>
+                            </div>
+                        </div>
+
+                        <div class="prospect-card" data-prospect="santos-consulting">
+                            <div class="prospect-header">
+                                <div>
+                                    <div class="prospect-name">Santos Business Consulting</div>
+                                    <div class="prospect-industry">Consulting • Hamilton • $320K Revenue</div>
+                                </div>
+                                <div class="health-score score-good">
+                                    <span class="stat-indicator indicator-good">●</span>
+                                    Good (82/100)
+                                </div>
+                            </div>
+                            <div class="prospect-metrics">
+                                <div class="metric">
+                                    <span class="metric-value">76%</span>
+                                    <div class="metric-label">Conversion Probability</div>
+                                </div>
+                                <div class="metric">
+                                    <span class="metric-value">$18K</span>
+                                    <div class="metric-label">Est. Annual Revenue</div>
+                                </div>
+                                <div class="metric">
+                                    <span class="metric-value">1 week</span>
+                                    <div class="metric-label">Optimal Contact Window</div>
+                                </div>
+                            </div>
+                            <div class="opportunity-tags">
+                                <span class="tag high-priority">High Growth Potential</span>
+                                <span class="tag medium-priority">Startup Banking</span>
+                                <span class="tag">Credit Building</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detailed Analysis Section -->
+                <div class="detailed-analysis" id="prospect-analysis">
+                    <div class="analysis-section">
+                        <h2 class="section-title">
+                            <span>📊</span>
+                            Financial Health Assessment - Rodriguez Construction Ltd
+                        </h2>
+                        <div class="financial-grid">
+                            <div class="financial-metric">
+                                <div class="financial-metric-label">Annual Revenue</div>
+                                <div class="financial-metric-value">$2.1M</div>
+                                <div class="financial-metric-trend trend-positive">↗ 18% growth YoY</div>
+                            </div>
+                            <div class="financial-metric">
+                                <div class="financial-metric-label">Cash Flow Score</div>
+                                <div class="financial-metric-value">8.4/10</div>
+                                <div class="financial-metric-trend trend-positive">↗ Stable & predictable</div>
+                            </div>
+                            <div class="financial-metric">
+                                <div class="financial-metric-label">Credit Rating</div>
+                                <div class="financial-metric-value">A-</div>
+                                <div class="financial-metric-trend trend-neutral">→ Stable outlook</div>
+                            </div>
+                            <div class="financial-metric">
+                                <div class="financial-metric-label">Working Capital</div>
+                                <div class="financial-metric-value">$340K</div>
+                                <div class="financial-metric-trend trend-positive">↗ 15% above industry avg</div>
+                            </div>
+                            <div class="financial-metric">
+                                <div class="financial-metric-label">Debt-to-Equity</div>
+                                <div class="financial-metric-value">0.42</div>
+                                <div class="financial-metric-trend trend-positive">↗ Healthy leverage</div>
+                            </div>
+                            <div class="financial-metric">
+                                <div class="financial-metric-label">Growth Trajectory</div>
+                                <div class="financial-metric-value">Strong</div>
+                                <div class="financial-metric-trend trend-positive">↗ 3-year expansion plan</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="analysis-section">
+                        <h2 class="section-title">
+                            <span>⚠️</span>
+                            Operational Challenges & Opportunities
+                        </h2>
+                        <div class="challenge-list">
+                            <div class="challenge-item">
+                                <div class="challenge-priority priority-high"></div>
+                                <div class="challenge-content">
+                                    <div class="challenge-title">Equipment Financing Gap</div>
+                                    <div class="challenge-description">Company needs $480K for new excavator and trucks to fulfill major infrastructure contract. Current lender can only provide $280K, creating $200K funding gap.</div>
+                                </div>
+                            </div>
+                            <div class="challenge-item">
+                                <div class="challenge-priority priority-medium"></div>
+                                <div class="challenge-content">
+                                    <div class="challenge-title">Payroll Banking Inefficiency</div>
+                                    <div class="challenge-description">Currently using competitor bank for payroll services with high fees ($450/month) and poor integration with accounting systems.</div>
+                                </div>
+                            </div>
+                            <div class="challenge-item">
+                                <div class="challenge-priority priority-medium"></div>
+                                <div class="challenge-content">
+                                    <div class="challenge-title">International Supplier Payments</div>
+                                    <div class="challenge-description">Increasing overseas supplier base requiring foreign exchange services. Current bank charges 3.2% margin on FX transactions.</div>
+                                </div>
+                            </div>
+                            <div class="challenge-item">
+                                <div class="challenge-priority priority-low"></div>
+                                <div class="challenge-content">
+                                    <div class="challenge-title">Insurance Premium Financing</div>
+                                    <div class="challenge-description">Annual insurance premiums of $85K paid upfront, creating cash flow pressure each renewal period.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="analysis-section">
+                        <h2 class="section-title">
+                            <span>🎯</span>
+                            Tailored Product Recommendations
+                        </h2>
+                        <div class="recommendations-list">
+                            <div class="recommendation-card">
+                                <div class="recommendation-header">
+                                    <div>
+                                        <div class="recommendation-title">Equipment Finance Package</div>
+                                    </div>
+                                    <div class="recommendation-fit">High Fit</div>
+                                </div>
+                                <div class="recommendation-benefits">
+                                    Structured equipment financing for $480K with competitive rates (6.2% vs current 7.8%). Include maintenance agreements and flexible repayment terms aligned with project cash flows.
+                                </div>
+                                <div class="recommendation-roi">
+                                    <span class="roi-label">Estimated Annual Savings</span>
+                                    <span class="roi-value">$8,400</span>
+                                </div>
+                            </div>
+                            
+                            <div class="recommendation-card">
+                                <div class="recommendation-header">
+                                    <div>
+                                        <div class="recommendation-title">Business Banking Package</div>
+                                    </div>
+                                    <div class="recommendation-fit">High Fit</div>
+                                </div>
+                                <div class="recommendation-benefits">
+                                    Complete business banking solution including payroll services, merchant facilities, and integrated accounting platform. Streamlined operations with single banking relationship.
+                                </div>
+                                <div class="recommendation-roi">
+                                    <span class="roi-label">Estimated Annual Savings</span>
+                                    <span class="roi-value">$6,200</span>
+                                </div>
+                            </div>
+
+                            <div class="recommendation-card">
+                                <div class="recommendation-header">
+                                    <div>
+                                        <div class="recommendation-title">Foreign Exchange Services</div>
+                                    </div>
+                                    <div class="recommendation-fit medium">Medium Fit</div>
+                                </div>
+                                <div class="recommendation-benefits">
+                                    Competitive FX rates (1.8% margin vs current 3.2%) with forward contracts available for budget certainty on major projects with international suppliers.
+                                </div>
+                                <div class="recommendation-roi">
+                                    <span class="roi-label">Estimated Annual Savings</span>
+                                    <span class="roi-value">$3,100</span>
+                                </div>
+                            </div>
+
+                            <div class="recommendation-card">
+                                <div class="recommendation-header">
+                                    <div>
+                                        <div class="recommendation-title">Premium Insurance Finance</div>
+                                    </div>
+                                    <div class="recommendation-fit medium">Medium Fit</div>
+                                </div>
+                                <div class="recommendation-benefits">
+                                    Spread insurance premium payments over 12 months at competitive rates, improving cash flow management and working capital availability.
+                                </div>
+                                <div class="recommendation-roi">
+                                    <span class="roi-label">Estimated Annual Savings</span>
+                                    <span class="roi-value">$2,400</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="analysis-section">
+                        <h2 class="section-title">
+                            <span>💬</span>
+                            Conversation Starters & Key Talking Points
+                        </h2>
+                        <div class="conversation-starters">
+                            <div class="starter-item">
+                                <div class="starter-topic">Equipment Financing Opportunity</div>
+                                <div class="starter-content">
+                                    "I see you've got the major Watercare contract - congratulations! Our equipment finance team has helped 12 construction companies this year secure funding for similar infrastructure projects. We could potentially fill that $200K gap your current lender can't cover, with terms that align with your project milestones."
+                                </div>
+                            </div>
+                            
+                            <div class="starter-item">
+                                <div class="starter-topic">Operational Efficiency</div>
+                                <div class="starter-content">
+                                    "Looking at construction companies your size, we're seeing significant savings when they consolidate banking services. Based on your payroll volume, you could save around $6,200 annually while getting better integration with your accounting systems."
+                                </div>
+                            </div>
+
+                            <div class="starter-item">
+                                <div class="starter-topic">Growth Support</div>
+                                <div class="starter-content">
+                                    "Your 18% growth rate puts you in the top quartile for construction companies. We specialize in supporting high-growth SMBs with flexible credit facilities and specialized trade finance that scales with your business."
+                                </div>
+                            </div>
+
+                            <div class="starter-item">
+                                <div class="starter-topic">Industry Expertise</div>
+                                <div class="starter-content">
+                                    "Our construction banking team understands project-based cash flows. We've structured facilities for 85% of the top construction companies in Auckland, including flexible arrangements for progress payments and retention releases."
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quick-actions">
+                    <button class="btn btn-primary">Schedule Discovery Call</button>
+                    <button class="btn btn-secondary">Send Information Package</button>
+                    <button class="btn btn-secondary">Add to Pipeline</button>
+                    <button class="btn btn-secondary">Generate Proposal</button>
+                </div>
+            </main>
+
+            <aside class="sidebar">
+                <div class="card">
+                    <div class="card-title">Competitive Intelligence</div>
+                    <div class="card-subtitle">Current banking relationships & switching indicators</div>
+                    
+                    <div style="margin-top: var(--space-4);">
+                        <div style="font-weight: 600; margin-bottom: var(--space-2);">Primary Bank</div>
+                        <div style="color: var(--ds-gray-600); font-size: var(--font-size-small); margin-bottom: var(--space-3);">
+                            Westpac Business Banking<br>
+                            Relationship: 4 years<br>
+                            Satisfaction: 6.2/10
+                        </div>
+                        
+                        <div style="font-weight: 600; margin-bottom: var(--space-2);">Switching Indicators</div>
+                        <div class="opportunity-tags">
+                            <span class="tag high-priority">Recent fee complaints</span>
+                            <span class="tag medium-priority">Poor digital experience</span>
+                            <span class="tag medium-priority">Limited credit appetite</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">Risk Assessment</div>
+                    <div class="card-subtitle">Credit evaluation & relationship value</div>
+                    
+                    <div style="margin-top: var(--space-4);">
+                        <div class="financial-grid">
+                            <div class="financial-metric">
+                                <div class="financial-metric-label">Credit Risk</div>
+                                <div class="financial-metric-value">Low</div>
+                                <div class="financial-metric-trend trend-positive">A- Rating</div>
+                            </div>
+                            <div class="financial-metric">
+                                <div class="financial-metric-label">LTV Potential</div>
+                                <div class="financial-metric-value">$52K</div>
+                                <div class="financial-metric-trend trend-positive">5-year projection</div>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-top: var(--space-4);">
+                            <div style="font-weight: 600; margin-bottom: var(--space-2);">Key Risk Factors</div>
+                            <div style="color: var(--ds-gray-600); font-size: var(--font-size-small);">
+                                • Industry cyclical nature<br>
+                                • Project concentration risk<br>
+                                • Weather dependency<br>
+                                • Skilled labor shortage
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">Industry Context</div>
+                    <div class="card-subtitle">Construction sector insights</div>
+                    
+                    <div style="margin-top: var(--space-4);">
+                        <div style="font-weight: 600; margin-bottom: var(--space-2);">Sector Trends</div>
+                        <div style="color: var(--ds-gray-600); font-size: var(--font-size-small); line-height: 1.4; margin-bottom: var(--space-3);">
+                            Infrastructure spending up 12% in Auckland region. Government housing initiatives creating significant opportunities for established contractors.
+                        </div>
+                        
+                        <div style="font-weight: 600; margin-bottom: var(--space-2);">Key Challenges</div>
+                        <div style="color: var(--ds-gray-600); font-size: var(--font-size-small); line-height: 1.4;">
+                            • Material cost inflation (8% YoY)<br>
+                            • Skilled labor shortage<br>
+                            • Equipment availability constraints<br>
+                            • Regulatory compliance costs
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">Next Best Actions</div>
+                    <div class="card-subtitle">Recommended follow-up steps</div>
+                    
+                    <div style="margin-top: var(--space-4);">
+                        <div class="challenge-list">
+                            <div class="challenge-item">
+                                <div class="challenge-priority priority-high"></div>
+                                <div class="challenge-content">
+                                    <div class="challenge-title">Schedule Equipment Finance Meeting</div>
+                                    <div class="challenge-description">Window closes in 3 days - they need funding decision by month end</div>
+                                </div>
+                            </div>
+                            <div class="challenge-item">
+                                <div class="challenge-priority priority-medium"></div>
+                                <div class="challenge-content">
+                                    <div class="challenge-title">Prepare Competitive Analysis</div>
+                                    <div class="challenge-description">Compare our rates vs. Westpac for their current facilities</div>
+                                </div>
+                            </div>
+                            <div class="challenge-item">
+                                <div class="challenge-priority priority-low"></div>
+                                <div class="challenge-content">
+                                    <div class="challenge-title">Industry Research</div>
+                                    <div class="challenge-description">Review recent construction sector report for talking points</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <script>
+        // Prospect Intelligence and Sales Workflow Optimization
+        class SMBProspectDashboard {
+            constructor() {
+                this.selectedProspect = 'rodriguez-construction';
+                this.prospects = {
+                    'rodriguez-construction': {
+                        name: 'Rodriguez Construction Ltd',
+                        industry: 'Construction',
+                        location: 'Auckland',
+                        revenue: '$2.1M',
+                        healthScore: 94,
+                        conversionProb: '89%',
+                        estimatedRevenue: '$47K',
+                        contactWindow: '3 days',
+                        financialData: {
+                            revenue: '$2.1M',
+                            cashFlowScore: '8.4/10',
+                            creditRating: 'A-',
+                            workingCapital: '$340K',
+                            debtEquity: '0.42',
+                            growth: 'Strong'
+                        },
+                        challenges: [
+                            {
+                                priority: 'high',
+                                title: 'Equipment Financing Gap',
+                                description: 'Company needs $480K for new excavator and trucks to fulfill major infrastructure contract. Current lender can only provide $280K, creating $200K funding gap.'
+                            },
+                            {
+                                priority: 'medium',
+                                title: 'Payroll Banking Inefficiency',
+                                description: 'Currently using competitor bank for payroll services with high fees ($450/month) and poor integration with accounting systems.'
+                            }
+                        ],
+                        recommendations: [
+                            {
+                                title: 'Equipment Finance Package',
+                                fit: 'High Fit',
+                                benefits: 'Structured equipment financing for $480K with competitive rates (6.2% vs current 7.8%). Include maintenance agreements and flexible repayment terms aligned with project cash flows.',
+                                savings: '$8,400'
+                            },
+                            {
+                                title: 'Business Banking Package',
+                                fit: 'High Fit',
+                                benefits: 'Complete business banking solution including payroll services, merchant facilities, and integrated accounting platform. Streamlined operations with single banking relationship.',
+                                savings: '$6,200'
+                            }
+                        ]
+                    },
+                    'chen-marketing': {
+                        name: 'Chen Digital Marketing',
+                        industry: 'Marketing',
+                        location: 'Wellington',
+                        revenue: '$520K',
+                        healthScore: 78,
+                        conversionProb: '73%',
+                        estimatedRevenue: '$28K',
+                        contactWindow: '1 week',
+                        financialData: {
+                            revenue: '$520K',
+                            cashFlowScore: '7.2/10',
+                            creditRating: 'B+',
+                            workingCapital: '$85K',
+                            debtEquity: '0.28',
+                            growth: 'Rapid'
+                        },
+                        challenges: [
+                            {
+                                priority: 'high',
+                                title: 'High Growth Funding Needs',
+                                description: 'Rapid client acquisition requires working capital for staff expansion and technology investments. Current competitor bank has limited appetite for growth lending.'
+                            },
+                            {
+                                priority: 'medium',
+                                title: 'International Payment Processing',
+                                description: 'Growing international client base requires efficient foreign exchange and payment processing solutions.'
+                            }
+                        ],
+                        recommendations: [
+                            {
+                                title: 'Growth Capital Line',
+                                fit: 'High Fit',
+                                benefits: 'Flexible credit facility supporting rapid expansion with competitive rates and minimal covenants. Scale with business growth.',
+                                savings: '$4,200'
+                            },
+                            {
+                                title: 'Digital Banking Suite',
+                                fit: 'High Fit',
+                                benefits: 'Modern digital banking platform with API integration, real-time reporting, and advanced security features for tech-forward businesses.',
+                                savings: '$3,800'
+                            }
+                        ]
+                    }
+                };
+                
+                this.initializeEventListeners();
+                this.updateProspectAnalysis();
+            }
+
+            initializeEventListeners() {
+                // Prospect card selection
+                document.querySelectorAll('.prospect-card').forEach(card => {
+                    card.addEventListener('click', () => {
+                        this.selectProspect(card);
+                    });
+                });
+
+                // Filter buttons
+                document.querySelectorAll('.filter-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        this.applyFilter(btn);
+                    });
+                });
+
+                // Search functionality
+                const searchInput = document.querySelector('.search-input');
+                searchInput.addEventListener('input', (e) => {
+                    this.filterProspects(e.target.value);
+                });
+
+                // Quick actions
+                document.querySelectorAll('.btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        this.handleQuickAction(btn);
+                    });
+                });
+            }
+
+            selectProspect(selectedCard) {
+                // Update UI selection
+                document.querySelectorAll('.prospect-card').forEach(card => {
+                    card.classList.remove('selected');
+                });
+                selectedCard.classList.add('selected');
+
+                // Get prospect data
+                const prospectId = selectedCard.dataset.prospect;
+                this.selectedProspect = prospectId;
+                
+                // Update detailed analysis
+                this.updateProspectAnalysis();
+                
+                // Analytics tracking
+                this.trackProspectView(prospectId);
+            }
+
+            updateProspectAnalysis() {
+                const prospect = this.prospects[this.selectedProspect];
+                if (!prospect) return;
+
+                // Update financial metrics
+                this.updateFinancialMetrics(prospect.financialData);
+                
+                // Update challenges section
+                this.updateChallengesSection(prospect.challenges);
+                
+                // Update recommendations
+                this.updateRecommendations(prospect.recommendations);
+                
+                // Update conversation starters
+                this.updateConversationStarters(prospect);
+            }
+
+            updateFinancialMetrics(data) {
+                const metrics = document.querySelectorAll('.financial-metric');
+                const values = [data.revenue, data.cashFlowScore, data.creditRating, 
+                              data.workingCapital, data.debtEquity, data.growth];
+                
+                metrics.forEach((metric, index) => {
+                    const valueElement = metric.querySelector('.financial-metric-value');
+                    if (valueElement && values[index]) {
+                        valueElement.textContent = values[index];
+                    }
+                });
+            }
+
+            updateChallengesSection(challenges) {
+                const challengeList = document.querySelector('.challenge-list');
+                challengeList.innerHTML = challenges.map(challenge => `
+                    <div class="challenge-item">
+                        <div class="challenge-priority priority-${challenge.priority}"></div>
+                        <div class="challenge-content">
+                            <div class="challenge-title">${challenge.title}</div>
+                            <div class="challenge-description">${challenge.description}</div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            updateRecommendations(recommendations) {
+                const recommendationsList = document.querySelector('.recommendations-list');
+                recommendationsList.innerHTML = recommendations.map(rec => `
+                    <div class="recommendation-card">
+                        <div class="recommendation-header">
+                            <div>
+                                <div class="recommendation-title">${rec.title}</div>
+                            </div>
+                            <div class="recommendation-fit${rec.fit.includes('Medium') ? ' medium' : ''}">${rec.fit}</div>
+                        </div>
+                        <div class="recommendation-benefits">${rec.benefits}</div>
+                        <div class="recommendation-roi">
+                            <span class="roi-label">Estimated Annual Savings</span>
+                            <span class="roi-value">${rec.savings}</span>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            updateConversationStarters(prospect) {
+                // Dynamic conversation starters based on prospect data
+                const starters = this.generateConversationStarters(prospect);
+                const startersContainer = document.querySelector('.conversation-starters');
+                
+                startersContainer.innerHTML = starters.map(starter => `
+                    <div class="starter-item">
+                        <div class="starter-topic">${starter.topic}</div>
+                        <div class="starter-content">${starter.content}</div>
+                    </div>
+                `).join('');
+            }
+
+            generateConversationStarters(prospect) {
+                // AI-powered conversation starter generation based on prospect intelligence
+                return [
+                    {
+                        topic: 'Growth Opportunity',
+                        content: `Your ${prospect.industry.toLowerCase()} business is showing impressive growth. We've helped similar companies in ${prospect.location} optimize their banking to support expansion while maintaining healthy cash flow.`
+                    },
+                    {
+                        topic: 'Industry Expertise',
+                        content: `Our ${prospect.industry.toLowerCase()} banking specialists understand the unique challenges your business faces. We've structured facilities for 75% of similar businesses in your market.`
+                    },
+                    {
+                        topic: 'Cost Optimization',
+                        content: `Companies your size typically save 15-25% on banking costs when they consolidate services. Based on your revenue profile, we could potentially reduce your annual banking expenses significantly.`
+                    }
+                ];
+            }
+
+            applyFilter(selectedBtn) {
+                // Update filter UI
+                document.querySelectorAll('.filter-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                selectedBtn.classList.add('active');
+
+                const filter = selectedBtn.textContent;
+                this.filterProspectsByCategory(filter);
+            }
+
+            filterProspectsByCategory(category) {
+                const cards = document.querySelectorAll('.prospect-card');
+                
+                cards.forEach(card => {
+                    let shouldShow = true;
+                    
+                    switch(category) {
+                        case 'High Potential':
+                            const conversionProb = parseInt(card.querySelector('.metric-value').textContent);
+                            shouldShow = conversionProb >= 80;
+                            break;
+                        case 'Growth Stage':
+                            shouldShow = card.querySelector('.tag:contains("Growth")') !== null;
+                            break;
+                        case 'Cash Flow Issues':
+                            shouldShow = card.textContent.includes('Cash Flow') || card.textContent.includes('Working Capital');
+                            break;
+                        case 'Competitor Banks':
+                            shouldShow = card.textContent.includes('Competitor Bank');
+                            break;
+                        default:
+                            shouldShow = true;
+                    }
+                    
+                    card.style.display = shouldShow ? 'block' : 'none';
+                });
+            }
+
+            filterProspects(searchTerm) {
+                const cards = document.querySelectorAll('.prospect-card');
+                const term = searchTerm.toLowerCase();
+                
+                cards.forEach(card => {
+                    const text = card.textContent.toLowerCase();
+                    const shouldShow = text.includes(term);
+                    card.style.display = shouldShow ? 'block' : 'none';
+                });
+            }
+
+            handleQuickAction(button) {
+                const action = button.textContent;
+                const prospect = this.prospects[this.selectedProspect];
+                
+                switch(action) {
+                    case 'Schedule Discovery Call':
+                        this.scheduleCall(prospect);
+                        break;
+                    case 'Send Information Package':
+                        this.sendInfoPackage(prospect);
+                        break;
+                    case 'Add to Pipeline':
+                        this.addToPipeline(prospect);
+                        break;
+                    case 'Generate Proposal':
+                        this.generateProposal(prospect);
+                        break;
+                }
+            }
+
+            scheduleCall(prospect) {
+                // Integrate with calendar system
+                console.log(`Scheduling discovery call with ${prospect.name}`);
+                this.showNotification(`Discovery call scheduled with ${prospect.name}`, 'success');
+            }
+
+            sendInfoPackage(prospect) {
+                // Generate and send personalized information package
+                console.log(`Sending information package to ${prospect.name}`);
+                this.showNotification(`Information package sent to ${prospect.name}`, 'success');
+            }
+
+            addToPipeline(prospect) {
+                // Add to CRM pipeline
+                console.log(`Adding ${prospect.name} to sales pipeline`);
+                this.showNotification(`${prospect.name} added to sales pipeline`, 'success');
+            }
+
+            generateProposal(prospect) {
+                // Generate tailored banking proposal
+                console.log(`Generating proposal for ${prospect.name}`);
+                this.showNotification(`Proposal generated for ${prospect.name}`, 'success');
+            }
+
+            showNotification(message, type) {
+                // Create temporary notification
+                const notification = document.createElement('div');
+                notification.className = `notification ${type}`;
+                notification.textContent = message;
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: var(--ds-green-500);
+                    color: white;
+                    padding: var(--space-4);
+                    border-radius: 6px;
+                    z-index: 1000;
+                    opacity: 0;
+                    transition: opacity 0.3s ease;
+                `;
+                
+                document.body.appendChild(notification);
+                
+                // Animate in
+                setTimeout(() => {
+                    notification.style.opacity = '1';
+                }, 100);
+                
+                // Remove after 3 seconds
+                setTimeout(() => {
+                    notification.style.opacity = '0';
+                    setTimeout(() => {
+                        document.body.removeChild(notification);
+                    }, 300);
+                }, 3000);
+            }
+
+            trackProspectView(prospectId) {
+                // Analytics tracking for prospect engagement
+                console.log(`Prospect viewed: ${prospectId}`);
+            }
+        }
+
+        // Initialize dashboard when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            new SMBProspectDashboard();
+        });
+
+        // Performance optimization for sales pipeline management
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        // Observe prospect cards for performance optimization
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.prospect-card, .analysis-section').forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
