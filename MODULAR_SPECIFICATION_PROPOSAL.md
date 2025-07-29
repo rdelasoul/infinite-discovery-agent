@@ -38,6 +38,111 @@ USER JOB + CONTEXT + SHARED MODULES = CONTEXTUAL UI SPECIFICATION
 - **Shared Modules**: Reusable standards and requirements
 - **Configuration**: Mix and match via spec-config.yml
 
+### Visual System Architecture
+
+```mermaid
+flowchart TD
+    %% User creates experiment
+    A[User Creates New Experiment] --> B[Copy Template or Existing Experiment]
+    
+    %% Spec creation
+    B --> C[Write spec.md - Jobs-to-be-Done Focus - 50-100 lines]
+    C --> D[Configure spec-config.yml - Select Dependencies]
+    
+    %% Dependency resolution
+    D --> E{spec-config.yml Dependencies}
+    
+    %% Shared modules
+    E -->|design-systems| F[shared/design-systems/ - geist-core, geist-components]
+    E -->|spec-modules| G[shared/spec-modules/ - accessibility, performance standards]
+    E -->|moodboards| H[shared/moodboards/ - visual aesthetic guidance]
+    E -->|data| I[shared/data/ - banking, ecommerce data sets]
+    
+    %% Command execution
+    F --> J[infinite Command Execution]
+    G --> J
+    H --> J
+    I --> J
+    C --> J
+    
+    %% Dependency resolution process
+    J --> K[Phase 1: Dependency Resolution - Read config, Load modules, Create consolidated spec]
+    
+    %% Agent deployment
+    K --> L[Phase 2: Agent Deployment - Sub-agents receive Jobs-to-be-Done context, emotional state, success metrics]
+    
+    %% Generation
+    L --> M[Agents Generate UI Based on Job Context, Not Just Requirements]
+    
+    %% Comparison: Before vs After
+    N[OLD WAY - Monolithic Spec] --> O[500+ line spec.md with mixed content - Job, Design, Accessibility, Performance, Data, Ultra-thinking]
+    
+    O --> P[Overwhelmed Sub-agents - Too much info, Not enough context]
+    
+    %% New way
+    Q[NEW WAY - Modular Specs] --> R[Clean spec.md: 50-100 lines - Job Statement, User Context, Success Metrics, Approach Guidelines]
+    
+    R --> S[spec-config.yml Dependencies: design-systems, spec-modules, data]
+    
+    S --> T[Focused Sub-agents - Clear job context, Appropriate constraints]
+    
+    %% Results
+    P --> U[❌ Generic UI - Doesn't match user needs, Agents guess at solutions]
+    T --> V[✅ Contextual UI - Matches job requirements, Agents understand user goals]
+    
+    %% Configuration flexibility
+    W[Same Job - Different Configs] --> X[Config A: Production - Full constraints, All quality modules]
+    W --> Y[Config B: Exploration - Creative freedom, Minimal constraints]
+    W --> Z[Config C: Enhancement - Reference existing work, Improvement strategies]
+    
+    X --> AA[Professional UI - WCAG compliant, Design system consistent]
+    Y --> BB[Creative UI - Innovative approaches, Visual exploration]
+    Z --> CC[Enhanced UI - Building on proven work, Systematic improvements]
+    
+    %% Maintenance benefits
+    DD[Update Shared Module] --> EE[All Experiments Updated - No spec rewrites needed]
+    
+    %% Style the diagram
+    classDef oldWay fill:#ffcccc,stroke:#d32f2f,stroke-width:2px
+    classDef newWay fill:#c8e6c9,stroke:#2e7d32,stroke-width:2px
+    classDef shared fill:#e1f5fe,stroke:#0277bd,stroke-width:2px
+    classDef result fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    
+    class N,O,P,U oldWay
+    class Q,R,S,T,V newWay
+    class F,G,H,I,DD,EE shared
+    class AA,BB,CC result
+```
+
+### Key System Insights
+
+#### 1. **The Central Problem** (Red Path)
+- Monolithic specs overwhelm agents with 500+ lines of mixed content
+- Agents receive too much implementation detail, not enough user context
+- Results in generic UI that doesn't match actual user needs
+
+#### 2. **The Modular Solution** (Green Path)
+- Clean specs focus on Jobs-to-be-Done (50-100 lines)
+- Dependencies pulled from shared modules as needed
+- Agents get focused context about user goals and constraints
+- Results in contextual UI that matches job requirements
+
+#### 3. **Configuration Flexibility** (Orange Results)
+- Same job can be solved different ways through different configs
+- Production vs. exploration vs. enhancement modes
+- Each configuration produces appropriate UI for its intended purpose
+
+#### 4. **Maintenance Advantage** (Blue Shared)
+- Update shared modules once, automatically affects all experiments
+- No need to rewrite individual specifications
+- Central quality control and consistency across all experiments
+
+#### 5. **The Core Transformation**
+```
+OLD: What to build → Generic solutions
+NEW: What job to accomplish → Contextual solutions
+```
+
 ### From Monolithic to Modular
 
 **Before: Monolithic Specification**
