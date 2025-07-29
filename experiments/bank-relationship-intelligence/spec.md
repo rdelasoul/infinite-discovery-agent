@@ -1,66 +1,67 @@
-# SMB Banking Sales Intelligence UX Pattern Specification
+# Bank Relationship Intelligence UX Pattern Specification
 
 ## Core Challenge
 
-Create **innovative UX patterns** that demonstrate how connected data platforms transform small business banking sales workflows. Focus on showcasing how **unified access to banking, accounting, and merchant data** enables unprecedented prospect intelligence, product recommendations, and sales optimization that fragmented systems cannot achieve.
+Create **innovative UX patterns** that optimize bank relationship manager workflows for analyzing small business portfolios through comprehensive **multi-source financial data integration**. Focus on demonstrating how **unified access to credit cards, external bank accounts, and accounting software** creates unprecedented portfolio intelligence, competitive insights, and relationship optimization that fragmented systems cannot achieve.
 
-**Primary Business Context**: Demonstrating the transformative power of connected datasets for small business banking sales teams. Show how unified access to banking relationships, accounting records, and merchant transactions creates superior prospect insights and conversion capabilities compared to traditional fragmented data approaches.
+**Primary Business Context**: Banks analyzing 100+ small business clients (0-50 employees each) by integrating their credit cards, external bank accounts, and accounting software trial balances to generate actionable insights for relationship managers about upsell opportunities, competitive intelligence, and portfolio optimization.
 
-**Parent Job-to-be-Done**: "Understand SMB financial needs to tailor pitches and acquire customers, increasing revenue"
+**Core Platform Demonstration**: Show how **connected data platforms** transform traditional banking relationship management by providing unified financial visibility across all client data sources, enabling relationship intelligence impossible with fragmented systems.
 
-## Connected Data Platform Value Proposition
+## Multi-Source Data Integration Value Proposition
 
-**The Transformation**: Traditional banking sales teams work with fragmented data sources - separate views of banking relationships, accounting records, and merchant transactions. This prototype demonstrates what becomes possible when these data sources are **unified in real-time** through a connected data platform.
+**The Transformation**: Traditional bank relationship managers work with fragmented data sources - separate views of their bank's accounts, external banking relationships, and isolated accounting records. This prototype demonstrates what becomes possible when these data sources are **unified in real-time** through a connected data platform.
 
-**Platform Demonstration Purpose**: Showcase familiar SMB banking sales workflows **transformed by connected datasets** that provide:
-- **Unified Financial View**: Real-time integration of banking, accounting, and merchant data
-- **Cross-Source Intelligence**: Insights only possible when all financial data sources connect  
-- **Enhanced Sales Capabilities**: Prospect assessment, product recommendations, and pipeline management powered by complete financial picture
-- **Competitive Advantage**: Sales intelligence that fragmented systems simply cannot provide
+**Platform Demonstration Purpose**: Showcase familiar bank relationship management workflows **transformed by multi-source integration** that provides:
+- **Complete Financial Picture**: Real-time integration of credit cards, bank accounts, and accounting software data
+- **Cross-Institution Intelligence**: Understanding client relationships with competitor banks and money flows
+- **Portfolio Analytics**: Comprehensive analysis across 100+ integrated small business client profiles
+- **Competitive Advantage**: Relationship intelligence that fragmented banking systems simply cannot provide
 
-**What This Prototype Shows**: How connected data transforms routine banking sales workflows into sophisticated intelligence systems that deliver superior prospect insights and conversion outcomes.
+**What This Prototype Shows**: How connected data platforms transform routine relationship management into sophisticated portfolio intelligence systems that deliver superior client insights and revenue optimization.
 
-**Target Customer Profile**: Small business banking sales teams focused on SMB client acquisition and revenue growth
+**Target Customer Profile**: Bank relationship managers managing portfolios of 50-150 small business clients
 
 **End User Roles**:
-- **Relationship Manager**: Direct client interaction, pitch preparation, product recommendations
-- **Business Development Manager**: Prospect identification, market analysis, pipeline management  
-- **Small Business Loan Officer**: Credit assessment, loan product matching, risk evaluation
+- **Relationship Manager**: Portfolio oversight, client interaction, opportunity identification, revenue optimization
+- **Portfolio Manager**: Team oversight, performance analysis, strategic portfolio development
+- **Risk Analyst**: Portfolio risk assessment, early warning systems, compliance monitoring
+- **Business Development**: New client acquisition, competitive analysis, market expansion
 
 ## Core Jobs-to-be-Done Framework
 
-### **Job 1: Pre-Contact Intelligence Assessment**
-*"Assess SMB financial health and operational challenges to prepare relevant approaches before initial contact"*
+### **Core Job 1: Multi-Source Portfolio Analysis**
+*"Analyze integrated financial data across credit cards, bank accounts, and accounting software to understand complete client financial pictures"*
 
 **Key Capabilities Needed**:
-- **Financial Health Scoring**: Automated assessment of SMB financial stability and growth potential
-- **Operational Challenge Identification**: Detect cash flow issues, seasonal patterns, growth constraints
-- **Conversation Starter Intelligence**: Identify specific pain points and opportunities for initial discussions
-- **Risk Assessment**: Early evaluation of credit worthiness and potential banking relationship value
-- **Competitive Analysis**: Understanding current banking relationships and switching likelihood
-- **Industry Context**: Sector-specific challenges and opportunities relevant to the prospect
+- **Cross-Source Data Harmonization**: Integrate and reconcile transactions across all financial data sources
+- **Portfolio Health Scoring**: Automated assessment of client financial stability using unified data
+- **Competitive Intelligence**: Understanding client relationships with other financial institutions
+- **Cash Flow Analysis**: Complete visibility into client money flows across all accounts and institutions
+- **Growth Pattern Recognition**: Identify expansion signals requiring additional banking support
+- **Risk Monitoring**: Early warning systems based on integrated financial behavior patterns
 
-### **Job 2: Product Recommendation Engine**
-*"Recommend suitable banking products to directly address SMBs' unique situations and increase product adoption"*
-
-**Key Capabilities Needed**:
-- **Product-Need Matching**: Intelligent mapping of SMB challenges to specific banking solutions
-- **Product Fit Scoring**: Quantified assessment of how well each product addresses prospect needs
-- **Cross-sell Sequencing**: Optimal order and timing for introducing multiple banking products
-- **Value Proposition Personalization**: Tailored benefits messaging based on specific SMB situation
-- **Competitive Differentiation**: How bank products compare to prospect's current solutions
-- **ROI Calculation**: Clear financial benefits and cost savings for each recommended product
-
-### **Job 3: High-Potential Prospect Identification**
-*"Identify high-potential SMB prospects to focus sales efforts and maximize conversion rates"*
+### **Core Job 2: Relationship Optimization Intelligence**
+*"Leverage multi-source insights to optimize existing client relationships and identify upsell opportunities"*
 
 **Key Capabilities Needed**:
-- **Conversion Probability Scoring**: Data-driven assessment of likelihood to become a client
-- **Revenue Potential Analysis**: Estimated lifetime value and product adoption potential
-- **Sales Effort Optimization**: Match prospect potential with appropriate sales resource allocation
-- **Timing Intelligence**: Identify optimal moments for outreach based on business lifecycle
-- **Pipeline Prioritization**: Rank prospects by conversion probability and revenue potential
-- **Market Opportunity Sizing**: Understand addressable market within specific territories or industries
+- **Opportunity Scoring**: Quantified upsell/cross-sell potential based on integrated financial analysis
+- **Wallet Share Analysis**: Understanding percentage of client's banking needs currently captured
+- **Product Gap Identification**: Banking products needed based on complete financial picture
+- **Competitive Positioning**: How bank's relationship compares to client's other banking relationships
+- **Relationship Depth Assessment**: Measuring relationship strength across all financial touchpoints
+- **Revenue Optimization**: Maximizing relationship profitability through intelligent product recommendations
+
+### **Core Job 3: Portfolio Performance Management**
+*"Manage and optimize portfolios of 100+ integrated small business relationships for maximum performance"*
+
+**Key Capabilities Needed**:
+- **Portfolio Prioritization**: Intelligent ranking of clients based on opportunity and risk scores
+- **Resource Allocation**: Optimal distribution of relationship manager time across portfolio
+- **Performance Analytics**: Tracking relationship manager effectiveness and portfolio growth
+- **Exception Management**: Automated alerts for clients requiring immediate attention
+- **Team Collaboration**: Shared portfolio intelligence and knowledge management
+- **Strategic Planning**: Long-term portfolio development and growth strategies
 
 ## Implementation Guidelines
 
@@ -77,105 +78,105 @@ Create **innovative UX patterns** that demonstrate how connected data platforms 
 - **Platform-Powered Analytics**: Predictive capabilities only possible through unified banking, accounting, and merchant data access
 - **Real-Time Data Synchronization**: Live integration demonstrating the transformative power of connected financial ecosystems
 
-## SMB Banking Sales Intelligence Data Requirements
+## Bank Relationship Intelligence Data Requirements
 
-**Critical Requirement**: All UX patterns MUST include comprehensive, realistic SMB sales data that fully demonstrates the transformative power of connected datasets. Show how unified access to banking, accounting, and merchant data creates prospect intelligence and sales capabilities impossible with fragmented systems.
+**Critical Requirement**: All UX patterns MUST include comprehensive, realistic bank relationship management data that fully demonstrates multi-source financial integration capabilities. Show how unified access to credit cards, external bank accounts, and accounting software creates portfolio intelligence and competitive insights impossible with fragmented banking systems.
 
-### **SMB Sales Intelligence Data Standards**
+### **Multi-Source Integration Data Standards**
 
-#### **Connected Data Prospect Intelligence**
-- **Unified Financial Health View**: Real-time cash flow patterns from banking + accounting + merchant data
-- **Cross-Source Banking Analysis**: Current relationships visible across all connected data sources
-- **Complete Business Context**: Industry insights derived from unified banking, accounting, and transaction data
-- **Platform-Powered Conversion Signals**: Triggers only visible through connected dataset analysis
-- **360-Degree Competitive Position**: Complete financial relationship mapping across all data sources
+#### **Cross-Institution Financial Data**
+- **Credit Cards**: Business cards from all institutions (own bank + competitors like Chase, Capital One, Amex)
+- **Bank Accounts**: Checking, savings, money market accounts from all banks (Wells Fargo, PNC, Fifth Third)
+- **Accounting Software**: QuickBooks Online, Xero, QuickBooks Desktop trial balance integration
+- **Transaction Correlation**: Cross-source transaction matching and pattern recognition
+- **Cash Flow Intelligence**: Complete financial picture across all integrated data sources
 
-#### **Platform-Enhanced Product Recommendations**
-- **Connected Data Product Matching**: Product recommendations powered by unified banking, accounting, and merchant insights
-- **Cross-Source Fit Scoring**: Product relevance assessment using complete financial picture
-- **Unified Data Cross-sell Intelligence**: Opportunities identified through connected dataset analysis
-- **Platform-Driven Value Propositions**: ROI calculations based on complete financial visibility
-- **Connected Data Competitive Analysis**: Product positioning using unified financial intelligence
+#### **Portfolio Intelligence Analytics**
+- **Client Health Scoring**: Automated scoring based on integrated financial data from all sources
+- **Opportunity Rankings**: Quantified upsell/cross-sell potential across portfolio clients
+- **Risk Assessments**: Early warning indicators for financial distress using multi-source data
+- **Competitive Positioning**: Understanding client wallet share and banking relationships
+- **Growth Indicators**: Businesses showing expansion signals requiring banking support
 
-#### **Connected Platform Sales Pipeline**
-- **Unified Data Prospect Scoring**: Conversion probability using complete financial dataset integration
-- **Cross-Source Sales Tracking**: Pipeline progression enhanced by banking, accounting, and merchant data visibility
-- **Platform-Powered Engagement Intelligence**: Outreach optimization using connected data insights
-- **Connected Data Territory Intelligence**: Geographic and industry optimization through unified financial analysis
-- **Platform-Enhanced Performance Metrics**: Conversion tracking powered by complete prospect financial picture
+#### **Relationship Management Workflows**
+- **Client Interaction History**: Previous conversations, meetings, and touchpoints
+- **Product Usage Analysis**: Current banking products and utilization patterns across all sources
+- **Opportunity Scoring**: ML-powered recommendations for next best actions
+- **Risk Predictive Models**: Probability scoring for various risk scenarios using integrated data
+- **Performance Benchmarking**: Client comparison against industry and portfolio peers
 
-### **Sales Intelligence Workflow Scenarios**
+### **Multi-Source Integration Workflow Scenarios**
 
-#### **Pre-Contact Research Data**
-- **Financial Health Assessment**: Automated scoring of SMB financial stability
-- **Challenge Identification**: Operational pain points and growth constraints
-- **Conversation Preparation**: Key talking points and relevant value propositions
-- **Risk Evaluation**: Initial credit worthiness and relationship potential assessment
-- **Competitive Context**: Current banking relationships and switching opportunities
+#### **Portfolio Analytics Data**
+- **Client Health Scores**: Automated scoring based on integrated financial data
+- **Opportunity Rankings**: Quantified upsell/cross-sell potential across portfolio
+- **Risk Assessments**: Early warning indicators for financial distress
+- **Competitive Positioning**: Understanding client wallet share and bank relationships
+- **Growth Indicators**: Businesses showing expansion signals requiring banking support
 
-#### **Product Recommendation Engine Data**
-- **Need-Product Matching**: Intelligent mapping of SMB challenges to banking solutions
-- **Recommendation Scoring**: Quantified product fit and adoption probability
-- **Value Proposition Personalization**: Tailored benefits messaging for each prospect
-- **Cross-sell Sequencing**: Optimal timing and order for product introduction
-- **ROI Calculations**: Clear financial benefits and cost savings analysis
+#### **Relationship Intelligence Data**
+- **Client Interaction History**: Previous conversations, meetings, and touchpoints
+- **Product Usage Analysis**: Current banking products and utilization patterns
+- **Opportunity Scoring**: ML-powered recommendations for next best actions
+- **Risk Predictive Models**: Probability scoring for various risk scenarios
+- **Performance Benchmarking**: Client comparison against industry and portfolio peers
 
-#### **Prospect Prioritization Data**
-- **Conversion Probability Models**: Data-driven likelihood of successful acquisition
-- **Revenue Potential Analysis**: Estimated lifetime value and product adoption potential
-- **Sales Effort Optimization**: Resource allocation based on prospect potential
-- **Timing Intelligence**: Optimal outreach moments based on business lifecycle
-- **Pipeline Performance**: Tracking conversion rates and sales cycle efficiency
+#### **Integration Workflow Data**
+- **Data Source Reconciliation**: Matching transactions across credit cards, bank accounts, and accounting records
+- **Automated Insights**: AI-generated recommendations for relationship managers
+- **Exception Handling**: Discrepancies and data quality issues requiring attention
+- **Real-Time Updates**: Live integration status and data freshness indicators
+- **Audit Trail**: Complete documentation of data sources and analytical decisions
 
-### **Sales Data Quality Guidelines**
+### **Financial Data Quality Guidelines**
 
 #### **Authenticity Standards**
-- **Realistic SMB Profiles**: Appropriate business models, financial patterns, and growth stages
-- **Genuine Sales Scenarios**: Authentic prospect interactions and conversion pathways
-- **Professional Sales Context**: Accurate sales terminology and banking product knowledge
-- **Market Dynamics**: Realistic competitive landscape and client decision-making factors
-- **Industry Specificity**: Challenges and opportunities appropriate to different SMB sectors
+- **Realistic Business Profiles**: Appropriate revenue, expense, and cash flow patterns for small businesses
+- **Genuine Banking Relationships**: Authentic multi-bank scenarios with primary/secondary relationships
+- **Professional Context**: Accurate relationship management language and banking terminology
+- **Temporal Consistency**: Logical date patterns and business lifecycle timing
+- **Industry Accuracy**: Expenses and patterns appropriate to business types and locations
 
-#### **Sales Pipeline Modeling**
-- **Prospect Diversity**: Different business types, sizes, and banking needs
-- **Conversion Readiness**: Varying levels of interest and readiness to switch banking relationships
-- **Competitive Scenarios**: Realistic multi-bank relationships and switching dynamics
-- **Sales Stage Progression**: Logical pipeline advancement from prospect to client
-- **Revenue Potential**: Diverse opportunity sizes and product adoption scenarios
+#### **Portfolio Relationship Modeling**
+- **Client Segmentation**: Different business types, sizes, and financial health levels
+- **Relationship Depth**: Varying levels of banking relationship intensity and product usage
+- **Competitive Dynamics**: Realistic scenarios of client relationships with multiple banks
+- **Growth Trajectories**: Businesses at different stages requiring different banking support
+- **Risk Profiles**: Diverse risk scenarios from healthy to distressed businesses
 
-### **SMB Banking Sales Intelligence Data Examples**
+### **Bank Relationship Intelligence Data Examples**
 
-#### **Sample SMB Sales Prospects**
-- **Rodriguez Construction**: $2M revenue, growth stage, needs equipment financing and cash management
-- **Chen Marketing**: $500K revenue, banks with competitor, high deposit growth potential
-- **Thompson Legal**: $1.2M revenue, established firm, treasury services and merchant services opportunity  
-- **Kim Restaurant**: $800K revenue, seasonal cash flow, working capital and POS solution needs
-- **Santos Consulting**: $300K revenue, startup, high growth potential, credit line and digital banking needs
+#### **Sample Small Business Portfolio**
+- **Rodriguez Construction**: $2M revenue, primary relationship, growth stage, equipment loan opportunity
+- **Chen Marketing**: $500K revenue, secondary relationship, competitor primary, deposit growth potential
+- **Thompson Legal**: $1.2M revenue, long-term client, stable, treasury services upsell
+- **Kim Restaurant**: $800K revenue, new client, seasonal cash flow, working capital needs
+- **Santos Consulting**: $300K revenue, startup, high growth, credit line expansion opportunity
 
-#### **Connected Data Platform Sources**
-- **Unified Financial Intelligence**: Revenue trends and cash flow from integrated banking, accounting, and merchant data
-- **Complete Banking Relationship View**: Provider relationships and product usage across all connected data sources
-- **360-Degree Business Context**: Industry insights and operational needs from unified financial ecosystem
-- **Platform-Powered Competitive Intelligence**: Market positioning analysis using connected dataset advantages
-- **Cross-Source Engagement Tracking**: Outreach optimization using complete financial relationship history
+#### **Integration Data Sources**
+- **Credit Cards**: Chase Business, Capital One Spark, Amex Business, Bank of America
+- **Bank Accounts**: Wells Fargo checking, PNC savings, Fifth Third money market
+- **Accounting Software**: QuickBooks Online, Xero, QuickBooks Desktop integration
+- **Transaction Categories**: Revenue recognition, expense categorization, cash flow analysis
+- **Risk Indicators**: Late payments, declining balances, increased credit utilization
 
-#### **Sales Team Roles & Personas**
-- **Sarah Johnson, Relationship Manager**: Territory of 150 SMB prospects, $5M annual quota
-- **Michael Chen, Business Development Manager**: New market development, competitive analysis
-- **Lisa Rodriguez, Small Business Loan Officer**: Credit assessment, loan product specialization
-- **David Kim, Senior Relationship Manager**: High-value prospects, complex product solutions
+#### **Bank Personnel & Roles**
+- **Sarah Johnson, Senior Relationship Manager**: Portfolio of 25 SMB clients, quota responsibility
+- **Michael Chen, Portfolio Manager**: Oversight of 5 relationship managers, regional performance
+- **Lisa Rodriguez, Risk Analyst**: Portfolio risk assessment, early warning system management
+- **David Kim, Business Development**: New client acquisition, competitive analysis, market expansion
 
 ## Output Requirements
 
 **File Naming**: `ux_pattern_[iteration_number].html`
 
-**Content Structure**: SMB banking sales intelligence UX pattern exploration within Geist design system constraints with comprehensive realistic sales workflow data
+**Content Structure**: Bank relationship intelligence UX pattern exploration within Geist design system constraints with comprehensive realistic portfolio management data
 
 **Implementation Requirements**:
-- **Complete Sales Example**: Pattern must include full functional demonstration using realistic SMB sales data for prospect assessment, product recommendation, and pipeline management
-- **Sales Intelligence Context**: All interface components should reflect prospect research, product matching, and conversion optimization
-- **Sales Role Coverage**: Different user types (relationship manager, business development manager, loan officer) with appropriate access levels
-- **Sales Workflow Coverage**: Complete user journeys from prospect identification to product recommendation to conversion tracking
+- **Complete Portfolio Example**: Pattern must include full functional demonstration using realistic multi-source banking data for 100+ small business clients
+- **Multi-Source Context**: All interface components should reflect credit card, bank account, and accounting software integration
+- **Bank Role Coverage**: Different user types (relationship manager, portfolio manager, risk analyst, business development) with appropriate access levels
+- **Intelligence Workflow Coverage**: Complete user journeys from data integration to client action recommendations
 
 ```html
 <!DOCTYPE html>
@@ -183,246 +184,246 @@ Create **innovative UX patterns** that demonstrate how connected data platforms 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>[Pattern Name] - SMB Banking Sales Intelligence</title>
+    <title>[Pattern Name] - Bank Relationship Intelligence</title>
     <style>
         /* Geist Design System implementation - see ../functional-ux-patterns/design-systems/geist-core.md and ../functional-ux-patterns/design-systems/geist-components.md */
         /* Use Geist color tokens, typography, spacing, and component patterns */
-        /* SMB banking sales intelligence optimized layout and interaction patterns within Geist constraints */
-        /* Focus on sales workflow efficiency and conversion optimization */
+        /* Bank relationship intelligence optimized layout and interaction patterns within Geist constraints */
+        /* Focus on portfolio management efficiency and relationship optimization */
     </style>
 </head>
 <body>
     <main>
-        <h1>[Pattern Name] - SMB Banking Sales Intelligence Pattern</h1>
+        <h1>[Pattern Name] - Bank Relationship Intelligence Pattern</h1>
         
-        <!-- The UX pattern showcasing SMB banking sales intelligence innovation -->
-        <div class="smb-sales-intelligence-pattern">
-            <!-- SMB sales prospect intelligence interface with realistic sales data and comprehensive prospect analysis -->
-            <!-- Smart information architecture for sales workflow across prospect research, product recommendation, and pipeline management -->
-            <!-- Demonstrates complete sales team user journey from prospect assessment to product recommendation to conversion tracking -->
-            <!-- Include prospect scoring, product fit assessments, and conversion probability rankings -->
+        <!-- The UX pattern showcasing bank relationship intelligence innovation -->
+        <div class="bank-relationship-intelligence-pattern">
+            <!-- Bank portfolio management interface with realistic multi-source integration and comprehensive client data -->
+            <!-- Smart information architecture for relationship oversight across 100+ small business clients -->
+            <!-- Demonstrates complete relationship manager user journey from data analysis to client action -->
+            <!-- Include portfolio health scores, opportunity rankings, and risk assessments -->
         </div>
         
-        <!-- Pattern variations for different sales roles and prospect management scenarios -->
-        <!-- Use realistic sales data to demonstrate prospect intelligence and sales optimization patterns -->
+        <!-- Pattern variations for different bank roles and relationship management scenarios -->
+        <!-- Use realistic portfolio data to demonstrate multi-source intelligence and client optimization patterns -->
         
     </main>
 
     <script>
-        // Prospect intelligence and sales workflow optimization
-        // Product recommendation engine and conversion tracking
-        // Progressive disclosure for complex sales intelligence
-        // Performance-optimized sales pipeline management task completion
+        // Multi-source data integration and portfolio analysis
+        // Relationship intelligence workflow optimization
+        // Progressive disclosure for complex financial intelligence
+        // Performance-optimized portfolio management task completion
     </script>
 </body>
 </html>
 ```
 
-## SMB Banking Sales Intelligence Pattern Dimensions
+## Bank Relationship Intelligence Pattern Dimensions
 
-### **Sales Intelligence Pattern Categories**
-Each pattern must solve real SMB banking sales challenges through innovative interaction models, information architecture, or sales workflow optimization specific to prospect assessment, product recommendation, and conversion optimization.
+### **Portfolio Management Pattern Categories**
+Each pattern must solve real bank relationship management challenges through innovative interaction models, information architecture, or intelligence workflow optimization specific to multi-source financial data environments.
 
-#### **Pre-Contact Intelligence Patterns**
-- **Prospect Financial Health Dashboard**: Comprehensive assessment of SMB financial stability and growth potential
-- **Challenge Identification Interface**: Automated detection of operational pain points and growth constraints
-- **Conversation Preparation Tools**: Key talking points and value propositions tailored to prospect situation
-- **Competitive Context Analysis**: Understanding current banking relationships and switching opportunities
-- **Risk Assessment Workflows**: Initial credit evaluation and relationship potential scoring
-- **Industry Intelligence**: Sector-specific challenges and opportunities relevant to prospect
-- **Timing Intelligence**: Optimal outreach moments based on business lifecycle indicators
-- **Research Automation**: Streamlined prospect analysis and opportunity assessment
+#### **Multi-Source Integration Architecture Patterns**
+- **Unified Data Dashboard**: Display integrated view of credit cards, bank accounts, and accounting data
+- **Source Attribution**: Clear identification of data origins and integration status
+- **Cross-Source Correlation**: Identify related transactions and patterns across all financial sources
+- **Data Quality Monitoring**: Real-time status of integration health and data freshness
+- **Competitive Intelligence**: Understanding client relationships with other financial institutions
+- **Historical Integration**: Time-based analysis of integrated financial data
+- **Exception Management**: Handling discrepancies and integration issues
+- **Audit Trail**: Complete documentation of data sources and analytical decisions
 
-#### **Product Recommendation Engine Patterns**
-- **Need-Product Matching**: Intelligent mapping of SMB challenges to specific banking solutions
-- **Product Fit Scoring**: Quantified assessment of product relevance and adoption probability
-- **Cross-sell Sequencing**: Optimal timing and order for introducing multiple banking products
-- **Value Proposition Personalization**: Tailored benefits messaging based on prospect-specific context
-- **ROI Calculator**: Clear financial benefits and cost savings analysis for each recommended product
-- **Competitive Differentiation**: How bank products compare to prospect's current solutions
-- **Implementation Planning**: Step-by-step adoption pathway for recommended banking products
-- **Success Prediction**: Likelihood of product adoption and usage based on prospect profile
+#### **Relationship Intelligence Workflow Patterns**
+- **Portfolio Prioritization**: Automated client ranking based on opportunity and risk scores
+- **Opportunity Detection**: ML-powered identification of upsell and cross-sell opportunities
+- **Risk Assessment**: Early warning systems for financial deterioration
+- **Client Segmentation**: Dynamic grouping based on relationship depth and potential
+- **Competitive Analysis**: Understanding client wallet share and bank relationships
+- **Action Recommendations**: AI-powered next best action suggestions
+- **Performance Tracking**: Relationship manager efficiency and success metrics
+- **Collaboration Tools**: Team-based portfolio management and knowledge sharing
 
-#### **Prospect Prioritization Patterns**
-- **Conversion Probability Scoring**: Data-driven assessment of likelihood to become a client
-- **Revenue Potential Analysis**: Estimated lifetime value and product adoption potential
-- **Sales Effort Optimization**: Resource allocation based on prospect potential and conversion likelihood
-- **Pipeline Management**: Visual workflow for tracking prospects through sales stages
-- **Territory Intelligence**: Geographic and industry segment optimization for sales focus
-- **Performance Analytics**: Conversion rates, revenue per prospect, and sales cycle tracking
-- **Team Collaboration**: Shared prospect intelligence and handoff workflows
-- **Market Opportunity Sizing**: Addressable market analysis within specific territories
+#### **Financial Intelligence Optimization Patterns**
+- **Predictive Analytics**: Proactive identification of client needs and risks
+- **Automated Insights**: AI-generated recommendations for relationship managers
+- **Real-Time Monitoring**: Live alerts for significant client financial changes
+- **Benchmarking**: Client comparison against industry and portfolio peers
+- **Trend Analysis**: Pattern recognition across client portfolios
+- **Scenario Planning**: What-if analysis for different client strategies
+- **Performance Optimization**: Continuous improvement of analytical models
+- **Integration Efficiency**: Streamlined data processing and analysis workflows
 
-#### **Sales Workflow Optimization Patterns**
-- **Outreach Sequencing**: Optimal timing and messaging for prospect engagement
-- **Response Tracking**: Engagement patterns and interest indicators across touchpoints
-- **Meeting Preparation**: Comprehensive prospect briefings and conversation guides
-- **Proposal Generation**: Automated product recommendation packages and pricing
-- **Follow-up Intelligence**: Smart reminders and next best action suggestions
-- **Competitive Battle Cards**: Real-time competitive positioning and objection handling
-- **Sales Stage Progression**: Guided workflows for advancing prospects through the pipeline
-- **Conversion Optimization**: Continuous improvement of sales processes and messaging
+#### **Business Development Support Patterns**
+- **Opportunity Pipeline**: Ranked list of upsell and cross-sell prospects
+- **Client Profiling**: Comprehensive financial analysis for individual businesses
+- **Market Analysis**: Industry and competitive insights for client portfolios
+- **Product Recommendations**: Intelligent suggestions for banking products and services
+- **Relationship Mapping**: Understanding client decision-making networks
+- **Growth Planning**: Supporting client expansion through banking products
+- **Risk Mitigation**: Proactive strategies for maintaining portfolio health
+- **Revenue Optimization**: Maximizing relationship profitability through intelligence
 
-### **SMB Banking Sales Intelligence Implementation Strategy**
+### **Bank Relationship Intelligence Implementation Strategy**
 
-#### **Sales Team Design System Integration**
-- **Geist Sales Components**: Leverage tables, cards, and forms for prospect data display and pipeline management
-- **Status Communication**: Use Geist badges and notifications for prospect alerts and sales opportunities
-- **Progressive Disclosure**: Reveal complex sales intelligence without overwhelming users during prospect analysis
-- **Dashboard Design**: Optimized for sales teams working with multiple prospects and conversion goals
-- **Accessibility for Sales Users**: Screen reader support and keyboard navigation for diverse sales professionals
+#### **Bank Personnel Design System Integration**
+- **Geist Financial Components**: Leverage tables, cards, and forms for portfolio data display
+- **Status Communication**: Use Geist badges and notifications for client alerts and opportunities
+- **Progressive Disclosure**: Reveal complex financial intelligence without overwhelming users
+- **Dashboard Design**: Optimized for relationship managers working with multiple clients
+- **Accessibility for Bank Users**: Screen reader support and keyboard navigation for diverse users
 
-#### **Sales Role Goal Optimization**
-- **Relationship Manager Interface**: Prospect overview with prioritized sales actions and conversion opportunities
-- **Business Development Dashboard**: Market analysis, territory management, and new prospect identification
-- **Loan Officer Tools**: Credit assessment, product matching, and risk evaluation workflows
-- **Sales Manager Oversight**: Team performance, pipeline health, and conversion rate analytics
-- **Executive Sales Reporting**: High-level conversion metrics, revenue pipeline, and market opportunity insights
+#### **Bank Role Goal Optimization**
+- **Relationship Manager Dashboard**: Portfolio overview with prioritized client actions
+- **Portfolio Manager Oversight**: Team performance and regional portfolio health
+- **Risk Analyst Interface**: Portfolio risk assessment and early warning systems
+- **Business Development Tools**: Opportunity identification and competitive analysis
+- **Executive Reporting**: High-level portfolio performance and strategic insights
 
 ## Enhancement Principles
 
-### **Sales Excellence**
-- **Sales Intelligence Amplification**: Every pattern decision enhances sales team effectiveness and conversion rates
-- **Revenue Growth Priority**: Proactive design that identifies and maximizes sales opportunities
-- **Conversion Optimization**: Intelligent identification of high-potential prospects and optimal sales strategies
-- **Competitive Advantage**: Patterns that provide superior prospect insights compared to competitor banks
-- **Sales Process Integration**: Seamless integration with existing CRM and sales management systems
+### **Bank Relationship Excellence**
+- **Intelligence Amplification**: Every pattern decision enhances relationship manager effectiveness
+- **Risk Management Priority**: Proactive design that identifies and mitigates portfolio risks
+- **Opportunity Maximization**: Intelligent identification of upsell and cross-sell possibilities
+- **Competitive Advantage**: Patterns that provide superior client insights compared to competitors
+- **Portfolio Optimization**: Seamless integration with existing bank systems and processes
 
-### **Prospect Intelligence Innovation**
-- **Multi-Signal Analysis**: Smart insights that combine financial data, business context, and market intelligence
-- **Context-Aware Sales**: Patterns that learn from prospect behavior and successful conversion patterns
-- **Predictive Sales Management**: Anticipate prospect needs and optimal outreach timing
-- **Collaborative Sales Intelligence**: Support team-based prospect management and knowledge sharing
-- **Real-Time Sales Visibility**: Immediate insights across all prospect touchpoints and engagement history
+### **Multi-Source Innovation**
+- **Cross-Source Intelligence**: Smart insights that span credit cards, bank accounts, and accounting data
+- **Context-Aware Analytics**: Patterns that learn from client financial behavior patterns
+- **Predictive Relationship Management**: Anticipate client needs and proactively address risks
+- **Collaborative Intelligence**: Support team-based relationship management workflows
+- **Real-Time Portfolio Visibility**: Immediate insights across all integrated data sources
 
-### **Sales-Centered Design**
-- **Role-Based Optimization**: Interfaces tailored to relationship manager, business development, and loan officer needs
-- **Sales Decision Support**: Clear data presentation for informed prospect prioritization and product recommendations
-- **Intelligent Sales Automation**: AI-powered recommendations without overwhelming sales workflow complexity
-- **Transparent Sales Analytics**: Complete visibility into prospect scoring models and recommendation logic
-- **Revenue Growth Support**: Patterns that support expanding sales pipeline and increasing conversion rates
+### **Bank-Centered Design**
+- **Role-Based Optimization**: Interfaces tailored to relationship manager, portfolio manager, risk analyst needs
+- **Decision Support**: Clear data presentation for informed relationship management choices
+- **Intelligent Automation**: AI-powered recommendations without overwhelming complexity
+- **Transparent Analytics**: Complete visibility into analytical models and data sources
+- **Portfolio Growth Support**: Patterns that support expanding client relationships and bank revenue
 
-## SMB Banking Sales Intelligence Development Guide
+## Bank Relationship Intelligence Development Guide
 
-### **Sales Team User Journey Mapping**
-- **Relationship Manager Entry Points**: Prospect dashboard, sales alerts, opportunity review
-- **Business Development Workflows**: Market analysis, territory management, new prospect identification
-- **Loan Officer Interactions**: Credit assessment, product matching, risk evaluation
-- **Sales Manager Tasks**: Team performance monitoring, pipeline analysis, conversion optimization
-- **Executive Sales Reporting**: Revenue pipeline summaries, market insights, conversion metrics
+### **Bank Personnel User Journey Mapping**
+- **Relationship Manager Entry Points**: Portfolio dashboard, client alerts, opportunity review
+- **Portfolio Manager Workflows**: Team oversight, performance analysis, strategic planning
+- **Risk Analyst Interactions**: Portfolio monitoring, early warning assessment, risk reporting
+- **Business Development Tasks**: Opportunity identification, competitive analysis, market research
+- **Executive Reporting**: Performance summaries, strategic insights, portfolio health
 
-### **Sales Intelligence Architecture**
-- **Prospect-Centric Organization**: Clear integration of financial data, business context, and market intelligence
-- **Sales-Driven Grouping**: Prospect organization supporting sales workflow optimization
-- **Conversion-Driven Prioritization**: Prospect ranking based on revenue potential and conversion probability
-- **Competitive Sales Intelligence**: Understanding prospect banking relationships and switching opportunities
-- **Performance-Based Structure**: Organization supporting sales team efficiency and conversion goals
+### **Financial Intelligence Architecture**
+- **Multi-Source Organization**: Clear integration of credit, banking, and accounting data
+- **Client-Centric Grouping**: Portfolio organization supporting relationship management
+- **Risk-Driven Prioritization**: Client ranking based on opportunity and risk assessment
+- **Competitive Intelligence**: Understanding client relationships with other institutions
+- **Performance-Based Structure**: Organization supporting relationship manager efficiency
 
-### **Sales Workflow Interaction Design**
-- **Intelligent Prospect Prioritization**: AI-powered prospect ranking and opportunity identification
-- **Automated Sales Insights**: System-generated recommendations for sales actions and product recommendations
-- **Sales Exception Management**: Clear processes for handling prospect data issues and follow-up requirements
-- **Collaborative Sales Workflows**: Team-based prospect management with role-appropriate access and handoffs
-- **CRM Integration**: Seamless connection with existing sales systems and customer relationship management platforms
+### **Bank Relationship Interaction Design**
+- **Intelligent Prioritization**: AI-powered client ranking and opportunity identification
+- **Automated Insights**: System-generated recommendations for relationship actions
+- **Exception Management**: Clear processes for handling data discrepancies and client issues
+- **Collaborative Workflows**: Team-based relationship management with role-appropriate access
+- **System Integration**: Seamless connection with existing bank systems and processes
 
 ## Quality Standards
 
-### **Sales Task Completion Optimization**
-- **Sales Team Efficiency**: Measurably faster prospect analysis and opportunity identification
-- **Conversion Performance**: Improved conversion rates and revenue growth through sales intelligence
-- **Sales Decision Support Quality**: Better prospect insights leading to improved sales outcomes
-- **User Adoption**: High usage rates across different sales team roles
-- **Predictive Accuracy**: Reduced false positives and improved conversion prediction reliability
+### **Bank Relationship Task Completion Optimization**
+- **Relationship Manager Efficiency**: Measurably faster client analysis and opportunity identification
+- **Portfolio Performance**: Improved upsell rates and risk management through intelligence
+- **Decision Support Quality**: Better relationship insights leading to improved client outcomes
+- **User Adoption**: High usage rates across different bank personnel roles
+- **Analytical Accuracy**: Reduced false positives and improved prediction reliability
 
-### **Sales System Integration**
-- **Performance at Scale**: Fast operation with large prospect databases and sales pipeline data
-- **Security Compliance**: Bank-grade security for sensitive prospect financial and business data
-- **Sales Audit Trail**: Full documentation of all sales processes and recommendation decisions
-- **Multi-User Sales Concurrency**: Support for multiple sales team members working simultaneously
-- **Data Quality Validation**: Comprehensive checks for prospect data accuracy and completeness
+### **Bank System Integration**
+- **Performance at Scale**: Fast operation with 100+ client portfolios and multi-source data
+- **Security Compliance**: Bank-grade security for sensitive client financial data
+- **Audit Trail Completeness**: Full documentation of all analytical processes and decisions
+- **Multi-User Concurrency**: Support for multiple relationship managers working simultaneously
+- **Data Integrity Validation**: Comprehensive checks for multi-source data accuracy
 
-### **Geist Design System Adherence for Sales**
-- **Sales Component Consistency**: Use Geist patterns for tables, forms, and prospect data display
-- **Professional Sales Visual Language**: Appropriate appearance for banking sales workflows
-- **Accessibility for Sales Users**: Support for diverse user abilities in sales analytical workflows
-- **Responsive Sales Interfaces**: Effective operation across different devices and sales contexts
-- **Performance for Sales Data**: Optimized handling of complex prospect and pipeline datasets
+### **Geist Design System Adherence for Banking**
+- **Financial Component Consistency**: Use Geist patterns for tables, forms, and data display
+- **Professional Visual Language**: Appropriate appearance for bank relationship management
+- **Accessibility for Bank Users**: Support for diverse user abilities in analytical workflows
+- **Responsive Portfolio Interfaces**: Effective operation across different devices and contexts
+- **Performance for Portfolio Data**: Optimized handling of complex multi-source datasets
 
 ## Integration Strategies
 
-### **Sales System Coordination**
-- **Multi-Source Sales Data Synchronization**: Consistent information across financial data, business context, and market intelligence
-- **Unified Sales Analytics Experience**: Seamless analysis across different prospect data sources
-- **Consolidated Sales Intelligence**: Aggregated insights spanning all prospect and market data
-- **Real-Time Sales Integration**: Live data processing and sales workflow optimization
-- **CRM System Integration**: Connection with existing sales management and customer relationship systems
+### **Multi-Source System Coordination**
+- **Cross-Source Data Synchronization**: Consistent information across credit cards, bank accounts, and accounting software
+- **Unified Analytics Experience**: Seamless analysis across different data sources
+- **Consolidated Intelligence**: Aggregated insights spanning all client financial data
+- **Real-Time Integration**: Live data processing and analysis workflows
+- **Bank System Integration**: Connection with existing relationship management and core banking systems
 
-### **Sales Context Adaptation**
-- **Territory Size Scaling**: Interfaces that work from small to large prospect territories
-- **Industry Specialization**: Sales patterns adapted for different SMB sectors and verticals
-- **Regulatory Compliance**: Support for banking regulations and prospect privacy requirements
-- **Competitive Sales Positioning**: Intelligence that provides advantages over other financial institutions
-- **Growth Accommodation**: Patterns that scale with expanding sales territories and prospect databases
+### **Bank Context Adaptation**
+- **Portfolio Size Scaling**: Interfaces that work from small to large client portfolios
+- **Industry Specialization**: Patterns adapted for different small business sectors
+- **Regulatory Compliance**: Support for banking regulations and client privacy requirements
+- **Competitive Positioning**: Intelligence that provides advantages over other financial institutions
+- **Growth Accommodation**: Patterns that scale with expanding client relationships and data sources
 
 ## Iteration Evolution
 
-### **SMB Banking Sales Intelligence Sophistication**
-- **Foundation (1-3)**: Basic prospect assessment with core sales workflow support
-- **Enhancement (4-6)**: Advanced analytics, conversion scoring, and product recommendation engines
-- **Innovation (7+)**: AI-powered sales intelligence and predictive prospect management
+### **Bank Relationship Intelligence Sophistication**
+- **Foundation (1-3)**: Basic multi-source integration with core relationship management workflows
+- **Enhancement (4-6)**: Advanced analytics, opportunity scoring, and risk assessment
+- **Innovation (7+)**: AI-powered relationship intelligence and predictive portfolio management
 
-### **Sales Workflow Complexity Progression**
-- **Simple Sales Integration**: Basic prospect data consolidation and pipeline overview
-- **Intelligent Sales Analytics**: Advanced pattern recognition and opportunity identification
-- **Predictive Sales Management**: AI-powered prospect conversion prediction and product matching
-- **Strategic Sales Optimization**: Comprehensive sales intelligence and competitive advantage
+### **Portfolio Management Complexity Progression**
+- **Simple Integration**: Basic data consolidation and client overview
+- **Intelligent Analytics**: Advanced pattern recognition and opportunity identification
+- **Predictive Relationship Management**: AI-powered client needs prediction and risk assessment
+- **Strategic Portfolio Optimization**: Comprehensive relationship intelligence and competitive advantage
 
 ## Ultra-Thinking Directive
 
-Before each SMB banking sales intelligence UX pattern creation, deeply consider:
+Before each bank relationship intelligence UX pattern creation, deeply consider:
 
-**Connected Data Platform User Understanding:**
-- How do different sales roles leverage unified banking, accounting, and merchant data for superior prospect assessment?
-- What becomes possible when sales workflows have real-time access to complete SMB financial ecosystems instead of fragmented data?
-- How does connected data transform prospect intelligence and sales processes beyond traditional banking approaches?
-- What competitive advantages emerge when sales teams have unified financial visibility that competitors cannot match?
-- How can connected datasets reduce sales research burden while delivering unprecedented prospect insights and conversion intelligence?
+**Bank Personnel User Understanding:**
+- How do different bank roles (Relationship Manager, Portfolio Manager, Risk Analyst, Business Development) interact with client portfolio systems?
+- What are the specific pain points in current relationship management workflows for analyzing small business clients?
+- How does multi-source data integration fit into bank relationship management and portfolio optimization processes?
+- What competitive advantages and revenue opportunities must be supported in relationship intelligence workflows?
+- How can we reduce the analytical burden while increasing relationship manager effectiveness?
 
-**Connected Data Innovation:**
-- What novel approaches become possible when prospect assessment uses unified banking, accounting, and merchant data?
-- How can connected data visualization reduce cognitive load while revealing cross-source insights impossible with fragmented systems?
-- What predictive capabilities emerge when sales intelligence uses complete financial ecosystem data?
-- How can connected data platforms provide intelligent automation while maintaining transparency across all data sources?
-- What contextual assistance becomes possible when sales workflows have unified access to complete SMB financial pictures?
+**Multi-Source Integration Innovation:**
+- What novel approaches could simplify complex multi-source financial data analysis for relationship managers?
+- How can information architecture reduce cognitive load when analyzing 100+ client portfolios?
+- What predictive capabilities would most benefit relationship managers managing diverse client relationships?
+- How can we provide intelligent automation while maintaining user control and analytical transparency?
+- What contextual assistance would help users navigate complex portfolio analysis workflows efficiently?
 
-**Connected Platform Integration:**
-- How does this pattern demonstrate integration with unified banking, accounting, and merchant data platforms?
-- Which Geist components best showcase connected data visualization and cross-source intelligence workflows?
-- How will this pattern demonstrate performance with unified financial datasets and real-time data synchronization?
-- What security and compliance considerations are essential for connected financial data platforms?
-- How can we maintain Geist visual consistency while showcasing the power of unified data access?
+**Bank System Integration:**
+- How does this pattern integrate with existing bank relationship management and core banking systems?
+- Which Geist components best support complex portfolio data display and analysis?
+- How will this pattern perform with realistic bank-scale client portfolios and multi-source data volumes?
+- What security and compliance considerations are essential for bank client financial data?
+- How can we maintain Geist visual consistency while optimizing for analytical workflow complexity?
 
-**Connected Data Value Excellence:**
-- Does this pattern clearly demonstrate the transformative impact of connected datasets on sales effectiveness?
-- How does this connected data approach showcase advantages over fragmented traditional banking systems?
-- What makes this pattern compelling as a demonstration of unified financial data platform capabilities?
-- How can we ensure this pattern showcases the revenue growth potential of connected data platforms?
-- What cross-source intelligence and unified insights should be highlighted to demonstrate platform value?
+**Business Value Excellence:**
+- Does this pattern measurably improve bank relationship management efficiency and effectiveness?
+- How does this approach compare to existing bank relationship intelligence solutions?
+- What makes this pattern valuable for both daily users and strategic portfolio analysis?
+- How can we ensure this pattern supports revenue growth and risk management objectives?
+- What competitive intelligence and market insights should be integrated into the workflow?
 
-**Connected Data Demonstration Strategy:**
-- What authentic SMB scenarios will best showcase the power of unified banking, accounting, and merchant data?
-- How can realistic connected datasets demonstrate capabilities impossible with fragmented systems?
-- What range of SMB financial profiles should highlight the advantages of unified data access?
-- How will different sales roles demonstrate the superior insights available through connected platforms?
-- What cross-source intelligence scenarios should showcase competitive advantages of unified data?
-- How can the data scenarios demonstrate the transformative potential of connected financial ecosystems?
-- What platform integration points should be highlighted to showcase unified data capabilities?
+**Multi-Source Bank Data Strategy:**
+- What authentic bank relationship scenarios will best demonstrate pattern value?
+- How can realistic data showcase complex integration workflows and analytical capabilities?
+- What range of small business profiles should be represented in the portfolio data?
+- How will different user roles and access levels be demonstrated through realistic scenarios?
+- What competitive dynamics and market conditions should be reflected in the client data?
+- How can the data scenarios enable complete testing of relationship intelligence workflows?
+- What integration points with existing bank systems should be included?
 
-**Generate connected data platform demonstrations that are:**
-- **Platform-Showcase-Optimized**: Specifically designed to demonstrate unified data advantages for banking sales workflows
-- **Connected-Data-Powered**: Built-in demonstration of banking, accounting, and merchant data integration capabilities
-- **Cross-Source-Intelligence-Enabled**: Showcase insights only possible through unified financial data access
-- **Unified-Data-Focused**: Effective demonstration of connected dataset advantages over fragmented systems
-- **Platform-Integration-Demonstrative**: Designed to showcase connected data platform capabilities and advantages
-- **Connected-Data-Transparent**: Complete visibility into how unified datasets create superior intelligence
-- **Platform-Advantage-Enhanced**: Smart demonstrations that clearly show connected data competitive advantages
+**Generate bank relationship intelligence patterns that are:**
+- **Bank-Personnel-Optimized**: Specifically designed for relationship manager, portfolio manager, and risk analyst workflows
+- **Multi-Source-Integration-Aware**: Built-in support for credit card, bank account, and accounting software data
+- **Role-Differentiated**: Appropriately adapted for different bank personnel needs and responsibilities
+- **Portfolio-Focused**: Effective with 100+ client portfolios and realistic multi-source data volumes
+- **System-Integration-Ready**: Designed to work with existing bank relationship management and core systems
+- **Intelligence-Transparent**: Complete analytical transparency for decision support and audit requirements
+- **Competitive-Advantage-Enhanced**: Smart automation and insights that provide superior client relationship intelligence
