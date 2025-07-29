@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Intelligence Hub - Multi-Client Relationship Management</title>
+    <style>
+        /* Geist Design System Implementation */
+        :root {
+            /* Geist Color Tokens */
+            --ds-gray-100: #fafafa;
+            --ds-gray-200: #eaeaea;
+            --ds-gray-300: #999999;
+            --ds-gray-400: #888888;
+            --ds-gray-500: #666666;
+            --ds-gray-600: #444444;
+            --ds-gray-700: #333333;
+            --ds-gray-800: #222222;
+            --ds-gray-900: #111111;
+            --ds-gray-1000: #000000;
+
+            --ds-blue-100: #e1f5fe;
+            --ds-blue-500: #0070f3;
+            --ds-blue-600: #0061d5;
+            --ds-blue-700: #004fc4;
+            --ds-blue-800: #0043a5;
+
+            --ds-red-500: #ee0000;
+            --ds-amber-500: #f5a623;
+            --ds-green-500: #22c55e;
+            --ds-purple-500: #7c3aed;
+
+            /* Modern Minimalist Aesthetic */
+            --main-brand: #2563eb;
+            --accent-green: #10b981;
+            --neutral-dark: #1f2937;
+            --neutral-light: #f3f4f6;
+
+            /* Typography */
+            --font-size-h1: 2.25rem;
+            --font-size-h2: 1.875rem;
+            --font-size-h3: 1.5rem;
+            --font-size-h4: 1.25rem;
+            --font-size-base: 1rem;
+            --font-size-small: 0.875rem;
+            --font-size-xs: 0.75rem;
+
+            /* Spacing */
+            --space-1: 0.25rem;
+            --space-2: 0.5rem;
+            --space-3: 0.75rem;
+            --space-4: 1rem;
+            --space-5: 1.25rem;
+            --space-6: 1.5rem;
+            --space-8: 2rem;
+            --space-10: 2.5rem;
+            --space-12: 3rem;
+            --space-16: 4rem;
+            --space-20: 5rem;
+            --space-24: 6rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Geist Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            font-size: var(--font-size-base);
+            line-height: 1.6;
+            color: var(--neutral-dark);
+            background: var(--ds-gray-100);
+        }
+
+        /* Main Layout */
+        .portfolio-dashboard {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            grid-template-rows: auto 1fr;
+        }
+
+        /* Header */
+        .main-header {
+            grid-column: 1 / -1;
+            background: white;
+            border-bottom: 1px solid var(--ds-gray-200);
+            padding: var(--space-4) var(--space-6);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: var(--space-4);
+        }
+
+        .header-title {
+            font-size: var(--font-size-h3);
+            font-weight: 600;
+            color: var(--neutral-dark);
+        }
+
+        .portfolio-stats {
+            display: flex;
+            gap: var(--space-6);
+            align-items: center;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--space-1);
+        }
+
+        .stat-value {
+            font-size: var(--font-size-h4);
+            font-weight: 700;
+            color: var(--main-brand);
+        }
+
+        .stat-label {
+            font-size: var(--font-size-xs);
+            color: var(--ds-gray-500);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: var(--space-3);
+            align-items: center;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: white;
+            border-right: 1px solid var(--ds-gray-200);
+            padding: var(--space-6);
+            overflow-y: auto;
+        }
+
+        .portfolio-filters {
+            margin-bottom: var(--space-8);
+        }
+
+        .filter-section {
+            margin-bottom: var(--space-6);
+        }
+
+        .filter-title {
+            font-size: var(--font-size-small);
+            font-weight: 600;
+            color: var(--neutral-dark);
+            margin-bottom: var(--space-3);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .filter-option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--space-2) var(--space-3);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-bottom: var(--space-1);
+        }
+
+        .filter-option:hover {
+            background: var(--neutral-light);
+        }
+
+        .filter-option.active {
+            background: var(--ds-blue-100);
+            color: var(--main-brand);
+        }
+
+        .filter-count {
+            font-size: var(--font-size-xs);
+            background: var(--ds-gray-200);
+            padding: var(--space-1) var(--space-2);
+            border-radius: 12px;
+            min-width: 24px;
+            text-align: center;
+        }
+
+        .filter-option.active .filter-count {
+            background: var(--main-brand);
+            color: white;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: var(--space-6);
+            overflow-y: auto;
+        }
+
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-6);
+        }
+
+        .view-controls {
+            display: flex;
+            gap: var(--space-2);
+            align-items: center;
+        }
+
+        .view-toggle {
+            display: flex;
+            background: var(--neutral-light);
+            border-radius: 6px;
+            padding: var(--space-1);
+        }
+
+        .toggle-btn {
+            padding: var(--space-2) var(--space-3);
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: var(--font-size-small);
+            transition: all 0.2s ease;
+        }
+
+        .toggle-btn.active {
+            background: white;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Portfolio Grid */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: var(--space-4);
+            margin-bottom: var(--space-8);
+        }
+
+        .client-card {
+            background: white;
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 8px;
+            padding: var(--space-5);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .client-card:hover {
+            border-color: var(--main-brand);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: var(--space-4);
+        }
+
+        .client-info h3 {
+            font-size: var(--font-size-base);
+            font-weight: 600;
+            color: var(--neutral-dark);
+            margin-bottom: var(--space-1);
+        }
+
+        .client-meta {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-500);
+        }
+
+        .priority-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            position: absolute;
+            top: var(--space-4);
+            right: var(--space-4);
+        }
+
+        .priority-high { background: var(--ds-red-500); }
+        .priority-medium { background: var(--ds-amber-500); }
+        .priority-low { background: var(--ds-green-500); }
+
+        .financial-metrics {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-4);
+            margin-bottom: var(--space-4);
+        }
+
+        .metric {
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: var(--font-size-h4);
+            font-weight: 700;
+            color: var(--main-brand);
+            margin-bottom: var(--space-1);
+        }
+
+        .metric-label {
+            font-size: var(--font-size-xs);
+            color: var(--ds-gray-500);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .opportunity-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-2);
+            margin-bottom: var(--space-4);
+        }
+
+        .tag {
+            font-size: var(--font-size-xs);
+            padding: var(--space-1) var(--space-2);
+            border-radius: 4px;
+            border: 1px solid var(--ds-gray-300);
+            color: var(--ds-gray-600);
+            background: var(--ds-gray-100);
+        }
+
+        .tag.high-value {
+            background: var(--ds-blue-100);
+            border-color: var(--main-brand);
+            color: var(--main-brand);
+        }
+
+        .last-interaction {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-500);
+            border-top: 1px solid var(--ds-gray-200);
+            padding-top: var(--space-3);
+        }
+
+        /* Action Panel */
+        .action-panel {
+            background: white;
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 8px;
+            padding: var(--space-6);
+        }
+
+        .panel-title {
+            font-size: var(--font-size-h4);
+            font-weight: 600;
+            color: var(--neutral-dark);
+            margin-bottom: var(--space-4);
+        }
+
+        .priority-queue {
+            list-style: none;
+        }
+
+        .queue-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--space-3);
+            border-radius: 6px;
+            margin-bottom: var(--space-2);
+            transition: all 0.2s ease;
+        }
+
+        .queue-item:hover {
+            background: var(--neutral-light);
+        }
+
+        .queue-client {
+            font-weight: 500;
+            color: var(--neutral-dark);
+        }
+
+        .queue-reason {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-500);
+        }
+
+        .queue-urgency {
+            font-size: var(--font-size-xs);
+            padding: var(--space-1) var(--space-2);
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .urgent {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .important {
+            background: #fef3c7;
+            color: #d97706;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: var(--space-2) var(--space-4);
+            border: 1px solid var(--ds-gray-300);
+            border-radius: 6px;
+            background: white;
+            color: var(--ds-gray-700);
+            font-size: var(--font-size-small);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+
+        .btn:hover {
+            border-color: var(--main-brand);
+            color: var(--main-brand);
+        }
+
+        .btn-primary {
+            background: var(--main-brand);
+            border-color: var(--main-brand);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--ds-blue-700);
+            border-color: var(--ds-blue-700);
+            color: white;
+        }
+
+        /* Search */
+        .search-input {
+            width: 100%;
+            padding: var(--space-3);
+            border: 1px solid var(--ds-gray-300);
+            border-radius: 6px;
+            font-size: var(--font-size-base);
+            margin-bottom: var(--space-4);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--main-brand);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        /* Accessibility */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .portfolio-dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                display: none;
+            }
+            
+            .portfolio-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+        }
+
+        /* Focus indicators for keyboard navigation */
+        .client-card:focus,
+        .filter-option:focus,
+        .btn:focus,
+        .toggle-btn:focus {
+            outline: 2px solid var(--main-brand);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="portfolio-dashboard">
+        <!-- Header -->
+        <header class="main-header" role="banner">
+            <div class="header-left">
+                <h1 class="header-title">Portfolio Intelligence Hub</h1>
+                <div class="portfolio-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">127</div>
+                        <div class="stat-label">Active Clients</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">$2.8M</div>
+                        <div class="stat-label">Portfolio AUM</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">18</div>
+                        <div class="stat-label">Actions Due</div>
+                    </div>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="btn">Export Report</button>
+                <button class="btn btn-primary">Schedule Reviews</button>
+            </div>
+        </header>
+
+        <!-- Sidebar -->
+        <aside class="sidebar" role="complementary" aria-label="Portfolio filters">
+            <div class="portfolio-filters">
+                <input type="search" class="search-input" placeholder="Search clients..." aria-label="Search clients">
+                
+                <div class="filter-section">
+                    <h3 class="filter-title">Priority Level</h3>
+                    <div class="filter-option active" tabindex="0" role="button" aria-pressed="true">
+                        <span>High Priority</span>
+                        <span class="filter-count">23</span>
+                    </div>
+                    <div class="filter-option" tabindex="0" role="button" aria-pressed="false">
+                        <span>Medium Priority</span>
+                        <span class="filter-count">64</span>
+                    </div>
+                    <div class="filter-option" tabindex="0" role="button" aria-pressed="false">
+                        <span>Low Priority</span>
+                        <span class="filter-count">40</span>
+                    </div>
+                </div>
+
+                <div class="filter-section">
+                    <h3 class="filter-title">Opportunity Type</h3>
+                    <div class="filter-option" tabindex="0" role="button" aria-pressed="false">
+                        <span>Credit Expansion</span>
+                        <span class="filter-count">34</span>
+                    </div>
+                    <div class="filter-option" tabindex="0" role="button" aria-pressed="false">
+                        <span>Cash Management</span>
+                        <span class="filter-count">28</span>
+                    </div>
+                    <div class="filter-option" tabindex="0" role="button" aria-pressed="false">
+                        <span>FX Services</span>
+                        <span class="filter-count">19</span>
+                    </div>
+                    <div class="filter-option" tabindex="0" role="button" aria-pressed="false">
+                        <span>Insurance Products</span>
+                        <span class="filter-count">15</span>
+                    </div>
+                </div>
+
+                <div class="filter-section">
+                    <h3 class="filter-title">Risk Profile</h3>
+                    <div class="filter-option" tabindex="0" role="button" aria-pressed="false">
+                        <span>Low Risk</span>
+                        <span class="filter-count">89</span>
+                    </div>
+                    <div class="filter-option" tabindex="0" role="button" aria-pressed="false">
+                        <span>Medium Risk</span>
+                        <span class="filter-count">32</span>
+                    </div>
+                    <div class="filter-option" tabindex="0" role="button" aria-pressed="false">
+                        <span>High Risk</span>
+                        <span class="filter-count">6</span>
+                    </div>
+                </div>
+
+                <div class="filter-section">
+                    <h3 class="filter-title">Last Contact</h3>
+                    <div class="filter-option" tabindex="0" role="button" aria-pressed="false">
+                        <span>This Week</span>
+                        <span class="filter-count">12</span>
+                    </div>
+                    <div class="filter-option" tabindex="0" role="button" aria-pressed="false">
+                        <span>This Month</span>
+                        <span class="filter-count">47</span>
+                    </div>
+                    <div class="filter-option" tabindex="0" role="button" aria-pressed="false">
+                        <span>Overdue</span>
+                        <span class="filter-count">18</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content" role="main" id="main-content">
+            <div class="content-header">
+                <h2 class="sr-only">Portfolio Client Overview</h2>
+                <div class="view-controls">
+                    <div class="view-toggle" role="tablist" aria-label="View options">
+                        <button class="toggle-btn active" role="tab" aria-selected="true" aria-controls="grid-view">Grid View</button>
+                        <button class="toggle-btn" role="tab" aria-selected="false" aria-controls="list-view">List View</button>
+                        <button class="toggle-btn" role="tab" aria-selected="false" aria-controls="analytics-view">Analytics</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Portfolio Grid -->
+            <div class="portfolio-grid" id="grid-view" role="tabpanel" aria-labelledby="grid-tab">
+                <!-- High Priority Clients -->
+                <article class="client-card" tabindex="0" role="button" aria-labelledby="client-1">
+                    <div class="priority-indicator priority-high" aria-label="High priority client"></div>
+                    <div class="card-header">
+                        <div class="client-info">
+                            <h3 id="client-1">Digital Innovations Ltd</h3>
+                            <div class="client-meta">Tech Startup • Auckland • 28 employees</div>
+                        </div>
+                    </div>
+                    <div class="financial-metrics">
+                        <div class="metric">
+                            <div class="metric-value">$485K</div>
+                            <div class="metric-label">Total Deposits</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value">$180K</div>
+                            <div class="metric-label">Credit Utilization</div>
+                        </div>
+                    </div>
+                    <div class="opportunity-tags">
+                        <span class="tag high-value">Credit Expansion</span>
+                        <span class="tag">FX Services</span>
+                        <span class="tag">Payroll Automation</span>
+                    </div>
+                    <div class="last-interaction">
+                        Last contact: 2 days ago • Next review: July 31, 2025
+                    </div>
+                </article>
+
+                <article class="client-card" tabindex="0" role="button" aria-labelledby="client-2">
+                    <div class="priority-indicator priority-high" aria-label="High priority client"></div>
+                    <div class="card-header">
+                        <div class="client-info">
+                            <h3 id="client-2">GreenBuild Construction</h3>
+                            <div class="client-meta">Construction • Wellington • 45 employees</div>
+                        </div>
+                    </div>
+                    <div class="financial-metrics">
+                        <div class="metric">
+                            <div class="metric-value">$720K</div>
+                            <div class="metric-label">Total Deposits</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value">$340K</div>
+                            <div class="metric-label">Credit Utilization</div>
+                        </div>
+                    </div>
+                    <div class="opportunity-tags">
+                        <span class="tag high-value">Equipment Finance</span>
+                        <span class="tag">Insurance Review</span>
+                    </div>
+                    <div class="last-interaction">
+                        Last contact: 5 days ago • Next review: August 2, 2025
+                    </div>
+                </article>
+
+                <article class="client-card" tabindex="0" role="button" aria-labelledby="client-3">
+                    <div class="priority-indicator priority-medium" aria-label="Medium priority client"></div>
+                    <div class="card-header">
+                        <div class="client-info">
+                            <h3 id="client-3">Fresh Foods Market</h3>
+                            <div class="client-meta">Retail • Christchurch • 22 employees</div>
+                        </div>
+                    </div>
+                    <div class="financial-metrics">
+                        <div class="metric">
+                            <div class="metric-value">$325K</div>
+                            <div class="metric-label">Total Deposits</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value">$95K</div>
+                            <div class="metric-label">Credit Utilization</div>
+                        </div>
+                    </div>
+                    <div class="opportunity-tags">
+                        <span class="tag">Cash Management</span>
+                        <span class="tag">Merchant Services</span>
+                    </div>
+                    <div class="last-interaction">
+                        Last contact: 1 week ago • Next review: August 5, 2025
+                    </div>
+                </article>
+
+                <article class="client-card" tabindex="0" role="button" aria-labelledby="client-4">
+                    <div class="priority-indicator priority-high" aria-label="High priority client"></div>
+                    <div class="card-header">
+                        <div class="client-info">
+                            <h3 id="client-4">ProHealth Medical</h3>
+                            <div class="client-meta">Healthcare • Auckland • 35 employees</div>
+                        </div>
+                    </div>
+                    <div class="financial-metrics">
+                        <div class="metric">
+                            <div class="metric-value">$620K</div>
+                            <div class="metric-label">Total Deposits</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value">$220K</div>
+                            <div class="metric-label">Credit Utilization</div>
+                        </div>
+                    </div>
+                    <div class="opportunity-tags">
+                        <span class="tag high-value">Practice Expansion</span>
+                        <span class="tag">Equipment Finance</span>
+                        <span class="tag">Professional Insurance</span>
+                    </div>
+                    <div class="last-interaction">
+                        Last contact: 3 days ago • Next review: July 30, 2025
+                    </div>
+                </article>
+
+                <article class="client-card" tabindex="0" role="button" aria-labelledby="client-5">
+                    <div class="priority-indicator priority-medium" aria-label="Medium priority client"></div>
+                    <div class="card-header">
+                        <div class="client-info">
+                            <h3 id="client-5">Coastal Logistics</h3>
+                            <div class="client-meta">Transport • Hamilton • 18 employees</div>
+                        </div>
+                    </div>
+                    <div class="financial-metrics">
+                        <div class="metric">
+                            <div class="metric-value">$290K</div>
+                            <div class="metric-label">Total Deposits</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value">$140K</div>
+                            <div class="metric-label">Credit Utilization</div>
+                        </div>
+                    </div>
+                    <div class="opportunity-tags">
+                        <span class="tag">Fleet Finance</span>
+                        <span class="tag">Fuel Cards</span>
+                    </div>
+                    <div class="last-interaction">
+                        Last contact: 6 days ago • Next review: August 8, 2025
+                    </div>
+                </article>
+
+                <article class="client-card" tabindex="0" role="button" aria-labelledby="client-6">
+                    <div class="priority-indicator priority-low" aria-label="Low priority client"></div>
+                    <div class="card-header">
+                        <div class="client-info">
+                            <h3 id="client-6">Artisan Coffee Co</h3>
+                            <div class="client-meta">Hospitality • Tauranga • 12 employees</div>
+                        </div>
+                    </div>
+                    <div class="financial-metrics">
+                        <div class="metric">
+                            <div class="metric-value">$140K</div>
+                            <div class="metric-label">Total Deposits</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value">$45K</div>
+                            <div class="metric-label">Credit Utilization</div>
+                        </div>
+                    </div>
+                    <div class="opportunity-tags">
+                        <span class="tag">POS Upgrade</span>
+                        <span class="tag">Seasonal Credit</span>
+                    </div>
+                    <div class="last-interaction">
+                        Last contact: 2 weeks ago • Next review: August 15, 2025
+                    </div>
+                </article>
+            </div>
+
+            <!-- Action Panel -->
+            <section class="action-panel" aria-labelledby="priority-queue-title">
+                <h3 id="priority-queue-title" class="panel-title">Priority Action Queue</h3>
+                <ul class="priority-queue">
+                    <li class="queue-item">
+                        <div>
+                            <div class="queue-client">Digital Innovations Ltd</div>
+                            <div class="queue-reason">Credit expansion request pending approval</div>
+                        </div>
+                        <span class="queue-urgency urgent">Urgent</span>
+                    </li>
+                    <li class="queue-item">
+                        <div>
+                            <div class="queue-client">ProHealth Medical</div>
+                            <div class="queue-reason">Equipment finance application due</div>
+                        </div>
+                        <span class="queue-urgency urgent">Urgent</span>
+                    </li>
+                    <li class="queue-item">
+                        <div>
+                            <div class="queue-client">GreenBuild Construction</div>
+                            <div class="queue-reason">Insurance policy renewal reminder</div>
+                        </div>
+                        <span class="queue-urgency important">Important</span>
+                    </li>
+                    <li class="queue-item">
+                        <div>
+                            <div class="queue-client">Fresh Foods Market</div>
+                            <div class="queue-reason">Quarterly review scheduled</div>
+                        </div>
+                        <span class="queue-urgency important">Important</span>
+                    </li>
+                </ul>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // Enhanced accessibility and interaction handling
+        document.addEventListener('DOMContentLoaded', function() {
+            // Handle filter interactions
+            const filterOptions = document.querySelectorAll('.filter-option');
+            filterOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Toggle active state
+                    const wasActive = this.classList.contains('active');
+                    filterOptions.forEach(opt => opt.classList.remove('active'));
+                    filterOptions.forEach(opt => opt.setAttribute('aria-pressed', 'false'));
+                    
+                    if (!wasActive) {
+                        this.classList.add('active');
+                        this.setAttribute('aria-pressed', 'true');
+                    }
+                });
+
+                // Keyboard support
+                option.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        this.click();
+                    }
+                });
+            });
+
+            // Handle view toggle
+            const toggleButtons = document.querySelectorAll('.toggle-btn');
+            toggleButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    toggleButtons.forEach(btn => {
+                        btn.classList.remove('active');
+                        btn.setAttribute('aria-selected', 'false');
+                    });
+                    this.classList.add('active');
+                    this.setAttribute('aria-selected', 'true');
+                });
+            });
+
+            // Handle client card interactions
+            const clientCards = document.querySelectorAll('.client-card');
+            clientCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    // Simulate opening client detail view
+                    console.log('Opening client details for:', this.querySelector('h3').textContent);
+                });
+
+                card.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        this.click();
+                    }
+                });
+            });
+
+            // Search functionality
+            const searchInput = document.querySelector('.search-input');
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                clientCards.forEach(card => {
+                    const clientName = card.querySelector('h3').textContent.toLowerCase();
+                    const isVisible = clientName.includes(searchTerm);
+                    card.style.display = isVisible ? '' : 'none';
+                });
+            });
+
+            // Live regions for screen readers
+            const createLiveRegion = () => {
+                const liveRegion = document.createElement('div');
+                liveRegion.setAttribute('aria-live', 'polite');
+                liveRegion.setAttribute('aria-atomic', 'true');
+                liveRegion.className = 'sr-only';
+                liveRegion.id = 'live-region';
+                document.body.appendChild(liveRegion);
+                return liveRegion;
+            };
+
+            const liveRegion = createLiveRegion();
+
+            // Announce filter changes
+            filterOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    const filterName = this.querySelector('span').textContent;
+                    const count = this.querySelector('.filter-count').textContent;
+                    liveRegion.textContent = `Filter applied: ${filterName}, showing ${count} clients`;
+                });
+            });
+        });
+
+        // Performance optimization - lazy loading for large portfolios
+        const observeCards = () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Load additional client data if needed
+                        entry.target.classList.add('loaded');
+                    }
+                });
+            }, { rootMargin: '50px' });
+
+            document.querySelectorAll('.client-card').forEach(card => {
+                observer.observe(card);
+            });
+        };
+
+        observeCards();
+    </script>
+</body>
+</html>

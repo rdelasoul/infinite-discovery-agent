@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wallet Share & Relationship Depth Analysis - Bank Relationship Intelligence</title>
+    <style>
+        /* Geist Design System Implementation */
+        :root {
+            /* Gray Scale - Primary neutral palette */
+            --ds-gray-100: #fafafa;
+            --ds-gray-200: #eaeaea;
+            --ds-gray-300: #999999;
+            --ds-gray-400: #888888;
+            --ds-gray-500: #666666;
+            --ds-gray-600: #444444;
+            --ds-gray-700: #333333;
+            --ds-gray-800: #222222;
+            --ds-gray-900: #111111;
+            --ds-gray-1000: #000000;
+
+            /* Blue - Interactive elements */
+            --ds-blue-100: #e1f5fe;
+            --ds-blue-500: #0070f3;
+            --ds-blue-600: #0061d5;
+            --ds-blue-700: #004fc4;
+            --ds-blue-800: #0043a5;
+
+            /* Status Colors */
+            --ds-red-500: #ee0000;
+            --ds-amber-500: #f5a623;
+            --ds-green-500: #00d084;
+            --ds-purple-500: #7c3aed;
+
+            /* Modern Minimalist Aesthetic */
+            --main-brand: #2563eb;
+            --background: #ffffff;
+            --accent: #10b981;
+            --neutral-dark: #1f2937;
+            --neutral-light: #f3f4f6;
+
+            /* Typography */
+            --font-size-h1: 2.25rem;
+            --font-size-h2: 1.875rem;
+            --font-size-h3: 1.5rem;
+            --font-size-h4: 1.25rem;
+            --font-size-base: 1rem;
+            --font-size-small: 0.875rem;
+            --font-size-xs: 0.75rem;
+
+            /* Spacing */
+            --space-1: 0.25rem;
+            --space-2: 0.5rem;
+            --space-3: 0.75rem;
+            --space-4: 1rem;
+            --space-5: 1.25rem;
+            --space-6: 1.5rem;
+            --space-8: 2rem;
+            --space-10: 2.5rem;
+            --space-12: 3rem;
+            --space-16: 4rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Geist Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background-color: var(--background);
+            color: var(--neutral-dark);
+            line-height: 1.6;
+        }
+
+        .app-container {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            grid-template-rows: 60px 1fr;
+            grid-template-areas:
+                "sidebar header"
+                "sidebar main";
+        }
+
+        /* Header */
+        .header {
+            grid-area: header;
+            background: var(--background);
+            border-bottom: 1px solid var(--ds-gray-200);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 var(--space-6);
+        }
+
+        .header-title {
+            font-size: var(--font-size-h4);
+            font-weight: 600;
+            color: var(--neutral-dark);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+        }
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--ds-blue-500);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: var(--font-size-small);
+            font-weight: 600;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            grid-area: sidebar;
+            background: var(--neutral-light);
+            border-right: 1px solid var(--ds-gray-200);
+            padding: var(--space-6);
+        }
+
+        .nav-section {
+            margin-bottom: var(--space-8);
+        }
+
+        .nav-title {
+            font-size: var(--font-size-small);
+            font-weight: 600;
+            color: var(--ds-gray-500);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: var(--space-4);
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            padding: var(--space-3) var(--space-4);
+            border-radius: 6px;
+            color: var(--ds-gray-600);
+            text-decoration: none;
+            margin-bottom: var(--space-2);
+            transition: all 0.2s ease;
+        }
+
+        .nav-item:hover {
+            background: var(--ds-gray-100);
+            color: var(--neutral-dark);
+        }
+
+        .nav-item.active {
+            background: var(--ds-blue-100);
+            color: var(--ds-blue-700);
+            font-weight: 500;
+        }
+
+        /* Main Content */
+        .main-content {
+            grid-area: main;
+            padding: var(--space-8);
+            overflow-y: auto;
+        }
+
+        .content-header {
+            margin-bottom: var(--space-8);
+        }
+
+        .page-title {
+            font-size: var(--font-size-h2);
+            font-weight: 600;
+            color: var(--neutral-dark);
+            margin-bottom: var(--space-2);
+        }
+
+        .page-subtitle {
+            color: var(--ds-gray-500);
+            font-size: var(--font-size-base);
+        }
+
+        /* Client Overview Card */
+        .client-overview {
+            background: var(--background);
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 8px;
+            padding: var(--space-6);
+            margin-bottom: var(--space-8);
+        }
+
+        .client-header {
+            display: flex;
+            align-items: center;
+            justify-content: between;
+            margin-bottom: var(--space-6);
+        }
+
+        .client-info {
+            flex: 1;
+        }
+
+        .client-name {
+            font-size: var(--font-size-h3);
+            font-weight: 600;
+            color: var(--neutral-dark);
+            margin-bottom: var(--space-1);
+        }
+
+        .client-details {
+            color: var(--ds-gray-500);
+            font-size: var(--font-size-small);
+        }
+
+        .status-badges {
+            display: flex;
+            gap: var(--space-2);
+        }
+
+        .badge {
+            padding: var(--space-1) var(--space-3);
+            border-radius: 4px;
+            font-size: var(--font-size-xs);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .badge.high-value {
+            background: var(--ds-green-500);
+            color: white;
+        }
+
+        .badge.growth-opportunity {
+            background: var(--ds-blue-500);
+            color: white;
+        }
+
+        .badge.competitive-risk {
+            background: var(--ds-amber-500);
+            color: white;
+        }
+
+        /* Grid Layout */
+        .analysis-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-6);
+            margin-bottom: var(--space-8);
+        }
+
+        .analysis-card {
+            background: var(--background);
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 8px;
+            padding: var(--space-6);
+        }
+
+        .card-title {
+            font-size: var(--font-size-h4);
+            font-weight: 600;
+            color: var(--neutral-dark);
+            margin-bottom: var(--space-4);
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+
+        .card-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--font-size-xs);
+            font-weight: 600;
+        }
+
+        .card-icon.wallet {
+            background: var(--ds-green-500);
+            color: white;
+        }
+
+        .card-icon.competitive {
+            background: var(--ds-purple-500);
+            color: white;
+        }
+
+        .card-icon.relationship {
+            background: var(--ds-blue-500);
+            color: white;
+        }
+
+        .card-icon.revenue {
+            background: var(--ds-amber-500);
+            color: white;
+        }
+
+        /* Wallet Share Analysis */
+        .wallet-share-visual {
+            margin-bottom: var(--space-6);
+            text-align: center;
+        }
+
+        .share-circle {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto var(--space-4);
+        }
+
+        .share-percentage {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: var(--font-size-h2);
+            font-weight: 700;
+            color: var(--main-brand);
+        }
+
+        .svg-circle {
+            transform: rotate(-90deg);
+        }
+
+        .circle-bg {
+            fill: none;
+            stroke: var(--ds-gray-200);
+            stroke-width: 8;
+        }
+
+        .circle-progress {
+            fill: none;
+            stroke: var(--main-brand);
+            stroke-width: 8;
+            stroke-linecap: round;
+            stroke-dasharray: 251.2;
+            stroke-dashoffset: 175.84; /* 30% progress */
+            transition: stroke-dashoffset 0.5s ease;
+        }
+
+        .share-breakdown {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-4);
+            margin-top: var(--space-4);
+        }
+
+        .share-item {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            padding: var(--space-3);
+            background: var(--neutral-light);
+            border-radius: 6px;
+        }
+
+        .share-label {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-600);
+        }
+
+        .share-value {
+            font-weight: 600;
+            color: var(--neutral-dark);
+        }
+
+        /* Competitive Analysis */
+        .competitor-list {
+            space-y: var(--space-4);
+        }
+
+        .competitor-item {
+            display: flex;
+            align-items: center;
+            justify-content: between;
+            padding: var(--space-4);
+            background: var(--neutral-light);
+            border-radius: 6px;
+            margin-bottom: var(--space-3);
+        }
+
+        .competitor-info {
+            flex: 1;
+        }
+
+        .competitor-name {
+            font-weight: 600;
+            color: var(--neutral-dark);
+            margin-bottom: var(--space-1);
+        }
+
+        .competitor-products {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-500);
+        }
+
+        .competitor-threat {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+
+        .threat-level {
+            padding: var(--space-1) var(--space-2);
+            border-radius: 4px;
+            font-size: var(--font-size-xs);
+            font-weight: 500;
+        }
+
+        .threat-high {
+            background: var(--ds-red-500);
+            color: white;
+        }
+
+        .threat-medium {
+            background: var(--ds-amber-500);
+            color: white;
+        }
+
+        .threat-low {
+            background: var(--ds-green-500);
+            color: white;
+        }
+
+        /* Relationship Depth */
+        .relationship-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-4);
+            margin-bottom: var(--space-6);
+        }
+
+        .metric-item {
+            text-align: center;
+            padding: var(--space-4);
+            background: var(--neutral-light);
+            border-radius: 6px;
+        }
+
+        .metric-value {
+            font-size: var(--font-size-h3);
+            font-weight: 700;
+            color: var(--main-brand);
+            margin-bottom: var(--space-1);
+        }
+
+        .metric-label {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-500);
+        }
+
+        .relationship-chart {
+            height: 200px;
+            background: var(--neutral-light);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--ds-gray-500);
+            font-size: var(--font-size-small);
+        }
+
+        /* Revenue Optimization */
+        .opportunity-list {
+            space-y: var(--space-4);
+        }
+
+        .opportunity-item {
+            display: flex;
+            align-items: center;
+            justify-content: between;
+            padding: var(--space-4);
+            background: var(--neutral-light);
+            border-radius: 6px;
+            margin-bottom: var(--space-3);
+        }
+
+        .opportunity-content {
+            flex: 1;
+        }
+
+        .opportunity-title {
+            font-weight: 600;
+            color: var(--neutral-dark);
+            margin-bottom: var(--space-1);
+        }
+
+        .opportunity-description {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-500);
+            margin-bottom: var(--space-2);
+        }
+
+        .opportunity-value {
+            display: flex;
+            align-items: center;
+            gap: var(--space-4);
+        }
+
+        .revenue-impact {
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .confidence-score {
+            padding: var(--space-1) var(--space-2);
+            background: var(--ds-blue-100);
+            color: var(--ds-blue-700);
+            border-radius: 4px;
+            font-size: var(--font-size-xs);
+            font-weight: 500;
+        }
+
+        .action-button {
+            background: var(--main-brand);
+            color: white;
+            border: none;
+            padding: var(--space-2) var(--space-4);
+            border-radius: 6px;
+            font-size: var(--font-size-small);
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .action-button:hover {
+            background: var(--ds-blue-600);
+        }
+
+        /* Full-width section */
+        .insights-section {
+            margin-top: var(--space-8);
+        }
+
+        .insights-card {
+            background: var(--background);
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 8px;
+            padding: var(--space-6);
+        }
+
+        .recommendations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--space-6);
+            margin-top: var(--space-6);
+        }
+
+        .recommendation-card {
+            background: var(--neutral-light);
+            border-radius: 6px;
+            padding: var(--space-5);
+        }
+
+        .recommendation-priority {
+            display: inline-block;
+            margin-bottom: var(--space-3);
+        }
+
+        .priority-high {
+            background: var(--ds-red-500);
+        }
+
+        .priority-medium {
+            background: var(--ds-amber-500);
+        }
+
+        .priority-low {
+            background: var(--ds-green-500);
+        }
+
+        .recommendation-title {
+            font-weight: 600;
+            color: var(--neutral-dark);
+            margin-bottom: var(--space-2);
+        }
+
+        .recommendation-details {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-500);
+            margin-bottom: var(--space-4);
+        }
+
+        .recommendation-metrics {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+        }
+
+        .expected-revenue {
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .app-container {
+                grid-template-columns: 1fr;
+                grid-template-areas:
+                    "header"
+                    "main";
+            }
+
+            .sidebar {
+                display: none;
+            }
+
+            .analysis-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            *, ::before, ::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header" role="banner">
+            <h1 class="header-title">Wallet Share & Relationship Intelligence</h1>
+            <div class="user-info">
+                <span class="sr-only">Current user:</span>
+                <div class="user-avatar" aria-label="Sarah Williams, Relationship Manager">SW</div>
+                <span>Sarah Williams</span>
+            </div>
+        </header>
+
+        <!-- Sidebar -->
+        <nav class="sidebar" role="navigation" aria-label="Main navigation">
+            <div class="nav-section">
+                <h2 class="nav-title">Portfolio</h2>
+                <a href="#" class="nav-item">
+                    <span>🏠</span>
+                    Portfolio Overview
+                </a>
+                <a href="#" class="nav-item active">
+                    <span>📊</span>
+                    Wallet Share Analysis
+                </a>
+                <a href="#" class="nav-item">
+                    <span>🎯</span>
+                    Opportunity Scoring
+                </a>
+                <a href="#" class="nav-item">
+                    <span>⚡</span>
+                    Competitive Intelligence
+                </a>
+            </div>
+            
+            <div class="nav-section">
+                <h2 class="nav-title">Client Management</h2>
+                <a href="#" class="nav-item">
+                    <span>👥</span>
+                    Client Relationships
+                </a>
+                <a href="#" class="nav-item">
+                    <span>📈</span>
+                    Revenue Optimization
+                </a>
+                <a href="#" class="nav-item">
+                    <span>🔍</span>
+                    Risk Assessment
+                </a>
+            </div>
+
+            <div class="nav-section">
+                <h2 class="nav-title">Analytics</h2>
+                <a href="#" class="nav-item">
+                    <span>📋</span>
+                    Performance Reports
+                </a>
+                <a href="#" class="nav-item">
+                    <span>🎲</span>
+                    Predictive Models
+                </a>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content" role="main" id="main-content">
+            <div class="content-header">
+                <h1 class="page-title">Tech Solutions Ltd - Relationship Analysis</h1>
+                <p class="page-subtitle">Comprehensive wallet share analysis and competitive positioning for maximizing relationship value</p>
+            </div>
+
+            <!-- Client Overview -->
+            <section class="client-overview" aria-labelledby="client-overview-title">
+                <div class="client-header">
+                    <div class="client-info">
+                        <h2 class="client-name" id="client-overview-title">Tech Solutions Ltd</h2>
+                        <div class="client-details">
+                            Customer since Aug 2019 • Annual Revenue: $2.5M • 25 Employees<br>
+                            Primary Contact: Jennifer Walsh • Relationship Manager: David Park
+                        </div>
+                    </div>
+                    <div class="status-badges">
+                        <span class="badge high-value">High Value</span>
+                        <span class="badge growth-opportunity">Growth Opportunity</span>
+                        <span class="badge competitive-risk">At Risk</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Analysis Grid -->
+            <div class="analysis-grid">
+                <!-- Wallet Share Analysis -->
+                <section class="analysis-card" aria-labelledby="wallet-share-title">
+                    <h2 class="card-title" id="wallet-share-title">
+                        <span class="card-icon wallet">💰</span>
+                        Wallet Share Analysis
+                    </h2>
+                    
+                    <div class="wallet-share-visual">
+                        <div class="share-circle">
+                            <svg class="svg-circle" width="120" height="120">
+                                <circle class="circle-bg" cx="60" cy="60" r="40"></circle>
+                                <circle class="circle-progress" cx="60" cy="60" r="40"></circle>
+                            </svg>
+                            <div class="share-percentage">32%</div>
+                        </div>
+                        <p><strong>Our Share of Client's Banking Needs</strong></p>
+                    </div>
+
+                    <div class="share-breakdown">
+                        <div class="share-item">
+                            <span class="share-label">Transaction Banking</span>
+                            <span class="share-value">$847K (45%)</span>
+                        </div>
+                        <div class="share-item">
+                            <span class="share-label">Credit Facilities</span>
+                            <span class="share-value">$280K (18%)</span>
+                        </div>
+                        <div class="share-item">
+                            <span class="share-label">Treasury Services</span>
+                            <span class="share-value">$0 (0%)</span>
+                        </div>
+                        <div class="share-item">
+                            <span class="share-label">Investment Products</span>
+                            <span class="share-value">$125K (65%)</span>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: var(--space-4); padding: var(--space-3); background: var(--ds-amber-100); border-radius: 6px;">
+                        <strong style="color: var(--ds-amber-800);">Opportunity:</strong>
+                        <span style="color: var(--ds-gray-700); font-size: var(--font-size-small);">68% of banking needs are with competitors. Estimated additional revenue potential: $420K annually.</span>
+                    </div>
+                </section>
+
+                <!-- Competitive Analysis -->
+                <section class="analysis-card" aria-labelledby="competitive-title">
+                    <h2 class="card-title" id="competitive-title">
+                        <span class="card-icon competitive">⚔️</span>
+                        Competitive Positioning
+                    </h2>
+                    
+                    <div class="competitor-list">
+                        <div class="competitor-item">
+                            <div class="competitor-info">
+                                <div class="competitor-name">ANZ Business</div>
+                                <div class="competitor-products">Primary transaction account, credit line ($500K), trade finance</div>
+                            </div>
+                            <div class="competitor-threat">
+                                <span class="threat-level threat-high">HIGH</span>
+                            </div>
+                        </div>
+
+                        <div class="competitor-item">
+                            <div class="competitor-info">
+                                <div class="competitor-name">ASB Business</div>
+                                <div class="competitor-products">Equipment financing, FX services</div>
+                            </div>
+                            <div class="competitor-threat">
+                                <span class="threat-level threat-medium">MEDIUM</span>
+                            </div>
+                        </div>
+
+                        <div class="competitor-item">
+                            <div class="competitor-info">
+                                <div class="competitor-name">Kiwibank Business</div>
+                                <div class="competitor-products">Backup transaction account</div>
+                            </div>
+                            <div class="competitor-threat">
+                                <span class="threat-level threat-low">LOW</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: var(--space-4); padding: var(--space-3); background: var(--ds-red-100); border-radius: 6px;">
+                        <strong style="color: var(--ds-red-800);">Alert:</strong>
+                        <span style="color: var(--ds-gray-700); font-size: var(--font-size-small);">ANZ holds 52% of client's banking relationship. Recent credit line increase suggests deepening relationship.</span>
+                    </div>
+                </section>
+
+                <!-- Relationship Depth -->
+                <section class="analysis-card" aria-labelledby="relationship-title">
+                    <h2 class="card-title" id="relationship-title">
+                        <span class="card-icon relationship">🤝</span>
+                        Relationship Depth Score
+                    </h2>
+                    
+                    <div class="relationship-metrics">
+                        <div class="metric-item">
+                            <div class="metric-value">6.8</div>
+                            <div class="metric-label">Overall Score</div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-value">4</div>
+                            <div class="metric-label">Products</div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-value">847</div>
+                            <div class="metric-label">Touch Points</div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-value">92%</div>
+                            <div class="metric-label">Engagement</div>
+                        </div>
+                    </div>
+
+                    <div class="relationship-chart">
+                        <span>Relationship Trend Chart - 6 Month Growth +1.2 Points</span>
+                    </div>
+
+                    <div style="margin-top: var(--space-4); padding: var(--space-3); background: var(--ds-blue-100); border-radius: 6px;">
+                        <strong style="color: var(--ds-blue-800);">Insight:</strong>
+                        <span style="color: var(--ds-gray-700); font-size: var(--font-size-small);">Strong relationship foundation but limited product penetration. High engagement indicates receptiveness to expansion.</span>
+                    </div>
+                </section>
+
+                <!-- Revenue Optimization -->
+                <section class="analysis-card" aria-labelledby="revenue-title">
+                    <h2 class="card-title" id="revenue-title">
+                        <span class="card-icon revenue">💡</span>
+                        Revenue Optimization
+                    </h2>
+                    
+                    <div class="opportunity-list">
+                        <div class="opportunity-item">
+                            <div class="opportunity-content">
+                                <div class="opportunity-title">Treasury Management Solution</div>
+                                <div class="opportunity-description">Multi-currency cash management and FX optimization based on $2.1M monthly international transactions</div>
+                                <div class="opportunity-value">
+                                    <span class="revenue-impact">+$180K annually</span>
+                                    <span class="confidence-score">94% confidence</span>
+                                </div>
+                            </div>
+                            <button class="action-button" aria-label="Initiate treasury management proposal">Propose</button>
+                        </div>
+
+                        <div class="opportunity-item">
+                            <div class="opportunity-content">
+                                <div class="opportunity-title">Equipment Finance Consolidation</div>
+                                <div class="opportunity-description">Refinance $650K equipment loans from ASB at better rates, consolidate relationship</div>
+                                <div class="opportunity-value">
+                                    <span class="revenue-impact">+$95K annually</span>
+                                    <span class="confidence-score">87% confidence</span>
+                                </div>
+                            </div>
+                            <button class="action-button" aria-label="Initiate equipment finance proposal">Propose</button>
+                        </div>
+
+                        <div class="opportunity-item">
+                            <div class="opportunity-content">
+                                <div class="opportunity-title">Enhanced Credit Facility</div>
+                                <div class="opportunity-description">Increase facility to $400K for growth capital, based on strong cash flow patterns</div>
+                                <div class="opportunity-value">
+                                    <span class="revenue-impact">+$65K annually</span>
+                                    <span class="confidence-score">91% confidence</span>
+                                </div>
+                            </div>
+                            <button class="action-button" aria-label="Initiate credit facility proposal">Propose</button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Strategic Insights -->
+            <section class="insights-section" aria-labelledby="insights-title">
+                <div class="insights-card">
+                    <h2 class="card-title" id="insights-title">
+                        <span class="card-icon" style="background: var(--ds-purple-500); color: white;">🧠</span>
+                        AI-Powered Strategic Recommendations
+                    </h2>
+                    
+                    <div class="recommendations-grid">
+                        <div class="recommendation-card">
+                            <span class="badge priority-high recommendation-priority">Critical Priority</span>
+                            <h3 class="recommendation-title">Defensive Action Required</h3>
+                            <p class="recommendation-details">ANZ's recent credit increase suggests aggressive relationship expansion. Immediate competitive response needed to protect primary banking relationship.</p>
+                            <div class="recommendation-metrics">
+                                <span class="expected-revenue">Risk: $280K annual revenue</span>
+                                <button class="action-button">Act Now</button>
+                            </div>
+                        </div>
+
+                        <div class="recommendation-card">
+                            <span class="badge priority-medium recommendation-priority">High Opportunity</span>
+                            <h3 class="recommendation-title">Treasury Services Cross-Sell</h3>
+                            <p class="recommendation-details">Client's international growth (45% YoY) creates perfect entry point for comprehensive treasury management solution.</p>
+                            <div class="recommendation-metrics">
+                                <span class="expected-revenue">Potential: $180K annually</span>
+                                <button class="action-button">Schedule Meeting</button>
+                            </div>
+                        </div>
+
+                        <div class="recommendation-card">
+                            <span class="badge priority-low recommendation-priority">Long-term Value</span>
+                            <h3 class="recommendation-title">Relationship Deepening</h3>
+                            <p class="recommendation-details">Strong engagement metrics indicate readiness for advisory services expansion and strategic banking partnership development.</p>
+                            <div class="recommendation-metrics">
+                                <span class="expected-revenue">Growth: +$120K annually</span>
+                                <button class="action-button">Plan Strategy</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: var(--space-6); padding: var(--space-4); background: var(--neutral-light); border-radius: 6px; border-left: 4px solid var(--main-brand);">
+                        <h4 style="margin-bottom: var(--space-2); color: var(--neutral-dark); font-weight: 600;">Next Best Actions</h4>
+                        <ol style="margin-left: var(--space-4); color: var(--ds-gray-600);">
+                            <li style="margin-bottom: var(--space-1);">Schedule emergency competitive response meeting within 48 hours</li>
+                            <li style="margin-bottom: var(--space-1);">Prepare comprehensive treasury services proposal for Q1 presentation</li>
+                            <li style="margin-bottom: var(--space-1);">Develop equipment finance consolidation strategy with pricing advantages</li>
+                            <li>Implement monthly relationship score monitoring and competitive intelligence alerts</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // Accessibility and interaction enhancements
+        document.addEventListener('DOMContentLoaded', function() {
+            // Focus management for keyboard navigation
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => {
+                item.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        item.click();
+                    }
+                });
+            });
+
+            // Action button interactions
+            const actionButtons = document.querySelectorAll('.action-button');
+            actionButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const action = this.textContent.trim();
+                    // Simulate action with user feedback
+                    this.textContent = 'Processing...';
+                    this.disabled = true;
+                    
+                    setTimeout(() => {
+                        this.textContent = action === 'Act Now' ? 'Scheduled' : 
+                                         action === 'Propose' ? 'Proposed' : 
+                                         action === 'Schedule Meeting' ? 'Scheduled' : 'Planned';
+                        this.style.background = 'var(--ds-green-500)';
+                    }, 1500);
+                });
+            });
+
+            // Wallet share circle animation
+            const progressCircle = document.querySelector('.circle-progress');
+            if (progressCircle) {
+                // Animate to 32% (stroke-dashoffset calculation: 251.2 - (251.2 * 0.32) = 170.8)
+                setTimeout(() => {
+                    progressCircle.style.strokeDashoffset = '170.8';
+                }, 500);
+            }
+
+            // Live region updates for screen readers
+            const liveRegion = document.createElement('div');
+            liveRegion.setAttribute('aria-live', 'polite');
+            liveRegion.setAttribute('aria-atomic', 'true');
+            liveRegion.className = 'sr-only';
+            document.body.appendChild(liveRegion);
+
+            // Simulate real-time updates
+            setInterval(() => {
+                const randomUpdates = [
+                    'Relationship score updated: 6.8 points',
+                    'New competitive intelligence: ANZ activity detected',
+                    'Opportunity score recalculated: Treasury services at 94% confidence',
+                    'Client engagement increased: 847 touchpoints this month'
+                ];
+                
+                const update = randomUpdates[Math.floor(Math.random() * randomUpdates.length)];
+                liveRegion.textContent = update;
+                
+                // Clear after announcement
+                setTimeout(() => {
+                    liveRegion.textContent = '';
+                }, 3000);
+            }, 30000); // Update every 30 seconds
+        });
+    </script>
+</body>
+</html>

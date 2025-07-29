@@ -1,0 +1,43 @@
+# Bank Relationship Intelligence Specification Configuration
+
+# Shared dependencies to include when running /infinite bank-relationship-intelligence
+dependencies:
+  # Design system dependencies (recommended for business applications)
+  design-systems:
+    - geist-core         # Essential for professional business interface
+    - geist-components   # Consistent component patterns for enterprise UX
+    - geist-data         # Data display components for financial information
+    - geist-forms        # Sophisticated form handling for banking interfaces
+    - geist-layout       # Complex portfolio layouts and multi-source data displays
+  
+  # Specification modules (essential for banking interfaces)
+  spec-modules:
+    - accessibility-standards      # Critical for financial service compliance
+    - performance-requirements     # Essential for responsive data interfaces
+    - realistic-data-requirements  # Critical for authentic banking workflow context
+  
+  # Data sets (core requirement for banking UX)
+  data:
+    - banking-data       # Essential for realistic bank relationship patterns
+  
+  # Aesthetic guidance (professional banking appearance)
+  moodboards:
+    - modern-minimalist  # Clean geometric precision for sophisticated banking interfaces
+  
+  # Enhancement strategies (advanced banking demo capabilities)
+  enhancement-strategies:
+    - patterns           # Optimize complex multi-source data workflows
+    # - demo-fidelity      # Create production-ready interactive banking demos
+
+# Experiment configuration
+experiment:
+  type: "functional-ux-patterns"
+  domain: "bank-relationship-intelligence"
+  output_format: "single-file"
+  naming_pattern: "ux_pattern_{iteration}.html"
+
+# Domain context:
+# - Multi-source financial data integration (credit cards + bank accounts + accounting software)
+# - Bank relationship manager portfolio analysis (100+ SMB clients)
+# - Connected data platform demonstration and competitive intelligence
+# - Professional enterprise banking interface standards with sophisticated workflows

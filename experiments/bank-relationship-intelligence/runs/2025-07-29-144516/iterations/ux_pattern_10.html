@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Source Data Integration Hub - Bank Relationship Intelligence</title>
+    <style>
+        /* Geist Design System Implementation */
+        :root {
+            /* Gray Scale - Primary neutral palette */
+            --ds-gray-100: #fafafa;
+            --ds-gray-200: #eaeaea;
+            --ds-gray-300: #999999;
+            --ds-gray-400: #888888;
+            --ds-gray-500: #666666;
+            --ds-gray-600: #444444;
+            --ds-gray-700: #333333;
+            --ds-gray-800: #222222;
+            --ds-gray-900: #111111;
+            --ds-gray-1000: #000000;
+
+            /* Blue - Interactive elements */
+            --ds-blue-100: #e1f5fe;
+            --ds-blue-500: #0070f3;
+            --ds-blue-600: #0061d5;
+            --ds-blue-700: #004fc4;
+            --ds-blue-800: #0043a5;
+
+            /* Status Colors */
+            --ds-red-500: #ee0000;
+            --ds-amber-500: #f5a623;
+            --ds-green-500: #22c55e;
+            --ds-purple-500: #7c3aed;
+
+            /* Modern Minimalist Aesthetic Colors */
+            --main-brand: #2563eb;
+            --accent-green: #10b981;
+            --neutral-dark: #1f2937;
+            --neutral-light: #f3f4f6;
+
+            /* Typography */
+            --font-size-h1: 2.25rem;
+            --font-size-h2: 1.875rem;
+            --font-size-h3: 1.5rem;
+            --font-size-h4: 1.25rem;
+            --font-size-base: 1rem;
+            --font-size-small: 0.875rem;
+            --font-size-xs: 0.75rem;
+
+            /* Spacing system based on 8px grid */
+            --space-1: 0.25rem;
+            --space-2: 0.5rem;
+            --space-3: 0.75rem;
+            --space-4: 1rem;
+            --space-5: 1.25rem;
+            --space-6: 1.5rem;
+            --space-8: 2rem;
+            --space-10: 2.5rem;
+            --space-12: 3rem;
+            --space-16: 4rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Geist Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            font-size: var(--font-size-base);
+            line-height: 1.6;
+            color: var(--ds-gray-900);
+            background-color: #ffffff;
+        }
+
+        /* Header */
+        .header {
+            background: #ffffff;
+            border-bottom: 1px solid var(--ds-gray-200);
+            padding: var(--space-4) var(--space-6);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1440px;
+            margin: 0 auto;
+        }
+
+        .header-title {
+            font-size: var(--font-size-h3);
+            font-weight: 600;
+            color: var(--neutral-dark);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: var(--space-3);
+            align-items: center;
+        }
+
+        /* Navigation */
+        .nav-tabs {
+            display: flex;
+            gap: var(--space-2);
+            background: var(--ds-gray-100);
+            border-radius: 8px;
+            padding: var(--space-1);
+        }
+
+        .nav-tab {
+            padding: var(--space-2) var(--space-4);
+            border: none;
+            background: transparent;
+            border-radius: 6px;
+            font-size: var(--font-size-small);
+            font-weight: 500;
+            color: var(--ds-gray-600);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .nav-tab.active {
+            background: #ffffff;
+            color: var(--main-brand);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Main Layout */
+        .main-container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: var(--space-6);
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: var(--space-6);
+        }
+
+        .content-area {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-6);
+        }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-4);
+        }
+
+        /* Integration Status Panel */
+        .integration-status {
+            background: #ffffff;
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 12px;
+            padding: var(--space-6);
+        }
+
+        .integration-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: var(--space-5);
+        }
+
+        .integration-title {
+            font-size: var(--font-size-h4);
+            font-weight: 600;
+            color: var(--neutral-dark);
+        }
+
+        .sync-status {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            font-size: var(--font-size-small);
+            color: var(--accent-green);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent-green);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Data Source Grid */
+        .data-sources {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-4);
+            margin-bottom: var(--space-6);
+        }
+
+        .data-source {
+            background: #ffffff;
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 8px;
+            padding: var(--space-5);
+            position: relative;
+            transition: all 0.2s ease;
+        }
+
+        .data-source:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transform: translateY(-1px);
+        }
+
+        .source-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-3);
+        }
+
+        .source-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--font-size-small);
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .banking-icon { background: var(--main-brand); }
+        .credit-icon { background: var(--ds-purple-500); }
+        .accounting-icon { background: var(--accent-green); }
+
+        .source-status {
+            display: flex;
+            align-items: center;
+            gap: var(--space-1);
+            font-size: var(--font-size-xs);
+            color: var(--ds-gray-500);
+        }
+
+        .source-title {
+            font-size: var(--font-size-base);
+            font-weight: 600;
+            color: var(--ds-gray-900);
+            margin-bottom: var(--space-2);
+        }
+
+        .source-stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-600);
+        }
+
+        /* Unified Dashboard */
+        .unified-dashboard {
+            background: #ffffff;
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 12px;
+            padding: var(--space-6);
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-5);
+        }
+
+        .dashboard-title {
+            font-size: var(--font-size-h4);
+            font-weight: 600;
+            color: var(--neutral-dark);
+        }
+
+        .view-controls {
+            display: flex;
+            gap: var(--space-2);
+        }
+
+        .control-btn {
+            padding: var(--space-2) var(--space-3);
+            border: 1px solid var(--ds-gray-300);
+            background: #ffffff;
+            border-radius: 6px;
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-600);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .control-btn.active {
+            border-color: var(--main-brand);
+            color: var(--main-brand);
+            background: var(--ds-blue-100);
+        }
+
+        /* Transaction Flow Visualization */
+        .flow-container {
+            margin-bottom: var(--space-6);
+            background: var(--neutral-light);
+            border-radius: 8px;
+            padding: var(--space-5);
+        }
+
+        .flow-header {
+            font-size: var(--font-size-base);
+            font-weight: 600;
+            color: var(--ds-gray-900);
+            margin-bottom: var(--space-4);
+        }
+
+        .flow-chart {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            overflow-x: auto;
+            padding-bottom: var(--space-2);
+        }
+
+        .flow-node {
+            background: #ffffff;
+            border: 2px solid var(--ds-gray-200);
+            border-radius: 8px;
+            padding: var(--space-3);
+            min-width: 120px;
+            text-align: center;
+            position: relative;
+        }
+
+        .flow-node.active {
+            border-color: var(--main-brand);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .flow-arrow {
+            color: var(--ds-gray-400);
+            font-size: 18px;
+        }
+
+        .node-title {
+            font-size: var(--font-size-small);
+            font-weight: 600;
+            color: var(--ds-gray-900);
+            margin-bottom: var(--space-1);
+        }
+
+        .node-value {
+            font-size: var(--font-size-xs);
+            color: var(--ds-gray-600);
+        }
+
+        /* Cross-Source Analysis Table */
+        .analysis-table {
+            background: #ffffff;
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .table-header {
+            background: var(--neutral-light);
+            padding: var(--space-4);
+            border-bottom: 1px solid var(--ds-gray-200);
+        }
+
+        .table-title {
+            font-size: var(--font-size-base);
+            font-weight: 600;
+            color: var(--ds-gray-900);
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-table th {
+            background: var(--ds-gray-100);
+            padding: var(--space-3) var(--space-4);
+            text-align: left;
+            font-size: var(--font-size-small);
+            font-weight: 600;
+            color: var(--ds-gray-700);
+            border-bottom: 1px solid var(--ds-gray-200);
+        }
+
+        .data-table td {
+            padding: var(--space-3) var(--space-4);
+            border-bottom: 1px solid var(--ds-gray-200);
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-900);
+        }
+
+        .data-table tr:hover {
+            background: var(--ds-gray-100);
+        }
+
+        /* Integration Health Panel */
+        .health-panel {
+            background: #ffffff;
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 12px;
+            padding: var(--space-5);
+        }
+
+        .health-header {
+            font-size: var(--font-size-base);
+            font-weight: 600;
+            color: var(--ds-gray-900);
+            margin-bottom: var(--space-4);
+        }
+
+        .health-metric {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--space-3) 0;
+            border-bottom: 1px solid var(--ds-gray-200);
+        }
+
+        .health-metric:last-child {
+            border-bottom: none;
+        }
+
+        .metric-label {
+            font-size: var(--font-size-small);
+            color: var(--ds-gray-600);
+        }
+
+        .metric-value {
+            font-size: var(--font-size-small);
+            font-weight: 600;
+            color: var(--ds-gray-900);
+        }
+
+        .metric-status {
+            padding: var(--space-1) var(--space-2);
+            border-radius: 4px;
+            font-size: var(--font-size-xs);
+            font-weight: 500;
+        }
+
+        .status-healthy {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--accent-green);
+        }
+
+        .status-warning {
+            background: rgba(245, 166, 35, 0.1);
+            color: var(--ds-amber-500);
+        }
+
+        /* Alert Panel */
+        .alert-panel {
+            background: #ffffff;
+            border: 1px solid var(--ds-gray-200);
+            border-radius: 12px;
+            padding: var(--space-5);
+        }
+
+        .alert-header {
+            font-size: var(--font-size-base);
+            font-weight: 600;
+            color: var(--ds-gray-900);
+            margin-bottom: var(--space-4);
+        }
+
+        .alert-item {
+            display: flex;
+            gap: var(--space-3);
+            padding: var(--space-3);
+            border-radius: 6px;
+            margin-bottom: var(--space-2);
+            background: var(--ds-gray-100);
+        }
+
+        .alert-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--font-size-xs);
+            font-weight: 600;
+            color: #ffffff;
+            background: var(--ds-amber-500);
+            flex-shrink: 0;
+        }
+
+        .alert-content {
+            flex: 1;
+        }
+
+        .alert-title {
+            font-size: var(--font-size-small);
+            font-weight: 600;
+            color: var(--ds-gray-900);
+            margin-bottom: var(--space-1);
+        }
+
+        .alert-message {
+            font-size: var(--font-size-xs);
+            color: var(--ds-gray-600);
+        }
+
+        /* Buttons */
+        .btn {
+            padding: var(--space-2) var(--space-4);
+            border: none;
+            border-radius: 6px;
+            font-size: var(--font-size-small);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+
+        .btn-primary {
+            background: var(--main-brand);
+            color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background: var(--ds-blue-600);
+        }
+
+        .btn-secondary {
+            background: var(--ds-gray-100);
+            color: var(--ds-gray-700);
+            border: 1px solid var(--ds-gray-300);
+        }
+
+        .btn-secondary:hover {
+            background: var(--ds-gray-200);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .main-container {
+                grid-template-columns: 1fr;
+                gap: var(--space-4);
+            }
+
+            .data-sources {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                padding: var(--space-4);
+            }
+            
+            .data-sources {
+                grid-template-columns: 1fr;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: var(--space-3);
+                align-items: flex-start;
+            }
+
+            .flow-chart {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .flow-arrow {
+                transform: rotate(90deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header" role="banner">
+        <div class="header-content">
+            <h1 class="header-title">Multi-Source Data Integration Hub</h1>
+            <div class="header-actions">
+                <nav class="nav-tabs" role="navigation" aria-label="Main navigation">
+                    <button class="nav-tab active" aria-pressed="true">Integration Overview</button>
+                    <button class="nav-tab" aria-pressed="false">Data Harmonization</button>
+                    <button class="nav-tab" aria-pressed="false">Quality Monitor</button>
+                    <button class="nav-tab" aria-pressed="false">Competitive Intel</button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-container" role="main" id="main-content">
+        <div class="content-area">
+            <!-- Integration Status Overview -->
+            <section class="integration-status" aria-labelledby="integration-title">
+                <div class="integration-header">
+                    <h2 id="integration-title" class="integration-title">Real-Time Data Integration Status</h2>
+                    <div class="sync-status">
+                        <div class="status-dot" aria-hidden="true"></div>
+                        <span>Live Sync Active - Last updated 32 seconds ago</span>
+                    </div>
+                </div>
+
+                <!-- Data Sources Grid -->
+                <div class="data-sources">
+                    <div class="data-source">
+                        <div class="source-header">
+                            <div class="source-icon banking-icon" aria-hidden="true">BK</div>
+                            <div class="source-status">
+                                <span class="status-dot"></span>
+                                <span>Connected</span>
+                            </div>
+                        </div>
+                        <h3 class="source-title">External Banking</h3>
+                        <div class="source-stats">
+                            <span>47 Accounts</span>
+                            <span>12 Institutions</span>
+                        </div>
+                    </div>
+
+                    <div class="data-source">
+                        <div class="source-header">
+                            <div class="source-icon credit-icon" aria-hidden="true">CC</div>
+                            <div class="source-status">
+                                <span class="status-dot"></span>
+                                <span>Connected</span>
+                            </div>
+                        </div>
+                        <h3 class="source-title">Credit Cards</h3>
+                        <div class="source-stats">
+                            <span>124 Cards</span>
+                            <span>8 Issuers</span>
+                        </div>
+                    </div>
+
+                    <div class="data-source">
+                        <div class="source-header">
+                            <div class="source-icon accounting-icon" aria-hidden="true">AC</div>
+                            <div class="source-status">
+                                <span class="status-dot"></span>
+                                <span>Connected</span>
+                            </div>
+                        </div>
+                        <h3 class="source-title">Accounting Software</h3>
+                        <div class="source-stats">
+                            <span>89 Systems</span>
+                            <span>5 Platforms</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Unified Cash Flow Dashboard -->
+            <section class="unified-dashboard" aria-labelledby="dashboard-title">
+                <div class="dashboard-header">
+                    <h2 id="dashboard-title" class="dashboard-title">Cross-Source Transaction Intelligence</h2>
+                    <div class="view-controls">
+                        <button class="control-btn active">Real-Time</button>
+                        <button class="control-btn">Daily</button>
+                        <button class="control-btn">Weekly</button>
+                        <button class="control-btn">Monthly</button>
+                    </div>
+                </div>
+
+                <!-- Transaction Flow Visualization -->
+                <div class="flow-container">
+                    <h3 class="flow-header">Multi-Institution Cash Flow Analysis</h3>
+                    <div class="flow-chart">
+                        <div class="flow-node active">
+                            <div class="node-title">Inbound</div>
+                            <div class="node-value">$847,392</div>
+                        </div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-node">
+                            <div class="node-title">Processing</div>
+                            <div class="node-value">$234,891</div>
+                        </div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-node">
+                            <div class="node-title">Distributed</div>
+                            <div class="node-value">$612,501</div>
+                        </div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-node">
+                            <div class="node-title">External</div>
+                            <div class="node-value">$389,275</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cross-Source Analysis Table -->
+                <div class="analysis-table">
+                    <div class="table-header">
+                        <h3 class="table-title">Cross-Institution Relationship Intelligence</h3>
+                    </div>
+                    <div class="table-container">
+                        <table class="data-table" role="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Client</th>
+                                    <th scope="col">Our Bank Share</th>
+                                    <th scope="col">External Banking</th>
+                                    <th scope="col">Credit Exposure</th>
+                                    <th scope="col">Cash Flow Score</th>
+                                    <th scope="col">Opportunity</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Tech Solutions Ltd</strong></td>
+                                    <td>67% ($847K)</td>
+                                    <td>ANZ (23%), BNZ (10%)</td>
+                                    <td>$45K across 3 cards</td>
+                                    <td><span class="metric-status status-healthy">Excellent</span></td>
+                                    <td>Treasury Services</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Creative Agency Co</strong></td>
+                                    <td>34% ($234K)</td>
+                                    <td>Westpac (45%), ASB (21%)</td>
+                                    <td>$67K across 5 cards</td>
+                                    <td><span class="metric-status status-warning">Moderate</span></td>
+                                    <td>Primary Banking</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Manufacturing Plus</strong></td>
+                                    <td>78% ($1.2M)</td>
+                                    <td>BNZ (15%), ANZ (7%)</td>
+                                    <td>$123K across 7 cards</td>
+                                    <td><span class="metric-status status-healthy">Strong</span></td>
+                                    <td>Equipment Finance</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Retail Innovations</strong></td>
+                                    <td>45% ($567K)</td>
+                                    <td>ASB (35%), Kiwibank (20%)</td>
+                                    <td>$89K across 4 cards</td>
+                                    <td><span class="metric-status status-healthy">Good</span></td>
+                                    <td>Merchant Services</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Consulting Partners</strong></td>
+                                    <td>23% ($189K)</td>
+                                    <td>Westpac (67%), BNZ (10%)</td>
+                                    <td>$34K across 2 cards</td>
+                                    <td><span class="metric-status status-warning">Fair</span></td>
+                                    <td>Relationship Growth</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <aside class="sidebar" role="complementary">
+            <!-- Integration Health Panel -->
+            <div class="health-panel">
+                <h3 class="health-header">Integration Health Metrics</h3>
+                <div class="health-metric">
+                    <span class="metric-label">Data Freshness</span>
+                    <span class="metric-status status-healthy">Real-time</span>
+                </div>
+                <div class="health-metric">
+                    <span class="metric-label">Sync Success Rate</span>
+                    <span class="metric-value">99.7%</span>
+                </div>
+                <div class="health-metric">
+                    <span class="metric-label">Data Quality Score</span>
+                    <span class="metric-value">94.3%</span>
+                </div>
+                <div class="health-metric">
+                    <span class="metric-label">Exception Rate</span>
+                    <span class="metric-status status-warning">2.1%</span>
+                </div>
+                <div class="health-metric">
+                    <span class="metric-label">Reconciliation Status</span>
+                    <span class="metric-status status-healthy">Complete</span>
+                </div>
+                <div class="health-metric">
+                    <span class="metric-label">API Performance</span>
+                    <span class="metric-value">127ms avg</span>
+                </div>
+            </div>
+
+            <!-- Data Quality Alerts -->
+            <div class="alert-panel">
+                <h3 class="alert-header">Integration Alerts</h3>
+                <div class="alert-item">
+                    <div class="alert-icon">!</div>
+                    <div class="alert-content">
+                        <div class="alert-title">Xero Sync Delay</div>
+                        <div class="alert-message">Creative Agency Co - 15min delay detected in accounting data feed</div>
+                    </div>
+                </div>
+                <div class="alert-item">
+                    <div class="alert-icon">!</div>
+                    <div class="alert-content">
+                        <div class="alert-title">Credit Card Anomaly</div>
+                        <div class="alert-message">Manufacturing Plus - Unusual spending pattern on Amex card</div>
+                    </div>
+                </div>
+                <div class="alert-item">
+                    <div class="alert-icon">!</div>
+                    <div class="alert-content">
+                        <div class="alert-title">New Account Detected</div>
+                        <div class="alert-message">Tech Solutions Ltd - New BNZ business account identified</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="health-panel">
+                <h3 class="health-header">Quick Actions</h3>
+                <div style="display: flex; flex-direction: column; gap: var(--space-3);">
+                    <button class="btn btn-primary">Run Full Reconciliation</button>
+                    <button class="btn btn-secondary">Export Integration Report</button>
+                    <button class="btn btn-secondary">Configure Data Sources</button>
+                    <button class="btn btn-secondary">View Competitive Analysis</button>
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <script>
+        // Tab navigation functionality
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Remove active class from all tabs
+                document.querySelectorAll('.nav-tab').forEach(t => {
+                    t.classList.remove('active');
+                    t.setAttribute('aria-pressed', 'false');
+                });
+                
+                // Add active class to clicked tab
+                this.classList.add('active');
+                this.setAttribute('aria-pressed', 'true');
+            });
+        });
+
+        // View controls functionality
+        document.querySelectorAll('.control-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.control-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Simulate data refresh
+                document.querySelectorAll('.flow-node').forEach(node => {
+                    node.classList.remove('active');
+                });
+                setTimeout(() => {
+                    document.querySelector('.flow-node').classList.add('active');
+                }, 300);
+            });
+        });
+
+        // Simulate real-time updates
+        function updateSyncStatus() {
+            const syncStatus = document.querySelector('.sync-status span');
+            const seconds = Math.floor(Math.random() * 60) + 1;
+            syncStatus.textContent = `Live Sync Active - Last updated ${seconds} seconds ago`;
+        }
+
+        // Update sync status every 10 seconds
+        setInterval(updateSyncStatus, 10000);
+
+        // Accessibility: Handle keyboard navigation for custom elements
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                if (e.target.classList.contains('nav-tab') || e.target.classList.contains('control-btn')) {
+                    e.preventDefault();
+                    e.target.click();
+                }
+            }
+        });
+
+        // Performance: Lazy load table data
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Simulate loading additional table rows
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe table rows for performance optimization
+        document.querySelectorAll('.data-table tbody tr').forEach(row => {
+            row.style.opacity = '0';
+            row.style.transform = 'translateY(20px)';
+            row.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+            observer.observe(row);
+        });
+    </script>
+</body>
+</html>
